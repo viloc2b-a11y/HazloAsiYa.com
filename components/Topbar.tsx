@@ -1,6 +1,6 @@
 'use client'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { FUNNEL_ORDER, FUNNELS } from '@/data/funnels'
 
 const LogoMark = ({ size = 36 }: { size?: number }) => (
@@ -21,6 +21,18 @@ const NAV_FUNNELS = ['snap','medicaid','id','wic','taxes','escuela','daca','itin
 
 export default function Topbar({ user }: { user?: { email: string; name?: string; plan?: string } | null }) {
   const [menuOpen, setMenuOpen] = useState(false)
+  const [localUser, setLocalUser] = useState<{ email: string; name?: string; plan?: string } | null>(user ?? null)
+
+  useEffect(() => {
+    // If a parent didn't pass a user (static export pages), use localStorage.
+    if (user !== undefined) { setLocalUser(user); return }
+    try {
+      const raw = localStorage.getItem('haya_user')
+      setLocalUser(raw ? JSON.parse(raw) : null)
+    } catch {
+      setLocalUser(null)
+    }
+  }, [user])
 
   return (
     <header className="sticky top-0 z-50 bg-navy/95 backdrop-blur border-b border-white/10">
@@ -49,10 +61,10 @@ export default function Topbar({ user }: { user?: { email: string; name?: string
 
         {/* Right side */}
         <div className="flex items-center gap-2">
-          {user ? (
+          {localUser ? (
             <Link href="/dashboard" className="flex items-center gap-2 bg-white/10 hover:bg-white/15 px-3 py-1.5 rounded-lg transition-colors">
               <div className="w-6 h-6 rounded-full bg-green flex items-center justify-center text-white text-xs font-bold">
-                {(user.name || user.email)[0].toUpperCase()}
+                {(localUser.name || localUser.email)[0].toUpperCase()}
               </div>
               <span className="text-white/80 text-[13px] font-medium hidden sm:block">Mi cuenta</span>
             </Link>

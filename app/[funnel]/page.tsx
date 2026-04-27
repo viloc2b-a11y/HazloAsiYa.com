@@ -25,7 +25,7 @@ export default async function FunnelPage({ params }: Props) {
 
   return (
     <div className="min-h-screen bg-cream">
-      <Topbar user={null}/>
+      <Topbar />
 
       {/* Hero */}
       <section className="bg-navy">

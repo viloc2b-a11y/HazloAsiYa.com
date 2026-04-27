@@ -108,7 +108,7 @@ export default function CheckoutModal({ productId, funnelId, onSuccess, onClose 
           <div className="px-6 pb-8 text-center">
             <div className="text-5xl mb-4">✅</div>
             <h3 className="font-serif text-2xl mb-2" style={{ color: 'var(--navy)' }}>¡Pago exitoso!</h3>
-            <p className="text-gray-500 text-sm">Tu acceso está activado. Revisa tu correo para la confirmación.</p>
+            <p className="text-gray-500 text-sm">Tu acceso está activado. Ya puedes continuar y ver el plan completo.</p>
           </div>
         ) : (
           <div className="px-6 pb-6 space-y-4">

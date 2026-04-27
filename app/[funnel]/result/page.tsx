@@ -357,7 +357,7 @@ export default function ResultPage() {
               <div className="text-center py-6">
                 <div className="text-5xl mb-4">✅</div>
                 <h3 className="font-serif text-2xl text-navy mb-2">¡Pago exitoso!</h3>
-                <p className="text-gray-500 text-sm mb-6">Tu guía está desbloqueada. Revisa tu correo.</p>
+                <p className="text-gray-500 text-sm mb-6">Tu guía está desbloqueada. Ya puedes ver el plan completo aquí mismo.</p>
                 <button onClick={() => setPayDone(false)} className="btn-primary w-full py-3">Ver mi plan completo →</button>
               </div>
             ) : (
