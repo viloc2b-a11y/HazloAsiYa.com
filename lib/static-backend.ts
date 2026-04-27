@@ -37,10 +37,22 @@ export async function authStatic(args: { action: 'login' | 'signup' | 'logout'; 
 export async function checkoutStatic(args: { productId: 'main' | 'annual' | 'assisted' }) {
   const user = getStoredUser()
   if (!user) return { ok: false as const, error: 'Inicia sesión para continuar' }
-  const plan = args.productId === 'annual' ? 'annual' : args.productId === 'assisted' ? 'assisted' : 'paid_guide'
-  const updated = { ...user, plan }
-  setStoredUser(updated)
-  return { ok: true as const, user: updated }
+
+  const res = await fetch('/api/checkout', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ productId: args.productId, userId: user.id, userEmail: user.email }),
+  })
+  const data = await res.json().catch(() => ({}))
+  if (!res.ok) return { ok: false as const, error: data?.error || 'No se pudo iniciar el pago' }
+
+  // Square hosted checkout URL
+  if (data?.checkoutUrl) {
+    window.location.href = data.checkoutUrl
+    return { ok: true as const, redirected: true as const }
+  }
+
+  return { ok: false as const, error: 'Respuesta inválida del checkout' }
 }
 
 export async function submitLeadStatic(args: { name: string; phone: string; zip?: string; funnel: string }) {

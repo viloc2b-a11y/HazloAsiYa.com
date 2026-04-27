@@ -381,11 +381,3 @@ export const NEXT_STEP_MAP: Record<FunnelId, { id: FunnelId; name: string; icon:
   bank:      [{ id: 'taxes', name: 'Taxes', icon: '💰', desc: 'Declara con cuenta bancaria establecida' }, { id: 'jobs', name: 'Empleo', icon: '💼', desc: 'Encuentra trabajo estable' }],
   matricula: [{ id: 'bank', name: 'Banco', icon: '🏦', desc: 'Muchos bancos aceptan la matrícula consular' }, { id: 'taxes', name: 'Taxes', icon: '💰', desc: 'Con matrícula y ITIN puedes declarar impuestos' }],
 };
-
-export const PRODUCTS = {
-  main:     { id: 'main',     name: 'Guía Completa por Trámite',         price: 19, priceId: process.env.STRIPE_PRICE_MAIN     || '' },
-  annual:   { id: 'annual',   name: 'Acceso Anual — 16 Trámites',        price: 49, priceId: process.env.STRIPE_PRICE_ANNUAL   || '' },
-  assisted: { id: 'assisted', name: 'Revisión Asistida por Especialista', price: 89, priceId: process.env.STRIPE_PRICE_ASSISTED || '' },
-};
-
-export type ProductId = keyof typeof PRODUCTS;

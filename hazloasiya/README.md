@@ -8,7 +8,7 @@
 | Supabase Keys | ✅ Configurado | en .env.local |
 | Email | ✅ Configurado | hazloasiya@gmail.com |
 | WhatsApp | ✅ Configurado | 346 876 1439 |
-| Stripe | ⏳ Pendiente | stripe.com/register |
+| Square | ⏳ Pendiente | developer.squareup.com |
 | OpenAI (ChatGPT) | ⏳ Pendiente | platform.openai.com |
 | Dominio | ⏳ Pendiente | hazloasiya.com |
 
@@ -17,7 +17,7 @@
 ## Stack
 - Next.js 14 (App Router)
 - Supabase (Auth + PostgreSQL)  
-- Stripe (Payments)
+- Square (Payments)
 - ChatGPT API (AI results)
 - Cloudflare Pages (Deploy)
 
@@ -42,16 +42,15 @@ npm run dev
 3. Go to Settings → API → copy URL and anon key
 4. Enable Google OAuth in Authentication → Providers → Google
 
-### 2. Stripe
-1. Create account at stripe.com
-2. Dashboard → Developers → API Keys → copy publishable and secret keys
-3. Create 3 products in Stripe:
-   - "Guía Completa" → $19 one-time → copy Price ID → STRIPE_PRICE_MAIN
-   - "Acceso Anual" → $49 one-time → copy Price ID → STRIPE_PRICE_ANNUAL  
-   - "Revisión Asistida" → $89 one-time → copy Price ID → STRIPE_PRICE_ASSISTED
-4. Webhooks → Add endpoint → URL: https://yourdomain.com/api/stripe-webhook
-   - Events: payment_intent.succeeded
-   - Copy signing secret → STRIPE_WEBHOOK_SECRET
+### 2. Square (Payments)
+1. Create account at developer.squareup.com
+2. Get:
+   - SQUARE_ACCESS_TOKEN
+   - SQUARE_LOCATION_ID
+3. Create a webhook subscription pointing to:
+   - `https://<your-domain>/api/square-webhook`
+4. Copy the webhook signature key:
+   - SQUARE_WEBHOOK_SIGNATURE_KEY
 
 ### 3. OpenAI (ChatGPT)
 1. platform.openai.com → API keys → Create key → OPENAI_API_KEY
@@ -93,13 +92,12 @@ NEXT_PUBLIC_SUPABASE_URL=https://xxx.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJ...
 SUPABASE_SERVICE_ROLE_KEY=eyJ...
 
-# Stripe
-STRIPE_SECRET_KEY=sk_live_...
-NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_live_...
-STRIPE_WEBHOOK_SECRET=whsec_...
-STRIPE_PRICE_MAIN=price_...
-STRIPE_PRICE_ANNUAL=price_...
-STRIPE_PRICE_ASSISTED=price_...
+# Square (Payments)
+SQUARE_ACCESS_TOKEN=EAAA...
+SQUARE_LOCATION_ID=...
+SQUARE_WEBHOOK_SIGNATURE_KEY=...
+SUPABASE_URL=https://xxx.supabase.co
+SUPABASE_SERVICE_ROLE_KEY=eyJ...
 
 # OpenAI (ChatGPT)
 OPENAI_API_KEY=sk-...

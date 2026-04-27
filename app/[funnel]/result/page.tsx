@@ -74,7 +74,8 @@ export default function ResultPage() {
     try {
       const res = await checkoutStatic({ productId: showPay as 'main' | 'annual' | 'assisted' })
       if (!res.ok) throw new Error(res.error)
-      setUser(res.user)
+      // In Square hosted checkout flow, we redirect away.
+      // If redirect didn't happen, keep user as-is.
       setPayDone(true)
       setShowPay(null)
     } catch (err: unknown) {
