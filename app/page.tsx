@@ -1,8 +1,10 @@
-import { createClient } from '@/lib/supabase/server'
+'use client'
+import { useEffect, useState } from 'react'
 import Topbar from '@/components/Topbar'
 import FunnelCard from '@/components/FunnelCard'
 import { FUNNELS, FUNNEL_ORDER } from '@/data/funnels'
 import Link from 'next/link'
+import { getStoredUser } from '@/lib/static-backend'
 
 const LogoMark = ({ size = 48 }: { size?: number }) => (
   <svg width={size} height={size} viewBox="0 0 48 48" fill="none">
@@ -18,14 +20,12 @@ const LogoMark = ({ size = 48 }: { size?: number }) => (
   </svg>
 )
 
-export default async function HomePage() {
-  const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
-  let userProfile = null
-  if (user) {
-    const { data } = await supabase.from('users').select('*').eq('id', user.id).single()
-    userProfile = data
-  }
+export default function HomePage() {
+  const [userProfile, setUserProfile] = useState<{ email: string; name?: string; plan?: string } | null>(null)
+
+  useEffect(() => {
+    setUserProfile(getStoredUser())
+  }, [])
 
   return (
     <div className="min-h-screen">

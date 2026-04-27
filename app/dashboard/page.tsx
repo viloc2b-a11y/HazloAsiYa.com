@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { FUNNELS, FUNNEL_ORDER } from '@/data/funnels'
+import { authStatic } from '@/lib/static-backend'
 
 interface Document {
   id: string; funnel: string; created_at: string; result: { eligible: boolean; headline: string }
@@ -24,9 +25,7 @@ export default function DashboardPage() {
   }, [router])
 
   const handleLogout = async () => {
-    await fetch('/api/auth', { method: 'POST', headers: { 'Content-Type': 'application/json' },
-                               body: JSON.stringify({ action: 'logout' }) })
-    localStorage.removeItem('haya_user')
+    await authStatic({ action: 'logout' })
     router.push('/')
   }
 

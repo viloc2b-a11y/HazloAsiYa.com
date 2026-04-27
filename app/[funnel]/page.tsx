@@ -1,15 +1,10 @@
 import { notFound } from 'next/navigation'
 import { Metadata } from 'next'
 import Link from 'next/link'
-import { createClient } from '@/lib/supabase/server'
 import { FUNNELS, FUNNEL_ORDER, NEXT_STEP_MAP, FunnelId } from '@/data/funnels'
 import Topbar from '@/components/Topbar'
 
 interface Props { params: Promise<{ funnel: string }> }
-
-export async function generateStaticParams() {
-  return FUNNEL_ORDER.map(funnel => ({ funnel }))
-}
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { funnel: id } = await params
@@ -26,19 +21,11 @@ export default async function FunnelPage({ params }: Props) {
   const f = FUNNELS[id as FunnelId]
   if (!f) notFound()
 
-  const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
-  let userProfile = null
-  if (user) {
-    const { data } = await supabase.from('users').select('*').eq('id', user.id).single()
-    userProfile = data
-  }
-
   const nextSteps = NEXT_STEP_MAP[id as FunnelId] || []
 
   return (
     <div className="min-h-screen bg-cream">
-      <Topbar user={userProfile}/>
+      <Topbar user={null}/>
 
       {/* Hero */}
       <section className="bg-navy">

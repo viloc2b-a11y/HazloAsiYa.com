@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import { useRouter, useParams } from 'next/navigation'
 import { FUNNELS, FunnelId } from '@/data/funnels'
 import Link from 'next/link'
+import { trackEvent } from '@/lib/static-backend'
 
 const LogoMark = () => (
   <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
@@ -37,11 +38,7 @@ export default function WizardPage() {
   const [loading,  setLoading]  = useState(false)
 
   useEffect(() => {
-    fetch('/api/track', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ event: 'form_started', funnel: id }),
-    }).catch(() => {})
+    trackEvent({ event: 'form_started', funnel: id }).catch(() => {})
   }, [id])
 
   if (!f) return <div className="p-8 text-center">Trámite no encontrado.</div>

@@ -1,5 +1,6 @@
 'use client'
 import { useState } from 'react'
+import { authStatic } from '@/lib/static-backend'
 
 interface AuthModalProps {
   onSuccess: (user: { id: string; email: string; name?: string; plan: string }) => void
@@ -36,25 +37,14 @@ export default function AuthModal({ onSuccess, onClose, initialMode = 'login' }:
 
     setLoading(true)
     try {
-      const res = await fetch('/api/auth', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          action: mode === 'login' ? 'login' : 'signup',
-          email, password, name,
-        }),
+      const res = await authStatic({
+        action: mode === 'login' ? 'login' : 'signup',
+        email,
+        password,
+        name,
       })
-      const data = await res.json()
-      if (data.error) { setError(data.error); return }
-
-      const user = {
-        id:    data.user.id,
-        email: data.user.email,
-        name:  name || data.user.email.split('@')[0],
-        plan:  'free',
-      }
-      localStorage.setItem('haya_user', JSON.stringify(user))
-      onSuccess(user)
+      if (!res.ok) { setError(res.error || 'Error'); return }
+      onSuccess(res.user as any)
     } catch {
       setError('Error de conexión. Intenta de nuevo.')
     } finally {

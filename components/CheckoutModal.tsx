@@ -1,8 +1,6 @@
 'use client'
-import { useState, useEffect } from 'react'
-import { loadStripe, StripeCardElement } from '@stripe/stripe-js'
-
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
+import { useState } from 'react'
+import { checkoutStatic } from '@/lib/static-backend'
 
 interface CheckoutModalProps {
   productId: 'main' | 'annual' | 'assisted'
@@ -52,64 +50,19 @@ const PRODUCTS = {
 
 export default function CheckoutModal({ productId, funnelId, onSuccess, onClose }: CheckoutModalProps) {
   const product = PRODUCTS[productId]
-  const [cardReady,  setCardReady]  = useState(false)
   const [processing, setProcessing] = useState(false)
   const [error,      setError]      = useState('')
   const [success,    setSuccess]    = useState(false)
-  const [cardEl,     setCardEl]     = useState<StripeCardElement | null>(null)
-
-  useEffect(() => {
-    let mounted = true
-    stripePromise.then(stripe => {
-      if (!stripe || !mounted) return
-      const elements = stripe.elements({
-        fonts: [{ cssSrc: 'https://fonts.googleapis.com/css2?family=Outfit:wght@400;600&display=swap' }],
-      })
-      const card = elements.create('card', {
-        style: {
-          base: {
-            fontFamily: 'Outfit, system-ui, sans-serif',
-            fontSize: '15px',
-            color: '#08213A',
-            '::placeholder': { color: '#9CA3AF' },
-          },
-          invalid: { color: '#EF4444' },
-        },
-      })
-      card.mount('#stripe-card-element')
-      card.on('change', e => { setCardReady(!e.empty); setError(e.error?.message || '') })
-      if (mounted) setCardEl(card)
-    })
-    return () => { mounted = false }
-  }, [])
 
   const handlePay = async () => {
-    if (!cardEl) return
     setProcessing(true)
     setError('')
 
     try {
-      // 1. Create PaymentIntent
-      const res = await fetch('/api/checkout', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ productId, funnelId }),
-      })
-      const { clientSecret, error: apiError } = await res.json()
-      if (apiError) throw new Error(apiError)
-
-      // 2. Confirm payment with Stripe
-      const stripe = await stripePromise
-      if (!stripe) throw new Error('Stripe no disponible')
-
-      const { error: stripeError, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
-        payment_method: { card: cardEl },
-      })
-      if (stripeError) throw new Error(stripeError.message)
-      if (paymentIntent?.status === 'succeeded') {
-        setSuccess(true)
-        setTimeout(() => onSuccess(productId), 1500)
-      }
+      const res = await checkoutStatic({ productId })
+      if (!res.ok) throw new Error(res.error || 'Pago no disponible')
+      setSuccess(true)
+      setTimeout(() => onSuccess(productId), 900)
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : 'Error al procesar el pago')
     } finally {
@@ -159,14 +112,8 @@ export default function CheckoutModal({ productId, funnelId, onSuccess, onClose 
           </div>
         ) : (
           <div className="px-6 pb-6 space-y-4">
-            {/* Stripe Card Element */}
-            <div>
-              <label className="label">Datos de tu tarjeta</label>
-              <div
-                id="stripe-card-element"
-                className="input"
-                style={{ padding: '14px 16px', minHeight: '46px' }}
-              />
+            <div className="bg-cream border border-cream-2 rounded-xl p-4 text-sm text-gray-600">
+              Pagos deshabilitados en modo export estático. Esta pantalla simula el desbloqueo del plan.
             </div>
 
             {error && (
@@ -177,9 +124,9 @@ export default function CheckoutModal({ productId, funnelId, onSuccess, onClose 
 
             <button
               onClick={handlePay}
-              disabled={processing || !cardReady}
+              disabled={processing}
               className="btn-primary w-full py-4 text-base"
-              style={{ opacity: processing || !cardReady ? 0.65 : 1 }}
+              style={{ opacity: processing ? 0.65 : 1 }}
             >
               {processing ? 'Procesando…' : `🔒 Pagar $${product.price}`}
             </button>

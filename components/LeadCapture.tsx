@@ -1,5 +1,6 @@
 'use client'
 import { useState } from 'react'
+import { submitLeadStatic } from '@/lib/static-backend'
 
 interface LeadCaptureProps {
   funnelId: string
@@ -28,11 +29,7 @@ export default function LeadCapture({ funnelId, funnelName }: LeadCaptureProps) 
 
     setLoading(true)
     try {
-      await fetch('/api/lead', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, phone, zip, funnel: funnelId }),
-      })
+      await submitLeadStatic({ name, phone, zip, funnel: funnelId })
       setSent(true)
     } catch {
       setError('Error al enviar. Intenta de nuevo.')

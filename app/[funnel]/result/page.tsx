@@ -2,10 +2,8 @@
 import { useState, useEffect } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import { FUNNELS, NEXT_STEP_MAP, FunnelId } from '@/data/funnels'
-import { loadStripe } from '@stripe/stripe-js'
 import Link from 'next/link'
-
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
+import { authStatic, checkoutStatic, generateResultStatic, submitLeadStatic } from '@/lib/static-backend'
 
 interface Result {
   eligible: boolean
@@ -54,29 +52,19 @@ export default function ResultPage() {
     const storedUser = localStorage.getItem('haya_user')
     if (storedUser) setUser(JSON.parse(storedUser))
 
-    // Generate result via Claude API
-    fetch('/api/generate-result', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ funnelId: id, formData }),
-    })
-      .then(r => r.json())
-      .then(data => { setResult(data); setLoading(false) })
-      .catch(() => setLoading(false))
+    try {
+      const data = generateResultStatic({ funnelId: id, formData })
+      setResult(data)
+    } finally {
+      setLoading(false)
+    }
   }, [id])
 
   const handleAuth = async () => {
     const { mode, email, password, name } = authForm
-    const res = await fetch('/api/auth', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ action: mode === 'login' ? 'login' : 'signup', email, password, name }),
-    })
-    const data = await res.json()
-    if (data.error) return alert(data.error)
-    const u = { ...data.user, name: authForm.name || data.user.email.split('@')[0], plan: 'free' }
-    localStorage.setItem('haya_user', JSON.stringify(u))
-    setUser(u)
+    const res = await authStatic({ action: mode === 'login' ? 'login' : 'signup', email, password, name })
+    if (!res.ok) return alert(res.error)
+    setUser(res.user as unknown as User)
     setShowAuth(false)
   }
 
@@ -84,26 +72,9 @@ export default function ResultPage() {
     if (!showPay) return
     setPaying(true)
     try {
-      const res = await fetch('/api/checkout', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ productId: showPay, funnelId: id }),
-      })
-      const { clientSecret } = await res.json()
-      const stripe = await stripePromise
-      if (!stripe || !clientSecret) throw new Error('Stripe not loaded')
-
-      const { error } = await stripe.confirmPayment({
-        clientSecret,
-        confirmParams: { return_url: `${window.location.origin}/${id}/result?paid=1` },
-        redirect: 'if_required',
-      })
-      if (error) throw error
-
-      // Update local user plan
-      const updatedUser = { ...user!, plan: showPay === 'annual' ? 'annual' : showPay === 'assisted' ? 'assisted' : 'paid_guide' }
-      localStorage.setItem('haya_user', JSON.stringify(updatedUser))
-      setUser(updatedUser)
+      const res = await checkoutStatic({ productId: showPay as 'main' | 'annual' | 'assisted' })
+      if (!res.ok) throw new Error(res.error)
+      setUser(res.user)
       setPayDone(true)
       setShowPay(null)
     } catch (err: unknown) {
@@ -113,11 +84,7 @@ export default function ResultPage() {
   }
 
   const handleLead = async () => {
-    await fetch('/api/lead', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ ...lead, funnel: id }),
-    })
+    await submitLeadStatic({ ...lead, funnel: id })
     setShowLead(false)
     alert('✅ ¡Gracias! Te contactaremos pronto por WhatsApp.')
   }
