@@ -227,10 +227,90 @@ function GenericStepFields({
   )
 
   if (stepId === 'docs') {
+    const key = 'docsSelected'
+    const selected: string[] = (() => {
+      const raw = formData[key]
+      if (!raw) return []
+      try {
+        const parsed = JSON.parse(raw)
+        return Array.isArray(parsed) ? parsed.filter(x => typeof x === 'string') : []
+      } catch {
+        return []
+      }
+    })()
+
+    const toggle = (id: string) => {
+      const next = selected.includes(id) ? selected.filter(x => x !== id) : [...selected, id]
+      onUpdate(key, JSON.stringify(next))
+    }
+
+    const DOCS_BASE: { id: string; label: string; hint?: string }[] = [
+      { id: 'photo_id', label: 'Identificación con foto', hint: 'ID/License/Pasaporte' },
+      { id: 'proof_address', label: 'Comprobante de domicilio', hint: 'renta, luz, agua, internet' },
+      { id: 'proof_income', label: 'Comprobante de ingresos', hint: 'talones de cheque, carta del empleador, 1099' },
+      { id: 'ssn_itin', label: 'SSN o ITIN (si tienes)', hint: 'si no tienes, igual puedes iniciar' },
+      { id: 'immigration', label: 'Estatus migratorio (si aplica)', hint: 'permiso, residencia, etc.' },
+      { id: 'household', label: 'Información del hogar', hint: 'quién vive contigo / niños' },
+    ]
+
+    const DOCS_EXTRA: Record<string, { id: string; label: string; hint?: string }[]> = {
+      snap: [
+        { id: 'expenses', label: 'Gastos mensuales', hint: 'renta/hipoteca, luz, agua, internet, childcare' },
+      ],
+      medicaid: [
+        { id: 'insurance', label: 'Seguro médico actual (si tienes)', hint: 'tarjeta o póliza' },
+        { id: 'kids_docs', label: 'Documentos de niños', hint: 'acta de nacimiento / vacunas (si aplica)' },
+      ],
+      wic: [
+        { id: 'pregnancy_baby', label: 'Embarazo o bebé (si aplica)', hint: 'ultrasonido, acta, etc.' },
+      ],
+      id: [
+        { id: 'birth_cert', label: 'Acta de nacimiento / pasaporte', hint: 'para identidad' },
+        { id: 'ssn_card', label: 'Tarjeta de SSN (si aplica)', hint: 'si te la piden en DPS' },
+      ],
+      taxes: [
+        { id: 'w2_1099', label: 'Formularios W-2 / 1099', hint: 'tus ingresos del año' },
+        { id: 'dependents', label: 'Datos de dependientes', hint: 'nombres/fechas de nacimiento/SSN o ITIN' },
+      ],
+    }
+
+    const docs = [...DOCS_BASE, ...(DOCS_EXTRA[funnelId] || [])]
+
     return (
       <div className="bg-cream-2 border border-cream rounded-xl p-5">
         <div className="text-sm font-semibold text-navy mb-3">Marca los documentos que ya tienes:</div>
-        <p className="text-gray-500 text-sm">Necesitarás documentos de identidad, domicilio e ingresos según el trámite. Haz clic en Continuar cuando estés listo.</p>
+        <p className="text-gray-500 text-sm mb-4">
+          Selecciona todo lo que ya tienes. Esto nos ayuda a darte un plan realista (si te falta algo, te decimos cómo conseguirlo).
+        </p>
+
+        <div className="space-y-2">
+          {docs.map(d => {
+            const checked = selected.includes(d.id)
+            return (
+              <label
+                key={d.id}
+                className={`flex items-start gap-3 p-4 rounded-xl border-2 cursor-pointer transition-all ${
+                  checked ? 'border-green bg-green/5' : 'border-gray-100 hover:border-gray-200 bg-white'
+                }`}
+              >
+                <input
+                  type="checkbox"
+                  checked={checked}
+                  onChange={() => toggle(d.id)}
+                  className="mt-0.5 accent-green shrink-0"
+                />
+                <div className="min-w-0">
+                  <div className="font-semibold text-navy text-sm">{d.label}</div>
+                  {d.hint && <div className="text-gray-400 text-xs mt-0.5">{d.hint}</div>}
+                </div>
+              </label>
+            )
+          })}
+        </div>
+
+        <div className="mt-4 text-xs text-gray-400">
+          Tip: si no tienes nada todavía, no pasa nada — solo continúa.
+        </div>
       </div>
     )
   }
