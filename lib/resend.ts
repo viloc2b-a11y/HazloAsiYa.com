@@ -1,11 +1,20 @@
 import { Resend } from 'resend'
 
-export const resend = new Resend(process.env.RESEND_API_KEY)
-const FROM = process.env.RESEND_FROM_EMAIL || 'hazloasiya@gmail.com'
+function getResendClient() {
+  const apiKey = process.env.RESEND_API_KEY
+  if (!apiKey) throw new Error('Missing RESEND_API_KEY')
+  return new Resend(apiKey)
+}
+
+function getFromEmail() {
+  return process.env.RESEND_FROM_EMAIL || 'hazloasiya@gmail.com'
+}
 
 export async function sendPurchaseConfirmation({
   to, name, funnel, productName, pdfUrl,
 }: { to: string; name: string; funnel: string; productName: string; pdfUrl?: string }) {
+  const resend = getResendClient()
+  const FROM = getFromEmail()
   return resend.emails.send({
     from: FROM,
     to,
@@ -43,6 +52,8 @@ export async function sendPurchaseConfirmation({
 }
 
 export async function sendWelcomeEmail({ to, name }: { to: string; name: string }) {
+  const resend = getResendClient()
+  const FROM = getFromEmail()
   return resend.emails.send({
     from: FROM,
     to,
@@ -85,6 +96,8 @@ export async function sendWelcomeEmail({ to, name }: { to: string; name: string 
 export async function sendLeadNotification({
   name, phone, zip, funnel,
 }: { name: string; phone: string; zip: string; funnel: string }) {
+  const resend = getResendClient()
+  const FROM = getFromEmail()
   return resend.emails.send({
     from: FROM,
     to: 'hazloasiya@gmail.com',
