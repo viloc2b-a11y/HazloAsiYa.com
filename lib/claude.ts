@@ -1,7 +1,7 @@
-import Anthropic from '@anthropic-ai/sdk'
 import { FunnelId, FUNNELS } from '@/data/funnels'
+import OpenAI from 'openai'
 
-const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
+const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
 
 export interface GeneratedResult {
   eligible: boolean
@@ -18,12 +18,7 @@ export async function generateFunnelResult(
 ): Promise<GeneratedResult> {
   const funnel = FUNNELS[funnelId]
 
-  const message = await client.messages.create({
-    model: 'claude-sonnet-4-20250514',
-    max_tokens: 1024,
-    messages: [{
-      role: 'user',
-      content: `Eres HazloAsíYa, una plataforma que ayuda a familias hispanas en EE.UU. a completar trámites de gobierno.
+  const prompt = `Eres HazloAsíYa, una plataforma que ayuda a familias hispanas en EE.UU. a completar trámites de gobierno.
 
 Trámite: ${funnel.name}
 Descripción: ${funnel.desc}
@@ -40,10 +35,12 @@ Responde ÚNICAMENTE con un objeto JSON válido (sin markdown, sin texto adicion
 }
 
 Sé específico con los datos del usuario. Usa los datos reales del formulario. Todos los pasos deben ser accionables y concretos.`,
-    }],
+  const completion = await client.chat.completions.create({
+    model: 'gpt-4.1-mini',
+    messages: [{ role: 'user', content: prompt }],
+    response_format: { type: 'json_object' },
   })
 
-  const text = message.content[0].type === 'text' ? message.content[0].text : ''
-  const clean = text.replace(/```json|```/g, '').trim()
-  return JSON.parse(clean) as GeneratedResult
+  const text = completion.choices[0]?.message?.content ?? ''
+  return JSON.parse(text) as GeneratedResult
 }

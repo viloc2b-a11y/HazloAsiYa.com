@@ -7,10 +7,10 @@
 | Supabase URL | ✅ Configurado | https://rlopqzcsmgpgcacyvhcv.supabase.co |
 | Supabase Keys | ✅ Configurado | en .env.local |
 | Email | ✅ Configurado | hazloasiya@gmail.com |
-| WhatsApp | ✅ Configurado | 346-876-1439 |
+| WhatsApp | ✅ Configurado | 346 876 1439 |
 | Stripe | ⏳ Pendiente | stripe.com/register |
 | Resend | ⏳ Pendiente | resend.com |
-| Anthropic | ⏳ Pendiente | console.anthropic.com |
+| OpenAI (ChatGPT) | ⏳ Pendiente | platform.openai.com |
 | Dominio | ⏳ Pendiente | hazloasiya.com |
 
 ---
@@ -20,7 +20,7 @@
 - Supabase (Auth + PostgreSQL)  
 - Stripe (Payments)
 - Resend (Email)
-- Claude API (AI results)
+- ChatGPT API (AI results)
 - Cloudflare Pages (Deploy)
 
 ---
@@ -61,8 +61,8 @@ npm run dev
 3. API Keys → Create key → RESEND_API_KEY
 4. Update RESEND_FROM_EMAIL to match your verified domain
 
-### 4. Anthropic
-1. console.anthropic.com → API Keys → Create key → ANTHROPIC_API_KEY
+### 4. OpenAI (ChatGPT)
+1. platform.openai.com → API keys → Create key → OPENAI_API_KEY
 
 ### 5. WhatsApp Business
 1. Create WhatsApp Business account
@@ -113,8 +113,8 @@ STRIPE_PRICE_ASSISTED=price_...
 RESEND_API_KEY=re_...
 RESEND_FROM_EMAIL=hola@hazloasiya.com
 
-# Anthropic
-ANTHROPIC_API_KEY=sk-ant-...
+# OpenAI (ChatGPT)
+OPENAI_API_KEY=sk-...
 
 # App
 NEXT_PUBLIC_APP_URL=https://hazloasiya.com
