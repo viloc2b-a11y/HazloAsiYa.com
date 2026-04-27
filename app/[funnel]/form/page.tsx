@@ -272,6 +272,49 @@ function GenericStepFields({
         { id: 'w2_1099', label: 'Formularios W-2 / 1099', hint: 'tus ingresos del año' },
         { id: 'dependents', label: 'Datos de dependientes', hint: 'nombres/fechas de nacimiento/SSN o ITIN' },
       ],
+      twc: [
+        { id: 'last_employer', label: 'Datos del último empleador', hint: 'nombre, dirección y teléfono' },
+        { id: 'employment_dates', label: 'Fechas de empleo', hint: 'inicio y fin (aprox.)' },
+        { id: 'separation_reason', label: 'Razón de separación', hint: 'despido, layoff, renuncia, etc.' },
+      ],
+      escuela: [
+        { id: 'child_birth', label: 'Acta de nacimiento del estudiante', hint: 'o pasaporte del niño/a' },
+        { id: 'vaccines', label: 'Cartilla de vacunas', hint: 'registro de inmunizaciones' },
+        { id: 'proof_guardianship', label: 'Tutoría (si aplica)', hint: 'custodia/guardianship' },
+      ],
+      daca: [
+        { id: 'ead', label: 'EAD / Permiso de trabajo', hint: 'frente y atrás' },
+        { id: 'i797', label: 'Notices I-797', hint: 'aprobaciones/recibos previos' },
+        { id: 'passport', label: 'Pasaporte (si tienes)', hint: 'o ID del país' },
+      ],
+      iep: [
+        { id: 'school_records', label: 'Reportes escolares', hint: 'boletas / report cards' },
+        { id: 'teacher_notes', label: 'Notas de maestros', hint: 'observaciones o emails' },
+        { id: 'medical_eval', label: 'Evaluaciones médicas (si hay)', hint: 'TDAH, autismo, etc.' },
+      ],
+      itin: [
+        { id: 'w7', label: 'Forma W-7 (si ya la tienes)', hint: 'borrador o ejemplo' },
+        { id: 'tax_return', label: 'Tax return (si aplica)', hint: 'declaración que acompañará el ITIN' },
+        { id: 'certified_id', label: 'ID certificado', hint: 'pasaporte o documentos certificados' },
+      ],
+      bank: [
+        { id: 'secondary_id', label: 'Segunda identificación (si tienes)', hint: 'pasaporte/matrícula/ID' },
+        { id: 'proof_address_bank', label: 'Comprobante de domicilio', hint: 'para abrir cuenta' },
+        { id: 'deposit', label: 'Depósito inicial (si aplica)', hint: 'efectivo o transferencia' },
+      ],
+      matricula: [
+        { id: 'mx_birth', label: 'Acta de nacimiento mexicana', hint: 'original/copia según consulado' },
+        { id: 'mx_id', label: 'Identificación oficial de México', hint: 'INE/pasaporte (si tienes)' },
+        { id: 'proof_address_consulate', label: 'Comprobante de domicilio', hint: 'en EE.UU.' },
+      ],
+      jobs: [
+        { id: 'work_auth', label: 'Autorización para trabajar (si aplica)', hint: 'EAD/SSN' },
+        { id: 'resume', label: 'Currículum (si tienes)', hint: 'aunque sea simple' },
+      ],
+      prek: [
+        { id: 'child_birth_prek', label: 'Acta de nacimiento', hint: 'para edad del niño/a' },
+        { id: 'proof_eligibility', label: 'Prueba de elegibilidad', hint: 'SNAP/Medicaid/WIC o ingreso' },
+      ],
     }
 
     const docs = [...DOCS_BASE, ...(DOCS_EXTRA[funnelId] || [])]
