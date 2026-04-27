@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
-import { sendLeadNotification } from '@/lib/resend'
+import { sendLeadNotification } from '@/lib/email'
 
 export async function POST(req: NextRequest) {
   try {

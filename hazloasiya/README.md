@@ -9,7 +9,6 @@
 | Email | ✅ Configurado | hazloasiya@gmail.com |
 | WhatsApp | ✅ Configurado | 346 876 1439 |
 | Stripe | ⏳ Pendiente | stripe.com/register |
-| Resend | ⏳ Pendiente | resend.com |
 | OpenAI (ChatGPT) | ⏳ Pendiente | platform.openai.com |
 | Dominio | ⏳ Pendiente | hazloasiya.com |
 
@@ -19,7 +18,6 @@
 - Next.js 14 (App Router)
 - Supabase (Auth + PostgreSQL)  
 - Stripe (Payments)
-- Resend (Email)
 - ChatGPT API (AI results)
 - Cloudflare Pages (Deploy)
 
@@ -55,16 +53,10 @@ npm run dev
    - Events: payment_intent.succeeded
    - Copy signing secret → STRIPE_WEBHOOK_SECRET
 
-### 3. Resend (Free up to 3K/mo)
-1. Create account at resend.com
-2. Add domain (hazloasiya.com) and verify DNS
-3. API Keys → Create key → RESEND_API_KEY
-4. Update RESEND_FROM_EMAIL to match your verified domain
-
-### 4. OpenAI (ChatGPT)
+### 3. OpenAI (ChatGPT)
 1. platform.openai.com → API keys → Create key → OPENAI_API_KEY
 
-### 5. WhatsApp Business
+### 4. WhatsApp Business
 1. Create WhatsApp Business account
 2. Get your number (e.g. 13465550000)
 3. Set NEXT_PUBLIC_WHATSAPP_NUMBER=13465550000
@@ -108,10 +100,6 @@ STRIPE_WEBHOOK_SECRET=whsec_...
 STRIPE_PRICE_MAIN=price_...
 STRIPE_PRICE_ANNUAL=price_...
 STRIPE_PRICE_ASSISTED=price_...
-
-# Resend
-RESEND_API_KEY=re_...
-RESEND_FROM_EMAIL=hola@hazloasiya.com
 
 # OpenAI (ChatGPT)
 OPENAI_API_KEY=sk-...
