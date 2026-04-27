@@ -1,0 +1,38 @@
+import Link from 'next/link'
+
+interface FunnelCardProps {
+  id: string
+  name: string
+  icon: string
+  action: string
+  color: string
+  bg: string
+}
+
+export default function FunnelCard({ id, name, icon, action, color, bg }: FunnelCardProps) {
+  return (
+    <Link
+      href={`/${id}`}
+      className="group card p-5 hover:shadow-md hover:-translate-y-1 transition-all duration-200 flex flex-col gap-3"
+    >
+      <div className="flex items-start gap-3">
+        <div
+          className="w-10 h-10 rounded-xl flex items-center justify-center text-xl shrink-0"
+          style={{ background: bg }}
+        >
+          {icon}
+        </div>
+        <div>
+          <div className="font-bold text-navy text-[15px] leading-tight">{name}</div>
+          <div className="text-xs text-gray-500 mt-1 line-clamp-2 leading-relaxed">{action}</div>
+        </div>
+      </div>
+      <div
+        className="text-[13px] font-bold flex items-center gap-1 mt-auto transition-all group-hover:gap-2"
+        style={{ color }}
+      >
+        Hazlo así <span>→</span>
+      </div>
+    </Link>
+  )
+}
