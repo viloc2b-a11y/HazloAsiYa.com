@@ -36,7 +36,6 @@ export default function ResultPage() {
   const [showAuth, setShowAuth] = useState(false)
   const [showLead, setShowLead] = useState(false)
   const [lead,     setLead]     = useState({ name: '', phone: '', zip: '' })
-  const [paying,   setPaying]   = useState(false)
   const [pdfing,   setPdfing]   = useState(false)
   const [authForm, setAuthForm] = useState({ email: '', password: '', name: '', mode: 'login' as 'login'|'register' })
 
@@ -98,16 +97,9 @@ export default function ResultPage() {
     setShowAuth(false)
   }
 
-  const startCheckout = async (productId: 'main' | 'annual' | 'assisted') => {
-    setPaying(true)
-    try {
-      const res = await checkoutStatic({ productId, funnelId: id })
-      if (!res.ok) throw new Error(res.error)
-      // Square hosted checkout redirects away on success.
-    } catch (err: unknown) {
-      alert(err instanceof Error ? err.message : 'Error al procesar el pago')
-      setPaying(false)
-    }
+  const startCheckout = (productId: string) => {
+    if (!id) return
+    checkoutStatic({ productId: productId as 'main' | 'annual' | 'assisted', funnelId: id })
   }
 
   const downloadBasicPdf = async () => {
@@ -261,10 +253,10 @@ export default function ResultPage() {
               </div>
               <p className="text-xs text-gray-400 mb-3">La guía completa incluye los pasos restantes + formulario de ejemplo + instrucciones de entrega</p>
               <div className="flex flex-wrap gap-2">
-                <button onClick={() => startCheckout('main')} disabled={paying} className="btn-primary py-2 px-5 text-sm">
+                <button onClick={() => startCheckout('main')} className="btn-primary py-2 px-5 text-sm">
                   Guía completa — $19
                 </button>
-                <button onClick={() => startCheckout('annual')} disabled={paying}
+                <button onClick={() => startCheckout('annual')}
                         className="py-2 px-5 text-sm font-bold rounded-xl border-2 border-gold text-gold hover:bg-gold hover:text-white transition-colors">
                   Acceso anual — $49
                 </button>
@@ -307,10 +299,10 @@ export default function ResultPage() {
               Formulario de ejemplo ya llenado · Errores comunes a evitar · Instrucciones exactas de entrega · PDF profesional
             </p>
             <div className="flex flex-wrap gap-3">
-              <button onClick={() => startCheckout('main')} disabled={paying} className="btn-gold py-3 px-6">
+              <button onClick={() => startCheckout('main')} className="btn-gold py-3 px-6">
                 Obtener guía completa — $19 →
               </button>
-              <button onClick={() => startCheckout('annual')} disabled={paying}
+              <button onClick={() => startCheckout('annual')}
                       className="text-sm font-semibold border-2 border-gray-200 rounded-xl px-5 py-3 text-gray-500 hover:border-gray-300">
                 O anual: $49 / 16 trámites
               </button>
@@ -326,7 +318,7 @@ export default function ResultPage() {
             <div className="font-serif text-lg text-white mb-1">Un especialista revisa tu paquete</div>
             <div className="text-white/45 text-sm">Documentos verificados + orientación por WhatsApp</div>
           </div>
-          <button onClick={() => startCheckout('assisted')} disabled={paying} className="btn-primary whitespace-nowrap">
+          <button onClick={() => startCheckout('assisted')} className="btn-primary whitespace-nowrap">
             $89 →
           </button>
         </div>
