@@ -33,11 +33,9 @@ export default function ResultPage() {
   const [user,     setUser]     = useState<User | null>(null)
   const [loading,  setLoading]  = useState(true)
   const [showAuth, setShowAuth] = useState(false)
-  const [showPay,  setShowPay]  = useState<string | null>(null)
   const [showLead, setShowLead] = useState(false)
   const [lead,     setLead]     = useState({ name: '', phone: '', zip: '' })
   const [paying,   setPaying]   = useState(false)
-  const [payDone,  setPayDone]  = useState(false)
   const [authForm, setAuthForm] = useState({ email: '', password: '', name: '', mode: 'login' as 'login'|'register' })
 
   const isPaid = user?.plan && !['free', '', undefined].includes(user.plan)
@@ -98,23 +96,16 @@ export default function ResultPage() {
     setShowAuth(false)
   }
 
-  const handlePay = async () => {
-    if (!showPay) return
+  const startCheckout = async (productId: 'main' | 'annual' | 'assisted') => {
     setPaying(true)
     try {
-      const res = await checkoutStatic({
-        productId: showPay as 'main' | 'annual' | 'assisted',
-        funnelId: id,
-      })
+      const res = await checkoutStatic({ productId, funnelId: id })
       if (!res.ok) throw new Error(res.error)
-      // In Square hosted checkout flow, we redirect away.
-      // If redirect didn't happen, keep user as-is.
-      setPayDone(true)
-      setShowPay(null)
+      // Square hosted checkout redirects away on success.
     } catch (err: unknown) {
       alert(err instanceof Error ? err.message : 'Error al procesar el pago')
+      setPaying(false)
     }
-    setPaying(false)
   }
 
   const handleLead = async () => {
@@ -246,10 +237,10 @@ export default function ResultPage() {
               </div>
               <p className="text-xs text-gray-400 mb-3">La guía completa incluye los pasos restantes + formulario de ejemplo + instrucciones de entrega</p>
               <div className="flex flex-wrap gap-2">
-                <button onClick={() => setShowPay('main')} className="btn-primary py-2 px-5 text-sm">
+                <button onClick={() => startCheckout('main')} disabled={paying} className="btn-primary py-2 px-5 text-sm">
                   Guía completa — $19
                 </button>
-                <button onClick={() => setShowPay('annual')}
+                <button onClick={() => startCheckout('annual')} disabled={paying}
                         className="py-2 px-5 text-sm font-bold rounded-xl border-2 border-gold text-gold hover:bg-gold hover:text-white transition-colors">
                   Acceso anual — $49
                 </button>
@@ -288,10 +279,10 @@ export default function ResultPage() {
               Formulario de ejemplo ya llenado · Errores comunes a evitar · Instrucciones exactas de entrega · PDF profesional
             </p>
             <div className="flex flex-wrap gap-3">
-              <button onClick={() => setShowPay('main')} className="btn-gold py-3 px-6">
+              <button onClick={() => startCheckout('main')} disabled={paying} className="btn-gold py-3 px-6">
                 Obtener guía completa — $19 →
               </button>
-              <button onClick={() => setShowPay('annual')}
+              <button onClick={() => startCheckout('annual')} disabled={paying}
                       className="text-sm font-semibold border-2 border-gray-200 rounded-xl px-5 py-3 text-gray-500 hover:border-gray-300">
                 O anual: $49 / 16 trámites
               </button>
@@ -307,7 +298,7 @@ export default function ResultPage() {
             <div className="font-serif text-lg text-white mb-1">Un especialista revisa tu paquete</div>
             <div className="text-white/45 text-sm">Documentos verificados + orientación por WhatsApp</div>
           </div>
-          <button onClick={() => setShowPay('assisted')} className="btn-primary whitespace-nowrap">
+          <button onClick={() => startCheckout('assisted')} disabled={paying} className="btn-primary whitespace-nowrap">
             $89 →
           </button>
         </div>
@@ -378,76 +369,6 @@ export default function ResultPage() {
               </button>
             </p>
             <button onClick={() => setShowAuth(false)}
-                    className="absolute top-4 right-4 text-gray-300 hover:text-gray-500 text-xl">×</button>
-          </div>
-        </div>
-      )}
-
-      {/* ── PAYMENT MODAL ── */}
-      {showPay && (
-        <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl p-8 w-full max-w-sm shadow-2xl">
-            {payDone ? (
-              <div className="text-center py-6">
-                <div className="text-5xl mb-4">✅</div>
-                <h3 className="font-serif text-2xl text-navy mb-2">¡Pago exitoso!</h3>
-                <p className="text-gray-500 text-sm mb-6">Tu guía está desbloqueada. Ya puedes ver el plan completo aquí mismo.</p>
-                <button onClick={() => setPayDone(false)} className="btn-primary w-full py-3">Ver mi plan completo →</button>
-              </div>
-            ) : (
-              <>
-                <div className="text-center mb-6">
-                  <div className="flex items-baseline justify-center gap-3 mb-1">
-                    <span className="font-serif text-5xl text-navy">
-                      ${showPay === 'main' ? '19' : showPay === 'annual' ? '49' : '89'}
-                    </span>
-                    {showPay === 'main' && <span className="text-gray-400 text-sm line-through">$150–$400 con preparador</span>}
-                  </div>
-                  <div className="text-gray-400 text-sm">Pago único · Sin suscripción · Garantía 30 días</div>
-                  <div className="font-semibold text-navy mt-2">
-                    {showPay === 'main' ? 'Guía Completa' : showPay === 'annual' ? 'Acceso Anual — 16 Trámites' : 'Revisión Asistida'}
-                  </div>
-                </div>
-
-                <div className="bg-cream rounded-xl p-4 mb-5 space-y-2 text-sm">
-                  {(showPay === 'main' ? [
-                    '🔓 Todos los pasos desbloqueados',
-                    '📝 Formulario de ejemplo ya llenado',
-                    '⚠️ Errores comunes y cómo evitarlos',
-                    '📋 Instrucciones de entrega',
-                  ] : showPay === 'annual' ? [
-                    '🔓 Los 16 trámites ilimitados',
-                    '🔔 Alertas cuando cambien requisitos',
-                    '📁 Historial de tus documentos',
-                    '💬 Soporte WhatsApp básico',
-                  ] : [
-                    '🔓 Plan completo desbloqueado',
-                    '👤 Revisión humana de documentos',
-                    '💬 Orientación por WhatsApp',
-                    '✅ Garantía de paquete correcto',
-                  ]).map(i => (
-                    <div key={i} className="flex items-center gap-2 text-gray-700"><span>{i.split(' ')[0]}</span><span>{i.slice(i.indexOf(' ')+1)}</span></div>
-                  ))}
-                </div>
-
-                {/* Decorative fields; checkout opens Square-hosted payment via API */}
-                <div className="space-y-3 mb-5">
-                  <input className="input" placeholder="Número de tarjeta" maxLength={19}/>
-                  <div className="grid grid-cols-2 gap-3">
-                    <input className="input" placeholder="MM/AA" maxLength={5}/>
-                    <input className="input" placeholder="CVC" maxLength={4}/>
-                  </div>
-                </div>
-
-                <button onClick={handlePay} disabled={paying} className="btn-primary w-full py-3.5">
-                  {paying ? 'Procesando…' : `🔒 Pagar $${showPay === 'main' ? '19' : showPay === 'annual' ? '49' : '89'}`}
-                </button>
-                <p className="text-center text-xs text-gray-400 mt-3">
-                  🔒 Pago seguro SSL · VISA · MC · AMEX
-                </p>
-              </>
-            )}
-            <button onClick={() => { setShowPay(null); setPayDone(false) }}
                     className="absolute top-4 right-4 text-gray-300 hover:text-gray-500 text-xl">×</button>
           </div>
         </div>
