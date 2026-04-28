@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+Disallow: /form/
+Disallow: /result/
+
+Sitemap: https://www.hazloasiya.com/sitemap.xml

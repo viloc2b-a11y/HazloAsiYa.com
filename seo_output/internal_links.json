@@ -1,0 +1,332 @@
+[
+  {
+    "page": "/",
+    "links_to": [
+      "/tramites/beneficios/",
+      "/tramites/impuestos/",
+      "/tramites/escuela/",
+      "/tramites/inmigracion/",
+      "/tramites/vivienda/",
+      "/tramites/finanzas/",
+      "/tramites/trabajo/",
+      "/snap/",
+      "/medicaid/",
+      "/wic/",
+      "/id/",
+      "/twc/",
+      "/taxes/",
+      "/escuela/",
+      "/daca/",
+      "/iep/",
+      "/itin/",
+      "/rent/",
+      "/prek/",
+      "/utilities/",
+      "/jobs/",
+      "/bank/",
+      "/matricula/",
+      "/precios/",
+      "/como-funciona/",
+      "/faq/"
+    ]
+  },
+  {
+    "page": "/tramites/beneficios/",
+    "links_to": [
+      "/snap/",
+      "/medicaid/",
+      "/wic/",
+      "/guias/documentos-para-snap/",
+      "/guias/como-solicitar-medicaid-en-espanol/",
+      "/guias/documentos-para-medicaid/",
+      "/faq/",
+      "/precios/"
+    ]
+  },
+  {
+    "page": "/tramites/impuestos/",
+    "links_to": [
+      "/itin/",
+      "/taxes/",
+      "/guias/que-es-el-itin-y-para-que-sirve/",
+      "/guias/como-llenar-la-w7/",
+      "/faq/",
+      "/precios/"
+    ]
+  },
+  {
+    "page": "/tramites/escuela/",
+    "links_to": [
+      "/escuela/",
+      "/matricula/",
+      "/prek/",
+      "/iep/",
+      "/guias/documentos-para-inscribir-a-tu-hijo-en-la-escuela/",
+      "/faq/",
+      "/precios/"
+    ]
+  },
+  {
+    "page": "/tramites/inmigracion/",
+    "links_to": [
+      "/daca/",
+      "/faq/",
+      "/precios/"
+    ]
+  },
+  {
+    "page": "/tramites/vivienda/",
+    "links_to": [
+      "/rent/",
+      "/utilities/",
+      "/guias/ayuda-para-pagar-renta-en-tu-ciudad/",
+      "/guias/ayuda-para-pagar-luz-y-gas/",
+      "/faq/",
+      "/precios/"
+    ]
+  },
+  {
+    "page": "/tramites/finanzas/",
+    "links_to": [
+      "/bank/",
+      "/faq/",
+      "/precios/"
+    ]
+  },
+  {
+    "page": "/tramites/trabajo/",
+    "links_to": [
+      "/jobs/",
+      "/twc/",
+      "/faq/",
+      "/precios/"
+    ]
+  },
+  {
+    "page": "/snap/",
+    "links_to": [
+      "/tramites/beneficios/",
+      "/guias/documentos-para-snap/",
+      "/faq/",
+      "/precios/",
+      "/privacy/"
+    ]
+  },
+  {
+    "page": "/medicaid/",
+    "links_to": [
+      "/tramites/beneficios/",
+      "/guias/como-solicitar-medicaid-en-espanol/",
+      "/guias/documentos-para-medicaid/",
+      "/faq/",
+      "/precios/",
+      "/privacy/"
+    ]
+  },
+  {
+    "page": "/wic/",
+    "links_to": [
+      "/tramites/beneficios/",
+      "/faq/",
+      "/precios/",
+      "/privacy/"
+    ]
+  },
+  {
+    "page": "/id/",
+    "links_to": [
+      "/tramites/finanzas/",
+      "/faq/",
+      "/precios/",
+      "/privacy/"
+    ]
+  },
+  {
+    "page": "/twc/",
+    "links_to": [
+      "/tramites/trabajo/",
+      "/faq/",
+      "/precios/",
+      "/privacy/"
+    ]
+  },
+  {
+    "page": "/taxes/",
+    "links_to": [
+      "/tramites/impuestos/",
+      "/faq/",
+      "/precios/",
+      "/privacy/"
+    ]
+  },
+  {
+    "page": "/escuela/",
+    "links_to": [
+      "/tramites/escuela/",
+      "/guias/documentos-para-inscribir-a-tu-hijo-en-la-escuela/",
+      "/faq/",
+      "/precios/",
+      "/privacy/"
+    ]
+  },
+  {
+    "page": "/daca/",
+    "links_to": [
+      "/tramites/inmigracion/",
+      "/faq/",
+      "/precios/",
+      "/privacy/"
+    ]
+  },
+  {
+    "page": "/iep/",
+    "links_to": [
+      "/tramites/escuela/",
+      "/guias/documentos-para-inscribir-a-tu-hijo-en-la-escuela/",
+      "/faq/",
+      "/precios/",
+      "/privacy/"
+    ]
+  },
+  {
+    "page": "/itin/",
+    "links_to": [
+      "/tramites/impuestos/",
+      "/guias/que-es-el-itin-y-para-que-sirve/",
+      "/faq/",
+      "/precios/",
+      "/privacy/"
+    ]
+  },
+  {
+    "page": "/rent/",
+    "links_to": [
+      "/tramites/vivienda/",
+      "/guias/ayuda-para-pagar-renta-en-tu-ciudad/",
+      "/faq/",
+      "/precios/",
+      "/privacy/"
+    ]
+  },
+  {
+    "page": "/prek/",
+    "links_to": [
+      "/tramites/escuela/",
+      "/guias/documentos-para-inscribir-a-tu-hijo-en-la-escuela/",
+      "/faq/",
+      "/precios/",
+      "/privacy/"
+    ]
+  },
+  {
+    "page": "/utilities/",
+    "links_to": [
+      "/tramites/vivienda/",
+      "/faq/",
+      "/precios/",
+      "/privacy/"
+    ]
+  },
+  {
+    "page": "/jobs/",
+    "links_to": [
+      "/tramites/trabajo/",
+      "/faq/",
+      "/precios/",
+      "/privacy/"
+    ]
+  },
+  {
+    "page": "/bank/",
+    "links_to": [
+      "/tramites/finanzas/",
+      "/faq/",
+      "/precios/",
+      "/privacy/"
+    ]
+  },
+  {
+    "page": "/matricula/",
+    "links_to": [
+      "/tramites/escuela/",
+      "/guias/documentos-para-inscribir-a-tu-hijo-en-la-escuela/",
+      "/faq/",
+      "/precios/",
+      "/privacy/"
+    ]
+  },
+  {
+    "page": "/guias/documentos-para-snap/",
+    "links_to": [
+      "/snap/",
+      "/tramites/beneficios/",
+      "/guias/como-solicitar-medicaid-en-espanol/",
+      "/guias/documentos-para-medicaid/",
+      "/faq/"
+    ]
+  },
+  {
+    "page": "/guias/como-solicitar-medicaid-en-espanol/",
+    "links_to": [
+      "/medicaid/",
+      "/tramites/beneficios/",
+      "/guias/documentos-para-snap/",
+      "/guias/documentos-para-medicaid/",
+      "/faq/"
+    ]
+  },
+  {
+    "page": "/guias/documentos-para-medicaid/",
+    "links_to": [
+      "/medicaid/",
+      "/tramites/beneficios/",
+      "/guias/documentos-para-snap/",
+      "/guias/como-solicitar-medicaid-en-espanol/",
+      "/faq/"
+    ]
+  },
+  {
+    "page": "/guias/que-es-el-itin-y-para-que-sirve/",
+    "links_to": [
+      "/itin/",
+      "/tramites/impuestos/",
+      "/guias/como-llenar-la-w7/",
+      "/faq/"
+    ]
+  },
+  {
+    "page": "/guias/como-llenar-la-w7/",
+    "links_to": [
+      "/itin/",
+      "/tramites/impuestos/",
+      "/guias/que-es-el-itin-y-para-que-sirve/",
+      "/faq/"
+    ]
+  },
+  {
+    "page": "/guias/documentos-para-inscribir-a-tu-hijo-en-la-escuela/",
+    "links_to": [
+      "/escuela/",
+      "/tramites/escuela/",
+      "/faq/"
+    ]
+  },
+  {
+    "page": "/guias/ayuda-para-pagar-renta-en-tu-ciudad/",
+    "links_to": [
+      "/rent/",
+      "/tramites/vivienda/",
+      "/guias/ayuda-para-pagar-luz-y-gas/",
+      "/faq/"
+    ]
+  },
+  {
+    "page": "/guias/ayuda-para-pagar-luz-y-gas/",
+    "links_to": [
+      "/utilities/",
+      "/tramites/vivienda/",
+      "/guias/ayuda-para-pagar-renta-en-tu-ciudad/",
+      "/faq/"
+    ]
+  }
+]

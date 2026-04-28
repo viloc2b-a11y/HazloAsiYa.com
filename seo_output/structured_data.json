@@ -1,0 +1,457 @@
+{
+  "organization": {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "HazloAsíYa",
+    "url": "https://www.hazloasiya.com",
+    "description": "Plataforma en español para ayudar a familias hispanas en EE. UU. a completar trámites sin errores.",
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "contactType": "customer support",
+      "availableLanguage": "Spanish"
+    }
+  },
+  "website": {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "HazloAsíYa",
+    "url": "https://www.hazloasiya.com",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://www.hazloasiya.com/?s={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  },
+  "faq": {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "¿Cómo funciona HazloAsíYa?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Completas un cuestionario gratis en 5 minutos. Te decimos qué tienes, qué te falta y cómo completar tu trámite paso a paso."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Cuánto cuesta?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "El cuestionario es gratis. El plan básico cuesta $19 por trámite y el plan anual $49 para acceso ilimitado."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Es asesoría legal?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. HazloAsíYa es una guía informativa. No somos abogados ni representantes legales."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Mis datos están seguros?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Sí. Usamos SSL, pagos seguros con Square y no guardamos información de tarjetas."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Tienen garantía?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Sí, ofrecemos garantía de satisfacción de 30 días."
+        }
+      }
+    ]
+  },
+  "services": {
+    "/snap/": {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "name": "Ayuda para trámite SNAP en español",
+      "description": "Guía paso a paso para completar el trámite SNAP en EE. UU. sin errores, con documentos requeridos y ejemplos prácticos.",
+      "provider": {
+        "@type": "Organization",
+        "name": "HazloAsíYa",
+        "url": "https://www.hazloasiya.com"
+      },
+      "url": "https://www.hazloasiya.com/snap/",
+      "offers": {
+        "@type": "Offer",
+        "price": "19.00",
+        "priceCurrency": "USD",
+        "priceValidUntil": "2026-12-31",
+        "availability": "https://schema.org/InStock"
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "United States"
+      },
+      "availableLanguage": "Spanish"
+    },
+    "/medicaid/": {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "name": "Ayuda para trámite Medicaid en español",
+      "description": "Guía paso a paso para completar el trámite Medicaid en EE. UU. sin errores, con documentos requeridos y ejemplos prácticos.",
+      "provider": {
+        "@type": "Organization",
+        "name": "HazloAsíYa",
+        "url": "https://www.hazloasiya.com"
+      },
+      "url": "https://www.hazloasiya.com/medicaid/",
+      "offers": {
+        "@type": "Offer",
+        "price": "19.00",
+        "priceCurrency": "USD",
+        "priceValidUntil": "2026-12-31",
+        "availability": "https://schema.org/InStock"
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "United States"
+      },
+      "availableLanguage": "Spanish"
+    },
+    "/wic/": {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "name": "Ayuda para trámite WIC en español",
+      "description": "Guía paso a paso para completar el trámite WIC en EE. UU. sin errores, con documentos requeridos y ejemplos prácticos.",
+      "provider": {
+        "@type": "Organization",
+        "name": "HazloAsíYa",
+        "url": "https://www.hazloasiya.com"
+      },
+      "url": "https://www.hazloasiya.com/wic/",
+      "offers": {
+        "@type": "Offer",
+        "price": "19.00",
+        "priceCurrency": "USD",
+        "priceValidUntil": "2026-12-31",
+        "availability": "https://schema.org/InStock"
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "United States"
+      },
+      "availableLanguage": "Spanish"
+    },
+    "/id/": {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "name": "Ayuda para trámite ID en español",
+      "description": "Guía paso a paso para completar el trámite ID en EE. UU. sin errores, con documentos requeridos y ejemplos prácticos.",
+      "provider": {
+        "@type": "Organization",
+        "name": "HazloAsíYa",
+        "url": "https://www.hazloasiya.com"
+      },
+      "url": "https://www.hazloasiya.com/id/",
+      "offers": {
+        "@type": "Offer",
+        "price": "19.00",
+        "priceCurrency": "USD",
+        "priceValidUntil": "2026-12-31",
+        "availability": "https://schema.org/InStock"
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "United States"
+      },
+      "availableLanguage": "Spanish"
+    },
+    "/twc/": {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "name": "Ayuda para trámite TWC en español",
+      "description": "Guía paso a paso para completar el trámite TWC en EE. UU. sin errores, con documentos requeridos y ejemplos prácticos.",
+      "provider": {
+        "@type": "Organization",
+        "name": "HazloAsíYa",
+        "url": "https://www.hazloasiya.com"
+      },
+      "url": "https://www.hazloasiya.com/twc/",
+      "offers": {
+        "@type": "Offer",
+        "price": "19.00",
+        "priceCurrency": "USD",
+        "priceValidUntil": "2026-12-31",
+        "availability": "https://schema.org/InStock"
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "United States"
+      },
+      "availableLanguage": "Spanish"
+    },
+    "/taxes/": {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "name": "Ayuda para trámite Taxes en español",
+      "description": "Guía paso a paso para completar el trámite Taxes en EE. UU. sin errores, con documentos requeridos y ejemplos prácticos.",
+      "provider": {
+        "@type": "Organization",
+        "name": "HazloAsíYa",
+        "url": "https://www.hazloasiya.com"
+      },
+      "url": "https://www.hazloasiya.com/taxes/",
+      "offers": {
+        "@type": "Offer",
+        "price": "19.00",
+        "priceCurrency": "USD",
+        "priceValidUntil": "2026-12-31",
+        "availability": "https://schema.org/InStock"
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "United States"
+      },
+      "availableLanguage": "Spanish"
+    },
+    "/escuela/": {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "name": "Ayuda para trámite Escuela en español",
+      "description": "Guía paso a paso para completar el trámite Escuela en EE. UU. sin errores, con documentos requeridos y ejemplos prácticos.",
+      "provider": {
+        "@type": "Organization",
+        "name": "HazloAsíYa",
+        "url": "https://www.hazloasiya.com"
+      },
+      "url": "https://www.hazloasiya.com/escuela/",
+      "offers": {
+        "@type": "Offer",
+        "price": "19.00",
+        "priceCurrency": "USD",
+        "priceValidUntil": "2026-12-31",
+        "availability": "https://schema.org/InStock"
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "United States"
+      },
+      "availableLanguage": "Spanish"
+    },
+    "/daca/": {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "name": "Ayuda para trámite DACA en español",
+      "description": "Guía paso a paso para completar el trámite DACA en EE. UU. sin errores, con documentos requeridos y ejemplos prácticos.",
+      "provider": {
+        "@type": "Organization",
+        "name": "HazloAsíYa",
+        "url": "https://www.hazloasiya.com"
+      },
+      "url": "https://www.hazloasiya.com/daca/",
+      "offers": {
+        "@type": "Offer",
+        "price": "19.00",
+        "priceCurrency": "USD",
+        "priceValidUntil": "2026-12-31",
+        "availability": "https://schema.org/InStock"
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "United States"
+      },
+      "availableLanguage": "Spanish"
+    },
+    "/iep/": {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "name": "Ayuda para trámite IEP en español",
+      "description": "Guía paso a paso para completar el trámite IEP en EE. UU. sin errores, con documentos requeridos y ejemplos prácticos.",
+      "provider": {
+        "@type": "Organization",
+        "name": "HazloAsíYa",
+        "url": "https://www.hazloasiya.com"
+      },
+      "url": "https://www.hazloasiya.com/iep/",
+      "offers": {
+        "@type": "Offer",
+        "price": "19.00",
+        "priceCurrency": "USD",
+        "priceValidUntil": "2026-12-31",
+        "availability": "https://schema.org/InStock"
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "United States"
+      },
+      "availableLanguage": "Spanish"
+    },
+    "/itin/": {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "name": "Ayuda para trámite ITIN en español",
+      "description": "Guía paso a paso para completar el trámite ITIN en EE. UU. sin errores, con documentos requeridos y ejemplos prácticos.",
+      "provider": {
+        "@type": "Organization",
+        "name": "HazloAsíYa",
+        "url": "https://www.hazloasiya.com"
+      },
+      "url": "https://www.hazloasiya.com/itin/",
+      "offers": {
+        "@type": "Offer",
+        "price": "19.00",
+        "priceCurrency": "USD",
+        "priceValidUntil": "2026-12-31",
+        "availability": "https://schema.org/InStock"
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "United States"
+      },
+      "availableLanguage": "Spanish"
+    },
+    "/rent/": {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "name": "Ayuda para trámite Renta en español",
+      "description": "Guía paso a paso para completar el trámite Renta en EE. UU. sin errores, con documentos requeridos y ejemplos prácticos.",
+      "provider": {
+        "@type": "Organization",
+        "name": "HazloAsíYa",
+        "url": "https://www.hazloasiya.com"
+      },
+      "url": "https://www.hazloasiya.com/rent/",
+      "offers": {
+        "@type": "Offer",
+        "price": "19.00",
+        "priceCurrency": "USD",
+        "priceValidUntil": "2026-12-31",
+        "availability": "https://schema.org/InStock"
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "United States"
+      },
+      "availableLanguage": "Spanish"
+    },
+    "/prek/": {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "name": "Ayuda para trámite Pre-K en español",
+      "description": "Guía paso a paso para completar el trámite Pre-K en EE. UU. sin errores, con documentos requeridos y ejemplos prácticos.",
+      "provider": {
+        "@type": "Organization",
+        "name": "HazloAsíYa",
+        "url": "https://www.hazloasiya.com"
+      },
+      "url": "https://www.hazloasiya.com/prek/",
+      "offers": {
+        "@type": "Offer",
+        "price": "19.00",
+        "priceCurrency": "USD",
+        "priceValidUntil": "2026-12-31",
+        "availability": "https://schema.org/InStock"
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "United States"
+      },
+      "availableLanguage": "Spanish"
+    },
+    "/utilities/": {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "name": "Ayuda para trámite Utilities en español",
+      "description": "Guía paso a paso para completar el trámite Utilities en EE. UU. sin errores, con documentos requeridos y ejemplos prácticos.",
+      "provider": {
+        "@type": "Organization",
+        "name": "HazloAsíYa",
+        "url": "https://www.hazloasiya.com"
+      },
+      "url": "https://www.hazloasiya.com/utilities/",
+      "offers": {
+        "@type": "Offer",
+        "price": "19.00",
+        "priceCurrency": "USD",
+        "priceValidUntil": "2026-12-31",
+        "availability": "https://schema.org/InStock"
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "United States"
+      },
+      "availableLanguage": "Spanish"
+    },
+    "/jobs/": {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "name": "Ayuda para trámite Empleos en español",
+      "description": "Guía paso a paso para completar el trámite Empleos en EE. UU. sin errores, con documentos requeridos y ejemplos prácticos.",
+      "provider": {
+        "@type": "Organization",
+        "name": "HazloAsíYa",
+        "url": "https://www.hazloasiya.com"
+      },
+      "url": "https://www.hazloasiya.com/jobs/",
+      "offers": {
+        "@type": "Offer",
+        "price": "19.00",
+        "priceCurrency": "USD",
+        "priceValidUntil": "2026-12-31",
+        "availability": "https://schema.org/InStock"
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "United States"
+      },
+      "availableLanguage": "Spanish"
+    },
+    "/bank/": {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "name": "Ayuda para trámite Banco en español",
+      "description": "Guía paso a paso para completar el trámite Banco en EE. UU. sin errores, con documentos requeridos y ejemplos prácticos.",
+      "provider": {
+        "@type": "Organization",
+        "name": "HazloAsíYa",
+        "url": "https://www.hazloasiya.com"
+      },
+      "url": "https://www.hazloasiya.com/bank/",
+      "offers": {
+        "@type": "Offer",
+        "price": "19.00",
+        "priceCurrency": "USD",
+        "priceValidUntil": "2026-12-31",
+        "availability": "https://schema.org/InStock"
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "United States"
+      },
+      "availableLanguage": "Spanish"
+    },
+    "/matricula/": {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "name": "Ayuda para trámite Matrícula en español",
+      "description": "Guía paso a paso para completar el trámite Matrícula en EE. UU. sin errores, con documentos requeridos y ejemplos prácticos.",
+      "provider": {
+        "@type": "Organization",
+        "name": "HazloAsíYa",
+        "url": "https://www.hazloasiya.com"
+      },
+      "url": "https://www.hazloasiya.com/matricula/",
+      "offers": {
+        "@type": "Offer",
+        "price": "19.00",
+        "priceCurrency": "USD",
+        "priceValidUntil": "2026-12-31",
+        "availability": "https://schema.org/InStock"
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "United States"
+      },
+      "availableLanguage": "Spanish"
+    }
+  }
+}
