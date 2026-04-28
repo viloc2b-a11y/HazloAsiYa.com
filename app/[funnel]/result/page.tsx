@@ -4,6 +4,7 @@ import { useParams, useRouter } from 'next/navigation'
 import { FUNNELS, NEXT_STEP_MAP, FunnelId } from '@/data/funnels'
 import Link from 'next/link'
 import { authStatic, checkoutStatic, generateResultClient, submitLeadStatic } from '@/lib/static-backend'
+import { generatePDF } from '@/components/PDFGenerator'
 
 interface Result {
   eligible: boolean
@@ -36,6 +37,7 @@ export default function ResultPage() {
   const [showLead, setShowLead] = useState(false)
   const [lead,     setLead]     = useState({ name: '', phone: '', zip: '' })
   const [paying,   setPaying]   = useState(false)
+  const [pdfing,   setPdfing]   = useState(false)
   const [authForm, setAuthForm] = useState({ email: '', password: '', name: '', mode: 'login' as 'login'|'register' })
 
   const isPaid = user?.plan && !['free', '', undefined].includes(user.plan)
@@ -105,6 +107,28 @@ export default function ResultPage() {
     } catch (err: unknown) {
       alert(err instanceof Error ? err.message : 'Error al procesar el pago')
       setPaying(false)
+    }
+  }
+
+  const downloadBasicPdf = async () => {
+    if (!result || !f || pdfing) return
+    setPdfing(true)
+    try {
+      await generatePDF({
+        funnelName: f.name,
+        funnelIcon: f.icon,
+        headline: result.headline,
+        subheadline: result.subheadline,
+        haveItems: result.haveItems,
+        missingItems: result.missingItems,
+        steps: result.steps,
+        isPaid: false,
+        userName: user?.name || user?.email,
+      })
+    } catch (err: unknown) {
+      alert(err instanceof Error ? err.message : 'No se pudo generar el PDF')
+    } finally {
+      setPdfing(false)
     }
   }
 
@@ -256,8 +280,12 @@ export default function ResultPage() {
               <div className="font-bold text-navy text-sm">PDF básico — descarga gratis</div>
               <div className="text-xs text-gray-400 mt-0.5">Incluye: elegibilidad + documentos + {stepsShow.length} pasos</div>
             </div>
-            <button className="py-2 px-4 text-sm font-bold rounded-xl border-2 border-gray-200 text-gray-600 hover:border-navy hover:text-navy transition-colors">
-              ⬇ Gratis
+            <button
+              onClick={downloadBasicPdf}
+              disabled={pdfing}
+              className="py-2 px-4 text-sm font-bold rounded-xl border-2 border-gray-200 text-gray-600 hover:border-navy hover:text-navy transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+            >
+              {pdfing ? 'Generando…' : '⬇ Gratis'}
             </button>
           </div>
         )}
