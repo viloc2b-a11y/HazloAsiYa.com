@@ -1,1 +1,0 @@
-self.__SSG_MANIFEST=new Set(["\u002F[funnel]","\u002F[funnel]\u002Fform","\u002F[funnel]\u002Fresult"]);self.__SSG_MANIFEST_CB&&self.__SSG_MANIFEST_CB()
