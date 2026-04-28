@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import { FUNNELS, NEXT_STEP_MAP, FunnelId } from '@/data/funnels'
 import Link from 'next/link'
-import { authStatic, checkoutStatic, generateResultStatic, submitLeadStatic } from '@/lib/static-backend'
+import { authStatic, checkoutStatic, generateResultClient, submitLeadStatic } from '@/lib/static-backend'
 
 interface Result {
   eligible: boolean
@@ -16,6 +16,12 @@ interface Result {
 
 interface User {
   id: string; email: string; name?: string; plan?: string
+}
+
+function productIdToPlan(productId: string): NonNullable<User['plan']> {
+  if (productId === 'annual') return 'annual'
+  if (productId === 'assisted') return 'assisted'
+  return 'paid_guide'
 }
 
 export default function ResultPage() {
@@ -45,18 +51,42 @@ export default function ResultPage() {
   const hiddenSteps = (result?.steps?.length || 0) - stepsShow.length
 
   useEffect(() => {
+    let cancelled = false
+
     const stored = sessionStorage.getItem(`haya_form_${id}`)
     const formData = stored ? JSON.parse(stored) : {}
 
-    // Load user from localStorage (set by auth)
     const storedUser = localStorage.getItem('haya_user')
     if (storedUser) setUser(JSON.parse(storedUser))
 
-    try {
-      const data = generateResultStatic({ funnelId: id, formData })
-      setResult(data)
-    } finally {
-      setLoading(false)
+    if (new URLSearchParams(window.location.search).get('paid') === '1') {
+      try {
+        const raw = sessionStorage.getItem('haya_pending_checkout')
+        const pending = raw ? (JSON.parse(raw) as { productId?: string; funnelId?: string }) : null
+        const uRaw = localStorage.getItem('haya_user')
+        if (pending?.productId && uRaw && (!pending.funnelId || pending.funnelId === id)) {
+          const u = JSON.parse(uRaw) as User
+          u.plan = productIdToPlan(pending.productId)
+          localStorage.setItem('haya_user', JSON.stringify(u))
+          setUser(u)
+          sessionStorage.removeItem('haya_pending_checkout')
+        }
+      } catch {
+        /* ignore */
+      }
+    }
+
+    ;(async () => {
+      try {
+        const data = await generateResultClient({ funnelId: id, formData })
+        if (!cancelled) setResult(data)
+      } finally {
+        if (!cancelled) setLoading(false)
+      }
+    })()
+
+    return () => {
+      cancelled = true
     }
   }, [id])
 
@@ -72,7 +102,10 @@ export default function ResultPage() {
     if (!showPay) return
     setPaying(true)
     try {
-      const res = await checkoutStatic({ productId: showPay as 'main' | 'annual' | 'assisted' })
+      const res = await checkoutStatic({
+        productId: showPay as 'main' | 'annual' | 'assisted',
+        funnelId: id,
+      })
       if (!res.ok) throw new Error(res.error)
       // In Square hosted checkout flow, we redirect away.
       // If redirect didn't happen, keep user as-is.
@@ -397,7 +430,7 @@ export default function ResultPage() {
                   ))}
                 </div>
 
-                {/* Simulated card form — in production use Stripe Elements */}
+                {/* Decorative fields; checkout opens Square-hosted payment via API */}
                 <div className="space-y-3 mb-5">
                   <input className="input" placeholder="Número de tarjeta" maxLength={19}/>
                   <div className="grid grid-cols-2 gap-3">

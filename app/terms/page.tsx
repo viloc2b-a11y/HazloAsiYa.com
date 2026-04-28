@@ -23,7 +23,7 @@ export default function TermsPage() {
           </section>
           <section>
             <h2 className="font-serif text-2xl text-navy mb-3">3. Pagos y Reembolsos</h2>
-            <p className="leading-relaxed">Los pagos se procesan de forma segura a través de Stripe. Ofrecemos una garantía de satisfacción de 30 días. Si no está satisfecho con el servicio, contáctenos en hola@hazloasiya.com para un reembolso completo.</p>
+            <p className="leading-relaxed">Los pagos se procesan de forma segura a través de Square. Ofrecemos una garantía de satisfacción de 30 días. Si no está satisfecho con el servicio, contáctenos en hola@hazloasiya.com para un reembolso completo.</p>
           </section>
           <section>
             <h2 className="font-serif text-2xl text-navy mb-3">4. Exactitud de la Información</h2>

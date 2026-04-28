@@ -21,7 +21,7 @@ export default function PrivacyPage() {
             <h2 className="font-serif text-2xl text-navy mb-3">Cómo usamos su información</h2>
             <ul className="list-disc list-inside space-y-1 leading-relaxed">
               <li>Para personalizar los resultados y guías de cada trámite</li>
-              <li>Para procesar pagos de forma segura a través de Stripe</li>
+              <li>Para procesar pagos de forma segura a través de Square</li>
               <li>Para enviar confirmaciones de compra y actualizaciones del servicio</li>
               <li>Para conectarle con recursos locales en su área</li>
             </ul>
@@ -32,7 +32,7 @@ export default function PrivacyPage() {
           </section>
           <section>
             <h2 className="font-serif text-2xl text-navy mb-3">Seguridad</h2>
-            <p className="leading-relaxed">Utilizamos encriptación SSL para todas las comunicaciones. Los pagos se procesan por Stripe — nunca almacenamos información de tarjetas de crédito. Los datos se almacenan en Supabase con encriptación en reposo.</p>
+            <p className="leading-relaxed">Utilizamos encriptación SSL para todas las comunicaciones. Los pagos se procesan por Square — nunca almacenamos información de tarjetas de crédito. Los datos se almacenan en Supabase con encriptación en reposo.</p>
           </section>
           <section>
             <h2 className="font-serif text-2xl text-navy mb-3">Sus derechos (CCPA)</h2>

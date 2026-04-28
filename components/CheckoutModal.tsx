@@ -59,7 +59,7 @@ export default function CheckoutModal({ productId, funnelId, onSuccess, onClose 
     setError('')
 
     try {
-      const res = await checkoutStatic({ productId })
+      const res = await checkoutStatic({ productId, funnelId })
       if (!res.ok) throw new Error(res.error || 'Pago no disponible')
       setSuccess(true)
       setTimeout(() => onSuccess(productId), 900)
@@ -112,10 +112,6 @@ export default function CheckoutModal({ productId, funnelId, onSuccess, onClose 
           </div>
         ) : (
           <div className="px-6 pb-6 space-y-4">
-            <div className="bg-cream border border-cream-2 rounded-xl p-4 text-sm text-gray-600">
-              Pagos deshabilitados en modo export estático. Esta pantalla simula el desbloqueo del plan.
-            </div>
-
             {error && (
               <div className="bg-red-50 border border-red-100 text-red-600 text-sm rounded-xl px-4 py-3">
                 {error}

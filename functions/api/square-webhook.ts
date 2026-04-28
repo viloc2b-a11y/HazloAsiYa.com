@@ -1,6 +1,7 @@
 type Env = {
   SQUARE_WEBHOOK_SIGNATURE_KEY: string
-  SUPABASE_URL: string
+  SUPABASE_URL?: string
+  NEXT_PUBLIC_SUPABASE_URL?: string
   SUPABASE_SERVICE_ROLE_KEY: string
 }
 
@@ -54,6 +55,11 @@ function parsePaymentNote(note?: string) {
     out[k.trim()] = rest.join('=').trim()
   })
   return out
+}
+
+/** Supabase `users.id` is UUID; local-only sessions use ids like `local_*`. */
+function isUuid(s: string): boolean {
+  return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(s)
 }
 
 async function supabaseUpdatePlan(args: { supabaseUrl: string; serviceKey: string; userId: string; plan: string }) {
@@ -110,7 +116,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   try {
     const req = context.request
     const signatureKey = context.env.SQUARE_WEBHOOK_SIGNATURE_KEY
-    const supabaseUrl = context.env.SUPABASE_URL
+    const supabaseUrl = context.env.SUPABASE_URL || context.env.NEXT_PUBLIC_SUPABASE_URL
     const serviceKey = context.env.SUPABASE_SERVICE_ROLE_KEY
 
     if (!signatureKey || !supabaseUrl || !serviceKey) return json({ error: 'Missing env' }, 500)
@@ -144,6 +150,14 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     const funnelId = meta.funnelId || null
     const userId = meta.userId
     if (!userId) return json({ error: 'Missing userId in payment_note' }, 400)
+
+    if (!isUuid(userId)) {
+      return json({
+        ok: true,
+        skipped: true,
+        reason: 'user_id_not_uuid',
+      })
+    }
 
     const plan =
       productId === 'annual' ? 'annual' :

@@ -48,7 +48,8 @@ npm run dev
    - SQUARE_ACCESS_TOKEN
    - SQUARE_LOCATION_ID
 3. Create a webhook subscription pointing to:
-   - `https://<your-domain>/api/square-webhook`
+   - `https://<your-domain>/api/square-webhook` (si usas Pages Functions)
+   - o `https://hazloasiya-api.vilomendez.workers.dev/api/square-webhook` (si usas tu Worker)
 4. Copy the webhook signature key:
    - SQUARE_WEBHOOK_SIGNATURE_KEY
 
@@ -104,6 +105,7 @@ OPENAI_API_KEY=sk-...
 
 # App
 NEXT_PUBLIC_APP_URL=https://hazloasiya.com
+NEXT_PUBLIC_API_BASE_URL=https://hazloasiya-api.vilomendez.workers.dev
 NEXT_PUBLIC_WHATSAPP_NUMBER=13465550000
 ```
 

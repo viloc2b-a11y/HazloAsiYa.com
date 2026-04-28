@@ -69,7 +69,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       // Keep it short-ish and parseable.
       payment_note: `userId=${userId};productId=${productId};funnelId=${funnelId || ''};email=${userEmail || ''}`,
       checkout_options: {
-        redirect_url: `${appUrl}/${funnelId || 'snap'}/result?paid=1`,
+        redirect_url: `${appUrl}/${funnelId || 'snap'}/result/?paid=1`,
         ask_for_shipping_address: false,
       },
     }
