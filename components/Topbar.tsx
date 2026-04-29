@@ -48,6 +48,12 @@ export default function Topbar({ user }: { user?: { email: string; name?: string
 
         {/* Desktop nav */}
         <nav className="hidden lg:flex items-center gap-0.5">
+          <Link
+            href="/buscar/"
+            className="px-3 py-1.5 text-[13px] font-semibold text-white/60 hover:text-white hover:bg-white/8 rounded-lg transition-colors"
+          >
+            Buscar
+          </Link>
           {NAV_FUNNELS.map(id => (
             <Link
               key={id}
@@ -95,6 +101,13 @@ export default function Topbar({ user }: { user?: { email: string; name?: string
       {/* Mobile menu */}
       {menuOpen && (
         <div className="lg:hidden border-t border-white/10 bg-navy px-4 py-3 grid grid-cols-2 gap-1">
+          <Link
+            href="/buscar/"
+            onClick={() => setMenuOpen(false)}
+            className="flex items-center gap-2 px-3 py-2 text-sm text-green font-semibold hover:bg-white/8 rounded-lg transition-colors col-span-2"
+          >
+            🔍 Buscar en el sitio
+          </Link>
           {FUNNEL_ORDER.map(id => (
             <Link
               key={id}

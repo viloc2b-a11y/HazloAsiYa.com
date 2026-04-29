@@ -1,7 +1,16 @@
 import Link from 'next/link'
 import { Metadata } from 'next'
+import { alternatesForPath } from '@/lib/alternates'
 
-export const metadata: Metadata = { title: 'Términos de Uso | HazloAsíYa' }
+export const metadata: Metadata = {
+  title: 'Términos de Uso | HazloAsíYa',
+  description:
+    'Condiciones del servicio HazloAsíYa: uso educativo, pagos, garantía y limitación de responsabilidad. No es asesoría legal.',
+  alternates: alternatesForPath('/terms/'),
+  openGraph: {
+    images: [{ url: '/images/og/terms-og.jpg', width: 1200, height: 630, alt: 'Términos de uso' }],
+  },
+}
 
 export default function TermsPage() {
   return (

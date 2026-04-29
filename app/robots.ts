@@ -1,17 +1,22 @@
 import type { MetadataRoute } from 'next'
-
-const BASE = process.env.NEXT_PUBLIC_APP_URL || 'https://hazloasiya.com'
+import { SITE_ORIGIN } from '@/lib/site'
 
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: [
       {
         userAgent: '*',
-        allow: '/',
-        disallow: ['/form/', '/result/'],
+        allow: ['/', '/guias/'],
+        disallow: [
+          '/form/',
+          '/result/',
+          '/api/',
+          '/*?preview=',
+          '/*?mode=',
+          '/*?session=',
+        ],
       },
     ],
-    sitemap: `${BASE}/sitemap.xml`,
+    sitemap: `${SITE_ORIGIN}/sitemap-index.xml`,
   }
 }
-

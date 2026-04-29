@@ -1,8 +1,12 @@
 import { notFound } from 'next/navigation'
-import { Metadata } from 'next'
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { FUNNELS, FUNNEL_ORDER, NEXT_STEP_MAP, FunnelId } from '@/data/funnels'
 import Topbar from '@/components/Topbar'
+import { absoluteUrl, isMoneyPageOgSlug } from '@/lib/site'
+import { alternatesForPath } from '@/lib/alternates'
+import VerifiedInfoBanner from '@/components/VerifiedInfoBanner'
+import { MONEY_PAGE_REGULATORY_SOURCE, regulatoryMetadataOther } from '@/lib/regulatory-meta'
 
 interface Props { params: Promise<{ funnel: string }> }
 
@@ -10,10 +14,24 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { funnel: id } = await params
   const f = FUNNELS[id as FunnelId]
   if (!f) return {}
-  return {
-    title: `Hazlo así: ${f.action} | HazloAsíYa`,
-    description: f.desc.slice(0, 160),
+  const path = `/${id}/`
+  const ogImage = isMoneyPageOgSlug(id)
+    ? { url: `/images/og/${id}-og.jpg` as const, width: 1200, height: 630, alt: f.name }
+    : { url: '/images/og/default-og.jpg' as const, width: 1200, height: 630, alt: f.name }
+  const base: Metadata = {
+    title: `${f.name} | HazloAsíYa`,
+    description: f.desc.slice(0, 155),
+    alternates: alternatesForPath(path),
+    openGraph: {
+      url: absoluteUrl(path),
+      locale: 'es_US',
+      images: [ogImage],
+    },
   }
+  if (isMoneyPageOgSlug(id)) {
+    base.other = regulatoryMetadataOther(MONEY_PAGE_REGULATORY_SOURCE[id])
+  }
+  return base
 }
 
 export default async function FunnelPage({ params }: Props) {
@@ -50,6 +68,21 @@ export default async function FunnelPage({ params }: Props) {
       </section>
 
       <div className="max-w-4xl mx-auto px-4 py-10 space-y-6">
+        {isMoneyPageOgSlug(id) && (
+          <VerifiedInfoBanner
+            officialUrl={
+              id === 'snap' || id === 'medicaid' || id === 'wic'
+                ? 'https://www.hhs.texas.gov/'
+                : id === 'itin' || id === 'taxes'
+                  ? 'https://www.irs.gov/'
+                  : id === 'escuela'
+                    ? 'https://tea.texas.gov/'
+                    : id === 'rent'
+                      ? 'https://www.hud.gov/'
+                      : 'https://www.acf.hhs.gov/ocs/programs/liheap'
+            }
+          />
+        )}
 
         {/* What you get */}
         <div className="bg-navy rounded-2xl p-6 text-white">

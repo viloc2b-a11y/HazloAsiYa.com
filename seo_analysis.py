@@ -241,11 +241,6 @@ class StructuredDataGenerator:
             "@type": "WebSite",
             "name": BRAND,
             "url": DOMAIN,
-            "potentialAction": {
-                "@type": "SearchAction",
-                "target": f"{DOMAIN}/?s={{search_term_string}}",
-                "query-input": "required name=search_term_string",
-            },
         }
 
     def breadcrumb(self, items: list[dict]) -> dict:

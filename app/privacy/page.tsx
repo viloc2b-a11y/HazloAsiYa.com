@@ -1,7 +1,16 @@
 import Link from 'next/link'
 import { Metadata } from 'next'
+import { alternatesForPath } from '@/lib/alternates'
 
-export const metadata: Metadata = { title: 'Política de Privacidad | HazloAsíYa' }
+export const metadata: Metadata = {
+  title: 'Política de Privacidad | HazloAsíYa',
+  description:
+    'Cómo recopilamos y usamos tu información en HazloAsíYa, pagos con Square y tus derechos. Sin vender datos a terceros.',
+  alternates: alternatesForPath('/privacy/'),
+  openGraph: {
+    images: [{ url: '/images/og/privacy-og.jpg', width: 1200, height: 630, alt: 'Privacidad' }],
+  },
+}
 
 export default function PrivacyPage() {
   return (

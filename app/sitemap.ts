@@ -1,18 +1,66 @@
 import { MetadataRoute } from 'next'
 import { FUNNEL_ORDER } from '@/data/funnels'
+import { getPublishedGuideSlugs } from '@/lib/guides-fs'
+import { SITE_ORIGIN, absoluteUrl } from '@/lib/site'
 
-const BASE = process.env.NEXT_PUBLIC_APP_URL || 'https://hazloasiya.com'
+const GEO_PATHS = ['/snap/texas/', '/medicaid/texas/', '/itin/houston/'] as const
+
+/** Fecha de última modificación al construir el sitio (export estático). */
+const LASTMOD = new Date()
+
+/**
+ * Rutas excluidas del sitemap (equivalente a excludedRoutes en Astro):
+ * /form/**, /result/**, /api/** — no son páginas índice y/o no deben indexarse.
+ */
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  // Only include indexable URLs. Gated flows like /form and /result should be noindex and excluded.
-  const funnelPages = FUNNEL_ORDER.map(id => (
-    { url: `${BASE}/${id}`, lastModified: new Date(), changeFrequency: 'weekly' as const, priority: 0.9 }
-  ))
+  const funnelPages = FUNNEL_ORDER.map(id => ({
+    url: absoluteUrl(`/${id}`),
+    lastModified: LASTMOD,
+    changeFrequency: 'weekly' as const,
+    priority: 0.9,
+  }))
+
+  const geoPages = GEO_PATHS.map(path => ({
+    url: absoluteUrl(path),
+    lastModified: LASTMOD,
+    changeFrequency: 'monthly' as const,
+    priority: 0.9,
+  }))
+
+  const guiaHub = {
+    url: absoluteUrl('/guias'),
+    lastModified: LASTMOD,
+    changeFrequency: 'weekly' as const,
+    priority: 0.8,
+  }
+
+  const guiaPages = getPublishedGuideSlugs().map((slug) => ({
+    url: absoluteUrl(`/guias/${slug}`),
+    lastModified: LASTMOD,
+    changeFrequency: 'weekly' as const,
+    priority: 0.8,
+  }))
 
   return [
-    { url: BASE,                   lastModified: new Date(), changeFrequency: 'daily' as const,   priority: 1.0 },
-    { url: `${BASE}/terms`,        lastModified: new Date(), changeFrequency: 'yearly' as const,  priority: 0.3 },
-    { url: `${BASE}/privacy`,      lastModified: new Date(), changeFrequency: 'yearly' as const,  priority: 0.3 },
+    { url: `${SITE_ORIGIN}/`, lastModified: LASTMOD, changeFrequency: 'daily' as const, priority: 1 },
+    { url: absoluteUrl('/terms'), lastModified: LASTMOD, changeFrequency: 'yearly' as const, priority: 0.3 },
+    { url: absoluteUrl('/privacy'), lastModified: LASTMOD, changeFrequency: 'yearly' as const, priority: 0.3 },
+    {
+      url: absoluteUrl('/sobre-nosotros'),
+      lastModified: LASTMOD,
+      changeFrequency: 'yearly' as const,
+      priority: 0.6,
+    },
+    {
+      url: absoluteUrl('/buscar'),
+      lastModified: LASTMOD,
+      changeFrequency: 'monthly' as const,
+      priority: 0.5,
+    },
+    guiaHub,
+    ...guiaPages,
     ...funnelPages,
+    ...geoPages,
   ]
 }

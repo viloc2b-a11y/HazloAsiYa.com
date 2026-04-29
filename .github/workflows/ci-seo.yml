@@ -1,0 +1,112 @@
+# CI/CD SEO (spec: ci-seo.yml) — Next.js 14 static export (out/).
+# Si el repo Git es la carpeta padre, copia este archivo a `<repo>/.github/workflows/`.
+
+name: SEO CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 8 * * 1'
+
+concurrency:
+  group: ci-seo-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate-metadata:
+    name: JOB 1 — validate-content (markdown + app/)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - id: appdir
+        run: |
+          if [ -f HazloAsiYa.com/package.json ]; then echo "dir=HazloAsiYa.com" >> $GITHUB_OUTPUT
+          elif [ -f package.json ]; then echo "dir=." >> $GITHUB_OUTPUT
+          else echo "No se encontró package.json"; exit 1; fi
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+          cache-dependency-path: ${{ steps.appdir.outputs.dir }}/package-lock.json
+      - name: npm ci
+        working-directory: ${{ steps.appdir.outputs.dir }}
+        run: npm ci
+      - name: npm run validate
+        working-directory: ${{ steps.appdir.outputs.dir }}
+        run: npm run validate
+
+  build-and-audit:
+    name: JOB 2 — build + audit out/
+    needs: validate-metadata
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - id: appdir
+        run: |
+          if [ -f HazloAsiYa.com/package.json ]; then echo "dir=HazloAsiYa.com" >> $GITHUB_OUTPUT
+          elif [ -f package.json ]; then echo "dir=." >> $GITHUB_OUTPUT
+          else exit 1; fi
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+          cache-dependency-path: ${{ steps.appdir.outputs.dir }}/package-lock.json
+      - run: npm ci
+        working-directory: ${{ steps.appdir.outputs.dir }}
+      - run: npm run build
+        working-directory: ${{ steps.appdir.outputs.dir }}
+      - name: Escanear out/ (pages.dev, reviews)
+        working-directory: ${{ steps.appdir.outputs.dir }}
+        run: node scripts/validate-content.mjs --static-out=out
+      - name: Sitemap, robots, _redirects, JSON-LD, canonical
+        working-directory: ${{ steps.appdir.outputs.dir }}
+        run: node scripts/audit-static-export.mjs out
+
+  content-expiry:
+    name: JOB 4 — content-expiry (main, cron / manual)
+    if: |
+      github.ref == 'refs/heads/main' &&
+      (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - uses: actions/checkout@v4
+      - id: appdir
+        run: |
+          if [ -f HazloAsiYa.com/package.json ]; then echo "dir=HazloAsiYa.com" >> $GITHUB_OUTPUT
+          elif [ -f package.json ]; then echo "dir=." >> $GITHUB_OUTPUT
+          else exit 1; fi
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Issues por guía con dataValidUntil vencido
+        working-directory: ${{ steps.appdir.outputs.dir }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_ASSIGNEE: ${{ github.repository_owner }}
+        run: node scripts/content-expiry.mjs --create-issue
+
+  lighthouse:
+    name: JOB 5 — Lighthouse (main, prod)
+    if: |
+      github.ref == 'refs/heads/main' &&
+      (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - id: lhci
+        run: |
+          if [ -f HazloAsiYa.com/lighthouserc.json ]; then echo "cfg=HazloAsiYa.com/lighthouserc.json" >> $GITHUB_OUTPUT
+          else echo "cfg=lighthouserc.json" >> $GITHUB_OUTPUT; fi
+      - uses: treosh/lighthouse-ci-action@v12
+        with:
+          urls: |
+            https://www.hazloasiya.com
+          configPath: ${{ steps.lhci.outputs.cfg }}
+          uploadArtifacts: true

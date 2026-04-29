@@ -1,5 +1,12 @@
 node_modules
 
+# Output de análisis Python — no es el sitemap de producción
+# El sitemap real está en out/sitemap.xml (generado por Next.js build)
+seo_output/
+
+# Reporte generado por migrate-content.mjs (regenerar con npm run migrate:audit)
+scripts/migrate-report.json
+
 # Next.js build outputs
 .next
 out
@@ -12,3 +19,6 @@ yarn-error.log*
 # OS / editor
 .DS_Store
 Thumbs.db
+
+# Entregas / artefactos zip locales
+*.zip

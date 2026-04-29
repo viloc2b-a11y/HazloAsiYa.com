@@ -1,0 +1,180 @@
+# ════════════════════════════════════════════════════════════
+# .cursorrules — HazloAsíYa
+# Stack: Next.js 14.2.5 · App Router · output:'export'
+# Deploy: Cloudflare Pages · Output dir: out/
+# Versión: 2.0 · Abril 2026
+# ════════════════════════════════════════════════════════════
+
+PROYECTO
+Nombre:    HazloAsíYa (hazloasiya.com)
+Stack:     Next.js 14.2.5 · App Router · TypeScript · output:'export'
+Deploy:    Cloudflare Pages · output directory: out/
+Idioma:    Español (es-US) — nunca generar contenido en inglés
+Audiencia: Familias hispanas en EE. UU., enfoque Texas/Houston
+Dominio:   https://www.hazloasiya.com (siempre con www y https)
+Contexto:  Ecosistema Vilo — VRG, VPL, VITALIS, VIDA, ClinIQ
+
+REGLAS ABSOLUTAS — nunca violar bajo ninguna circunstancia
+
+R1. DATOS FALSOS EN SCHEMA
+Jamás incluir aggregateRating, ratingValue ni reviewCount en JSON-LD
+a menos que exista un sistema de reviews implementado y visible
+en el DOM de la misma página. Sin reviews reales = sin schema de rating.
+
+R2. ROBOTS.TXT
+Nunca usar Disallow: /*?* — rompe UTM tracking de campañas Meta/Google.
+Solo bloquear parámetros internos específicos conocidos.
+El archivo correcto está en app/robots.ts — no crear robots.txt estático.
+
+R3. SEARCHACTION
+El WebSite JSON-LD puede incluir SearchAction solo si /buscar/ tiene
+búsqueda real (Pagefind post-build en out/pagefind/). No añadir otra
+SearchAction duplicada ni plantillas sin search_term_string.
+
+R4. SAMEAS CON URLS NO VERIFICADAS
+Nunca incluir sameAs en Organization con URLs de redes sociales
+que no estén confirmadas como activas y públicas.
+Mejor omitirlo que incluir una URL rota.
+
+R5. SITEMAP CON URLS QUE NO EXISTEN
+El sitemap lo genera app/sitemap.ts — solo incluir rutas que tienen
+un archivo page.tsx real en app/. Nunca hardcodear rutas en el sitemap
+que no existen en la app. Verificar con: grep en out/ post-build.
+Los funnels en FUNNEL_ORDER usan app/[funnel]/page.tsx (ruta dinámica), no app/{slug}/page.tsx por cada slug.
+
+R6. MEDICAID TEXAS — DATO CRÍTICO
+Texas NO adoptó la expansión Medicaid del ACA.
+Adultos sin hijos menores en Texas generalmente NO califican.
+Nunca escribir contenido que implique lo contrario.
+Si hay duda, citar directamente hhs.texas.gov.
+
+R7. NAMESPACE DE SITEMAP
+El namespace correcto es http:// (no https://).
+Next.js lo genera correcto por defecto — no sobreescribir manualmente.
+
+R8. OUTPUT DIRECTORY
+Todo lo que va a Cloudflare Pages debe estar en out/ — no en dist/ ni
+en la raíz. El archivo _redirects debe copiarse a out/ en el build.
+Cloudflare Pages: output directory = out
+
+REGLAS DE NEXT.JS APP ROUTER
+
+Metadata:
+- Siempre exportar metadata o generateMetadata desde page.tsx (Server)
+- metadataBase: new URL('https://www.hazloasiya.com') en layout.tsx raíz
+- alternates.canonical vía alternatesForPath() / metadata en cada página money/geo/guias
+- openGraph.locale: 'es_US' en todas las páginas
+- og:image con ruta bajo /images/og/ (metadataBase resuelve URL absoluta) · width:1200, height:630
+- El canonical nunca debe incluir query params ni trailing slash doble
+
+Componentes:
+- Lógica interactiva → Client Components con 'use client'
+- page.tsx → Server Component cuando sea posible para exportar metadata
+- Patrón: page.tsx (server, metadata) + *Client.tsx (client, interacción)
+- JSON-LD: preferir funciones reutilizables; centralizar en lib/schema.ts cuando se cree (hoy: page.tsx / lib/regulatory-meta.ts)
+
+Rutas:
+- trailingSlash: true está activo — todas las rutas terminan en /
+- No crear rutas nuevas sin reflejarlas en app/sitemap.ts cuando deban indexarse
+- Rutas geo actuales: app/snap/texas/page.tsx, app/medicaid/texas/page.tsx, app/itin/houston/page.tsx
+
+Build:
+- npm run build genera out/ y ejecuta pagefind (índice en out/pagefind/) — verificar antes de PR
+- Post-build check: grep -r "pages.dev" out/ → debe ser 0 resultados
+- Post-build check: grep -r "localhost" out/ → debe ser 0 resultados
+- La variable NEXT_PUBLIC_APP_URL debe ser https://www.hazloasiya.com
+
+REGLAS SEO
+
+Títulos:       máx 60 chars · keyword principal al inicio
+Descriptions:  máx 155 chars · incluir beneficio implícito
+H1:            único por página · diferente al title tag
+Canonical:     siempre vía alternates + metadataBase
+og:image:      1200×630px bajo public/images/og/
+Schema:        validar en search.google.com/test/rich-results antes de PR
+
+Prioridades en sitemap:
+  money pages (/snap/, /medicaid/, etc.): 0.9
+  guías (/guias/*):                        0.8
+  geo (/snap/texas/, etc.):                0.9 (ajustar en app/sitemap.ts si el brief cambia)
+  sobre-nosotros:                          0.6
+  legal (privacy, terms):                  0.3
+
+Páginas que nunca van en sitemap:
+  /form/* · /result/* · /api/* · cualquier ruta con ?params
+
+REGLAS DE CONTENIDO
+
+Idioma y tono:
+- Español natural, no traducción literal del inglés
+- Terminología local Texas: HHSC (no HHS), TWC (no DOL),
+  YourTexasBenefits (no portal genérico), 2-1-1 (no 211)
+- Nunca usar términos que impliquen juicio sobre estatus migratorio
+- Siempre "trámite" — no "proceso", "procedure" ni "aplicación"
+- Nunca "applica" — siempre "aplica" o "solicita"
+
+Obligatorio en cada página de trámite:
+- Disclaimer o aviso YMYL visible cuando aplique
+- Fuente oficial citada con link (rel="noopener noreferrer")
+- Fecha de verificación visible cuando aplique: "Verificado: [mes año]" o banner regulatorio
+- CTA hacia el cuestionario de evaluación gratuita en money pages
+- FAQs con schema FAQPage donde corresponda (p. ej. guías)
+
+Datos regulatorios:
+- Nunca inventar límites de ingresos, porcentajes o fechas
+- Si no se puede verificar en tiempo real: usar "según las reglas vigentes"
+  y marcar con // TODO: VERIFY en el código
+- Fuentes aceptadas: USDA FNS, IRS.gov, HHSC Texas, HUD.gov, TEA Texas
+
+REGLAS DE CÓDIGO
+
+TypeScript: estricto · sin any · interfaces para todos los props
+CSS: usar variables del design system (Tailwind theme) · evitar colores sueltos fuera del theme
+Imágenes: alt text descriptivo en español · siempre
+Links externos: target="_blank" rel="noopener noreferrer" siempre
+Links internos: rutas relativas con / prefix · evitar URLs absolutas hardcodeadas fuera de SITE_ORIGIN/lib/site.ts
+JSON-LD: objetos tipados; extraer a lib/schema.ts cuando crezca el proyecto
+
+ESTRUCTURA DE ARCHIVOS
+
+app/[funnel]/page.tsx           → money pages (server, generateMetadata)
+app/[funnel]/form/              → formularios (client + layout metadata)
+app/guias/[slug]/page.tsx       → guías educativas (Markdown)
+app/sobre-nosotros/page.tsx     → E-E-A-T
+app/sitemap.ts                  → sitemap dinámico
+app/robots.ts                   → robots (no usar public/robots.txt como fuente única)
+app/layout.tsx                  → metadataBase + schema WebSite
+components/*Client.tsx          → client components
+lib/site.ts                     → SITE_ORIGIN y constantes globales
+lib/regulatory-meta.ts          → metadatos regulatorios / other
+public/images/og/               → OG images (1200×630px, JPG)
+public/_redirects               → copiado a out/ en build
+scripts/*.mjs                   → scripts Node ESM (validate, audit, migrate-content, etc.)
+.github/workflows/ci-seo.yml    → CI/CD con gates SEO
+
+CHECKLIST PRE-COMMIT (aplicar antes de cada commit)
+
+□ npm run build → 0 errores
+□ grep -r "pages.dev" out/ → 0 resultados
+□ grep -r "aggregateRating" out/ → 0 resultados
+□ Cada page.tsx modificado exporta metadata con title y description
+□ Canonical correcto en alternates de cada página modificada
+□ Si se creó ruta nueva indexable: está en app/sitemap.ts
+□ Si se agrega dato regulatorio: tiene fuente citada y TODO:VERIFY si no verificado
+□ Disclaimer / aviso educativo presente en páginas sensibles (YMYL)
+
+CONTEXTO DE NEGOCIO
+
+HazloAsíYa es el top-of-funnel SEO del ecosistema Vilo (Houston/Katy TX).
+Las guías de trámites atraen a familias hispanas que pueden luego conectar
+con estudios clínicos de VITALIS y servicios de VRG/VPL.
+
+Posicionamiento: plataforma educativa privada — no agencia gubernamental,
+no bufete de abogados. El disclaimer es parte de la identidad, no un adorno.
+
+El modelo es freemium: cuestionario gratis → conversión a plan de pago.
+Todo el contenido debe orientar hacia el CTA de evaluación gratuita.
+
+# ════════════════════════════════════════════════════════════
+# Fin de .cursorrules v2.0 — actualizar cuando cambie el stack
+# ════════════════════════════════════════════════════════════

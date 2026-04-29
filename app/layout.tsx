@@ -1,15 +1,37 @@
 import type { Metadata } from 'next'
 import './globals.css'
+import { SITE_ORIGIN, absoluteUrl } from '@/lib/site'
+import { alternatesForPath } from '@/lib/alternates'
+
+const searchUrlTemplate = `${absoluteUrl('/buscar')}?q={search_term_string}`
+
+const websiteJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'HazloAsíYa',
+  url: `${SITE_ORIGIN}/`,
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: {
+      '@type': 'EntryPoint',
+      urlTemplate: searchUrlTemplate,
+    },
+    'query-input': 'required name=search_term_string',
+  },
+}
 
 export const metadata: Metadata = {
   title: 'HazloAsíYa — Haz tus trámites en Estados Unidos sin errores',
   description: 'Te decimos exactamente qué hacer, qué documentos necesitas y cómo completar tus trámites en EE.UU. desde la primera vez. En español.',
-  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'https://hazloasiya.com'),
+  metadataBase: new URL(SITE_ORIGIN),
+  alternates: alternatesForPath('/'),
   openGraph: {
     title: 'HazloAsíYa — Haz tus trámites en EE.UU. sin errores',
     description: 'Guías paso a paso en español para SNAP, Medicaid, DACA, taxes, escuela y más.',
     type: 'website',
     locale: 'es_US',
+    url: `${SITE_ORIGIN}/`,
+    images: [{ url: '/images/og/default-og.jpg', width: 1200, height: 630, alt: 'HazloAsíYa' }],
   },
   twitter: { card: 'summary_large_image' },
 }
@@ -23,6 +45,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet"/>
       </head>
       <body className="bg-cream text-gray-800 antialiased">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+        />
         {children}
       </body>
     </html>

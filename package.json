@@ -4,26 +4,42 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
-    "export": "next build",
+    "build": "next build && pagefind --site out --quiet",
+    "build:next-only": "next build",
+    "export": "next build && pagefind --site out --quiet",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "validate": "node scripts/validate-content.mjs",
+    "seo:validate": "node scripts/validate-content.mjs",
+    "seo:validate:full": "node scripts/validate-content.mjs --static-out=out",
+    "seo:audit:out": "node scripts/audit-static-export.mjs out",
+    "seo:content-expiry": "node scripts/content-expiry.mjs",
+    "generate:og": "node scripts/generate-og-images.mjs",
+    "migrate:landings": "node scripts/migrate-landings.mjs",
+    "migrate:audit": "node scripts/migrate-content.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "^0.5.0",
     "@supabase/supabase-js": "^2.45.0",
+    "gray-matter": "^4.0.3",
     "jspdf": "^2.5.1",
     "next": "14.2.5",
     "openai": "^5.0.0",
     "react": "^18.3.0",
-    "react-dom": "^18.3.0"
+    "react-dom": "^18.3.0",
+    "react-markdown": "^10.1.0",
+    "zod": "^3.25.76"
   },
   "devDependencies": {
+    "@pagefind/default-ui": "^1.5.2",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "autoprefixer": "^10.0.1",
+    "cheerio": "^1.2.0",
+    "pagefind": "^1.5.2",
     "postcss": "^8",
+    "sharp": "^0.33.5",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
   }
