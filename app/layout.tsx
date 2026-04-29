@@ -1,8 +1,10 @@
 import type { Metadata } from 'next'
+import Script from 'next/script'
 import './globals.css'
 import { SITE_ORIGIN, absoluteUrl } from '@/lib/site'
 import { alternatesForPath } from '@/lib/alternates'
 import CookieBanner from '@/components/legal/CookieBanner'
+import GoogleAnalyticsClient from '@/components/analytics/GoogleAnalyticsClient'
 
 const searchUrlTemplate = `${absoluteUrl('/buscar')}?q={search_term_string}`
 
@@ -44,6 +46,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="preconnect" href="https://fonts.googleapis.com"/>
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous"/>
         <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+        <Script id="ga-consent-default" strategy="beforeInteractive">
+          {`
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('consent', 'default', {
+  analytics_storage: 'denied',
+  ad_storage: 'denied',
+  ad_user_data: 'denied',
+  ad_personalization: 'denied',
+  wait_for_update: 500,
+});
+`}
+        </Script>
       </head>
       <body className="bg-cream text-gray-800 antialiased">
         <script
@@ -51,6 +66,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
         />
         {children}
+        <GoogleAnalyticsClient />
         <CookieBanner />
       </body>
     </html>

@@ -5,6 +5,7 @@ import UpsellButton from '@/components/monetization/UpsellButton'
 import EmailCapture from '@/components/monetization/EmailCapture'
 import type { Phase1ProductKey } from '@/lib/payment-products'
 import { FUNNEL_EVENTS, trackFunnelEvent } from '@/lib/analytics-events'
+import { useAbVariant } from '@/hooks/useAbVariant'
 
 type Props = {
   funnelId: string
@@ -23,12 +24,20 @@ function pickPrimaryKit(funnelId: string, highConfidence: boolean): Phase1Produc
 /**
  * Monetización Fase 1 solo tras resultado: sin upsell en resultados negativos ni antes del valor.
  */
+const abUpsellActive = process.env.NEXT_PUBLIC_AB_UPSELL_ACTIVE === 'true'
+
 export default function ResultPhase1Section({ funnelId, tramiteLabel, eligible, missingCount }: Props) {
+  const { variant: abVariant, experimentId } = useAbVariant()
+
   useEffect(() => {
     if (!eligible) return
     trackFunnelEvent(FUNNEL_EVENTS.RESULT_ELIGIBLE, { funnel: funnelId })
-    trackFunnelEvent(FUNNEL_EVENTS.UPSELL_SHOWN, { funnel: funnelId })
-  }, [eligible, funnelId])
+    trackFunnelEvent(FUNNEL_EVENTS.UPSELL_SHOWN, {
+      funnel: funnelId,
+      tramite: funnelId,
+      ...(abUpsellActive ? { variant: abVariant, experiment: experimentId } : {}),
+    })
+  }, [eligible, funnelId, abVariant, experimentId])
 
   if (!eligible) return null
 
@@ -58,6 +67,8 @@ export default function ResultPhase1Section({ funnelId, tramiteLabel, eligible, 
               productKey="revisionExpress"
               placement="result_express_secondary"
               funnelId={funnelId}
+              abVariant={abVariant}
+              abExperimentId={abUpsellActive ? experimentId : undefined}
             />
           </>
         ) : (
@@ -70,6 +81,8 @@ export default function ResultPhase1Section({ funnelId, tramiteLabel, eligible, 
               placement="result_express"
               funnelId={funnelId}
               supportText="Una segunda mirada educativa sobre tu checklist puede evitar retrabajo."
+              abVariant={abVariant}
+              abExperimentId={abUpsellActive ? experimentId : undefined}
             />
           </>
         )}

@@ -46,6 +46,8 @@ En local, prueba con **Wrangler** / entorno Pages; en producción Cloudflare enr
 Plantilla: **`.env.local.example`**. Resumen:
 
 - **Públicas:** `NEXT_PUBLIC_APP_URL` (ej. `https://www.hazloasiya.com`), `NEXT_PUBLIC_API_BASE_URL` si el API no es el mismo origen, Supabase público, WhatsApp, claves `NEXT_PUBLIC_AFFILIATE_*` (Fase 1).
+- **GA4 (consent-gate):** `NEXT_PUBLIC_GA_MEASUREMENT_ID=G-XXXXXXXXXX`. El script `gtag.js` **no** se inyecta en el HTML estático: solo tras aceptar analítica en el CookieBanner (Consent Mode v2: default `denied` en `layout`).
+- **A/B upsell:** `NEXT_PUBLIC_AB_UPSELL_ACTIVE=false` por defecto; poner `true` cuando haya tráfico suficiente (ver `docs/ab-test-upsell.md`).
 - **Functions:** `OPENAI_*`, `SQUARE_*`, `SUPABASE_*`, newsletter (`EMAIL_PROVIDER`, `CONVERTKIT_*` o `BREVO_*`).
 
 Nunca subas **`.env.local`** (contiene secretos).

@@ -25,6 +25,7 @@ export const CONSENT_EVENT = 'haya-consent-updated'
 export function dispatchConsentUpdated() {
   if (typeof window === 'undefined') return
   window.dispatchEvent(new Event(CONSENT_EVENT))
+  window.dispatchEvent(new Event('consentUpdated'))
 }
 
 export function readConsent():

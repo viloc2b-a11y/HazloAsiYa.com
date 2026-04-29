@@ -12,10 +12,24 @@ type Props = {
   funnelId: string
   /** Texto de apoyo encima del CTA (FTC: claro, sin urgencia). */
   supportText?: string
+  /** Solo afecta el CTA de revisión express (A/B copy). */
+  abVariant?: 'A' | 'B'
+  abExperimentId?: string
 }
 
-export default function UpsellButton({ productKey, placement, funnelId, supportText }: Props) {
+export default function UpsellButton({
+  productKey,
+  placement,
+  funnelId,
+  supportText,
+  abVariant = 'A',
+  abExperimentId,
+}: Props) {
   const p = PHASE1_PRODUCTS[productKey]
+  const ctaLabel =
+    productKey === 'revisionExpress' && abVariant === 'B'
+      ? 'Revisar mis documentos antes de enviar — $12'
+      : p.ctaLabel
   const [email, setEmail] = useState('')
   const [busy, setBusy] = useState(false)
   const user = typeof window !== 'undefined' ? getStoredUser() : null
@@ -30,10 +44,16 @@ export default function UpsellButton({ productKey, placement, funnelId, supportT
       product: productKey,
       placement,
       funnel: funnelId,
+      ...(abExperimentId
+        ? { variant: abVariant, experiment: abExperimentId, tramite: funnelId }
+        : {}),
     })
     trackFunnelEvent(FUNNEL_EVENTS.CHECKOUT_START, {
       product: productKey,
       funnel: funnelId,
+      ...(abExperimentId
+        ? { variant: abVariant, experiment: abExperimentId }
+        : {}),
     })
     setBusy(true)
     const res = await checkoutStatic({
@@ -75,7 +95,7 @@ export default function UpsellButton({ productKey, placement, funnelId, supportT
           disabled={busy}
           className="btn-primary px-6 py-3 text-sm whitespace-nowrap shrink-0 disabled:opacity-60"
         >
-          {busy ? 'Abriendo checkout…' : p.ctaLabel}
+          {busy ? 'Abriendo checkout…' : ctaLabel}
         </button>
       </div>
       <p className="text-xs text-gray-500 leading-relaxed">{p.disclaimer}</p>

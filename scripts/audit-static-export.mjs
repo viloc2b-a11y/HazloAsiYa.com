@@ -114,6 +114,11 @@ function auditHtmlSemantics(htmlPath, html) {
   if (/AggregateRating/i.test(html) || /\bratingValue\b/i.test(html)) {
     issues.push({ file: rf, msg: 'prohibido: AggregateRating / ratingValue en HTML' })
   }
+  if (/googletagmanager\.com\/gtag\/js/i.test(html)) {
+    warnings.push(
+      `${rf}: GA4 puede estar incrustando gtag/js en HTML estático — verificar que solo cargue tras consent (carga dinámica esperada)`,
+    )
+  }
 
   const scriptRe = /<script[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi
   let m
