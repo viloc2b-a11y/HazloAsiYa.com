@@ -2,38 +2,49 @@
 
 import { useLayoutEffect, useState } from 'react'
 
-const STORAGE_KEY = 'haz_ab_upsell'
-export const AB_UPSELL_EXPERIMENT_ID = 'upsell-copy-v1' as const
+/** ID del experimento de copy del CTA "revisión express" (debe coincidir con GA4). */
+export const UPSELL_COPY_EXPERIMENT_ID = 'upsell-copy-v1' as const
 
 function experimentActive(): boolean {
   return process.env.NEXT_PUBLIC_AB_UPSELL_ACTIVE === 'true'
 }
 
+export type AbVariantState = {
+  variant: 'A' | 'B'
+  /** `true` tras leer/asignar en `localStorage` (evita `upsell_shown` con variante equivocada). */
+  assignmentReady: boolean
+}
+
 /**
- * Variante A/B para copy del upsell "revisión express".
- * Si NEXT_PUBLIC_AB_UPSELL_ACTIVE !== 'true', siempre 'A' (sin experimento).
+ * Asignación A/B 50/50 persistida en `localStorage` bajo `haz_ab_${experimentId}`.
+ * - Si `NEXT_PUBLIC_AB_UPSELL_ACTIVE !== 'true'`: siempre variante `'A'`; la clave **no** se crea.
+ * - Con flag `true`, la clave solo se escribe en la primera visita que activa el experimento.
  */
-export function useAbVariant(): { variant: 'A' | 'B'; experimentId: typeof AB_UPSELL_EXPERIMENT_ID } {
-  const [variant, setVariant] = useState<'A' | 'B'>('A')
+export function useAbVariant(experimentId: string): AbVariantState {
+  const [state, setState] = useState<AbVariantState>({
+    variant: 'A',
+    assignmentReady: false,
+  })
 
   useLayoutEffect(() => {
     if (!experimentActive()) {
-      setVariant('A')
+      setState({ variant: 'A', assignmentReady: true })
       return
     }
     try {
-      const raw = localStorage.getItem(STORAGE_KEY)
-      if (raw === 'A' || raw === 'B') {
-        setVariant(raw)
+      const key = `haz_ab_${experimentId}`
+      const stored = localStorage.getItem(key)
+      if (stored === 'A' || stored === 'B') {
+        setState({ variant: stored, assignmentReady: true })
         return
       }
-      const v = Math.random() < 0.5 ? 'A' : 'B'
-      localStorage.setItem(STORAGE_KEY, v)
-      setVariant(v)
+      const assigned = Math.random() < 0.5 ? 'A' : 'B'
+      localStorage.setItem(key, assigned)
+      setState({ variant: assigned, assignmentReady: true })
     } catch {
-      setVariant('A')
+      setState({ variant: 'A', assignmentReady: true })
     }
-  }, [])
+  }, [experimentId])
 
-  return { variant, experimentId: AB_UPSELL_EXPERIMENT_ID }
+  return state
 }

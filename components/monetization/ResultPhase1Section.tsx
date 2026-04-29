@@ -1,11 +1,11 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import UpsellButton from '@/components/monetization/UpsellButton'
 import EmailCapture from '@/components/monetization/EmailCapture'
 import type { Phase1ProductKey } from '@/lib/payment-products'
 import { FUNNEL_EVENTS, trackFunnelEvent } from '@/lib/analytics-events'
-import { useAbVariant } from '@/hooks/useAbVariant'
+import { UPSELL_COPY_EXPERIMENT_ID, useAbVariant } from '@/hooks/useAbVariant'
 
 type Props = {
   funnelId: string
@@ -23,21 +23,27 @@ function pickPrimaryKit(funnelId: string, highConfidence: boolean): Phase1Produc
 
 /**
  * Monetización Fase 1 solo tras resultado: sin upsell en resultados negativos ni antes del valor.
+ * A/B copy revisión express: `NEXT_PUBLIC_AB_UPSELL_ACTIVE=true` + ver `docs/ab-test-upsell.md`.
  */
-const abUpsellActive = process.env.NEXT_PUBLIC_AB_UPSELL_ACTIVE === 'true'
-
 export default function ResultPhase1Section({ funnelId, tramiteLabel, eligible, missingCount }: Props) {
-  const { variant: abVariant, experimentId } = useAbVariant()
+  const { variant, assignmentReady } = useAbVariant(UPSELL_COPY_EXPERIMENT_ID)
+  const upsellShownRef = useRef(false)
 
   useEffect(() => {
     if (!eligible) return
     trackFunnelEvent(FUNNEL_EVENTS.RESULT_ELIGIBLE, { funnel: funnelId })
+  }, [eligible, funnelId])
+
+  useEffect(() => {
+    if (!eligible || !assignmentReady || upsellShownRef.current) return
+    upsellShownRef.current = true
     trackFunnelEvent(FUNNEL_EVENTS.UPSELL_SHOWN, {
-      funnel: funnelId,
+      variant,
+      experiment: UPSELL_COPY_EXPERIMENT_ID,
       tramite: funnelId,
-      ...(abUpsellActive ? { variant: abVariant, experiment: experimentId } : {}),
+      placement: 'result_phase1',
     })
-  }, [eligible, funnelId, abVariant, experimentId])
+  }, [eligible, assignmentReady, variant, funnelId])
 
   if (!eligible) return null
 
@@ -55,11 +61,7 @@ export default function ResultPhase1Section({ funnelId, tramiteLabel, eligible, 
             <p className="text-sm text-gray-700 leading-relaxed">
               Descarga la guía completa con documentos y pasos orientativos para tu caso.
             </p>
-            <UpsellButton
-              productKey={kit}
-              placement="result_kit_primary"
-              funnelId={funnelId}
-            />
+            <UpsellButton productKey={kit} placement="result_kit_primary" funnelId={funnelId} />
             <p className="text-sm text-gray-600 pt-2 border-t border-cream">
               O pide una revisión express de tu paquete documental antes de enviar:
             </p>
@@ -67,8 +69,7 @@ export default function ResultPhase1Section({ funnelId, tramiteLabel, eligible, 
               productKey="revisionExpress"
               placement="result_express_secondary"
               funnelId={funnelId}
-              abVariant={abVariant}
-              abExperimentId={abUpsellActive ? experimentId : undefined}
+              variant={variant}
             />
           </>
         ) : (
@@ -81,8 +82,7 @@ export default function ResultPhase1Section({ funnelId, tramiteLabel, eligible, 
               placement="result_express"
               funnelId={funnelId}
               supportText="Una segunda mirada educativa sobre tu checklist puede evitar retrabajo."
-              abVariant={abVariant}
-              abExperimentId={abUpsellActive ? experimentId : undefined}
+              variant={variant}
             />
           </>
         )}

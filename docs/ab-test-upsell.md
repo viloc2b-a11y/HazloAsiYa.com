@@ -1,40 +1,94 @@
 # A/B test — copy del upsell «revisión express»
 
 **Experimento:** `upsell-copy-v1`  
-**Flag:** `NEXT_PUBLIC_AB_UPSELL_ACTIVE` — debe ser `true` solo cuando haya tráfico suficiente (orientativo: **200+** usuarios por variante).
+**Implementación:** `hooks/useAbVariant.ts`, `ResultPhase1Section.tsx`, `UpsellButton.tsx` (solo cambia el texto del CTA; Disclosure, disclaimer y precio iguales).
+
+## Flag de activación
+
+`NEXT_PUBLIC_AB_UPSELL_ACTIVE=false` por defecto.
+
+- Con **`false`**: todos ven la variante **A** (control). No se crea `localStorage` `haz_ab_upsell-copy-v1`.
+- Con **`true`** en Cloudflare Pages (Variables de entorno): asignación 50/50 persistida; no hace falta redeploy si solo cambias el valor del flag.
+
+Activar solo con tráfico real (orientativo: **200–300+** usuarios completando el cuestionario).
+
+---
 
 ## Variantes
 
-| ID | Texto del botón |
-|----|-------------------|
-| A (control) | Obtener revisión express — $12 |
-| B (test) | Revisar mis documentos antes de enviar — $12 |
+|        | Copy del botón |
+|--------|----------------|
+| **A** (control) | Obtener revisión express — $12 |
+| **B** (test)    | Revisar mis documentos antes de enviar — $12 |
 
-Disclosure y disclaimer legal son **idénticos** en ambas variantes.
+Los kits SNAP / ITIN **no** entran en el test.
 
-## Métricas en GA4
+---
 
-1. **Primaria:** tasa `upsell_click` / `upsell_shown`, desglosada por dimensión personalizada **`variant`** (`A` vs `B`) y **`experiment`** (`upsell-copy-v1`).
-2. **Secundaria:** `checkout_complete` / `upsell_click` (o conversión a checkout), misma segmentación.
+## Métricas del experimento
 
-### Informe sugerido
+**Métrica primaria**
 
-- Exploración → Informe en blanco.
-- Dimensiones: evento, `variant`, `experiment` (registrar como parámetros de evento personalizados en GA4 si aún no aparecen).
-- Segmentos: usuarios que dispararon `upsell_shown` con `experiment = upsell-copy-v1`.
+- `tasa_click = upsell_click / upsell_shown` (por variante; parámetro personalizado `variant` en GA4).
 
-## Criterios
+**Métrica secundaria**
 
-- **Victoria:** diferencia relativa **> 15%** a favor de una variante, con **≥ 200** impresiones (`upsell_shown`) por variante.
-- **Parada:** si `quiz_complete` (u otra conversión de embudo base) **cae > 5%** respecto al control en cualquier variante → desactivar el experimento (`NEXT_PUBLIC_AB_UPSELL_ACTIVE=false`) y revisar copy o UX.
+- `tasa_checkout = checkout_start / upsell_click` (por variante).
 
-## Comportamiento con flag en `false`
+**Métrica de guardia (no debe bajar)**
 
-- Siempre variante **A**; no se persiste asignación aleatoria nueva para el test.
-- Los eventos `upsell_shown` / `upsell_click` **no** incluyen `variant` ni `experiment` en el payload (menos ruido en GA).
+- `tasa_cuestionario = quiz_complete / quiz_start`  
+  Si baja **> 5%** en cualquier variante → **parar el test** de inmediato.
 
-## Archivos
+---
 
-- `hooks/useAbVariant.ts`
-- `components/monetization/UpsellButton.tsx`
-- `components/monetization/ResultPhase1Section.tsx`
+## Cómo leer resultados en GA4
+
+1. GA4 → **Explore** → **Blank exploration**
+2. **Dimensiones:** `Event name` y el parámetro personalizado **`variant`** (y `experiment` si lo registras como dimensión personalizada).
+3. **Métricas:** Event count
+4. **Filtro:** `event_name` in (`upsell_shown`, `upsell_click`, `checkout_start`)
+5. Desglosar por **`variant`** → tabla A vs B y tasas derivadas en hoja de cálculo o en la exploración.
+
+---
+
+## Criterio de victoria
+
+- Diferencia entre variantes: **> 15%** en la métrica primaria (orientativo).
+- Tamaño de muestra: **> 200** usuarios por variante en `upsell_shown`.
+- Duración mínima: **14 días** corridos (captura variación entre días laborables y fin de semana).
+- Significancia: **p < 0.05** (calculadoras gratuitas: abtestguide.com, statsig.com, etc.).
+
+---
+
+## Post-experimento
+
+### Si la variante B gana (diferencia > 15%, muestra suficiente)
+
+1. Actualizar el copy por defecto en `UpsellButton` (`REVISION_EXPRESS_CTA`) al texto de B.
+2. Eliminar la prop `variant` / lógica A/B (o dejarla como legacy apagada).
+3. Apagar: `NEXT_PUBLIC_AB_UPSELL_ACTIVE=false`.
+4. Documentar aquí la fecha y las métricas clave.
+5. Planificar el siguiente test (ej. precio, posición del bloque).
+
+### Si la A gana o no hay diferencia significativa
+
+1. Mantener copy A.
+2. Apagar el experimento (`NEXT_PUBLIC_AB_UPSELL_ACTIVE=false`).
+3. Documentar que se probó B y no hubo mejora clara.
+4. Elegir un nuevo elemento a testear.
+
+### Si la métrica de guardia cae > 5%
+
+1. Apagar el experimento **de inmediato**.
+2. Revisar que el upsell solo se muestre con `eligible === true` y que el copy no confunda.
+3. No reactivar hasta entender la causa.
+
+---
+
+## Eventos enviados (resumen)
+
+- `upsell_shown`: `variant`, `experiment`, `tramite`, `placement: result_phase1`
+- `upsell_click`: `variant`, `experiment`, `product`, `placement`, `funnel`, `tramite`
+
+Verificación manual adicional: `docs/verify-ga4-consent.md` (consent antes de medir).

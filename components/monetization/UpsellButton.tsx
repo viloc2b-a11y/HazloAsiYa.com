@@ -5,6 +5,12 @@ import Disclosure from '@/components/legal/Disclosure'
 import { PHASE1_PRODUCTS, type Phase1ProductKey } from '@/lib/payment-products'
 import { checkoutStatic, getStoredUser } from '@/lib/static-backend'
 import { FUNNEL_EVENTS, trackFunnelEvent } from '@/lib/analytics-events'
+import { UPSELL_COPY_EXPERIMENT_ID } from '@/hooks/useAbVariant'
+
+const REVISION_EXPRESS_CTA = {
+  A: 'Obtener revisión express — $12',
+  B: 'Revisar mis documentos antes de enviar — $12',
+} as const
 
 type Props = {
   productKey: Phase1ProductKey
@@ -12,9 +18,8 @@ type Props = {
   funnelId: string
   /** Texto de apoyo encima del CTA (FTC: claro, sin urgencia). */
   supportText?: string
-  /** Solo afecta el CTA de revisión express (A/B copy). */
-  abVariant?: 'A' | 'B'
-  abExperimentId?: string
+  /** Solo revisión express entra en el A/B; kits omiten o usan 'A'. */
+  variant?: 'A' | 'B'
 }
 
 export default function UpsellButton({
@@ -22,14 +27,13 @@ export default function UpsellButton({
   placement,
   funnelId,
   supportText,
-  abVariant = 'A',
-  abExperimentId,
+  variant,
 }: Props) {
   const p = PHASE1_PRODUCTS[productKey]
+  const v = variant ?? 'A'
   const ctaLabel =
-    productKey === 'revisionExpress' && abVariant === 'B'
-      ? 'Revisar mis documentos antes de enviar — $12'
-      : p.ctaLabel
+    productKey === 'revisionExpress' ? REVISION_EXPRESS_CTA[v] : p.ctaLabel
+
   const [email, setEmail] = useState('')
   const [busy, setBusy] = useState(false)
   const user = typeof window !== 'undefined' ? getStoredUser() : null
@@ -41,19 +45,18 @@ export default function UpsellButton({
       return
     }
     trackFunnelEvent(FUNNEL_EVENTS.UPSELL_CLICK, {
+      variant: v,
+      experiment: UPSELL_COPY_EXPERIMENT_ID,
       product: productKey,
       placement,
       funnel: funnelId,
-      ...(abExperimentId
-        ? { variant: abVariant, experiment: abExperimentId, tramite: funnelId }
-        : {}),
+      tramite: funnelId,
     })
     trackFunnelEvent(FUNNEL_EVENTS.CHECKOUT_START, {
+      variant: v,
+      experiment: UPSELL_COPY_EXPERIMENT_ID,
       product: productKey,
       funnel: funnelId,
-      ...(abExperimentId
-        ? { variant: abVariant, experiment: abExperimentId }
-        : {}),
     })
     setBusy(true)
     const res = await checkoutStatic({
@@ -71,6 +74,7 @@ export default function UpsellButton({
       data-track="upsell"
       data-product={productKey}
       data-placement={placement}
+      data-ab-variant={v}
     >
       <Disclosure variant="paid-service" />
       {supportText && <p className="text-sm text-gray-700 leading-relaxed">{supportText}</p>}
