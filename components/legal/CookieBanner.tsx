@@ -38,6 +38,7 @@ export default function CookieBanner() {
     }
     localStorage.setItem(STORAGE_US, JSON.stringify(payload))
     localStorage.removeItem(STORAGE_EU)
+    // Dispara consentUpdated + haya-consent-updated para GA4 / hooks sin recargar
     dispatchConsentUpdated()
     setVisible(false)
   }

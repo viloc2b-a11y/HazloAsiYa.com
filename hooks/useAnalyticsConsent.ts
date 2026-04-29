@@ -5,8 +5,8 @@ import {
   CONSENT_EVENT,
   STORAGE_EU,
   STORAGE_US,
-  readConsent,
 } from '@/lib/cookie-consent'
+import { isAnalyticsAllowed, isMarketingAllowed } from '@/lib/consent-utils'
 
 export type AnalyticsConsentState = {
   analyticsAllowed: boolean
@@ -17,11 +17,9 @@ function computeConsent(): AnalyticsConsentState {
   if (typeof window === 'undefined') {
     return { analyticsAllowed: false, marketingAllowed: false }
   }
-  const c = readConsent()
-  if (!c) return { analyticsAllowed: false, marketingAllowed: false }
   return {
-    analyticsAllowed: c.value.analytics === true,
-    marketingAllowed: c.value.marketing === true,
+    analyticsAllowed: isAnalyticsAllowed(),
+    marketingAllowed: isMarketingAllowed(),
   }
 }
 

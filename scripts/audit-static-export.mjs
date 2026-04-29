@@ -114,9 +114,10 @@ function auditHtmlSemantics(htmlPath, html) {
   if (/AggregateRating/i.test(html) || /\bratingValue\b/i.test(html)) {
     issues.push({ file: rf, msg: 'prohibido: AggregateRating / ratingValue en HTML' })
   }
-  if (/googletagmanager\.com\/gtag\/js/i.test(html)) {
+  // Solo si hay <script src="...gtag/js"> directo en el HTML (no el string dentro de un inline IIFE)
+  if (/<script[^>]+src=["'][^"']*googletagmanager\.com\/gtag\/js/i.test(html)) {
     warnings.push(
-      `${rf}: GA4 puede estar incrustando gtag/js en HTML estático — verificar que solo cargue tras consent (carga dinámica esperada)`,
+      `${rf}: GA4 carga gtag/js vía <script src=…> en HTML estático — verificar Consent Mode y orden de scripts`,
     )
   }
 
@@ -231,6 +232,19 @@ function main() {
     forbidden,
   )
   assertCanonical(path.join(OUT, 'snap', 'texas', 'index.html'), ['/snap/texas/'], forbidden)
+
+  const rootIndex = path.join(OUT, 'index.html')
+  if (fs.existsSync(rootIndex)) {
+    const htmlContent = fs.readFileSync(rootIndex, 'utf8')
+    if (
+      htmlContent.includes('googletagmanager.com/gtag/js') &&
+      (!htmlContent.includes('analytics_storage') || !htmlContent.includes('denied'))
+    ) {
+      warnings.push(
+        'out/index.html: GA4 puede estar cargando sin Consent Mode default — verificar layout (denied + analytics_storage)',
+      )
+    }
+  }
 
   for (const htmlPath of collectIndexHtmlFiles(OUT)) {
     const html = fs.readFileSync(htmlPath, 'utf8')

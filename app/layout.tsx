@@ -6,6 +6,8 @@ import { alternatesForPath } from '@/lib/alternates'
 import CookieBanner from '@/components/legal/CookieBanner'
 import GoogleAnalyticsClient from '@/components/analytics/GoogleAnalyticsClient'
 
+const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID
+
 const searchUrlTemplate = `${absoluteUrl('/buscar')}?q={search_term_string}`
 
 const websiteJsonLd = {
@@ -55,10 +57,26 @@ gtag('consent', 'default', {
   ad_storage: 'denied',
   ad_user_data: 'denied',
   ad_personalization: 'denied',
-  wait_for_update: 500,
+  wait_for_update: 500
 });
 `}
         </Script>
+        {GA_MEASUREMENT_ID ? (
+          <Script id="ga-gtag-loader" strategy="afterInteractive">
+            {`
+(function(){
+  var id=${JSON.stringify(GA_MEASUREMENT_ID)};
+  var s=document.createElement('script');
+  s.async=true;
+  s.src='https://www.googletagmanager.com/gtag/js?id='+encodeURIComponent(id);
+  s.onload=function(){
+    gtag('js', new Date());
+    gtag('config', id, { send_page_view: false, anonymize_ip: true });
+  };
+  document.head.appendChild(s);
+})();`}
+          </Script>
+        ) : null}
       </head>
       <body className="bg-cream text-gray-800 antialiased">
         <script

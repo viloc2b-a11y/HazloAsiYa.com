@@ -41,6 +41,29 @@ export function readConsent():
     }
     const us = localStorage.getItem(STORAGE_US)
     if (us) {
+      // Legado: solo texto (prompt / installs antiguos)
+      if (us === 'all') {
+        return {
+          mode: 'us',
+          value: {
+            essential: true,
+            analytics: true,
+            marketing: true,
+            savedAt: new Date().toISOString(),
+          },
+        }
+      }
+      if (us === 'essential') {
+        return {
+          mode: 'us',
+          value: {
+            essential: true,
+            analytics: false,
+            marketing: false,
+            savedAt: new Date().toISOString(),
+          },
+        }
+      }
       const v = JSON.parse(us) as ConsentUS
       if (v && v.essential === true) return { mode: 'us', value: v }
     }

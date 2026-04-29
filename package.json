@@ -18,7 +18,8 @@
     "migrate:landings": "node scripts/migrate-landings.mjs",
     "migrate:audit": "node scripts/migrate-content.mjs",
     "audit:data": "node scripts/audit-data-inventory.mjs",
-    "audit:legal": "node scripts/audit-legal-compliance.mjs"
+    "audit:legal": "node scripts/audit-legal-compliance.mjs",
+    "docs:consent": "echo Ver docs/verify-ga4-consent.md para verificacion manual de GA4 y Consent Mode v2"
   },
   "dependencies": {
     "@supabase/ssr": "^0.5.0",

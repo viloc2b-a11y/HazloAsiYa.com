@@ -1,69 +1,54 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { useAnalyticsConsent } from '@/hooks/useAnalyticsConsent'
 
 declare global {
   interface Window {
     dataLayer?: unknown[]
-    __hayaGa4Loaded?: boolean
+    gtag?: (...args: unknown[]) => void
   }
 }
 
 /**
- * Carga gtag.js y configura GA4 solo cuando analyticsAllowed.
- * Requiere Script beforeInteractive en layout que define dataLayer + gtag + consent default denied.
+ * Tras cargar gtag.js + config en layout (send_page_view: false), aquí solo:
+ * - Consent Mode v2 update (granted/denied) según CookieBanner
+ * - Primer page_view manual cuando analyticsAllowed (misma sesión, sin recargar)
  */
 export default function GoogleAnalyticsClient() {
   const { analyticsAllowed, marketingAllowed } = useAnalyticsConsent()
   const measurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID
+  const pageViewSentRef = useRef(false)
 
   useEffect(() => {
     if (!measurementId || typeof window === 'undefined') return
     const gtag = window.gtag
     if (typeof gtag !== 'function') return
 
-    const adGranted = marketingAllowed ? 'granted' : 'denied'
+    const adState = marketingAllowed ? 'granted' : 'denied'
 
     if (!analyticsAllowed) {
-      if (window.__hayaGa4Loaded) {
-        gtag('consent', 'update', {
-          analytics_storage: 'denied',
-          ad_storage: 'denied',
-          ad_user_data: 'denied',
-          ad_personalization: 'denied',
-        })
-      }
-      return
-    }
-
-    const applyConsentUpdate = () => {
+      pageViewSentRef.current = false
       gtag('consent', 'update', {
-        analytics_storage: 'granted',
-        ad_storage: adGranted,
-        ad_user_data: adGranted,
-        ad_personalization: adGranted,
+        analytics_storage: 'denied',
+        ad_storage: 'denied',
+        ad_user_data: 'denied',
+        ad_personalization: 'denied',
       })
-    }
-
-    if (window.__hayaGa4Loaded) {
-      applyConsentUpdate()
       return
     }
 
-    const s = document.createElement('script')
-    s.async = true
-    s.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(measurementId)}`
-    s.onload = () => {
-      window.__hayaGa4Loaded = true
-      gtag('js', new Date())
-      applyConsentUpdate()
-      gtag('config', measurementId, {
-        send_page_view: true,
-        anonymize_ip: true,
-      })
+    gtag('consent', 'update', {
+      analytics_storage: 'granted',
+      ad_storage: adState,
+      ad_user_data: adState,
+      ad_personalization: adState,
+    })
+
+    if (!pageViewSentRef.current) {
+      gtag('event', 'page_view')
+      pageViewSentRef.current = true
     }
-    document.head.appendChild(s)
   }, [analyticsAllowed, marketingAllowed, measurementId])
 
   return null
