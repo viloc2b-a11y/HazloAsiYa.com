@@ -7,6 +7,8 @@ import VerifiedInfoBanner from '@/components/VerifiedInfoBanner'
 import { getPublishedGuideSlugs, loadPublishedGuide } from '@/lib/guides-fs'
 import { absoluteUrl } from '@/lib/site'
 import { alternatesForPath } from '@/lib/alternates'
+import { DISCLAIMER_ITIN } from '@/lib/legal-texts'
+import { guideNeedsItinDisclaimer } from '@/lib/guide-needs-itin-disclaimer'
 
 export const dynamicParams = false
 
@@ -61,6 +63,7 @@ export default async function GuiaPage({ params }: Props) {
   if (!loaded) notFound()
   const { data, content } = loaded
   const firstOfficial = data.regulatorySource[0]
+  const showItinDisclaimer = guideNeedsItinDisclaimer(slug, data.relatedTramites)
 
   return (
     <div className="min-h-screen bg-cream">
@@ -78,6 +81,16 @@ export default async function GuiaPage({ params }: Props) {
         <h1 className="font-serif text-3xl sm:text-4xl text-navy mb-6 leading-tight">{data.h1}</h1>
 
         <VerifiedInfoBanner officialUrl={firstOfficial} displayPeriod={data.lastVerified} />
+
+        {showItinDisclaimer && (
+          <aside
+            className="mt-6 rounded-xl border-l-4 border-green bg-emerald-50/90 px-4 py-3 text-sm text-navy leading-relaxed"
+            role="note"
+          >
+            <span className="font-bold text-green">Aviso fiscal (orientación)</span>
+            <p className="mt-1.5">{DISCLAIMER_ITIN}</p>
+          </aside>
+        )}
 
         <div className="prose prose-gray max-w-none space-y-6 text-gray-800 mt-8">
           <ReactMarkdown>{content}</ReactMarkdown>

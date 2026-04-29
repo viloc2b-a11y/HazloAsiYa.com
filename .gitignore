@@ -1,5 +1,9 @@
 node_modules
 
+# Secretos y entorno local
+.env.local
+.env*.local
+
 # Output de análisis Python — no es el sitemap de producción
 # El sitemap real está en out/sitemap.xml (generado por Next.js build)
 seo_output/
@@ -22,3 +26,6 @@ Thumbs.db
 
 # Entregas / artefactos zip locales
 *.zip
+
+# Generado por npm run audit:data (regenerable)
+docs/data-inventory-auto.json

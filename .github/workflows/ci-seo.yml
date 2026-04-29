@@ -64,6 +64,27 @@ jobs:
       - name: Sitemap, robots, _redirects, JSON-LD, canonical
         working-directory: ${{ steps.appdir.outputs.dir }}
         run: node scripts/audit-static-export.mjs out
+      - name: Legal compliance audit (FAIL bloquea)
+        working-directory: ${{ steps.appdir.outputs.dir }}
+        run: node scripts/audit-legal-compliance.mjs out
+
+  audit-data-inventory:
+    name: JOB 3 — inventario de datos (informativo)
+    needs: validate-metadata
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - id: appdir
+        run: |
+          if [ -f HazloAsiYa.com/package.json ]; then echo "dir=HazloAsiYa.com" >> $GITHUB_OUTPUT
+          elif [ -f package.json ]; then echo "dir=." >> $GITHUB_OUTPUT
+          else exit 1; fi
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: npm run audit:data
+        working-directory: ${{ steps.appdir.outputs.dir }}
+        run: node scripts/audit-data-inventory.mjs
 
   content-expiry:
     name: JOB 4 — content-expiry (main, cron / manual)

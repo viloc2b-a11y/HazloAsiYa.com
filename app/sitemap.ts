@@ -42,10 +42,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }))
 
+  const legalExtras = [
+    { url: absoluteUrl('/precios/'), lastModified: LASTMOD, changeFrequency: 'monthly' as const, priority: 0.5 },
+    { url: absoluteUrl('/mis-datos/'), lastModified: LASTMOD, changeFrequency: 'yearly' as const, priority: 0.25 },
+    { url: absoluteUrl('/no-vender-mis-datos/'), lastModified: LASTMOD, changeFrequency: 'yearly' as const, priority: 0.25 },
+  ]
+
   return [
     { url: `${SITE_ORIGIN}/`, lastModified: LASTMOD, changeFrequency: 'daily' as const, priority: 1 },
-    { url: absoluteUrl('/terms'), lastModified: LASTMOD, changeFrequency: 'yearly' as const, priority: 0.3 },
-    { url: absoluteUrl('/privacy'), lastModified: LASTMOD, changeFrequency: 'yearly' as const, priority: 0.3 },
+    { url: absoluteUrl('/terms/'), lastModified: LASTMOD, changeFrequency: 'yearly' as const, priority: 0.3 },
+    { url: absoluteUrl('/privacy/'), lastModified: LASTMOD, changeFrequency: 'yearly' as const, priority: 0.3 },
+    ...legalExtras,
     {
       url: absoluteUrl('/sobre-nosotros'),
       lastModified: LASTMOD,

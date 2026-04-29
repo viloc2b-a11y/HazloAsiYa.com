@@ -4,6 +4,12 @@ import { useRouter, useParams } from 'next/navigation'
 import { FUNNELS, FunnelId } from '@/data/funnels'
 import Link from 'next/link'
 import { trackEvent } from '@/lib/static-backend'
+import { FUNNEL_EVENTS } from '@/lib/analytics-events'
+import AgeGate from '@/components/legal/AgeGate'
+import GdprBadge from '@/components/legal/GdprBadge'
+import { useIsEU } from '@/hooks/useIsEU'
+
+const COPPA_FUNNELS = new Set<string>(['escuela', 'iep', 'prek', 'medicaid'])
 
 const LogoMark = () => (
   <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
@@ -30,6 +36,7 @@ const AI_MESSAGES: Partial<Record<FunnelId | 'default', string[]>> = {
 export default function WizardPage() {
   const { funnel: id } = useParams<{ funnel: string }>()
   const router = useRouter()
+  const { isEU, ready } = useIsEU()
   const f = FUNNELS[id as FunnelId]
 
   const [step,     setStep]     = useState(0)
@@ -39,9 +46,12 @@ export default function WizardPage() {
 
   useEffect(() => {
     trackEvent({ event: 'form_started', funnel: id }).catch(() => {})
+    trackEvent({ event: FUNNEL_EVENTS.QUIZ_START, funnel: id }).catch(() => {})
   }, [id])
 
   if (!f) return <div className="p-8 text-center">Trámite no encontrado.</div>
+
+  const childDataExpected = COPPA_FUNNELS.has(id)
 
   const steps = f.steps
   const progress = Math.round((step / steps.length) * 100)
@@ -75,6 +85,7 @@ export default function WizardPage() {
   const handleSubmit = async () => {
     setLoading(true)
     try {
+      await trackEvent({ event: FUNNEL_EVENTS.QUIZ_COMPLETE, funnel: id }).catch(() => {})
       // Save form data to sessionStorage for result page
       sessionStorage.setItem(`haya_form_${id}`, JSON.stringify(formData))
       router.push(`/${id}/result`)
@@ -89,7 +100,13 @@ export default function WizardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-cream flex flex-col">
+    <AgeGate childDataExpected={childDataExpected} onAdultConfirmed={() => {}}>
+      <div className="min-h-screen bg-cream flex flex-col">
+        {ready && isEU && (
+          <div className="max-w-2xl mx-auto w-full px-4 pt-3 shrink-0">
+            <GdprBadge show />
+          </div>
+        )}
       {/* Mini topbar */}
       <header className="bg-navy px-4 h-12 flex items-center justify-between shrink-0">
         <Link href={`/${id}`} className="flex items-center gap-2">
@@ -204,6 +221,7 @@ export default function WizardPage() {
         )}
       </div>
     </div>
+    </AgeGate>
   )
 }
 

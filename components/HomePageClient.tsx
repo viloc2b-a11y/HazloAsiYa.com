@@ -223,9 +223,12 @@ export default function HomePageClient() {
             <div className="text-white/50 text-xs font-bold tracking-widest uppercase mb-3">Legal</div>
             {[
               ['Guías','/guias/'],
+              ['Planes y precios','/precios/'],
               ['Quiénes somos','/sobre-nosotros'],
-              ['Términos de Uso','/terms'],
-              ['Privacidad','/privacy'],
+              ['Términos de Uso','/terms/'],
+              ['Privacidad','/privacy/'],
+              ['Mis datos','/mis-datos/'],
+              ['No vender mis datos','/no-vender-mis-datos/'],
             ].map(([l,h]) => (
               <Link key={l} href={h} className="block text-white/40 hover:text-white text-sm transition-colors mb-1">{l}</Link>
             ))}

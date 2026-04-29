@@ -5,6 +5,7 @@ import { FUNNELS, NEXT_STEP_MAP, FunnelId } from '@/data/funnels'
 import Link from 'next/link'
 import { authStatic, checkoutStatic, generateResultClient, submitLeadStatic } from '@/lib/static-backend'
 import { generatePDF } from '@/components/PDFGenerator'
+import ResultPhase1Section from '@/components/monetization/ResultPhase1Section'
 
 interface Result {
   eligible: boolean
@@ -208,6 +209,13 @@ export default function ResultPage() {
             </div>
           </div>
         </div>
+
+        <ResultPhase1Section
+          funnelId={id as string}
+          tramiteLabel={f.name}
+          eligible={result.eligible}
+          missingCount={result.missingItems.length}
+        />
 
         {/* Anonymous gate */}
         {!isLoggedIn && (

@@ -1,3 +1,6 @@
+import type { CheckoutProductId } from '@/lib/payment-products'
+import { trackFunnelEvent } from '@/lib/analytics-events'
+
 export type StaticUser = { id: string; email: string; name?: string; plan?: string }
 
 export function getStoredUser(): StaticUser | null {
@@ -14,6 +17,11 @@ export function setStoredUser(user: StaticUser | null) {
 }
 
 export async function trackEvent(args: { event: string; funnel?: string; data?: unknown }) {
+  const extra =
+    args.data && typeof args.data === 'object' && !Array.isArray(args.data)
+      ? (args.data as Record<string, unknown>)
+      : {}
+  trackFunnelEvent(args.event, { funnel: args.funnel, ...extra })
   console.log('trackEvent (static)', args)
 }
 
@@ -34,12 +42,25 @@ export async function authStatic(args: { action: 'login' | 'signup' | 'logout'; 
   return { ok: true as const, user }
 }
 
+function guestIdFromEmail(email: string): string {
+  const em = email.trim().toLowerCase()
+  let h = 0
+  for (let i = 0; i < em.length; i++) h = (h * 31 + em.charCodeAt(i)) | 0
+  return `guest_${Math.abs(h).toString(36)}`
+}
+
 export async function checkoutStatic(args: {
-  productId: 'main' | 'annual' | 'assisted'
+  productId: CheckoutProductId
   funnelId?: string
+  /** Si no hay sesión, permite pagar como invitado con correo (recibo Square). */
+  userEmail?: string
 }) {
-  const user = getStoredUser()
-  if (!user) return { ok: false as const, error: 'Inicia sesión para continuar' }
+  let user = getStoredUser()
+  if (!user && args.userEmail?.trim()) {
+    const email = args.userEmail.trim()
+    user = { id: guestIdFromEmail(email), email, plan: 'free' }
+  }
+  if (!user) return { ok: false as const, error: 'Introduce tu correo o inicia sesión para continuar al pago' }
 
   const base = (process.env.NEXT_PUBLIC_API_BASE_URL || '').replace(/\/+$/, '')
   const url = base ? `${base}/api/checkout` : '/api/checkout'

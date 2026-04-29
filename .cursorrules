@@ -175,6 +175,80 @@ no bufete de abogados. El disclaimer es parte de la identidad, no un adorno.
 El modelo es freemium: cuestionario gratis → conversión a plan de pago.
 Todo el contenido debe orientar hacia el CTA de evaluación gratuita.
 
+── REGLAS LEGALES v2.0 (NO MODIFICAR SIN REVISIÓN LEGAL) ──
+
+R9. UPL — LENGUAJE PROHIBIDO
+  ✗ "garantizamos que será aprobado"
+  ✗ "te representamos ante [agencia]"
+  ✗ "asesoría legal" (como servicio que ofrecemos)
+  ✗ "te decimos si calificas" (como determinación oficial)
+  ✓ Usar: "orientación", "preparación", "revisión de completitud",
+           "información educativa", "cuestionario orientativo"
+
+R10. FTC — DIVULGACIONES OBLIGATORIAS
+  Todo enlace o contenido con acuerdo comercial: Disclosure ANTES del link.
+  Nunca solo en footer ni en página de términos separada.
+  En español claro y conspicuo — no texto gris pequeño.
+
+R11. COPPA — FLUJOS CON MENORES
+  AgeGate en /escuela/, /iep/, /prek/, /medicaid/.
+  No almacenar datos de menores de 13 sin verificación parental.
+  Si hay duda: tratar como dato de menor (más restrictivo).
+
+R12. TDPSA — DATOS DE USUARIOS
+  Ley aplicable: Texas TDPSA, no CCPA como base principal.
+  No crear campos que recopilen más de lo definido en lib/legal-texts.ts.
+  Documentos subidos: retención máxima 90 días → eliminación automática.
+
+R13. CIRCULAR 230 — CONTENIDO FISCAL
+  Páginas de ITIN, taxes, W-7: importar DISCLAIMER_ITIN.
+  Siempre referir a VITA del IRS como opción gratuita.
+  No recomendar estrategias fiscales específicas.
+
+R14. GDPR — USUARIOS DE LA UE
+  Formularios: usar hook useIsEU y mostrar GdprBadge si isEU.
+  Base legal documentada en lib/gdpr-legal-basis.ts para cada dato.
+  No transferir datos de usuarios UE sin mecanismo GDPR válido (SCCs).
+  Consentimiento UE: granular, revocable, sin casillas pre-marcadas.
+
+R15. MONETIZACIÓN ÉTICA
+  Sin contadores de urgencia falsos ("¡Oferta termina en 2 horas!").
+  Sin precios tachados que no sean descuentos reales.
+  Política de reembolso 30 días visible en cada producto.
+  Cancelación de membresía: 1 clic, sin retención agresiva.
+  Cada producto de pago: Disclosure variant="paid-service" visible.
+
+R16. INVENTARIO DE DATOS
+  Cualquier campo nuevo en formularios: agregar a docs/data-inventory-template.md.
+  Antes de agregar un nuevo campo: comentario en código:
+  // DATA: [tipo] [propósito] [retención] [base legal]
+  No crear campos sin justificación documentada.
+
+R17. CURSOS ESTACIONALES
+  Cursos de pago: siempre con fecha de vigencia del contenido.
+  Si el contenido regulatorio del curso cambia: marcar como "revisar"
+  y pausar venta hasta actualizar.
+  Usar SeasonalCourseBanner para mostrar cursos relevantes por época.
+
+R18. UPSELL SIN DARK PATTERNS
+  Sin contadores de urgencia falsos.
+  Sin frases como "solo quedan 3 disponibles" para productos digitales.
+  Sin precios tachados que no sean descuentos reales y verificables.
+  El upsell siempre aparece DESPUÉS de que el usuario recibe valor (p. ej. resultado del cuestionario).
+  A/B test: si el upsell baja conversión base >5%, desactivar o iterar.
+
+R19. AFILIADOS — SOLO VERIFICADOS
+  Solo 3 afiliados al inicio (lib/affiliates.ts). Agregar nuevos requiere:
+  - URL real del programa de afiliados (no inventar)
+  - disclosure: true y AffiliateCard con Disclosure antes del link
+  - Prueba de que el producto existe y es legítimo
+  - rel="nofollow sponsored noopener noreferrer" en el enlace
+
+R20. EMAIL — CAN-SPAM + TDPSA
+  Captura post-resultado; checkbox de consentimiento visible antes del envío.
+  Doble opt-in en ConvertKit/Brevo. Tag/campo del trámite por suscriptor.
+  Unsubscribe en 1 clic — sin retención agresiva.
+
 # ════════════════════════════════════════════════════════════
 # Fin de .cursorrules v2.0 — actualizar cuando cambie el stack
 # ════════════════════════════════════════════════════════════

@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 import { SITE_ORIGIN, absoluteUrl } from '@/lib/site'
 import { alternatesForPath } from '@/lib/alternates'
+import CookieBanner from '@/components/legal/CookieBanner'
 
 const searchUrlTemplate = `${absoluteUrl('/buscar')}?q={search_term_string}`
 
@@ -50,6 +51,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
         />
         {children}
+        <CookieBanner />
       </body>
     </html>
   )

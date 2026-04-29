@@ -7,6 +7,10 @@ import { absoluteUrl, isMoneyPageOgSlug } from '@/lib/site'
 import { alternatesForPath } from '@/lib/alternates'
 import VerifiedInfoBanner from '@/components/VerifiedInfoBanner'
 import { MONEY_PAGE_REGULATORY_SOURCE, regulatoryMetadataOther } from '@/lib/regulatory-meta'
+import Disclosure from '@/components/legal/Disclosure'
+import { DISCLAIMER_ITIN } from '@/lib/legal-texts'
+import SeasonalCourseBanner from '@/components/monetization/SeasonalCourseBanner'
+import AffiliateRecommendations from '@/components/monetization/AffiliateRecommendations'
 
 interface Props { params: Promise<{ funnel: string }> }
 
@@ -44,6 +48,20 @@ export default async function FunnelPage({ params }: Props) {
   return (
     <div className="min-h-screen bg-cream">
       <Topbar />
+
+      <div className="max-w-4xl mx-auto px-4 pt-4">
+        <Disclosure variant="educational" />
+      </div>
+
+      {(id === 'itin' || id === 'taxes') && (
+        <div className="max-w-4xl mx-auto px-4 pt-3">
+          <aside className="rounded-xl border-l-4 border-navy/30 bg-navy/5 px-4 py-3 text-sm text-navy leading-relaxed">
+            {DISCLAIMER_ITIN}
+          </aside>
+        </div>
+      )}
+
+      <SeasonalCourseBanner funnelId={id} />
 
       {/* Hero */}
       <section className="bg-navy">
@@ -139,6 +157,8 @@ export default async function FunnelPage({ params }: Props) {
             </div>
           </div>
         )}
+
+        <AffiliateRecommendations />
 
         {/* Next steps */}
         {nextSteps.length > 0 && (

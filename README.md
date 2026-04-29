@@ -1,56 +1,99 @@
-# HazloAsiYa.com
+# HazloAsíYa (hazloasiya.com)
 
-Website en español para ayudar a familias hispanas en EE.UU. a completar trámites (SNAP, Medicaid, ID, etc.) con un plan paso‑a‑paso generado por IA.
+Sitio en **español** para orientar a familias hispanas en EE. UU. en trámites (SNAP, Medicaid, ITIN, escuela, etc.) con cuestionario, plan paso a paso y contenido educativo (no asesoría legal ni gubernamental).
 
-## Stack (actual)
-- **Next.js 14** (App Router) con `output: 'export'`
-- **Cloudflare Pages Functions** para backend en `functions/api/*`
-- **Square Hosted Checkout** para pagos (la app **no** captura tarjeta/expiración/CVV)
-- **OpenAI API** para generar el resultado (`/api/generate-result`)
-- **Supabase** (si está configurado) para datos/webhook y plan del usuario
+## Stack
 
-## Quick start
+| Pieza | Detalle |
+|--------|---------|
+| Framework | **Next.js 14** (App Router), `output: 'export'` |
+| Deploy | **Cloudflare Pages** (salida `out/`) |
+| Pagos | **Square Hosted Checkout** (`POST /api/checkout` → `checkoutUrl`) |
+| IA | **OpenAI** (`POST /api/generate-result`) |
+| Datos | **Supabase** (opcional; webhook Square + usuario/plan) |
+| Email marketing | **ConvertKit** o **Brevo** (`POST /api/subscribe-email`) |
+
+## Inicio rápido
 
 ```bash
+cd HazloAsiYa.com   # si clonas el monorepo, entra a esta carpeta
 npm install
 cp .env.local.example .env.local
 npm run dev
 ```
 
-## Backend API (Cloudflare Pages Functions)
+Build estático + índice de búsqueda (Pagefind):
 
-Endpoints (no están en `app/api`):
-- `POST /api/generate-result` → OpenAI → retorna JSON con el plan
-- `POST /api/checkout` → Square → retorna `{ checkoutUrl }` y redirige a Square Hosted Checkout desde el cliente
-- `POST /api/square-webhook` → webhook de Square (firma) + actualización en Supabase (si aplica)
-
-> Para probar los endpoints localmente, usa **Wrangler Pages** (Pages Functions). En producción, Cloudflare Pages enruta automáticamente `/api/*` a `functions/api/*`.
-
-## Environment variables
-
-Ver `.env.local.example`. Variables clave:
-
-```env
-# Public / Next
-NEXT_PUBLIC_APP_URL=https://hazloasiya.com
-NEXT_PUBLIC_API_BASE_URL=
-NEXT_PUBLIC_SUPABASE_URL=
-NEXT_PUBLIC_SUPABASE_ANON_KEY=
-NEXT_PUBLIC_WHATSAPP_NUMBER=
-
-# Cloudflare Pages Functions
-OPENAI_API_KEY=
-OPENAI_MODEL=gpt-4.1-mini
-
-SQUARE_ACCESS_TOKEN=
-SQUARE_LOCATION_ID=
-SQUARE_WEBHOOK_SIGNATURE_KEY=
-
-SUPABASE_URL=
-SUPABASE_SERVICE_ROLE_KEY=
+```bash
+npm run build
 ```
 
-## Payments (Square)
-- El cliente llama `POST /api/checkout` y obtiene `checkoutUrl`.
-- El navegador redirige al **Square Hosted Checkout**.
-- La app **no** muestra ni recolecta campos de tarjeta.
+## API (Cloudflare Pages Functions)
+
+Rutas bajo `functions/api/` (no `app/api`):
+
+| Método | Ruta | Uso |
+|--------|------|-----|
+| POST | `/api/generate-result` | Plan / resultado del cuestionario (OpenAI) |
+| POST | `/api/checkout` | Square Payment Links → `{ checkoutUrl }` |
+| POST | `/api/square-webhook` | Pagos completados; Supabase si aplica |
+| POST | `/api/subscribe-email` | Alta a lista (ConvertKit / Brevo) |
+
+En local, prueba con **Wrangler** / entorno Pages; en producción Cloudflare enruta `/api/*` a estas funciones.
+
+## Variables de entorno
+
+Plantilla: **`.env.local.example`**. Resumen:
+
+- **Públicas:** `NEXT_PUBLIC_APP_URL` (ej. `https://www.hazloasiya.com`), `NEXT_PUBLIC_API_BASE_URL` si el API no es el mismo origen, Supabase público, WhatsApp, claves `NEXT_PUBLIC_AFFILIATE_*` (Fase 1).
+- **Functions:** `OPENAI_*`, `SQUARE_*`, `SUPABASE_*`, newsletter (`EMAIL_PROVIDER`, `CONVERTKIT_*` o `BREVO_*`).
+
+Nunca subas **`.env.local`** (contiene secretos).
+
+## Pagos (Square)
+
+- Productos legacy en checkout: guía única, anual, asistida (precios en `functions/api/checkout.ts`).
+- **Monetización Fase 1:** revisión express ($12), kit SNAP ($9), kit ITIN ($14) — mismos precios en código y en Square.
+- El cliente **no** captura datos de tarjeta; solo redirige al checkout alojado de Square.
+
+## Cumplimiento y documentación
+
+- Textos legales centralizados en `lib/legal-texts.ts`; política en `app/privacy/`, términos en `app/terms/`.
+- GDPR / cookies: `components/legal/CookieBanner.tsx`, `lib/cookie-consent.ts`.
+- Derechos de datos: `app/mis-datos/`, California: `app/no-vender-mis-datos/`.
+- Add-on monetización Fase 1: **`docs/modulo-12-monetizacion-fase1.md`**.
+- Inventario interno: `docs/data-processing-register.md`, plantilla `docs/data-inventory-template.md`.
+
+## Scripts útiles
+
+```bash
+npm run lint
+npm run validate              # contenido / metadatos
+npm run audit:data            # inventario de campos de formulario → regenerar JSON local
+npm run audit:legal           # tras `npm run build`, escanea `out/` + reglas UPL heurísticas
+npm run seo:validate:full     # validación contra export estático
+```
+
+CI: `.github/workflows/ci-seo.yml` (build, auditoría estática, legal audit, job opcional `audit:data`).
+
+## Estructura (resumen)
+
+```
+app/                  # Rutas App Router (incl. [funnel]/form, result, guías, legal, precios)
+components/           # UI + legal/, monetization/
+data/funnels.ts       # Trámites y orden
+functions/api/        # Workers Cloudflare
+lib/                  # site, static-backend, payment-products, affiliates, analytics-events, …
+docs/                 # módulos legales / monetización / inventario
+scripts/              # validate, audit-*, migrate-*, …
+public/               # estáticos, _redirects → copia a out/
+```
+
+## Dominio y SEO
+
+- Canónico: **`https://www.hazloasiya.com`** (`lib/site.ts`, `metadataBase` en `app/layout.tsx`).
+- Tras el build: comprobar que no queden `pages.dev` ni `aggregateRating` falso en `out/` (`npm run audit:legal`).
+
+## Licencia / propiedad
+
+Código y contenido propiedad del proyecto HazloAsíYa salvo dependencias con sus propias licencias.

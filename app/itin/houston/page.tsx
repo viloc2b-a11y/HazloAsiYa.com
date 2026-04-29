@@ -5,6 +5,8 @@ import { absoluteUrl } from '@/lib/site'
 import { alternatesForPath } from '@/lib/alternates'
 import VerifiedInfoBanner from '@/components/VerifiedInfoBanner'
 import { regulatoryMetadataOther } from '@/lib/regulatory-meta'
+import { DISCLAIMER_ITIN } from '@/lib/legal-texts'
+import AffiliateRecommendations from '@/components/monetization/AffiliateRecommendations'
 
 export const metadata: Metadata = {
   title: 'ITIN en Houston — guía y documentos | HazloAsíYa',
@@ -54,6 +56,14 @@ export default function ItinHoustonPage() {
         <div className="mb-8">
           <VerifiedInfoBanner officialUrl="https://www.irs.gov/individuals/international-taxpayers/taxpayer-identification-numbers-tin" />
         </div>
+
+        <aside
+          className="mb-8 rounded-xl border-l-4 border-green bg-emerald-50/90 px-4 py-3 text-sm text-navy leading-relaxed"
+          role="note"
+        >
+          <span className="font-bold text-green">Aviso fiscal (orientación)</span>
+          <p className="mt-1.5">{DISCLAIMER_ITIN}</p>
+        </aside>
 
         <div className="prose prose-gray max-w-none space-y-6">
           <p>
@@ -141,6 +151,10 @@ export default function ItinHoustonPage() {
             </Link>{' '}
             para armar documentos y revisar errores comunes del W-7.
           </p>
+
+          <div className="mt-10">
+            <AffiliateRecommendations />
+          </div>
 
           <p className="text-sm text-gray-600 border-t border-cream pt-6 leading-relaxed">
             Estos recursos son independientes de HazloAsíYa. Te los compartimos como referencia. Verifica disponibilidad

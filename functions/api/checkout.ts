@@ -26,12 +26,18 @@ const PRODUCT_PRICE_CENTS: Record<string, number> = {
   main: 1900,
   annual: 4900,
   assisted: 8900,
+  revisionExpress: 1200,
+  kitSnap: 900,
+  kitItin: 1400,
 }
 
 const PRODUCT_LABEL: Record<string, string> = {
   main: 'Guía Completa por Trámite',
   annual: 'Acceso Anual — 16 Trámites',
   assisted: 'Revisión Asistida por Especialista',
+  revisionExpress: 'Revisión Express — completitud documental',
+  kitSnap: 'Kit SNAP — checklist y pasos (PDF)',
+  kitItin: 'Kit ITIN — guía W-7 educativa (PDF)',
 }
 
 export const onRequestPost: PagesFunction<Env> = async (context) => {
@@ -41,7 +47,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     const locationId = requireEnv(env, 'SQUARE_LOCATION_ID')
 
     const { productId, userId, userEmail, funnelId } = (await context.request.json()) as {
-      productId: 'main' | 'annual' | 'assisted'
+      productId: string
       userId: string
       userEmail?: string
       funnelId?: string
