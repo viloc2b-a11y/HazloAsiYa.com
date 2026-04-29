@@ -357,6 +357,11 @@ export const FUNNELS: Record<FunnelId, Funnel> = {
   },
 };
 
+/** Comprueba que el segmento de URL sea un funnel conocido (evita `as FunnelId` inseguro). */
+export function isValidFunnelId(slug: string): slug is FunnelId {
+  return Object.prototype.hasOwnProperty.call(FUNNELS, slug)
+}
+
 export const FUNNEL_ORDER: FunnelId[] = [
   'snap', 'medicaid', 'id', 'wic', 'twc', 'taxes',
   'escuela', 'daca', 'iep', 'itin', 'rent', 'prek',

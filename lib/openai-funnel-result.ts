@@ -1,3 +1,7 @@
+/**
+ * Generación del resultado del cuestionario vía API OpenAI (no Claude).
+ * El Worker `functions/api/generate-result.ts` replica la lógica para producción.
+ */
 import { FunnelId, FUNNELS } from '@/data/funnels'
 import OpenAI from 'openai'
 

@@ -103,7 +103,8 @@ async function supabaseInsertPurchase(args: {
       product_id: productId,
       funnel: funnelId || null,
       amount: Math.round((amountCents || 0) / 100),
-      stripe_payment_intent: squarePaymentId || null,
+      stripe_payment_intent: null,
+      square_payment_id: squarePaymentId || null,
     }),
   })
   if (!r.ok) {

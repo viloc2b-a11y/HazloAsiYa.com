@@ -1,12 +1,12 @@
 import type { Metadata } from 'next'
 import { alternatesForPath } from '@/lib/alternates'
-import { FUNNELS, FunnelId } from '@/data/funnels'
+import { FUNNELS, isValidFunnelId } from '@/data/funnels'
 
 type Props = { children: React.ReactNode; params: Promise<{ funnel: string }> }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { funnel } = await params
-  const f = FUNNELS[funnel as FunnelId]
+  const f = isValidFunnelId(funnel) ? FUNNELS[funnel] : undefined
   const title = f ? `${f.name} — cuestionario | HazloAsíYa` : 'Cuestionario | HazloAsíYa'
   const description = f
     ? f.desc.slice(0, 155)

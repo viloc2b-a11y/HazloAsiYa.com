@@ -54,8 +54,8 @@ Nunca subas **`.env.local`** (contiene secretos).
 
 ## Pagos (Square)
 
-- Productos legacy en checkout: guía única, anual, asistida (precios en `functions/api/checkout.ts`).
-- **Monetización Fase 1:** revisión express ($12), kit SNAP ($9), kit ITIN ($14) — mismos precios en código y en Square.
+- Productos legacy en checkout: guía única, anual, asistida — precios y etiquetas en **`data/checkout-prices.json`** (leídos por `functions/api/checkout.ts` y `lib/payment-products.ts`).
+- **Monetización Fase 1:** revisión express, kit SNAP, kit ITIN — mismos montos en JSON, UI y Square.
 - El cliente **no** captura datos de tarjeta; solo redirige al checkout alojado de Square.
 
 ## Cumplimiento y documentación

@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { FUNNELS, FUNNEL_ORDER, NEXT_STEP_MAP, FunnelId } from '@/data/funnels'
+import { FUNNELS, NEXT_STEP_MAP, isValidFunnelId } from '@/data/funnels'
 import Topbar from '@/components/Topbar'
 import { absoluteUrl, isMoneyPageOgSlug } from '@/lib/site'
 import { alternatesForPath } from '@/lib/alternates'
@@ -16,8 +16,8 @@ interface Props { params: Promise<{ funnel: string }> }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { funnel: id } = await params
-  const f = FUNNELS[id as FunnelId]
-  if (!f) return {}
+  if (!isValidFunnelId(id)) return {}
+  const f = FUNNELS[id]
   const path = `/${id}/`
   const ogImage = isMoneyPageOgSlug(id)
     ? { url: `/images/og/${id}-og.jpg` as const, width: 1200, height: 630, alt: f.name }
@@ -40,10 +40,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function FunnelPage({ params }: Props) {
   const { funnel: id } = await params
-  const f = FUNNELS[id as FunnelId]
-  if (!f) notFound()
-
-  const nextSteps = NEXT_STEP_MAP[id as FunnelId] || []
+  if (!isValidFunnelId(id)) notFound()
+  const f = FUNNELS[id]
+  const nextSteps = NEXT_STEP_MAP[id] || []
 
   return (
     <div className="min-h-screen bg-cream">

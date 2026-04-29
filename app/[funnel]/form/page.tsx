@@ -1,7 +1,7 @@
 'use client'
 import { useState, useEffect } from 'react'
 import { useRouter, useParams } from 'next/navigation'
-import { FUNNELS, FunnelId } from '@/data/funnels'
+import { FUNNELS, FunnelId, isValidFunnelId } from '@/data/funnels'
 import Link from 'next/link'
 import { trackEvent } from '@/lib/static-backend'
 import { FUNNEL_EVENTS } from '@/lib/analytics-events'
@@ -37,7 +37,8 @@ export default function WizardPage() {
   const { funnel: id } = useParams<{ funnel: string }>()
   const router = useRouter()
   const { isEU, ready } = useIsEU()
-  const f = FUNNELS[id as FunnelId]
+  const f =
+    typeof id === 'string' && isValidFunnelId(id) ? FUNNELS[id] : undefined
 
   const [step,     setStep]     = useState(0)
   const [formData, setFormData] = useState<Record<string, string>>({})
@@ -59,7 +60,10 @@ export default function WizardPage() {
   const isAiStep = currentStep?.id === 'ai'
   const isLastStep = step === steps.length - 1
 
-  const aiMsgs = AI_MESSAGES[id as FunnelId] || (AI_MESSAGES as Record<string, string[]>)['default']!
+  const aiMsgs =
+    typeof id === 'string' && isValidFunnelId(id)
+      ? AI_MESSAGES[id] ?? AI_MESSAGES.default!
+      : AI_MESSAGES.default!
 
   // Start AI simulation
   useEffect(() => {

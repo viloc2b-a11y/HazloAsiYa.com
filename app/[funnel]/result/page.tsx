@@ -1,7 +1,7 @@
 'use client'
 import { useState, useEffect } from 'react'
 import { useParams, useRouter } from 'next/navigation'
-import { FUNNELS, NEXT_STEP_MAP, FunnelId } from '@/data/funnels'
+import { FUNNELS, NEXT_STEP_MAP, isValidFunnelId } from '@/data/funnels'
 import Link from 'next/link'
 import { authStatic, checkoutStatic, generateResultClient, submitLeadStatic } from '@/lib/static-backend'
 import { generatePDF } from '@/components/PDFGenerator'
@@ -29,7 +29,8 @@ function productIdToPlan(productId: string): NonNullable<User['plan']> {
 export default function ResultPage() {
   const { funnel: id } = useParams<{ funnel: string }>()
   const router = useRouter()
-  const f = FUNNELS[id as FunnelId]
+  const f =
+    typeof id === 'string' && isValidFunnelId(id) ? FUNNELS[id] : undefined
 
   const [result,   setResult]   = useState<Result | null>(null)
   const [user,     setUser]     = useState<User | null>(null)
@@ -147,7 +148,8 @@ export default function ResultPage() {
 
   if (!f || !result) return <div className="p-8 text-center">Error al cargar el resultado.</div>
 
-  const nextSteps = NEXT_STEP_MAP[id as FunnelId] || []
+  const nextSteps =
+    typeof id === 'string' && isValidFunnelId(id) ? NEXT_STEP_MAP[id] || [] : []
 
   return (
     <div className="min-h-screen bg-cream">

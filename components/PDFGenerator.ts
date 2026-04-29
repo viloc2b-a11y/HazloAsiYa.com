@@ -13,6 +13,7 @@ interface PDFData {
 }
 
 export async function generatePDF(data: PDFData): Promise<void> {
+  // Dependencia declarada en package.json ("jspdf").
   const { jsPDF } = await import('jspdf')
   const doc = new jsPDF({ unit: 'pt', format: 'letter', orientation: 'portrait' })
 

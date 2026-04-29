@@ -1,7 +1,12 @@
 /**
  * Productos Fase 1 — checkout Square (Payment Links vía Worker /api/checkout).
+ * Precios: data/checkout-prices.json (misma fuente que functions/api/checkout.ts).
  * Textos orientativos para publicación; revisar con abogado antes de producción.
  */
+
+import checkoutPricesData from '@/data/checkout-prices.json'
+
+const phase1Prices = checkoutPricesData.products
 
 export type Phase1ProductKey = 'revisionExpress' | 'kitSnap' | 'kitItin'
 
@@ -22,7 +27,7 @@ export const PHASE1_PRODUCTS: Record<Phase1ProductKey, PaymentProductDef> = {
   revisionExpress: {
     key: 'revisionExpress',
     name: 'Revisión Express',
-    priceCents: 12_00,
+    priceCents: phase1Prices.revisionExpress.priceCents,
     shortDescription:
       'Revisamos que tu documentación esté completa según los requisitos publicados por la agencia. Respuesta orientativa en 24–48 horas hábiles.',
     disclaimer:
@@ -32,7 +37,7 @@ export const PHASE1_PRODUCTS: Record<Phase1ProductKey, PaymentProductDef> = {
   kitSnap: {
     key: 'kitSnap',
     name: 'Kit SNAP — Lista de documentos y pasos',
-    priceCents: 9_00,
+    priceCents: phase1Prices.kitSnap.priceCents,
     shortDescription:
       'PDF descargable con checklist de documentos, pasos en orden y ejemplos orientativos para preparar tu solicitud en Texas (contenido educativo).',
     disclaimer:
@@ -42,7 +47,7 @@ export const PHASE1_PRODUCTS: Record<Phase1ProductKey, PaymentProductDef> = {
   kitItin: {
     key: 'kitItin',
     name: 'Kit ITIN — Guía W-7 paso a paso',
-    priceCents: 14_00,
+    priceCents: phase1Prices.kitItin.priceCents,
     shortDescription:
       'PDF con orientación sobre el formulario W-7, lista de documentos que el IRS suele aceptar y errores frecuentes a evitar (contenido educativo).',
     disclaimer:

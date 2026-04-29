@@ -1,3 +1,6 @@
+/** Precios y etiquetas: fuente única `data/checkout-prices.json`. */
+import checkoutPricesData from '../../data/checkout-prices.json'
+
 type Env = {
   SQUARE_ACCESS_TOKEN: string
   SQUARE_LOCATION_ID: string
@@ -22,22 +25,14 @@ function requireEnv(env: Partial<Env>, key: keyof Env) {
   return val
 }
 
-const PRODUCT_PRICE_CENTS: Record<string, number> = {
-  main: 1900,
-  annual: 4900,
-  assisted: 8900,
-  revisionExpress: 1200,
-  kitSnap: 900,
-  kitItin: 1400,
-}
+type PriceRow = { priceCents: number; label: string }
+const rows = checkoutPricesData.products as Record<string, PriceRow>
 
-const PRODUCT_LABEL: Record<string, string> = {
-  main: 'Guía Completa por Trámite',
-  annual: 'Acceso Anual — 16 Trámites',
-  assisted: 'Revisión Asistida por Especialista',
-  revisionExpress: 'Revisión Express — completitud documental',
-  kitSnap: 'Kit SNAP — checklist y pasos (PDF)',
-  kitItin: 'Kit ITIN — guía W-7 educativa (PDF)',
+const PRODUCT_PRICE_CENTS: Record<string, number> = {}
+const PRODUCT_LABEL: Record<string, string> = {}
+for (const [key, row] of Object.entries(rows)) {
+  PRODUCT_PRICE_CENTS[key] = row.priceCents
+  PRODUCT_LABEL[key] = row.label
 }
 
 export const onRequestPost: PagesFunction<Env> = async (context) => {
