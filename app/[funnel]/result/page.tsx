@@ -36,6 +36,7 @@ export default function ResultPage() {
   const [user,     setUser]     = useState<User | null>(null)
   const [loading,  setLoading]  = useState(true)
   const [showAuth, setShowAuth] = useState(false)
+  const [pendingCheckoutProductId, setPendingCheckoutProductId] = useState<string | null>(null)
   const [showLead, setShowLead] = useState(false)
   const [lead,     setLead]     = useState({ name: '', phone: '', zip: '' })
   const [pdfing,   setPdfing]   = useState(false)
@@ -97,11 +98,24 @@ export default function ResultPage() {
     if (!res.ok) return alert(res.error)
     setUser(res.user as unknown as User)
     setShowAuth(false)
+
+    if (pendingCheckoutProductId) {
+      const pid = pendingCheckoutProductId
+      setPendingCheckoutProductId(null)
+      await startCheckout(pid)
+    }
   }
 
-  const startCheckout = (productId: string) => {
+  const startCheckout = async (productId: string) => {
     if (!id) return
-    checkoutStatic({ productId: productId as 'main' | 'annual' | 'assisted', funnelId: id })
+    const storedUser = localStorage.getItem('haya_user')
+    if (!storedUser) {
+      setPendingCheckoutProductId(productId)
+      setShowAuth(true)
+      return
+    }
+    const res = await checkoutStatic({ productId: productId as 'main' | 'annual' | 'assisted', funnelId: id })
+    if (!res.ok) alert(res.error)
   }
 
   const downloadBasicPdf = async () => {
@@ -213,7 +227,7 @@ export default function ResultPage() {
         </div>
 
         <ResultPhase1Section
-          funnelId={id as string}
+          funnelId={typeof id === 'string' ? id : ''}
           tramiteLabel={f.name}
           eligible={result.eligible}
           missingCount={result.missingItems.length}
