@@ -34,16 +34,31 @@ export default function EmailCapture({ funnelId, tramiteLabel }: Props) {
           firstName: firstName.trim() || undefined,
         }),
       })
-      const data = await res.json().catch(() => ({}))
+      const data = (await res.json().catch(() => ({}))) as {
+        error?: string
+        title?: string
+        status?: string
+        duplicate?: boolean
+      }
       if (!res.ok) {
+        if (data?.title === 'Member Exists' || data?.error === 'Member Exists') {
+          if (analyticsAllowed) trackFunnelEvent(FUNNEL_EVENTS.EMAIL_CAPTURE, { tramite: funnelId })
+          setStatus('ok')
+          setMsg('Ya estás en nuestra lista. ¡Gracias!')
+          return
+        }
         setStatus('err')
-        setMsg(typeof data?.error === 'string' ? data.error : 'No se pudo registrar. Intenta de nuevo.')
+        setMsg(
+          typeof data?.error === 'string'
+            ? data.error
+            : 'Hubo un problema. Intenta de nuevo o escríbenos a hola@hazloasiya.com'
+        )
         return
       }
       if (analyticsAllowed) trackFunnelEvent(FUNNEL_EVENTS.EMAIL_CAPTURE, { tramite: funnelId })
       setStatus('ok')
-      if (data?.status === 'exists') setMsg('Ya estás en nuestra lista. ¡Gracias!')
-      else setMsg('✓ Revisa tu email — te enviamos un link de confirmación')
+      if (data?.duplicate) setMsg('Ya estás en nuestra lista. ¡Gracias!')
+      else setMsg('¡Listo! Recibirás alertas sobre este trámite.')
     } catch {
       setStatus('err')
       setMsg('Error de red. Intenta más tarde.')
