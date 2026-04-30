@@ -42,13 +42,15 @@ export default function ResultPage() {
   const [pdfing,   setPdfing]   = useState(false)
   const [authForm, setAuthForm] = useState({ email: '', password: '', name: '', mode: 'login' as 'login'|'register' })
   const [paidInUrl, setPaidInUrl] = useState(false)
+  const [purchaseVerified, setPurchaseVerified] = useState(false)
 
   const isPaid = user?.plan && !['free', '', undefined].includes(user.plan)
+  const hasPaidAccess = Boolean(isPaid) || purchaseVerified
   const isLoggedIn = !!user
 
   const haveShow  = isLoggedIn ? result?.haveItems || []   : (result?.haveItems || []).slice(0, 2)
   const missShow  = isLoggedIn ? result?.missingItems || [] : (result?.missingItems || []).slice(0, 2)
-  const stepsShow = isPaid     ? result?.steps || []
+  const stepsShow = hasPaidAccess ? result?.steps || []
                   : isLoggedIn ? (result?.steps || []).slice(0, 3)
                   : (result?.steps || []).slice(0, 1)
   const hiddenSteps = (result?.steps?.length || 0) - stepsShow.length
@@ -97,7 +99,23 @@ export default function ResultPage() {
     setPaidInUrl(new URLSearchParams(window.location.search).get('paid') === '1')
   }, [id])
 
-  const canDownloadFullPdf = Boolean(isPaid) || paidInUrl
+  useEffect(() => {
+    if (!id || typeof id !== 'string' || !user?.email) return
+    let cancelled = false
+    fetch(
+      `/api/check-purchase?email=${encodeURIComponent(user.email)}&funnel=${encodeURIComponent(id)}`
+    )
+      .then((r) => (r.ok ? r.json() : Promise.reject(new Error(String(r.status)))))
+      .then((d: { paid?: boolean }) => {
+        if (!cancelled && d.paid) setPurchaseVerified(true)
+      })
+      .catch(() => {})
+    return () => {
+      cancelled = true
+    }
+  }, [id, user?.email])
+
+  const canDownloadFullPdf = hasPaidAccess || paidInUrl
 
   const handleAuth = async () => {
     const { mode, email, password, name } = authForm
@@ -280,7 +298,7 @@ export default function ResultPage() {
         <div className="card overflow-hidden">
           <div className="bg-navy px-5 py-3.5 flex items-center justify-between">
             <div className="font-bold text-white text-sm">📋 Hazlo así — pasos en orden</div>
-            {isPaid ? (
+            {hasPaidAccess ? (
               <span className="text-xs bg-green/25 text-green-light px-2.5 py-1 rounded-full font-bold">COMPLETO</span>
             ) : isLoggedIn ? (
               <span className="text-xs text-white/40">{stepsShow.length} de {result.steps.length} pasos</span>
@@ -319,7 +337,7 @@ export default function ResultPage() {
         </div>
 
         {/* Free PDF (registered) */}
-        {isLoggedIn && !isPaid && (
+        {isLoggedIn && !hasPaidAccess && (
           <div className="card p-5 flex items-center justify-between gap-4">
             <div>
               <div className="font-bold text-navy text-sm">PDF básico — descarga gratis</div>
@@ -376,7 +394,7 @@ export default function ResultPage() {
         </div>
 
         {/* Upgrade box (registered, not paid) */}
-        {isLoggedIn && !isPaid && (
+        {isLoggedIn && !hasPaidAccess && (
           <div className="card p-6 border-2 border-gold">
             <div className="text-xs font-bold tracking-widest uppercase text-gold mb-2">Guía completa — $19</div>
             <h3 className="font-serif text-xl text-navy mb-2">Desbloquea los {hiddenSteps} pasos restantes + ejemplos</h3>
