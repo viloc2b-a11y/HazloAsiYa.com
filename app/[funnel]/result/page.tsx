@@ -41,6 +41,7 @@ export default function ResultPage() {
   const [lead,     setLead]     = useState({ name: '', phone: '', zip: '' })
   const [pdfing,   setPdfing]   = useState(false)
   const [authForm, setAuthForm] = useState({ email: '', password: '', name: '', mode: 'login' as 'login'|'register' })
+  const [paidInUrl, setPaidInUrl] = useState(false)
 
   const isPaid = user?.plan && !['free', '', undefined].includes(user.plan)
   const isLoggedIn = !!user
@@ -92,6 +93,12 @@ export default function ResultPage() {
     }
   }, [id])
 
+  useEffect(() => {
+    setPaidInUrl(new URLSearchParams(window.location.search).get('paid') === '1')
+  }, [id])
+
+  const canDownloadFullPdf = Boolean(isPaid) || paidInUrl
+
   const handleAuth = async () => {
     const { mode, email, password, name } = authForm
     const res = await authStatic({ action: mode === 'login' ? 'login' : 'signup', email, password, name })
@@ -131,6 +138,28 @@ export default function ResultPage() {
         missingItems: result.missingItems,
         steps: result.steps,
         isPaid: false,
+        userName: user?.name || user?.email,
+      })
+    } catch (err: unknown) {
+      alert(err instanceof Error ? err.message : 'No se pudo generar el PDF')
+    } finally {
+      setPdfing(false)
+    }
+  }
+
+  const downloadFullPdf = async () => {
+    if (!result || !f || pdfing) return
+    setPdfing(true)
+    try {
+      await generatePDF({
+        funnelName: f.name,
+        funnelIcon: f.icon,
+        headline: result.headline,
+        subheadline: result.subheadline,
+        haveItems: result.haveItems,
+        missingItems: result.missingItems,
+        steps: result.steps,
+        isPaid: true,
         userName: user?.name || user?.email,
       })
     } catch (err: unknown) {
@@ -306,13 +335,45 @@ export default function ResultPage() {
           </div>
         )}
 
-        {/* Full PDF (paid) */}
-        {isPaid && (
-          <div className="flex gap-3 flex-wrap">
-            <button className="btn-primary py-3 px-6">⬇️ Descargar PDF completo</button>
-            <button className="btn-outline py-3 px-6" onClick={() => window.print()}>🖨️ Imprimir</button>
+        {/* PDF completo: sin pago → checkout main; con plan o ?paid=1 → generar PDF */}
+        <div className="card p-5">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <div className="font-bold text-navy text-sm">PDF completo del plan</div>
+              <p className="text-xs text-gray-500 mt-1 leading-relaxed">
+                {canDownloadFullPdf
+                  ? 'Todos los pasos y listas en un solo archivo.'
+                  : 'Incluye todos los pasos del resultado — desbloquea con la guía por trámite ($19).'}
+              </p>
+            </div>
+            <div className="flex flex-wrap gap-2 shrink-0">
+              {canDownloadFullPdf ? (
+                <>
+                  <button
+                    type="button"
+                    onClick={downloadFullPdf}
+                    disabled={pdfing}
+                    className="btn-primary py-2.5 px-5 text-sm disabled:opacity-60 disabled:cursor-not-allowed"
+                  >
+                    {pdfing ? 'Generando…' : '⬇️ Descargar PDF completo'}
+                  </button>
+                  <button type="button" className="btn-outline py-2.5 px-5 text-sm" onClick={() => window.print()}>
+                    🖨️ Imprimir
+                  </button>
+                </>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => startCheckout('main')}
+                  disabled={pdfing}
+                  className="btn-primary py-2.5 px-5 text-sm disabled:opacity-60"
+                >
+                  Desbloquear PDF completo — $19
+                </button>
+              )}
+            </div>
           </div>
-        )}
+        </div>
 
         {/* Upgrade box (registered, not paid) */}
         {isLoggedIn && !isPaid && (
