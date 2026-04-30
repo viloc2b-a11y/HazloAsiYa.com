@@ -20,7 +20,7 @@ jobs:
     name: JOB 1 — validate-content (markdown + app/)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4.3.1
+      - uses: actions/checkout@v6
       - id: appdir
         run: |
           if [ -f HazloAsiYa.com/package.json ]; then echo "dir=HazloAsiYa.com" >> $GITHUB_OUTPUT
@@ -43,7 +43,7 @@ jobs:
     needs: validate-metadata
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4.3.1
+      - uses: actions/checkout@v6
       - id: appdir
         run: |
           if [ -f HazloAsiYa.com/package.json ]; then echo "dir=HazloAsiYa.com" >> $GITHUB_OUTPUT
@@ -73,7 +73,7 @@ jobs:
     needs: validate-metadata
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4.3.1
+      - uses: actions/checkout@v6
       - id: appdir
         run: |
           if [ -f HazloAsiYa.com/package.json ]; then echo "dir=HazloAsiYa.com" >> $GITHUB_OUTPUT
@@ -96,7 +96,7 @@ jobs:
       contents: read
       issues: write
     steps:
-      - uses: actions/checkout@v4.3.1
+      - uses: actions/checkout@v6
       - id: appdir
         run: |
           if [ -f HazloAsiYa.com/package.json ]; then echo "dir=HazloAsiYa.com" >> $GITHUB_OUTPUT
@@ -121,7 +121,7 @@ jobs:
     runs-on: ubuntu-latest
     continue-on-error: true
     steps:
-      - uses: actions/checkout@v4.3.1
+      - uses: actions/checkout@v6
       - id: lhci
         run: |
           if [ -f HazloAsiYa.com/lighthouserc.json ]; then echo "cfg=HazloAsiYa.com/lighthouserc.json" >> $GITHUB_OUTPUT
