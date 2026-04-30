@@ -25,6 +25,12 @@ function requireEnv(env: Partial<Env>, key: keyof Env) {
   return val
 }
 
+function isValidEmail(s: string): boolean {
+  const t = s.trim()
+  if (t.length > 254 || t.length < 3) return false
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(t)
+}
+
 type PriceRow = { priceCents: number; label: string }
 const rows = checkoutPricesData.products as Record<string, PriceRow>
 
@@ -35,43 +41,73 @@ for (const [key, row] of Object.entries(rows)) {
   PRODUCT_LABEL[key] = row.label
 }
 
+/** Nota en el pago para el webhook (sin `;` ni `=` dentro de valores codificados problemáticos). */
+function buildPaymentNote(args: {
+  userId: string
+  productId: string
+  funnelId: string
+  email: string
+}) {
+  const emailSafe = encodeURIComponent(args.email)
+  return `userId=${args.userId};productId=${args.productId};funnelId=${args.funnelId};email=${emailSafe}`
+}
+
 export const onRequestPost: PagesFunction<Env> = async (context) => {
   try {
     const env = context.env
     const accessToken = requireEnv(env, 'SQUARE_ACCESS_TOKEN')
     const locationId = requireEnv(env, 'SQUARE_LOCATION_ID')
 
-    const { productId, userId, userEmail, funnelId } = (await context.request.json()) as {
-      productId: string
-      userId: string
-      userEmail?: string
+    const body = (await context.request.json()) as {
+      productId?: string
+      userId?: string
+      email?: string
       funnelId?: string
     }
 
+    const productId = body.productId?.trim() || ''
+    const userId = body.userId?.trim() || ''
+    const emailRaw = typeof body.email === 'string' ? body.email : ''
+    const funnelId = body.funnelId?.trim() || ''
+
     if (!PRODUCT_PRICE_CENTS[productId]) return json({ error: 'Producto inválido' }, 400)
     if (!userId) return json({ error: 'Falta userId' }, 400)
+    if (!emailRaw.trim()) return json({ error: 'Falta email' }, 400)
+    if (!isValidEmail(emailRaw)) return json({ error: 'Email inválido' }, 400)
 
-    const appUrl = env.NEXT_PUBLIC_APP_URL || new URL(context.request.url).origin
-
-    // Square Payment Links API (hosted checkout)
-    const idempotencyKey = crypto.randomUUID()
+    const email = emailRaw.trim()
     const lineItemPrice = PRODUCT_PRICE_CENTS[productId]
     const label = PRODUCT_LABEL[productId] || productId
 
-    const body = {
+    const appUrl = env.NEXT_PUBLIC_APP_URL || new URL(context.request.url).origin
+
+    const idempotencyKey = crypto.randomUUID()
+
+    const squareBody = {
       idempotency_key: idempotencyKey,
       description: `HazloAsíYa — ${label}`,
-      quick_pay: {
-        name: label,
-        price_money: { amount: lineItemPrice, currency: 'USD' },
+      order: {
         location_id: locationId,
+        line_items: [
+          {
+            name: label,
+            quantity: '1',
+            base_price_money: { amount: lineItemPrice, currency: 'USD' },
+          },
+        ],
+        metadata: {
+          email,
+          product_id: productId,
+          funnel: funnelId,
+        },
       },
-      // Use a reference_id so webhook can map it back.
-      // Keep it short-ish and parseable.
-      payment_note: `userId=${userId};productId=${productId};funnelId=${funnelId || ''};email=${userEmail || ''}`,
+      payment_note: buildPaymentNote({ userId, productId, funnelId, email }),
       checkout_options: {
         redirect_url: `${appUrl}/${funnelId || 'snap'}/result/?paid=1`,
         ask_for_shipping_address: false,
+      },
+      pre_populated_data: {
+        buyer_email: email,
       },
     }
 
@@ -82,7 +118,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
         'content-type': 'application/json',
         'square-version': '2025-01-23',
       },
-      body: JSON.stringify(body),
+      body: JSON.stringify(squareBody),
     })
 
     const data = await r.json().catch(() => null)
@@ -97,4 +133,3 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     return json({ error: e instanceof Error ? e.message : 'Error' }, 500)
   }
 }
-

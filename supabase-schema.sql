@@ -50,6 +50,7 @@ CREATE TABLE IF NOT EXISTS public.purchases (
   amount                  integer NOT NULL,
   stripe_payment_intent   text UNIQUE,
   square_payment_id       text UNIQUE,
+  email                   text,
   created_at              timestamptz DEFAULT now()
 );
 

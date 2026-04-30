@@ -52,7 +52,7 @@ function guestIdFromEmail(email: string): string {
 export async function checkoutStatic(args: {
   productId: CheckoutProductId
   funnelId?: string
-  /** Si no hay sesión, permite pagar como invitado con correo (recibo Square). */
+  /** Correo obligatorio para Square (`pre_populated_data.buyer_email` / metadata). Si hay sesión, se usa la del usuario. */
   userEmail?: string
 }) {
   let user = getStoredUser()
@@ -61,6 +61,9 @@ export async function checkoutStatic(args: {
     user = { id: guestIdFromEmail(email), email, plan: 'free' }
   }
   if (!user) return { ok: false as const, error: 'Introduce tu correo o inicia sesión para continuar al pago' }
+
+  const email = user.email?.trim()
+  if (!email) return { ok: false as const, error: 'Se requiere un correo electrónico para el pago' }
 
   const base = (process.env.NEXT_PUBLIC_API_BASE_URL || '').replace(/\/+$/, '')
   const url = base ? `${base}/api/checkout` : '/api/checkout'
@@ -71,7 +74,7 @@ export async function checkoutStatic(args: {
     body: JSON.stringify({
       productId: args.productId,
       userId: user.id,
-      userEmail: user.email,
+      email,
       funnelId: args.funnelId,
     }),
   })

@@ -88,8 +88,18 @@ async function supabaseInsertPurchase(args: {
   funnelId?: string
   amountCents?: number
   squarePaymentId?: string
+  buyerEmail?: string
 }) {
-  const { supabaseUrl, serviceKey, userId, productId, funnelId, amountCents, squarePaymentId } = args
+  const { supabaseUrl, serviceKey, userId, productId, funnelId, amountCents, squarePaymentId, buyerEmail } = args
+  const row: Record<string, unknown> = {
+    user_id: userId,
+    product_id: productId,
+    funnel: funnelId || null,
+    amount: Math.round((amountCents || 0) / 100),
+    stripe_payment_intent: null,
+    square_payment_id: squarePaymentId || null,
+  }
+  if (buyerEmail) row.email = buyerEmail
   const r = await fetch(`${supabaseUrl}/rest/v1/purchases`, {
     method: 'POST',
     headers: {
@@ -98,14 +108,7 @@ async function supabaseInsertPurchase(args: {
       'content-type': 'application/json',
       prefer: 'return=minimal',
     },
-    body: JSON.stringify({
-      user_id: userId,
-      product_id: productId,
-      funnel: funnelId || null,
-      amount: Math.round((amountCents || 0) / 100),
-      stripe_payment_intent: null,
-      square_payment_id: squarePaymentId || null,
-    }),
+    body: JSON.stringify(row),
   })
   if (!r.ok) {
     const text = await r.text().catch(() => '')
@@ -150,6 +153,14 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     const productId = meta.productId || 'main'
     const funnelId = meta.funnelId || null
     const userId = meta.userId
+    let buyerEmail: string | undefined
+    if (meta.email) {
+      try {
+        buyerEmail = decodeURIComponent(meta.email)
+      } catch {
+        buyerEmail = meta.email
+      }
+    }
     if (!userId) return json({ error: 'Missing userId in payment_note' }, 400)
 
     if (!isUuid(userId)) {
@@ -178,6 +189,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       funnelId: funnelId || undefined,
       amountCents,
       squarePaymentId,
+      buyerEmail,
     })
 
     return json({ ok: true })
