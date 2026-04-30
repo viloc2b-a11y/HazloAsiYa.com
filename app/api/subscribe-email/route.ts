@@ -1,3 +1,4 @@
+import crypto from 'crypto'
 import { NextResponse } from 'next/server'
 
 export const runtime = 'nodejs'
@@ -34,17 +35,19 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'Correo inválido' }, { status: 400 })
   }
 
-  const url = `https://${server}.api.mailchimp.com/3.0/lists/${audience}/members`
+  const subscriberHash = crypto.createHash('md5').update(email).digest('hex')
+  const url = `https://${server}.api.mailchimp.com/3.0/lists/${audience}/members/${subscriberHash}`
   const auth = `Basic ${Buffer.from(`anystring:${apiKey}`).toString('base64')}`
 
   const res = await fetch(url, {
-    method: 'POST',
+    method: 'PUT',
     headers: {
       Authorization: auth,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
       email_address: email,
+      status_if_new: 'subscribed',
       status: 'subscribed',
       merge_fields: {
         FNAME: firstName || '',
@@ -63,14 +66,11 @@ export async function POST(req: Request) {
 
   if (!res.ok) {
     const err = data as { detail?: string; title?: string }
-    if (err?.title === 'Member Exists') {
-      return NextResponse.json({ duplicate: true }, { status: 200 })
-    }
     return NextResponse.json(
       { error: err?.detail || err?.title || 'Error de Mailchimp' },
       { status: res.status >= 400 && res.status < 600 ? res.status : 502 }
     )
   }
 
-  return NextResponse.json(data, { status: 200 })
+  return NextResponse.json({ ok: true }, { status: 200 })
 }

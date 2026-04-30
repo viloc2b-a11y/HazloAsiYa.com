@@ -34,19 +34,8 @@ export default function EmailCapture({ funnelId, tramiteLabel }: Props) {
           firstName: firstName.trim() || undefined,
         }),
       })
-      const data = (await res.json().catch(() => ({}))) as {
-        error?: string
-        title?: string
-        status?: string
-        duplicate?: boolean
-      }
+      const data = (await res.json().catch(() => ({}))) as { error?: string }
       if (!res.ok) {
-        if (data?.title === 'Member Exists' || data?.error === 'Member Exists') {
-          if (analyticsAllowed) trackFunnelEvent(FUNNEL_EVENTS.EMAIL_CAPTURE, { tramite: funnelId })
-          setStatus('ok')
-          setMsg('Ya estás en nuestra lista. ¡Gracias!')
-          return
-        }
         setStatus('err')
         setMsg(
           typeof data?.error === 'string'
@@ -57,8 +46,7 @@ export default function EmailCapture({ funnelId, tramiteLabel }: Props) {
       }
       if (analyticsAllowed) trackFunnelEvent(FUNNEL_EVENTS.EMAIL_CAPTURE, { tramite: funnelId })
       setStatus('ok')
-      if (data?.duplicate) setMsg('Ya estás en nuestra lista. ¡Gracias!')
-      else setMsg('¡Listo! Recibirás alertas sobre este trámite.')
+      setMsg('¡Listo! Recibirás alertas sobre este trámite.')
     } catch {
       setStatus('err')
       setMsg('Error de red. Intenta más tarde.')

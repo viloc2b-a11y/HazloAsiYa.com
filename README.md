@@ -11,7 +11,7 @@ Sitio en **español** para orientar a familias hispanas en EE. UU. en trámites 
 | Pagos | **Square Hosted Checkout** (`POST /api/checkout` → `checkoutUrl`) |
 | IA | **OpenAI** (`POST /api/generate-result`) |
 | Datos | **Supabase** (opcional; webhook Square + usuario/plan) |
-| Email marketing | **ConvertKit** o **Brevo** (`POST /api/subscribe-email`) |
+| Email marketing | **Mailchimp** (`POST /api/subscribe-email` → alta idempotente **PUT** a la audiencia) |
 
 ## Inicio rápido
 
@@ -28,18 +28,26 @@ Build estático + índice de búsqueda (Pagefind):
 npm run build
 ```
 
-## API (Cloudflare Pages Functions)
+## API
 
-Rutas bajo `functions/api/` (no `app/api`):
+### Cloudflare Pages (`functions/api/`)
+
+En **producción** (Cloudflare Pages), `/api/*` lo atienden los Workers en `functions/api/`:
 
 | Método | Ruta | Uso |
 |--------|------|-----|
 | POST | `/api/generate-result` | Plan / resultado del cuestionario (OpenAI) |
 | POST | `/api/checkout` | Square Payment Links → `{ checkoutUrl }` |
 | POST | `/api/square-webhook` | Pagos completados; Supabase si aplica |
-| POST | `/api/subscribe-email` | Alta a lista (ConvertKit / Brevo) |
+| POST | `/api/subscribe-email` | Suscripción Mailchimp (PUT idempotente por MD5 del email; respuesta `{ ok: true }`) |
 
-En local, prueba con **Wrangler** / entorno Pages; en producción Cloudflare enruta `/api/*` a estas funciones.
+`wrangler.toml` declara `nodejs_compat` para usar `node:crypto` (hash MD5 del subscriber) en `subscribe-email`.
+
+### Next.js (`app/api/`)
+
+En **`npm run dev`**, algunas rutas existen también en `app/api/` (misma firma HTTP). La de newsletter es **`app/api/subscribe-email/route.ts`** (`runtime: 'nodejs'`), misma lógica Mailchimp que la función de Cloudflare.
+
+Prueba local del subscribe: `curl` contra el origen que sirva la ruta (dev: Next; prod: dominio en Cloudflare).
 
 ## Variables de entorno
 
@@ -48,7 +56,8 @@ Plantilla: **`.env.local.example`**. Resumen:
 - **Públicas:** `NEXT_PUBLIC_APP_URL` (ej. `https://www.hazloasiya.com`), `NEXT_PUBLIC_API_BASE_URL` si el API no es el mismo origen, Supabase público, WhatsApp, claves `NEXT_PUBLIC_AFFILIATE_*` (Fase 1).
 - **GA4 (consent-gate):** `NEXT_PUBLIC_GA_MEASUREMENT_ID=G-XXXXXXXXXX`. El script `gtag.js` **no** se inyecta en el HTML estático: solo tras aceptar analítica en el CookieBanner (Consent Mode v2: default `denied` en `layout`).
 - **A/B upsell:** `NEXT_PUBLIC_AB_UPSELL_ACTIVE=false` por defecto; poner `true` cuando haya tráfico suficiente (ver `docs/ab-test-upsell.md`).
-- **Functions:** `OPENAI_*`, `SQUARE_*`, `SUPABASE_*`, newsletter (`EMAIL_PROVIDER`, `CONVERTKIT_*` o `BREVO_*`).
+- **Mailchimp:** `MAILCHIMP_API_KEY`, `MAILCHIMP_AUDIENCE_ID`; `MAILCHIMP_SERVER` (opcional si el API key ya termina en `-usXX`, p. ej. `-us21`).
+- **Functions:** `OPENAI_*`, `SQUARE_*`, `SUPABASE_*`.
 
 Nunca subas **`.env.local`** (contiene secretos).
 
@@ -71,6 +80,8 @@ Nunca subas **`.env.local`** (contiene secretos).
 ```bash
 npm run lint
 npm run validate              # contenido / metadatos
+npm run setup:mailchimp       # merge fields TRAMITE en la audiencia (requiere vars Mailchimp)
+npm run verify                # comprobaciones locales (Mailchimp, merge fields, etc.)
 npm run audit:data            # inventario de campos de formulario → regenerar JSON local
 npm run audit:legal           # tras `npm run build`, escanea `out/` + reglas UPL heurísticas
 npm run seo:validate:full     # validación contra export estático
