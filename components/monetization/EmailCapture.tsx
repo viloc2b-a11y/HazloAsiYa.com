@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { FUNNEL_EVENTS, trackFunnelEvent } from '@/lib/analytics-events'
+import { useAnalyticsConsent } from '@/hooks/useAnalyticsConsent'
 
 type Props = {
   funnelId: string
@@ -9,7 +10,9 @@ type Props = {
 }
 
 export default function EmailCapture({ funnelId, tramiteLabel }: Props) {
+  const { analyticsAllowed } = useAnalyticsConsent()
   const [email, setEmail] = useState('')
+  const [firstName, setFirstName] = useState('')
   const [consent, setConsent] = useState(false)
   const [status, setStatus] = useState<'idle' | 'loading' | 'ok' | 'err'>('idle')
   const [msg, setMsg] = useState('')
@@ -27,8 +30,8 @@ export default function EmailCapture({ funnelId, tramiteLabel }: Props) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           email: email.trim(),
-          funnelId,
-          consent: true,
+          tramite: funnelId,
+          firstName: firstName.trim() || undefined,
         }),
       })
       const data = await res.json().catch(() => ({}))
@@ -37,9 +40,10 @@ export default function EmailCapture({ funnelId, tramiteLabel }: Props) {
         setMsg(typeof data?.error === 'string' ? data.error : 'No se pudo registrar. Intenta de nuevo.')
         return
       }
-      trackFunnelEvent(FUNNEL_EVENTS.EMAIL_CAPTURE, { funnel: funnelId })
+      if (analyticsAllowed) trackFunnelEvent(FUNNEL_EVENTS.EMAIL_CAPTURE, { tramite: funnelId })
       setStatus('ok')
-      setMsg('Revisa tu correo para confirmar la suscripción (doble opt-in).')
+      if (data?.status === 'exists') setMsg('Ya estás en nuestra lista. ¡Gracias!')
+      else setMsg('✓ Revisa tu email — te enviamos un link de confirmación')
     } catch {
       setStatus('err')
       setMsg('Error de red. Intenta más tarde.')
@@ -54,6 +58,15 @@ export default function EmailCapture({ funnelId, tramiteLabel }: Props) {
         spam: solo lo relevante para tu situación.
       </p>
       <form onSubmit={submit} className="space-y-3">
+        <input
+          type="text"
+          name="alert_name"
+          value={firstName}
+          onChange={(e) => setFirstName(e.target.value)}
+          className="w-full rounded-xl border border-gray-200 px-4 py-2.5 text-sm"
+          placeholder="Tu nombre (opcional)"
+          autoComplete="given-name"
+        />
         <input
           type="email"
           name="alert_email"
@@ -73,8 +86,7 @@ export default function EmailCapture({ funnelId, tramiteLabel }: Props) {
             className="mt-0.5 accent-green"
           />
           <span>
-            Acepto recibir correos sobre este trámite y políticas de privacidad. Entiendo que puedo cancelar la
-            suscripción en cualquier momento con un enlace en cada mensaje (CAN-SPAM / TDPSA).
+            Acepto recibir emails de HazloAsíYa. Puedo cancelar en cualquier momento.
           </span>
         </label>
         <button type="submit" disabled={status === 'loading' || !consent} className="btn-primary w-full py-3 text-sm">

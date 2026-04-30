@@ -62,20 +62,18 @@ gtag('consent', 'default', {
 `}
         </Script>
         {GA_MEASUREMENT_ID ? (
-          <Script id="ga-gtag-loader" strategy="afterInteractive">
-            {`
-(function(){
-  var id=${JSON.stringify(GA_MEASUREMENT_ID)};
-  var s=document.createElement('script');
-  s.async=true;
-  s.src='https://www.googletagmanager.com/gtag/js?id='+encodeURIComponent(id);
-  s.onload=function(){
-    gtag('js', new Date());
-    gtag('config', id, { send_page_view: false, anonymize_ip: true });
-  };
-  document.head.appendChild(s);
-})();`}
-          </Script>
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(GA_MEASUREMENT_ID)}`}
+              strategy="afterInteractive"
+            />
+            <Script id="ga-config" strategy="afterInteractive">
+              {`
+gtag('js', new Date());
+gtag('config', ${JSON.stringify(GA_MEASUREMENT_ID)}, { send_page_view: false });
+`}
+            </Script>
+          </>
         ) : null}
       </head>
       <body className="bg-cream text-gray-800 antialiased">

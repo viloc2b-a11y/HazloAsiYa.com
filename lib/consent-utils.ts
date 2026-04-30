@@ -4,6 +4,7 @@
  */
 
 import { readConsent } from '@/lib/cookie-consent'
+export { useAnalyticsConsent } from '@/hooks/useAnalyticsConsent'
 
 /** Uso síncrono fuera de React (p. ej. trackFunnelEvent). SSR: siempre false. */
 export function isAnalyticsAllowed(): boolean {

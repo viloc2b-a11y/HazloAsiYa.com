@@ -31,3 +31,30 @@ export function trackFunnelEvent(eventName: string, params?: Record<string, unkn
     /* ignore */
   }
 }
+
+export function trackSquarePurchase(params: {
+  productId: string
+  productName: string
+  value: number // USD
+  currency: string // 'USD'
+}) {
+  if (typeof window === 'undefined') return
+  if (!isAnalyticsAllowed()) return
+  try {
+    window.gtag?.('event', 'purchase', {
+      transaction_id: `sq_${Date.now()}`,
+      value: params.value,
+      currency: params.currency,
+      items: [
+        {
+          item_id: params.productId,
+          item_name: params.productName,
+          price: params.value,
+          quantity: 1,
+        },
+      ],
+    })
+  } catch {
+    /* ignore */
+  }
+}

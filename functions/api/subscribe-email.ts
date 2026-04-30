@@ -1,9 +1,7 @@
 type Env = {
-  EMAIL_PROVIDER?: string
-  CONVERTKIT_API_KEY?: string
-  CONVERTKIT_FORM_ID?: string
-  BREVO_API_KEY?: string
-  BREVO_LIST_ID?: string
+  MAILCHIMP_API_KEY?: string
+  MAILCHIMP_AUDIENCE_ID?: string
+  MAILCHIMP_SERVER?: string
 }
 
 type PagesFunction<E = unknown> = (context: { request: Request; env: E }) => Promise<Response>
@@ -22,67 +20,56 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   try {
     const body = (await context.request.json()) as {
       email?: string
-      funnelId?: string
-      consent?: boolean
+      tramite?: string
+      firstName?: string
     }
-    const email = body.email?.trim().toLowerCase()
-    const funnelId = body.funnelId?.trim() || 'general'
+    const email = body.email?.trim().toLowerCase() || ''
+    const tramite = body.tramite?.trim() || 'general'
+    const firstName = body.firstName?.trim() || ''
+
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       return json({ error: 'Correo inválido' }, 400)
     }
-    if (!body.consent) return json({ error: 'Se requiere consentimiento explícito' }, 400)
 
     const env = context.env
-    const provider = (env.EMAIL_PROVIDER || 'convertkit').toLowerCase()
+    const server = env.MAILCHIMP_SERVER || 'us2'
+    const apiKey = env.MAILCHIMP_API_KEY
+    const audience = env.MAILCHIMP_AUDIENCE_ID
+    if (!apiKey || !audience) return json({ error: 'Newsletter no configurado' }, 501)
 
-    if (provider === 'convertkit') {
-      const apiKey = env.CONVERTKIT_API_KEY
-      const formId = env.CONVERTKIT_FORM_ID
-      if (!apiKey || !formId) return json({ error: 'Newsletter no configurado (ConvertKit)' }, 501)
+    const url = `https://${server}.api.mailchimp.com/3.0/lists/${audience}/members`
+    const auth = `Basic ${btoa(`anystring:${apiKey}`)}`
 
-      const r = await fetch(`https://api.convertkit.com/v3/forms/${formId}/subscribe`, {
-        method: 'POST',
-        headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({
-          api_key: apiKey,
-          email,
-          fields: { tramite: funnelId },
-        }),
-      })
-      const data = await r.json().catch(() => null)
-      if (!r.ok) {
-        return json({ error: (data as { message?: string })?.message || 'ConvertKit error' }, 502)
-      }
-      return json({ ok: true, provider: 'convertkit' })
-    }
-
-    if (provider === 'brevo') {
-      const apiKey = env.BREVO_API_KEY
-      const listId = parseInt(env.BREVO_LIST_ID || '', 10)
-      if (!apiKey || !listId) return json({ error: 'Newsletter no configurado (Brevo)' }, 501)
-
-      const r = await fetch('https://api.brevo.com/v3/contacts', {
-        method: 'POST',
-        headers: {
-          accept: 'application/json',
-          'content-type': 'application/json',
-          'api-key': apiKey,
+    const r = await fetch(url, {
+      method: 'POST',
+      headers: {
+        Authorization: auth,
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        email_address: email,
+        status: 'pending', // double opt-in
+        merge_fields: {
+          FNAME: firstName || '',
+          TRAMITE: tramite,
         },
-        body: JSON.stringify({
-          email,
-          listIds: [listId],
-          attributes: { TRAMITE: funnelId },
-          updateEnabled: true,
-        }),
-      })
-      if (!r.ok) {
-        const text = await r.text().catch(() => '')
-        return json({ error: text || 'Brevo error' }, 502)
-      }
-      return json({ ok: true, provider: 'brevo' })
+        tags: [tramite, 'hazloasiya-web'],
+        language: 'es',
+      }),
+    })
+
+    const data = (await r.json().catch(() => null)) as null | { title?: string; detail?: string }
+    if (r.ok) return json({ ok: true, status: 'pending' })
+
+    if (r.status === 400 && data?.title === 'Member Exists') {
+      return json({ ok: true, status: 'exists' })
     }
 
-    return json({ error: `Proveedor desconocido: ${provider}` }, 400)
+    // No filtrar detalles sensibles al cliente (key/audience). Mensajes simples.
+    if (r.status === 401) return json({ error: 'No se pudo registrar. Intenta más tarde.' }, 502)
+    if (r.status === 404) return json({ error: 'No se pudo registrar. Intenta más tarde.' }, 502)
+
+    return json({ error: data?.detail || 'No se pudo registrar. Intenta de nuevo.' }, 502)
   } catch (e: unknown) {
     return json({ error: e instanceof Error ? e.message : 'Error' }, 500)
   }
