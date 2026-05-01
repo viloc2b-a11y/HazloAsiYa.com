@@ -166,5 +166,26 @@
     "lastVerified": "2026-01-15T12:00:00.000Z",
     "validUntil": "2026-12-31T23:59:59.999Z",
     "sourceUrl": "https://www.acf.hhs.gov/ocs/map/map-published-guidelines"
+  },
+  "itin_irs_regulatory_reference": {
+    "value": 0,
+    "unit": "regulatory_reference",
+    "lastVerified": "2026-04-28T12:00:00.000Z",
+    "validUntil": "2026-12-31T23:59:59.999Z",
+    "sourceUrl": "https://www.irs.gov/itin"
+  },
+  "escuela_tea_regulatory_reference": {
+    "value": 0,
+    "unit": "regulatory_reference",
+    "lastVerified": "2026-04-28T12:00:00.000Z",
+    "validUntil": "2026-12-31T23:59:59.999Z",
+    "sourceUrl": "https://tea.texas.gov/"
+  },
+  "daca_uscis_regulatory_reference": {
+    "value": 0,
+    "unit": "regulatory_reference",
+    "lastVerified": "2026-04-28T12:00:00.000Z",
+    "validUntil": "2026-12-31T23:59:59.999Z",
+    "sourceUrl": "https://www.uscis.gov/humanitarian/consideration-deferred-action-childhood-arrivals-daca"
   }
 }

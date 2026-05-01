@@ -79,6 +79,9 @@ const FUNNEL_LIMIT_KEY_PREFIX: Partial<Record<FunnelId, string>> = {
   taxes: 'taxes_',
   rent: 'rent_',
   utilities: 'utilities_',
+  itin: 'itin_',
+  escuela: 'escuela_',
+  daca: 'daca_',
 }
 
 export type VerificationMeta = {

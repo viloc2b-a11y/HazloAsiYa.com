@@ -31,11 +31,23 @@ function parseDocsSelected(formData: Record<string, string>): string[] {
 }
 
 function deriveHaveItems(formData: Record<string, string>): string[] {
+  const docsMulti = formData.documents_available
+  if (docsMulti) {
+    try {
+      const p = JSON.parse(docsMulti) as unknown
+      if (Array.isArray(p) && p.length > 0) {
+        const labels = p.filter((x): x is string => typeof x === 'string')
+        if (labels.length > 0) return labels.slice(0, 5)
+      }
+    } catch {
+      /* ignore */
+    }
+  }
   const ids = parseDocsSelected(formData)
   const labels = ids.map(id => DOC_LABELS[id] || id.replace(/_/g, ' '))
   if (labels.length > 0) return labels.slice(0, 5)
   const fallback: string[] = []
-  if (formData.familySize || formData.income) {
+  if (formData.familySize || formData.income || formData.household_size) {
     fallback.push('Datos básicos del hogar que compartiste en el cuestionario')
   }
   if (fallback.length === 0) {

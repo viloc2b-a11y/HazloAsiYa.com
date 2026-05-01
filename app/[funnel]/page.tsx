@@ -6,6 +6,7 @@ import { getFunnelContextLinks } from '@/data/funnel-internal-links'
 import { getFunnelHeroCopy, getFunnelSeoMeta } from '@/data/funnel-landing'
 import Topbar from '@/components/Topbar'
 import { absoluteUrl, isMoneyPageOgSlug } from '@/lib/site'
+import { getMoneyPageVerificationDisplay } from '@/lib/money-page-sources'
 import { alternatesForPath } from '@/lib/alternates'
 import VerifiedInfoBanner from '@/components/VerifiedInfoBanner'
 import VerificationBadge from '@/components/VerificationBadge'
@@ -66,6 +67,7 @@ export default async function FunnelPage({ params }: Props) {
   const nextSteps = NEXT_STEP_MAP[id] || []
   const contextLinks = getFunnelContextLinks(id)
   const hero = getFunnelHeroCopy(id, { action: f.action, desc: f.desc, icon: f.icon })
+  const moneyVerification = isMoneyPageOgSlug(id) ? getMoneyPageVerificationDisplay(id) : null
 
   return (
     <div className="min-h-screen bg-cream">
@@ -136,22 +138,12 @@ export default async function FunnelPage({ params }: Props) {
       </section>
 
       <div className="max-w-4xl mx-auto px-4 py-10 space-y-6">
-        {isMoneyPageOgSlug(id) && (
+        {moneyVerification && (
           <>
             <VerifiedInfoBanner
-              officialUrl={
-                id === 'daca'
-                  ? 'https://www.uscis.gov/humanitarian/consideration-deferred-action-childhood-arrivals-daca'
-                  : id === 'snap' || id === 'medicaid' || id === 'wic'
-                    ? 'https://www.hhs.texas.gov/'
-                    : id === 'itin' || id === 'taxes'
-                      ? 'https://www.irs.gov/'
-                      : id === 'escuela'
-                        ? 'https://tea.texas.gov/'
-                        : id === 'rent'
-                          ? 'https://www.hud.gov/'
-                          : 'https://www.acf.hhs.gov/ocs/programs/liheap'
-              }
+              officialUrl={moneyVerification.sourceUrl}
+              lastVerifiedIso={moneyVerification.lastVerified}
+              validUntilIso={moneyVerification.validUntil}
             />
             <VerificationBadge programId={id} className="mt-2" />
           </>

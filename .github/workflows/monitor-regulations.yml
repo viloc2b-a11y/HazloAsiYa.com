@@ -1,0 +1,46 @@
+# Vigencia de src/data/program-limits.json + comprobación opcional con OpenAI (--with-ai).
+# Añade el secret OPENAI_API_KEY en el repo si quieres el paso con IA en CI.
+
+name: Monitor regulations
+
+on:
+  schedule:
+    - cron: '0 10 * * 1' # lunes 10:00 UTC
+  workflow_dispatch:
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - id: appdir
+        run: |
+          if [ -f HazloAsiYa.com/package.json ]; then echo "dir=HazloAsiYa.com" >> $GITHUB_OUTPUT
+          elif [ -f package.json ]; then echo "dir=." >> $GITHUB_OUTPUT
+          else echo "No se encontró package.json"; exit 1; fi
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+          cache-dependency-path: ${{ steps.appdir.outputs.dir }}/package-lock.json
+
+      - name: npm ci
+        working-directory: ${{ steps.appdir.outputs.dir }}
+        run: npm ci
+
+      - name: Validar límites (Zod + fechas)
+        working-directory: ${{ steps.appdir.outputs.dir }}
+        run: npm run monitor:regulations
+
+      - name: Cruce con OpenAI (si hay API key)
+        working-directory: ${{ steps.appdir.outputs.dir }}
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          if [ -z "$OPENAI_API_KEY" ]; then
+            echo "OPENAI_API_KEY no configurada — se omite --with-ai."
+            exit 0
+          fi
+          npm run monitor:regulations -- --with-ai

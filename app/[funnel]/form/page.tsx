@@ -1,71 +1,116 @@
 'use client'
-import { useState, useEffect } from 'react'
+
+import { useState, useEffect, useMemo } from 'react'
 import { useRouter, useParams } from 'next/navigation'
-import { FUNNELS, FunnelId, isValidFunnelId } from '@/data/funnels'
+import { FUNNELS, type FunnelId, isValidFunnelId } from '@/data/funnels'
 import Link from 'next/link'
 import { trackEvent } from '@/lib/static-backend'
 import { FUNNEL_EVENTS } from '@/lib/analytics-events'
 import AgeGate from '@/components/legal/AgeGate'
 import GdprBadge from '@/components/legal/GdprBadge'
 import { useIsEU } from '@/hooks/useIsEU'
+import { buildQuestionnaireSteps, fieldsForQuestionnaireStep } from '@/lib/funnel-questionnaire-wizard'
+import { getQuestionnaireFields } from '@/lib/ai-prompts'
+import QuestionnaireBatchFields, {
+  isQuestionnaireBatchComplete,
+  formatQuestionnaireValue,
+} from '@/components/funnels/QuestionnaireBatchFields'
 
 const COPPA_FUNNELS = new Set<string>(['escuela', 'iep', 'prek', 'medicaid'])
 
 const LogoMark = () => (
   <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-    <rect width="28" height="28" rx="7" fill="url(#wlm)"/>
-    <path d="M7 20 L14 8 L21 20" stroke="white" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
-    <path d="M14 8 L14 21" stroke="white" strokeWidth="2.2" strokeLinecap="round" fill="none"/>
+    <rect width="28" height="28" rx="7" fill="url(#wlm)" />
+    <path
+      d="M7 20 L14 8 L21 20"
+      stroke="white"
+      strokeWidth="2.2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      fill="none"
+    />
+    <path d="M14 8 L14 21" stroke="white" strokeWidth="2.2" strokeLinecap="round" fill="none" />
     <defs>
       <linearGradient id="wlm" x1="0" y1="0" x2="28" y2="28" gradientUnits="userSpaceOnUse">
-        <stop offset="0%" stopColor="#0EC96A"/>
-        <stop offset="100%" stopColor="#087A3F"/>
+        <stop offset="0%" stopColor="#0EC96A" />
+        <stop offset="100%" stopColor="#087A3F" />
       </linearGradient>
     </defs>
   </svg>
 )
 
 const AI_MESSAGES: Partial<Record<FunnelId | 'default', string[]>> = {
-  snap:     ['Analizando ingresos del hogar…','Comparando con límites de SNAP en Texas…','Calculando beneficio estimado…','Verificando documentos requeridos…','✅ Evaluación completa'],
-  medicaid: ['Verificando composición del hogar…','Comparando ingresos con el FPL…','Identificando programa aplicable (Medicaid vs CHIP)…','Verificando documentos requeridos…','✅ Evaluación completa'],
-  daca:     ['Verificando fechas de vencimiento DACA…','Revisando requisitos actualizados USCIS…','Completando formulario I-821D…','Completando formulario I-765…','✅ Paquete de renovación listo'],
-  taxes:    ['Analizando tipo de ingresos y formularios…','Verificando estado civil y dependientes…','Calculando deducciones posibles…','Identificando créditos fiscales disponibles…','✅ Tu plan de taxes está listo'],
-  default:  ['Analizando tu información…','Verificando requisitos…','Preparando tu plan personalizado…','Identificando recursos locales…','✅ Tu plan está listo'],
+  snap: [
+    'Analizando ingresos del hogar…',
+    'Comparando con límites de SNAP en Texas…',
+    'Calculando beneficio estimado…',
+    'Verificando documentos requeridos…',
+    '✅ Evaluación completa',
+  ],
+  medicaid: [
+    'Verificando composición del hogar…',
+    'Comparando ingresos con el FPL…',
+    'Identificando programa aplicable (Medicaid vs CHIP)…',
+    'Verificando documentos requeridos…',
+    '✅ Evaluación completa',
+  ],
+  daca: [
+    'Verificando fechas de vencimiento DACA…',
+    'Revisando requisitos actualizados USCIS…',
+    'Completando formulario I-821D…',
+    'Completando formulario I-765…',
+    '✅ Paquete de renovación listo',
+  ],
+  taxes: [
+    'Analizando tipo de ingresos y formularios…',
+    'Verificando estado civil y dependientes…',
+    'Calculando deducciones posibles…',
+    'Identificando créditos fiscales disponibles…',
+    '✅ Tu plan de taxes está listo',
+  ],
+  default: [
+    'Analizando tu información…',
+    'Verificando requisitos…',
+    'Preparando tu plan personalizado…',
+    'Identificando recursos locales…',
+    '✅ Tu plan está listo',
+  ],
 }
 
 export default function WizardPage() {
   const { funnel: id } = useParams<{ funnel: string }>()
   const router = useRouter()
   const { isEU, ready } = useIsEU()
-  const f =
-    typeof id === 'string' && isValidFunnelId(id) ? FUNNELS[id] : undefined
+  const f = typeof id === 'string' && isValidFunnelId(id) ? FUNNELS[id] : undefined
 
-  const [step,     setStep]     = useState(0)
+  const [step, setStep] = useState(0)
   const [formData, setFormData] = useState<Record<string, string>>({})
-  const [aiIdx,    setAiIdx]    = useState(0)
-  const [loading,  setLoading]  = useState(false)
+  const [aiIdx, setAiIdx] = useState(0)
+  const [loading, setLoading] = useState(false)
+  const [stepError, setStepError] = useState<string | null>(null)
+
+  const funnelId = typeof id === 'string' && isValidFunnelId(id) ? id : null
+
+  const wizardSteps = useMemo(() => {
+    if (!funnelId) return []
+    const q = buildQuestionnaireSteps(funnelId)
+    if (q.length === 0) return []
+    return [
+      ...q,
+      { id: 'ai', title: 'Evaluando', desc: 'Preparando tu plan personalizado.' },
+      { id: 'review', title: 'Revisa', desc: 'Confirma antes de continuar.' },
+    ]
+  }, [funnelId])
 
   useEffect(() => {
     trackEvent({ event: 'form_started', funnel: id }).catch(() => {})
     trackEvent({ event: FUNNEL_EVENTS.QUIZ_START, funnel: id }).catch(() => {})
   }, [id])
 
-  if (!f) return <div className="p-8 text-center">Trámite no encontrado.</div>
-
-  const childDataExpected = COPPA_FUNNELS.has(id)
-
-  const steps = f.steps
-  const progress = Math.round((step / steps.length) * 100)
-  const currentStep = steps[step]
+  const currentStep = wizardSteps[step]
   const isAiStep = currentStep?.id === 'ai'
-  const isLastStep = step === steps.length - 1
+  const aiMsgs = funnelId ? (AI_MESSAGES[funnelId] ?? AI_MESSAGES.default!) : AI_MESSAGES.default!
 
-  const aiMsgs =
-    typeof id === 'string' && isValidFunnelId(id)
-      ? AI_MESSAGES[id] ?? AI_MESSAGES.default!
-      : AI_MESSAGES.default!
-
-  // Start AI simulation
   useEffect(() => {
     if (!isAiStep) return
     setAiIdx(0)
@@ -82,15 +127,40 @@ export default function WizardPage() {
     return () => clearInterval(int)
   }, [step, isAiStep, aiMsgs.length])
 
+  if (!f || !funnelId || wizardSteps.length === 0) {
+    return <div className="p-8 text-center">Trámite no encontrado o sin cuestionario configurado.</div>
+  }
+
+  const childDataExpected = COPPA_FUNNELS.has(String(id))
+  const progress = Math.round((step / Math.max(wizardSteps.length - 1, 1)) * 100)
+  const qFields = getQuestionnaireFields(funnelId)
+
+  const handleBack = () => {
+    setStepError(null)
+    setStep(s => {
+      if (s <= 0) return 0
+      if (wizardSteps[s]?.id === 'review' && wizardSteps[s - 1]?.id === 'ai') return s - 2
+      return s - 1
+    })
+  }
+
   const handleNext = () => {
-    if (step < steps.length - 1) setStep(s => s + 1)
+    setStepError(null)
+    const sid = currentStep?.id
+    if (sid?.startsWith('qb:')) {
+      const batch = fieldsForQuestionnaireStep(funnelId, sid)
+      if (!isQuestionnaireBatchComplete(batch, formData)) {
+        setStepError('Completa los campos obligatorios antes de continuar.')
+        return
+      }
+    }
+    if (step < wizardSteps.length - 1) setStep(s => s + 1)
   }
 
   const handleSubmit = async () => {
     setLoading(true)
     try {
       await trackEvent({ event: FUNNEL_EVENTS.QUIZ_COMPLETE, funnel: id }).catch(() => {})
-      // Save form data to sessionStorage for result page
       sessionStorage.setItem(`haya_form_${id}`, JSON.stringify(formData))
       router.push(`/${id}/result`)
     } catch {
@@ -103,6 +173,12 @@ export default function WizardPage() {
     setFormData(d => ({ ...d, [key]: val }))
   }
 
+  const isReview = currentStep?.id === 'review'
+  const isQuestionBatch = currentStep?.id?.startsWith('qb:') ?? false
+  const batchFields = isQuestionBatch && currentStep
+    ? fieldsForQuestionnaireStep(funnelId, currentStep.id)
+    : []
+
   return (
     <AgeGate childDataExpected={childDataExpected} onAdultConfirmed={() => {}}>
       <div className="min-h-screen bg-cream flex flex-col">
@@ -111,419 +187,130 @@ export default function WizardPage() {
             <GdprBadge show />
           </div>
         )}
-      {/* Mini topbar */}
-      <header className="bg-navy px-4 h-12 flex items-center justify-between shrink-0">
-        <Link href={`/${id}`} className="flex items-center gap-2">
-          <LogoMark/>
-          <span className="text-white/70 text-sm">HazloAsí<span className="text-green">Ya</span></span>
-        </Link>
-        <div className="text-white/50 text-sm">{f.icon} {f.name.split(' ')[0]}</div>
-      </header>
+        <header className="bg-navy px-4 h-12 flex items-center justify-between shrink-0">
+          <Link href={`/${id}`} className="flex items-center gap-2">
+            <LogoMark />
+            <span className="text-white/70 text-sm">
+              HazloAsí<span className="text-green">Ya</span>
+            </span>
+          </Link>
+          <div className="text-white/50 text-sm">
+            {f.icon} {f.name.split(' ')[0]}
+          </div>
+        </header>
 
-      {/* Progress */}
-      <div className="h-1.5 bg-white/20">
-        <div
-          className="h-full bg-gradient-to-r from-green-light to-green transition-all duration-500"
-          style={{ width: `${progress}%` }}
-        />
-      </div>
-
-      {/* Step counter */}
-      <div className="bg-navy/5 border-b border-gray-100 px-4 py-2 flex items-center justify-between">
-        <div className="text-xs text-gray-500">
-          Paso <span className="font-bold text-navy">{step + 1}</span> de {steps.length}
+        <div className="h-1.5 bg-white/20">
+          <div
+            className="h-full bg-gradient-to-r from-green-light to-green transition-all duration-500"
+            style={{ width: `${progress}%` }}
+          />
         </div>
-        <div className="text-xs font-bold text-green">{progress}% completado</div>
-      </div>
 
-      {/* Main content */}
-      <div className="flex-1 max-w-2xl mx-auto w-full px-4 py-8">
-
-        {isAiStep ? (
-          /* AI Processing */
-          <div className="text-center py-12">
-            <div className="w-16 h-16 rounded-2xl bg-green/10 flex items-center justify-center mx-auto mb-6">
-              <div className="w-8 h-8 rounded-full bg-green animate-pulse"/>
-            </div>
-            <h2 className="font-serif text-2xl text-navy mb-6">Preparando tu plan…</h2>
-            <div className="space-y-3 max-w-sm mx-auto">
-              {aiMsgs.map((msg, i) => (
-                <div
-                  key={i}
-                  className={`flex items-center gap-3 p-3 rounded-xl transition-all duration-500 ${
-                    i < aiIdx ? 'bg-green/8 text-green' :
-                    i === aiIdx ? 'bg-navy/5 text-navy font-medium' :
-                    'opacity-30 text-gray-400'
-                  }`}
-                >
-                  <div className={`w-2 h-2 rounded-full shrink-0 ${
-                    i < aiIdx ? 'bg-green' : i === aiIdx ? 'bg-navy animate-pulse' : 'bg-gray-300'
-                  }`}/>
-                  <span className="text-sm">{msg}</span>
-                </div>
-              ))}
-            </div>
+        <div className="bg-navy/5 border-b border-gray-100 px-4 py-2 flex items-center justify-between">
+          <div className="text-xs text-gray-500">
+            Paso <span className="font-bold text-navy">{step + 1}</span> de {wizardSteps.length}
           </div>
-        ) : currentStep?.id === 'review' ? (
-          /* Review step */
-          <div>
-            <h2 className="font-serif text-2xl text-navy mb-2">Revisa tu información</h2>
-            <p className="text-gray-500 mb-6">Verifica antes de continuar — lo usamos para personalizar tu plan.</p>
-            <div className="card p-5 space-y-3 mb-6">
-              {Object.entries(formData).map(([k, v]) => (
-                <div key={k} className="flex justify-between text-sm py-2 border-b border-gray-50 last:border-0">
-                  <span className="text-gray-500 capitalize">{k.replace(/([A-Z])/g, ' $1').trim()}</span>
-                  <span className="font-medium text-navy">{v}</span>
-                </div>
-              ))}
-              {Object.keys(formData).length === 0 && (
-                <p className="text-gray-400 text-sm text-center py-4">Sin datos registrados aún.</p>
+          <div className="text-xs font-bold text-green">{progress}% completado</div>
+        </div>
+
+        <div className="flex-1 max-w-2xl mx-auto w-full px-4 py-8">
+          {isAiStep ? (
+            <div className="text-center py-12">
+              <div className="w-16 h-16 rounded-2xl bg-green/10 flex items-center justify-center mx-auto mb-6">
+                <div className="w-8 h-8 rounded-full bg-green animate-pulse" />
+              </div>
+              <h2 className="font-serif text-2xl text-navy mb-6">Preparando tu plan…</h2>
+              <div className="space-y-3 max-w-sm mx-auto">
+                {aiMsgs.map((msg, i) => (
+                  <div
+                    key={i}
+                    className={`flex items-center gap-3 p-3 rounded-xl transition-all duration-500 ${
+                      i < aiIdx
+                        ? 'bg-green/8 text-green'
+                        : i === aiIdx
+                          ? 'bg-navy/5 text-navy font-medium'
+                          : 'opacity-30 text-gray-400'
+                    }`}
+                  >
+                    <div
+                      className={`w-2 h-2 rounded-full shrink-0 ${
+                        i < aiIdx ? 'bg-green' : i === aiIdx ? 'bg-navy animate-pulse' : 'bg-gray-300'
+                      }`}
+                    />
+                    <span className="text-sm">{msg}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ) : isReview ? (
+            <div>
+              <h2 className="font-serif text-2xl text-navy mb-2">Revisa tu información</h2>
+              <p className="text-gray-500 mb-6">
+                Verifica antes de continuar — lo enviamos a tu plan personalizado.
+              </p>
+              {stepError && (
+                <p className="text-red-600 text-sm mb-4" role="alert">
+                  {stepError}
+                </p>
               )}
-            </div>
-            <button onClick={handleSubmit} disabled={loading} className="btn-primary w-full py-4">
-              {loading ? 'Procesando…' : 'Completa este trámite →'}
-            </button>
-          </div>
-        ) : currentStep?.id === 'download' ? (
-          /* This shouldn't show — handled by result page */
-          <div className="text-center">
-            <p>Redirigiendo…</p>
-          </div>
-        ) : (
-          /* Generic step */
-          <div>
-            <div className="text-xs font-bold tracking-widest uppercase text-green mb-1">
-              {f.name}
-            </div>
-            <h2 className="font-serif text-2xl text-navy mb-1">{currentStep?.title}</h2>
-            <p className="text-gray-500 text-sm mb-6">{currentStep?.desc}</p>
-
-            <GenericStepFields
-              stepId={currentStep?.id || ''}
-              funnelId={id}
-              formData={formData}
-              onUpdate={updateField}
-            />
-
-            <div className="flex gap-3 mt-8">
-              {step > 0 && (
+              <div className="card p-5 space-y-3 mb-6">
+                {qFields.map(field => (
+                  <div
+                    key={field.id}
+                    className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-1 text-sm py-2 border-b border-gray-50 last:border-0"
+                  >
+                    <span className="text-gray-500 shrink-0 max-w-[55%]">{field.label}</span>
+                    <span className="font-medium text-navy text-right sm:text-left break-words">
+                      {formatQuestionnaireValue(field, formData[field.id] || '')}
+                    </span>
+                  </div>
+                ))}
+              </div>
+              <div className="flex gap-3">
                 <button
-                  onClick={() => setStep(s => s - 1)}
+                  type="button"
+                  onClick={handleBack}
                   className="flex-1 py-3 border-2 border-gray-200 text-gray-600 font-semibold rounded-xl hover:border-gray-300 transition-colors"
                 >
                   ← Atrás
                 </button>
-              )}
-              <button
-                onClick={handleNext}
-                className="flex-[2] btn-primary py-3"
-              >
-                {step === steps.length - 2 ? 'Revisar y confirmar →' : 'Hazlo así →'}
-              </button>
+                <button onClick={handleSubmit} disabled={loading} className="flex-[2] btn-primary py-4">
+                  {loading ? 'Procesando…' : 'Completa este trámite →'}
+                </button>
+              </div>
             </div>
-          </div>
-        )}
+          ) : (
+            <div>
+              <div className="text-xs font-bold tracking-widest uppercase text-green mb-1">{f.name}</div>
+              <h2 className="font-serif text-2xl text-navy mb-1">{currentStep?.title}</h2>
+              <p className="text-gray-500 text-sm mb-6">{currentStep?.desc}</p>
+
+              {stepError && (
+                <p className="text-red-600 text-sm mb-4" role="alert">
+                  {stepError}
+                </p>
+              )}
+
+              <QuestionnaireBatchFields fields={batchFields} formData={formData} onUpdate={updateField} />
+
+              <div className="flex gap-3 mt-8">
+                {step > 0 && (
+                  <button
+                    type="button"
+                    onClick={handleBack}
+                    className="flex-1 py-3 border-2 border-gray-200 text-gray-600 font-semibold rounded-xl hover:border-gray-300 transition-colors"
+                  >
+                    ← Atrás
+                  </button>
+                )}
+                <button type="button" onClick={handleNext} className="flex-[2] btn-primary py-3">
+                  {step === wizardSteps.length - 3 ? 'Continuar →' : 'Hazlo así →'}
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
-    </div>
     </AgeGate>
-  )
-}
-
-/* Generic field renderer based on step ID */
-function GenericStepFields({
-  stepId, funnelId, formData, onUpdate,
-}: {
-  stepId: string; funnelId: string; formData: Record<string, string>; onUpdate: (k: string, v: string) => void
-}) {
-  const Radio = ({ name, value, label, desc }: { name: string; value: string; label: string; desc?: string }) => (
-    <label className={`flex items-start gap-3 p-4 rounded-xl border-2 cursor-pointer transition-all ${
-      formData[name] === value ? 'border-green bg-green/5' : 'border-gray-100 hover:border-gray-200'
-    }`}>
-      <input type="radio" name={name} value={value} checked={formData[name] === value}
-             onChange={() => onUpdate(name, value)} className="mt-0.5 accent-green shrink-0"/>
-      <div>
-        <div className="font-semibold text-navy text-sm">{label}</div>
-        {desc && <div className="text-gray-400 text-xs mt-0.5">{desc}</div>}
-      </div>
-    </label>
-  )
-
-  if (stepId === 'docs') {
-    const key = 'docsSelected'
-    const selected: string[] = (() => {
-      const raw = formData[key]
-      if (!raw) return []
-      try {
-        const parsed = JSON.parse(raw)
-        return Array.isArray(parsed) ? parsed.filter(x => typeof x === 'string') : []
-      } catch {
-        return []
-      }
-    })()
-
-    const toggle = (id: string) => {
-      const next = selected.includes(id) ? selected.filter(x => x !== id) : [...selected, id]
-      onUpdate(key, JSON.stringify(next))
-    }
-
-    const DOCS_BASE: { id: string; label: string; hint?: string }[] = [
-      { id: 'photo_id', label: 'Identificación con foto', hint: 'ID/License/Pasaporte' },
-      { id: 'proof_address', label: 'Comprobante de domicilio', hint: 'renta, luz, agua, internet' },
-      { id: 'proof_income', label: 'Comprobante de ingresos', hint: 'talones de cheque, carta del empleador, 1099' },
-      { id: 'ssn_itin', label: 'SSN o ITIN (si tienes)', hint: 'si no tienes, igual puedes iniciar' },
-      { id: 'immigration', label: 'Estatus migratorio (si aplica)', hint: 'permiso, residencia, etc.' },
-      { id: 'household', label: 'Información del hogar', hint: 'quién vive contigo / niños' },
-    ]
-
-    const DOCS_EXTRA: Record<string, { id: string; label: string; hint?: string }[]> = {
-      snap: [
-        { id: 'expenses', label: 'Gastos mensuales', hint: 'renta/hipoteca, luz, agua, internet, childcare' },
-      ],
-      medicaid: [
-        { id: 'insurance', label: 'Seguro médico actual (si tienes)', hint: 'tarjeta o póliza' },
-        { id: 'kids_docs', label: 'Documentos de niños', hint: 'acta de nacimiento / vacunas (si aplica)' },
-      ],
-      wic: [
-        { id: 'pregnancy_baby', label: 'Embarazo o bebé (si aplica)', hint: 'ultrasonido, acta, etc.' },
-      ],
-      id: [
-        { id: 'birth_cert', label: 'Acta de nacimiento / pasaporte', hint: 'para identidad' },
-        { id: 'ssn_card', label: 'Tarjeta de SSN (si aplica)', hint: 'si te la piden en DPS' },
-      ],
-      taxes: [
-        { id: 'w2_1099', label: 'Formularios W-2 / 1099', hint: 'tus ingresos del año' },
-        { id: 'dependents', label: 'Datos de dependientes', hint: 'nombres/fechas de nacimiento/SSN o ITIN' },
-      ],
-      twc: [
-        { id: 'last_employer', label: 'Datos del último empleador', hint: 'nombre, dirección y teléfono' },
-        { id: 'employment_dates', label: 'Fechas de empleo', hint: 'inicio y fin (aprox.)' },
-        { id: 'separation_reason', label: 'Razón de separación', hint: 'despido, layoff, renuncia, etc.' },
-      ],
-      escuela: [
-        { id: 'child_birth', label: 'Acta de nacimiento del estudiante', hint: 'o pasaporte del niño/a' },
-        { id: 'vaccines', label: 'Cartilla de vacunas', hint: 'registro de inmunizaciones' },
-        { id: 'proof_guardianship', label: 'Tutoría (si aplica)', hint: 'custodia/guardianship' },
-      ],
-      daca: [
-        { id: 'ead', label: 'EAD / Permiso de trabajo', hint: 'frente y atrás' },
-        { id: 'i797', label: 'Notices I-797', hint: 'aprobaciones/recibos previos' },
-        { id: 'passport', label: 'Pasaporte (si tienes)', hint: 'o ID del país' },
-      ],
-      iep: [
-        { id: 'school_records', label: 'Reportes escolares', hint: 'boletas / report cards' },
-        { id: 'teacher_notes', label: 'Notas de maestros', hint: 'observaciones o emails' },
-        { id: 'medical_eval', label: 'Evaluaciones médicas (si hay)', hint: 'TDAH, autismo, etc.' },
-      ],
-      itin: [
-        { id: 'w7', label: 'Forma W-7 (si ya la tienes)', hint: 'borrador o ejemplo' },
-        { id: 'tax_return', label: 'Tax return (si aplica)', hint: 'declaración que acompañará el ITIN' },
-        { id: 'certified_id', label: 'ID certificado', hint: 'pasaporte o documentos certificados' },
-      ],
-      bank: [
-        { id: 'secondary_id', label: 'Segunda identificación (si tienes)', hint: 'pasaporte/matrícula/ID' },
-        { id: 'proof_address_bank', label: 'Comprobante de domicilio', hint: 'para abrir cuenta' },
-        { id: 'deposit', label: 'Depósito inicial (si aplica)', hint: 'efectivo o transferencia' },
-      ],
-      matricula: [
-        { id: 'mx_birth', label: 'Acta de nacimiento mexicana', hint: 'original/copia según consulado' },
-        { id: 'mx_id', label: 'Identificación oficial de México', hint: 'INE/pasaporte (si tienes)' },
-        { id: 'proof_address_consulate', label: 'Comprobante de domicilio', hint: 'en EE.UU.' },
-      ],
-      jobs: [
-        { id: 'work_auth', label: 'Autorización para trabajar (si aplica)', hint: 'EAD/SSN' },
-        { id: 'resume', label: 'Currículum (si tienes)', hint: 'aunque sea simple' },
-      ],
-      prek: [
-        { id: 'child_birth_prek', label: 'Acta de nacimiento', hint: 'para edad del niño/a' },
-        { id: 'proof_eligibility', label: 'Prueba de elegibilidad', hint: 'SNAP/Medicaid/WIC o ingreso' },
-      ],
-    }
-
-    const docs = [...DOCS_BASE, ...(DOCS_EXTRA[funnelId] || [])]
-
-    return (
-      <div className="bg-cream-2 border border-cream rounded-xl p-5">
-        <div className="text-sm font-semibold text-navy mb-3">Marca los documentos que ya tienes:</div>
-        <p className="text-gray-500 text-sm mb-4">
-          Selecciona todo lo que ya tienes. Esto nos ayuda a darte un plan realista (si te falta algo, te decimos cómo conseguirlo).
-        </p>
-
-        <div className="space-y-2">
-          {docs.map(d => {
-            const checked = selected.includes(d.id)
-            return (
-              <label
-                key={d.id}
-                className={`flex items-start gap-3 p-4 rounded-xl border-2 cursor-pointer transition-all ${
-                  checked ? 'border-green bg-green/5' : 'border-gray-100 hover:border-gray-200 bg-white'
-                }`}
-              >
-                <input
-                  type="checkbox"
-                  checked={checked}
-                  onChange={() => toggle(d.id)}
-                  className="mt-0.5 accent-green shrink-0"
-                />
-                <div className="min-w-0">
-                  <div className="font-semibold text-navy text-sm">{d.label}</div>
-                  {d.hint && <div className="text-gray-400 text-xs mt-0.5">{d.hint}</div>}
-                </div>
-              </label>
-            )
-          })}
-        </div>
-
-        <div className="mt-4 text-xs text-gray-400">
-          Tip: si no tienes nada todavía, no pasa nada — solo continúa.
-        </div>
-      </div>
-    )
-  }
-
-  if (stepId === 'income') {
-    return (
-      <div className="space-y-3">
-        <label className="label">Ingreso mensual total del hogar</label>
-        {[['0-500','$0 – $500'],['500-1000','$500 – $1,000'],['1000-1500','$1,000 – $1,500'],['1500-2000','$1,500 – $2,000'],['2000-2500','$2,000 – $2,500'],['2500+','Más de $2,500']].map(([v,l]) => (
-          <Radio key={v} name="monthlyIncome" value={v} label={l}/>
-        ))}
-      </div>
-    )
-  }
-
-  if (stepId === 'family') {
-    return (
-      <div className="space-y-4">
-        <div>
-          <label className="label">¿Cuántas personas viven en tu hogar? (incluyéndote)</label>
-          <input className="input" type="number" min="1" max="20" placeholder="Ej: 4"
-                 value={formData.householdSize || ''} onChange={e => onUpdate('householdSize', e.target.value)}/>
-        </div>
-        <div>
-          <label className="label">¿Hay niños menores de 18 años?</label>
-          <div className="space-y-2">
-            <Radio name="hasKids" value="yes" label="Sí, hay niños en el hogar"/>
-            <Radio name="hasKids" value="no" label="No, solo adultos"/>
-          </div>
-        </div>
-      </div>
-    )
-  }
-
-  if (stepId === 'personal') {
-    return (
-      <div className="grid sm:grid-cols-2 gap-4">
-        <div>
-          <label className="label">Nombre(s)</label>
-          <input className="input" placeholder="Ej: María" value={formData.firstName || ''}
-                 onChange={e => onUpdate('firstName', e.target.value)}/>
-        </div>
-        <div>
-          <label className="label">Apellido(s)</label>
-          <input className="input" placeholder="Ej: García" value={formData.lastName || ''}
-                 onChange={e => onUpdate('lastName', e.target.value)}/>
-        </div>
-        <div className="sm:col-span-2">
-          <label className="label">Correo electrónico</label>
-          <input className="input" type="email" placeholder="tu@correo.com" value={formData.email || ''}
-                 onChange={e => onUpdate('email', e.target.value)}/>
-        </div>
-      </div>
-    )
-  }
-
-  if (stepId === 'address') {
-    return (
-      <div className="grid sm:grid-cols-2 gap-4">
-        <div className="sm:col-span-2">
-          <label className="label">Dirección</label>
-          <input className="input" placeholder="Ej: 1234 Main St" value={formData.address1 || ''}
-                 onChange={e => onUpdate('address1', e.target.value)}/>
-        </div>
-        <div>
-          <label className="label">Ciudad</label>
-          <input className="input" placeholder="Ej: Katy" value={formData.city || ''}
-                 onChange={e => onUpdate('city', e.target.value)}/>
-        </div>
-        <div>
-          <label className="label">ZIP Code</label>
-          <input className="input" placeholder="Ej: 77450" maxLength={5} value={formData.zipCode || ''}
-                 onChange={e => onUpdate('zipCode', e.target.value)}/>
-        </div>
-      </div>
-    )
-  }
-
-  if (stepId === 'employment') {
-    return (
-      <div className="space-y-3">
-        <label className="label">Situación laboral actual</label>
-        {[
-          ['employed_w2','Empleado con W-2','Trabajo con cheque y deducciones'],
-          ['self_employed','Trabajo por cuenta propia','Contratista, 1099, negocio propio'],
-          ['unemployed','Sin trabajo actualmente','Buscando trabajo o entre trabajos'],
-          ['part_time','Trabajo de medio tiempo','Menos de 32 horas por semana'],
-        ].map(([v,l,d]) => <Radio key={v} name="employmentType" value={v} label={l} desc={d}/>)}
-      </div>
-    )
-  }
-
-  if (stepId === 'child') {
-    return (
-      <div className="grid sm:grid-cols-2 gap-4">
-        <div>
-          <label className="label">Nombre del niño/a</label>
-          <input className="input" placeholder="Ej: Sebastián" value={formData.childFirst || ''}
-                 onChange={e => onUpdate('childFirst', e.target.value)}/>
-        </div>
-        <div>
-          <label className="label">Apellido(s)</label>
-          <input className="input" placeholder="Ej: García" value={formData.childLast || ''}
-                 onChange={e => onUpdate('childLast', e.target.value)}/>
-        </div>
-        <div>
-          <label className="label">Fecha de nacimiento</label>
-          <input className="input" type="date" value={formData.childDOB || ''}
-                 onChange={e => onUpdate('childDOB', e.target.value)}/>
-        </div>
-        <div>
-          <label className="label">Grado actual o al que va a entrar</label>
-          <select className="input" value={formData.childGrade || ''}
-                  onChange={e => onUpdate('childGrade', e.target.value)}>
-            <option value="">Seleccionar...</option>
-            {['PK','K','1','2','3','4','5','6','7','8','9','10','11','12'].map(g => (
-              <option key={g} value={g}>{g === 'PK' ? 'Pre-Kínder' : g === 'K' ? 'Kínder' : `${g}° Grado`}</option>
-            ))}
-          </select>
-        </div>
-      </div>
-    )
-  }
-
-  if (stepId === 'reason' || stepId === 'sepReason') {
-    return (
-      <div className="space-y-3">
-        <label className="label">¿Por qué dejaste de trabajar?</label>
-        {[
-          ['laid_off','Me despidieron / layoff','Reducción de personal, cierre de empresa'],
-          ['fired','Me terminaron el contrato','Por causas ajenas a un delito'],
-          ['temp','Era un trabajo temporal','El contrato terminó según lo acordado'],
-          ['quit','Renuncié voluntariamente','Por decisión propia'],
-        ].map(([v,l,d]) => <Radio key={v} name="sepReason" value={v} label={l} desc={d}/>)}
-      </div>
-    )
-  }
-
-  // Default — generic text area
-  return (
-    <div>
-      <label className="label">Información adicional (opcional)</label>
-      <textarea
-        className="input resize-none h-28"
-        placeholder="Escribe cualquier información adicional relevante para tu trámite..."
-        value={formData[stepId] || ''}
-        onChange={e => onUpdate(stepId, e.target.value)}
-      />
-    </div>
   )
 }
