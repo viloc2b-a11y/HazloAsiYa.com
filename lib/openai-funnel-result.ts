@@ -1,5 +1,5 @@
 /**
- * Resultado del cuestionario vía IA (Claude si `ANTHROPIC_API_KEY`, si no OpenAI).
+ * Resultado del cuestionario vía OpenAI (ChatGPT).
  * `functions/api/generate-result.ts` usa la misma lógica para Pages.
  */
 import type { FunnelId } from '@/data/funnels'

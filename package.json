@@ -19,6 +19,7 @@
     "migrate:audit": "node scripts/migrate-content.mjs",
     "audit:data": "node scripts/audit-data-inventory.mjs",
     "audit:legal": "node scripts/audit-legal-compliance.mjs",
+    "monitor:regulations": "npx tsx scripts/monitor-regulations.ts",
     "docs:consent": "echo Ver docs/verify-ga4-consent.md para verificacion manual de GA4 y Consent Mode v2",
     "setup:mailchimp": "node scripts/setup-mailchimp.mjs",
     "verify": "node scripts/verify-integrations.mjs"
@@ -47,6 +48,7 @@
     "postcss": "^8",
     "sharp": "^0.33.5",
     "tailwindcss": "^3.4.1",
+    "tsx": "^4.19.0",
     "typescript": "^5"
   }
 }

@@ -1,0 +1,170 @@
+{
+  "snap_texas_gross_monthly_1p": {
+    "value": 1580,
+    "unit": "USD_gross_monthly",
+    "lastVerified": "2026-01-15T12:00:00.000Z",
+    "validUntil": "2026-09-30T23:59:59.999Z",
+    "sourceUrl": "https://www.fns.usda.gov/snap/recipient/eligibility"
+  },
+  "snap_texas_gross_monthly_2p": {
+    "value": 2137,
+    "unit": "USD_gross_monthly",
+    "lastVerified": "2026-01-15T12:00:00.000Z",
+    "validUntil": "2026-09-30T23:59:59.999Z",
+    "sourceUrl": "https://www.fns.usda.gov/snap/recipient/eligibility"
+  },
+  "snap_texas_gross_monthly_3p": {
+    "value": 2694,
+    "unit": "USD_gross_monthly",
+    "lastVerified": "2026-01-15T12:00:00.000Z",
+    "validUntil": "2026-09-30T23:59:59.999Z",
+    "sourceUrl": "https://www.fns.usda.gov/snap/recipient/eligibility"
+  },
+  "snap_texas_gross_monthly_4p": {
+    "value": 3250,
+    "unit": "USD_gross_monthly",
+    "lastVerified": "2026-01-15T12:00:00.000Z",
+    "validUntil": "2026-09-30T23:59:59.999Z",
+    "sourceUrl": "https://www.fns.usda.gov/snap/recipient/eligibility"
+  },
+  "snap_texas_gross_monthly_5p": {
+    "value": 3807,
+    "unit": "USD_gross_monthly",
+    "lastVerified": "2026-01-15T12:00:00.000Z",
+    "validUntil": "2026-09-30T23:59:59.999Z",
+    "sourceUrl": "https://www.fns.usda.gov/snap/recipient/eligibility"
+  },
+  "snap_texas_gross_monthly_6p": {
+    "value": 4364,
+    "unit": "USD_gross_monthly",
+    "lastVerified": "2026-01-15T12:00:00.000Z",
+    "validUntil": "2026-09-30T23:59:59.999Z",
+    "sourceUrl": "https://www.fns.usda.gov/snap/recipient/eligibility"
+  },
+  "snap_texas_gross_monthly_7p": {
+    "value": 4921,
+    "unit": "USD_gross_monthly",
+    "lastVerified": "2026-01-15T12:00:00.000Z",
+    "validUntil": "2026-09-30T23:59:59.999Z",
+    "sourceUrl": "https://www.fns.usda.gov/snap/recipient/eligibility"
+  },
+  "snap_texas_gross_monthly_8p": {
+    "value": 5478,
+    "unit": "USD_gross_monthly",
+    "lastVerified": "2026-01-15T12:00:00.000Z",
+    "validUntil": "2026-09-30T23:59:59.999Z",
+    "sourceUrl": "https://www.fns.usda.gov/snap/recipient/eligibility"
+  },
+  "snap_texas_each_additional_person_usd": {
+    "value": 557,
+    "unit": "USD_gross_monthly_increment",
+    "lastVerified": "2026-01-15T12:00:00.000Z",
+    "validUntil": "2026-09-30T23:59:59.999Z",
+    "sourceUrl": "https://www.fns.usda.gov/snap/recipient/eligibility"
+  },
+  "wic_texas_185fpl_monthly_1p": {
+    "value": 2248,
+    "unit": "USD_gross_monthly",
+    "lastVerified": "2026-01-15T12:00:00.000Z",
+    "validUntil": "2026-09-30T23:59:59.999Z",
+    "sourceUrl": "https://www.fns.usda.gov/wic/wic-income-eligibility-guidelines"
+  },
+  "wic_texas_185fpl_monthly_2p": {
+    "value": 3041,
+    "unit": "USD_gross_monthly",
+    "lastVerified": "2026-01-15T12:00:00.000Z",
+    "validUntil": "2026-09-30T23:59:59.999Z",
+    "sourceUrl": "https://www.fns.usda.gov/wic/wic-income-eligibility-guidelines"
+  },
+  "wic_texas_185fpl_monthly_3p": {
+    "value": 3834,
+    "unit": "USD_gross_monthly",
+    "lastVerified": "2026-01-15T12:00:00.000Z",
+    "validUntil": "2026-09-30T23:59:59.999Z",
+    "sourceUrl": "https://www.fns.usda.gov/wic/wic-income-eligibility-guidelines"
+  },
+  "wic_texas_185fpl_monthly_4p": {
+    "value": 4628,
+    "unit": "USD_gross_monthly",
+    "lastVerified": "2026-01-15T12:00:00.000Z",
+    "validUntil": "2026-09-30T23:59:59.999Z",
+    "sourceUrl": "https://www.fns.usda.gov/wic/wic-income-eligibility-guidelines"
+  },
+  "wic_texas_185fpl_monthly_5p": {
+    "value": 5421,
+    "unit": "USD_gross_monthly",
+    "lastVerified": "2026-01-15T12:00:00.000Z",
+    "validUntil": "2026-09-30T23:59:59.999Z",
+    "sourceUrl": "https://www.fns.usda.gov/wic/wic-income-eligibility-guidelines"
+  },
+  "wic_texas_185fpl_monthly_6p": {
+    "value": 6214,
+    "unit": "USD_gross_monthly",
+    "lastVerified": "2026-01-15T12:00:00.000Z",
+    "validUntil": "2026-09-30T23:59:59.999Z",
+    "sourceUrl": "https://www.fns.usda.gov/wic/wic-income-eligibility-guidelines"
+  },
+  "wic_texas_each_additional_person_usd": {
+    "value": 793,
+    "unit": "USD_gross_monthly_increment",
+    "lastVerified": "2026-01-15T12:00:00.000Z",
+    "validUntil": "2026-09-30T23:59:59.999Z",
+    "sourceUrl": "https://www.fns.usda.gov/wic/wic-income-eligibility-guidelines"
+  },
+  "medicaid_chip_family3_monthly_201fpl_usd": {
+    "value": 4121,
+    "unit": "USD_gross_monthly_approx",
+    "lastVerified": "2026-01-15T12:00:00.000Z",
+    "validUntil": "2026-06-30T23:59:59.999Z",
+    "sourceUrl": "https://www.hhs.texas.gov/services/health/medicaid-chip"
+  },
+  "medicaid_pregnant_family3_monthly_198fpl_usd": {
+    "value": 4060,
+    "unit": "USD_gross_monthly_approx",
+    "lastVerified": "2026-01-15T12:00:00.000Z",
+    "validUntil": "2026-06-30T23:59:59.999Z",
+    "sourceUrl": "https://www.hhs.texas.gov/services/health/medicaid-chip"
+  },
+  "medicaid_parent_caretaker_family3_monthly_usd": {
+    "value": 369,
+    "unit": "USD_gross_monthly_approx",
+    "lastVerified": "2026-01-15T12:00:00.000Z",
+    "validUntil": "2026-06-30T23:59:59.999Z",
+    "sourceUrl": "https://www.hhs.texas.gov/services/health/medicaid-chip"
+  },
+  "taxes_vita_income_max_usd": {
+    "value": 67000,
+    "unit": "USD_annual",
+    "lastVerified": "2026-01-15T12:00:00.000Z",
+    "validUntil": "2026-12-31T23:59:59.999Z",
+    "sourceUrl": "https://www.irs.gov/individuals/free-tax-return-preparation-for-qualifying-taxpayers"
+  },
+  "rent_houston_ami_family4_annual_ref_usd": {
+    "value": 115000,
+    "unit": "USD_annual_reference",
+    "lastVerified": "2026-01-15T12:00:00.000Z",
+    "validUntil": "2026-12-31T23:59:59.999Z",
+    "sourceUrl": "https://www.huduser.gov/portal/datasets/il.html"
+  },
+  "rent_houston_80pct_ami_family4_annual_ref_usd": {
+    "value": 92000,
+    "unit": "USD_annual_reference",
+    "lastVerified": "2026-01-15T12:00:00.000Z",
+    "validUntil": "2026-12-31T23:59:59.999Z",
+    "sourceUrl": "https://www.huduser.gov/portal/datasets/il.html"
+  },
+  "utilities_liheap_fpl_threshold_low_pct": {
+    "value": 150,
+    "unit": "percent_fpl",
+    "lastVerified": "2026-01-15T12:00:00.000Z",
+    "validUntil": "2026-12-31T23:59:59.999Z",
+    "sourceUrl": "https://www.acf.hhs.gov/ocs/map/map-published-guidelines"
+  },
+  "utilities_liheap_fpl_threshold_high_pct": {
+    "value": 200,
+    "unit": "percent_fpl",
+    "lastVerified": "2026-01-15T12:00:00.000Z",
+    "validUntil": "2026-12-31T23:59:59.999Z",
+    "sourceUrl": "https://www.acf.hhs.gov/ocs/map/map-published-guidelines"
+  }
+}

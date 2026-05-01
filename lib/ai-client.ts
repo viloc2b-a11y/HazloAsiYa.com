@@ -6,22 +6,12 @@ import { sanitizeFormDataForAi } from './questionnaire-validator'
 
 /** Credenciales opcionalmente inyectadas (p. ej. Cloudflare `env`). */
 export type AiSecrets = {
-  ANTHROPIC_API_KEY?: string
-  ANTHROPIC_MODEL?: string
   OPENAI_API_KEY?: string
   OPENAI_MODEL?: string
 }
 
-function resolveSecrets(overrides?: AiSecrets): Required<
-  Pick<AiSecrets, 'ANTHROPIC_MODEL' | 'OPENAI_MODEL'>
-> &
-  AiSecrets {
+function resolveSecrets(overrides?: AiSecrets): Required<Pick<AiSecrets, 'OPENAI_MODEL'>> & AiSecrets {
   return {
-    ANTHROPIC_API_KEY: overrides?.ANTHROPIC_API_KEY ?? process.env.ANTHROPIC_API_KEY,
-    ANTHROPIC_MODEL:
-      overrides?.ANTHROPIC_MODEL ??
-      process.env.ANTHROPIC_MODEL ??
-      'claude-sonnet-4-20250514',
     OPENAI_API_KEY: overrides?.OPENAI_API_KEY ?? process.env.OPENAI_API_KEY,
     OPENAI_MODEL: overrides?.OPENAI_MODEL ?? process.env.OPENAI_MODEL ?? 'gpt-4.1-mini',
   }
@@ -97,39 +87,6 @@ function fallbackOutput(): AIOutput {
   }
 }
 
-async function callAnthropic(
-  system: string,
-  userJson: string,
-  secrets: ReturnType<typeof resolveSecrets>,
-): Promise<string> {
-  const apiKey = secrets.ANTHROPIC_API_KEY
-  if (!apiKey) throw new Error('Missing ANTHROPIC_API_KEY')
-
-  const r = await fetch('https://api.anthropic.com/v1/messages', {
-    method: 'POST',
-    headers: {
-      'content-type': 'application/json',
-      'x-api-key': apiKey,
-      'anthropic-version': '2023-06-01',
-    },
-    body: JSON.stringify({
-      model: secrets.ANTHROPIC_MODEL,
-      max_tokens: 1000,
-      system,
-      messages: [{ role: 'user', content: userJson }],
-    }),
-  })
-  const data = (await r.json().catch(() => null)) as {
-    content?: { type: string; text?: string }[]
-    error?: { message?: string }
-  } | null
-  if (!r.ok) {
-    throw new Error(data?.error?.message || `Anthropic HTTP ${r.status}`)
-  }
-  const text = data?.content?.find(c => c.type === 'text')?.text ?? ''
-  return text
-}
-
 async function callOpenAI(
   system: string,
   userJson: string,
@@ -164,7 +121,7 @@ async function callOpenAI(
 }
 
 /**
- * Respuesta JSON estándar (`AIOutput`): Claude si hay `ANTHROPIC_API_KEY`, si no OpenAI.
+ * Respuesta JSON estándar (`AIOutput`) vía API de OpenAI (ChatGPT).
  */
 export async function getEligibilityResult(
   funnelId: FunnelId,
@@ -177,13 +134,8 @@ export async function getEligibilityResult(
 
   let text = ''
   try {
-    if (s.ANTHROPIC_API_KEY) {
-      text = await callAnthropic(system, userJson, s)
-    } else if (s.OPENAI_API_KEY) {
-      text = await callOpenAI(system, userJson, s)
-    } else {
-      throw new Error('Missing ANTHROPIC_API_KEY or OPENAI_API_KEY')
-    }
+    if (!s.OPENAI_API_KEY) throw new Error('Missing OPENAI_API_KEY')
+    text = await callOpenAI(system, userJson, s)
   } catch {
     return fallbackOutput()
   }

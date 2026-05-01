@@ -8,6 +8,7 @@ import Topbar from '@/components/Topbar'
 import { absoluteUrl, isMoneyPageOgSlug } from '@/lib/site'
 import { alternatesForPath } from '@/lib/alternates'
 import VerifiedInfoBanner from '@/components/VerifiedInfoBanner'
+import VerificationBadge from '@/components/VerificationBadge'
 import { MONEY_PAGE_REGULATORY_SOURCE, regulatoryMetadataOther } from '@/lib/regulatory-meta'
 import Disclosure from '@/components/legal/Disclosure'
 import { DISCLAIMER_INMIGRACION, DISCLAIMER_ITIN, DISCLAIMER_MEDICAID_TX } from '@/lib/legal-texts'
@@ -136,21 +137,24 @@ export default async function FunnelPage({ params }: Props) {
 
       <div className="max-w-4xl mx-auto px-4 py-10 space-y-6">
         {isMoneyPageOgSlug(id) && (
-          <VerifiedInfoBanner
-            officialUrl={
-              id === 'daca'
-                ? 'https://www.uscis.gov/humanitarian/consideration-deferred-action-childhood-arrivals-daca'
-                : id === 'snap' || id === 'medicaid' || id === 'wic'
-                  ? 'https://www.hhs.texas.gov/'
-                  : id === 'itin' || id === 'taxes'
-                    ? 'https://www.irs.gov/'
-                    : id === 'escuela'
-                      ? 'https://tea.texas.gov/'
-                      : id === 'rent'
-                        ? 'https://www.hud.gov/'
-                        : 'https://www.acf.hhs.gov/ocs/programs/liheap'
-            }
-          />
+          <>
+            <VerifiedInfoBanner
+              officialUrl={
+                id === 'daca'
+                  ? 'https://www.uscis.gov/humanitarian/consideration-deferred-action-childhood-arrivals-daca'
+                  : id === 'snap' || id === 'medicaid' || id === 'wic'
+                    ? 'https://www.hhs.texas.gov/'
+                    : id === 'itin' || id === 'taxes'
+                      ? 'https://www.irs.gov/'
+                      : id === 'escuela'
+                        ? 'https://tea.texas.gov/'
+                        : id === 'rent'
+                          ? 'https://www.hud.gov/'
+                          : 'https://www.acf.hhs.gov/ocs/programs/liheap'
+              }
+            />
+            <VerificationBadge programId={id} className="mt-2" />
+          </>
         )}
 
         {/* Enlaces internos: SEO + recorrido antes del scroll largo */}

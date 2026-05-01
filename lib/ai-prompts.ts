@@ -4,6 +4,14 @@
  */
 import type { FunnelId } from '../data/funnels'
 import type { QuestionnaireField } from '../types/ai'
+import {
+  medicaidTexasIncomeRefsPromptLine,
+  rentHoustonAmiRefsPromptLine,
+  snapTexasGrossMonthlyPromptLine,
+  taxesVitaIncomeMaxPromptFragment,
+  utilitiesLiheapFplPromptLine,
+  wicTexas185fplPromptLine,
+} from './program-limits'
 
 export const STANDARD_DISCLAIMER =
   'Este resultado es una estimación orientativa. La elegibilidad real la determina la agencia oficial según tu documentación completa. Verifica en la fuente oficial antes de enviar tu solicitud.'
@@ -30,12 +38,6 @@ Reglas globales:
 - disclaimer debe ser exactamente el texto fijo indicado arriba.
 `.trim()
 
-const SNAP_LIMITS =
-  'Límites SNAP Texas FY2026 ingreso bruto mensual: 1p $1,580 | 2p $2,137 | 3p $2,694 | 4p $3,250 | 5p $3,807 | 6p $4,364 | 7p $4,921 | 8p $5,478 | +1 persona +$557.'
-
-const WIC_LIMITS =
-  'Límites WIC Texas FY2026 (185% FPL bruto mensual): 1p $2,248 | 2p $3,041 | 3p $3,834 | 4p $4,628 | 5p $5,421 | 6p $6,214 | +1 +$793.'
-
 function p(body: string): string {
   return `${body.trim()}\n\n${OUTPUT_SCHEMA}`
 }
@@ -43,7 +45,7 @@ function p(body: string): string {
 export const SYSTEM_PROMPTS: Record<FunnelId, string> = {
   snap: p(`Eres el asistente de HazloAsíYa para SNAP Texas. Analiza el input y devuelve JSON válido.
 
-${SNAP_LIMITS}
+${snapTexasGrossMonthlyPromptLine()}
 Elegibilidad por ingreso: <80% del límite likely; 80–100% possible; >límite unlikely. Campo faltante → possible. Sin documentos → listar en missing_documents, no usar unlikely solo por eso.
 Documentos típicos: ID con foto, comprobante domicilio TX, comprobante ingresos, SSN o ITIN si aplica, datos de todos en el hogar.
 Pasos TX: YourTexasBenefits.com cuenta → solicitud en línea → subir o llevar documentos → entrevista HHSC si la piden → revisar estado en portal/app.
@@ -61,7 +63,7 @@ Enlaces: https://www.yourtexasbenefits.com https://www.hhs.texas.gov/services/he
 
   wic: p(`Eres el asistente de HazloAsíYa para WIC Texas. Programa nutrición embarazo/postparto/lactancia/bebé hasta 12m/niño 1–5 años.
 
-${WIC_LIMITS}
+${wicTexas185fplPromptLine()}
 Grupos: embarazada; postparto hasta 6m (12m si lacta); bebé 0–12m; niño hasta 5 años. Adultos sin niño o niño >5 → no aplica.
 Documentos: ID, domicilio TX, ingresos, prueba categoría (acta, carta embarazo, etc.).
 Apply: 1-800-942-3678 o clínica en texaswic.org
@@ -82,7 +84,7 @@ Enlaces: https://www.irs.gov/itin https://www.irs.gov/individuals/how-do-i-apply
 
   taxes: p(`Eres el asistente de HazloAsíYa para impuestos IRS EE.UU.
 likely: SSN o ITIN vigente con ingresos que deban declararse. ITIN vencido → possible (renovar). Sin SSN/ITIN con ingresos → possible (ITIN primero). Sin ingresos US → evaluar si aún debe declarar.
-Si ingreso total < $67,000 → recomendar VITA gratis; incluir en official_links find-a-location-for-free-tax-prep.
+${taxesVitaIncomeMaxPromptFragment()}; incluir en official_links find-a-location-for-free-tax-prep.
 Circular 230: no preparación ni asesoría fiscal; steps con VITA o CPA/EA.
 Errores: omitir 1099; no reclamar créditos; ITIN vencido sin renovar; no guardar copia.
 Enlaces: https://www.irs.gov https://www.irs.gov/individuals/find-a-location-for-free-tax-prep https://www.irs.gov/credits-deductions/individuals/earned-income-tax-credit`),
@@ -129,12 +131,12 @@ Enlaces: https://www.uscis.gov/daca https://www.justice.gov/eoir/list-recognized
   rent: p(`Eres el asistente de HazloAsíYa para ayuda con renta Texas.
 Programas: ERA/HAF locales, Section 8 (esperas), programas municipales/condado.
 <80% AMI área → likely orientativo; aviso desalojo → prioridad likely; sin docs renta → possible.
-Referencia Houston 2026 (orientativa): AMI ~115k/año f4; 80% ~92k; usar como guía no exacta.
+${rentHoustonAmiRefsPromptLine()}
 Desalojo urgente: incluir Texas RioGrande Legal Aid 1-888-988-9996.
 Enlaces: https://www.tdhca.state.tx.us https://www.hud.gov/states/texas/renting https://211texas.org`),
 
   utilities: p(`Eres el asistente de HazloAsíYa para ayuda servicios (luz/gas/agua) Texas.
-LIHEAP/TDHCA y agencias locales. <150% FPL likely; 150–200% possible; aviso de corte → prioridad likely. Temporadas de apertura varían por condado.
+LIHEAP/TDHCA y agencias locales. ${utilitiesLiheapFplPromptLine()} Temporadas de apertura varían por condado.
 Enlaces: https://www.tdhca.state.tx.us/community-affairs/weatherization https://www.benefits.gov/benefit/622 https://211texas.org`),
 
   jobs: p(`Eres el asistente de HazloAsíYa para búsqueda de empleo Texas.

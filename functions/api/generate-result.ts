@@ -6,8 +6,6 @@ import type { GeneratedResult } from '../../types/ai'
 type Env = {
   OPENAI_API_KEY?: string
   OPENAI_MODEL?: string
-  ANTHROPIC_API_KEY?: string
-  ANTHROPIC_MODEL?: string
 }
 
 type PagesFunction<E = unknown> = (context: { request: Request; env: E }) => Promise<Response>
@@ -40,12 +38,10 @@ export const onRequestPost: PagesFunction<Env> = async context => {
     const secrets = {
       OPENAI_API_KEY: context.env.OPENAI_API_KEY,
       OPENAI_MODEL: context.env.OPENAI_MODEL,
-      ANTHROPIC_API_KEY: context.env.ANTHROPIC_API_KEY,
-      ANTHROPIC_MODEL: context.env.ANTHROPIC_MODEL,
     }
 
-    if (!secrets.OPENAI_API_KEY && !secrets.ANTHROPIC_API_KEY) {
-      return json({ error: 'Missing OPENAI_API_KEY or ANTHROPIC_API_KEY' }, 500)
+    if (!secrets.OPENAI_API_KEY) {
+      return json({ error: 'Missing OPENAI_API_KEY' }, 500)
     }
 
     const parsed = await generateFunnelResultFromAi(funnelId, formData, secrets)
