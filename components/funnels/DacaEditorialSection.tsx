@@ -73,48 +73,110 @@ export default function DacaEditorialSection() {
           <Link href="/bank/" className="text-green font-semibold hover:underline">
             Cuenta bancaria
           </Link>
+          {' · '}
+          <Link href="/itin/" className="text-green font-semibold hover:underline">
+            ITIN / impuestos
+          </Link>
         </p>
 
+        {/* §3b */}
         <div>
           <h2 id="daca-edu-que-es" className="font-serif text-2xl text-navy mb-3">
-            ¿Qué es la renovación DACA?
+            ¿Qué es renovar DACA?
           </h2>
-          <p className="text-gray-600 text-sm leading-relaxed">
-            <strong>DACA</strong> (Deferred Action for Childhood Arrivals) es una política administrativa que{' '}
-            <strong>USCIS</strong> aplica según reglas y litigios vigentes. No es lo mismo que residencia permanente. La
-            renovación demuestra que sigues cumpliendo los requisitos publicados en el sitio oficial. Las reglas y
-            formularios cambian;{' '}
-            <strong>verifica la página actual de USCIS</strong> antes de enviar.
+          <p className="text-gray-600 text-sm leading-relaxed mb-3">
+            <strong>DACA</strong> es una política administrativa que <strong>USCIS</strong> aplica según reglas y litigios
+            vigentes. No es residencia permanente ni garantía futura. La renovación demuestra que sigues cumpliendo
+            requisitos publicados en uscis.gov.
           </p>
-        </div>
-
-        <div>
-          <h2 className="font-serif text-2xl text-navy mb-3">Formularios y tarifas</h2>
-          <ul className="list-disc list-inside space-y-2 text-sm text-gray-700">
+          <p className="text-gray-600 text-sm leading-relaxed mb-3">
+            Formularios, tarifas y plazos cambian; descarga siempre la versión vigente de{' '}
+            <strong>I-821D</strong> e <strong>I-765</strong> antes de firmar o pagar.
+          </p>
+          <ul className="list-disc list-inside space-y-2 text-sm text-gray-700 leading-relaxed">
             <li>
-              <strong>I-821D:</strong> solicitud de consideración de DACA.
+              <strong>I-821D:</strong> consideración de DACA; respuestas deben coincidir con tu historial previo salvo
+              cambios declarados.
             </li>
             <li>
-              <strong>I-765:</strong> permiso de trabajo (EAD) asociado en muchos casos.
+              <strong>I-765:</strong> permiso de trabajo cuando aplica a tu paquete de renovación.
             </li>
             <li>
-              Tarifas: USCIS publica montos y exenciones en{' '}
-              <a href="https://www.uscis.gov/forms" className="text-green font-semibold underline" target="_blank" rel="noopener noreferrer">
-                uscis.gov/forms
-              </a>
-              .
+              <strong>Ventana de tiempo:</strong> USCIS ha orientado presentar con anticipación (históricamente ~120–150
+              días; verifica guía actual).
+            </li>
+            <li>
+              <strong>Elegibilidad continua:</strong> arrestos, viajes o nuevas denuncias pueden cambiar el análisis; caso
+              complejo requiere abogado.
             </li>
           </ul>
         </div>
 
+        <p className="text-sm text-gray-600 leading-relaxed">
+          Tarifas y revisiones de formularios:{' '}
+          <a href="https://www.uscis.gov/forms" className="text-green font-semibold underline" target="_blank" rel="noopener noreferrer">
+            uscis.gov/forms
+          </a>
+          .
+        </p>
+
+        {/* §3c */}
         <div>
-          <h2 className="font-serif text-2xl text-navy mb-3">Documentos que suele pedir USCIS</h2>
-          <p className="text-sm text-gray-700 mb-2">Orientación general (tu lista exacta depende del formulario vigente):</p>
-          <ul className="list-disc list-inside space-y-2 text-sm text-gray-700">
-            <li>Copia del último permiso de trabajo o notificación de aprobación previa</li>
-            <li>Identificación con foto</li>
-            <li>Pruebas continuas de residencia en EE.UU. desde tu última aprobación</li>
-            <li>Certificado de no antecedentes o respuestas en el formulario según te aplique</li>
+          <h2 className="font-serif text-2xl text-navy mb-3">Documentos que suele pedir USCIS (con ejemplos)</h2>
+          <p className="text-sm text-gray-700 mb-4 leading-relaxed">
+            Tu lista exacta depende del formulario y de tu historial. Estos ejemplos orientan; no sustituyen instrucciones
+            oficiales.
+          </p>
+          <div className="space-y-5 text-sm text-gray-700">
+            <div>
+              <h3 className="font-semibold text-navy mb-2">Estatus DACA previo</h3>
+              <ul className="list-disc list-inside space-y-1.5 leading-relaxed">
+                <li>Copia del último EAD, aviso I-797 o documentos de aprobación reciente.</li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="font-semibold text-navy mb-2">Identidad</h3>
+              <ul className="list-disc list-inside space-y-1.5 leading-relaxed">
+                <li>Pasaporte, permiso estatal o ID que USCIS acepte según las instrucciones vigentes.</li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="font-semibold text-navy mb-2">Residencia continua</h3>
+              <ul className="list-disc list-inside space-y-1.5 leading-relaxed">
+                <li>Arriendos, registros escolares, facturas médicas o bancarias con nombre y fechas dentro del periodo pedido.</li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="font-semibold text-navy mb-2">Antecedentes y preguntas de elegibilidad</h3>
+              <ul className="list-disc list-inside space-y-1.5 leading-relaxed">
+                <li>Certificados de arresto sellados o declaraciones bajo juramento si las preguntas del formulario aplican.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        {/* §3d */}
+        <div>
+          <h2 className="font-serif text-2xl text-navy mb-3">Pasos típicos de renovación</h2>
+          <ol className="list-decimal list-inside space-y-2 text-sm text-gray-700 leading-relaxed">
+            <li>Lee la página oficial de DACA y descarga formularios e instrucciones del día.</li>
+            <li>Completa I-821D e I-765 con la misma información coherente en ambos.</li>
+            <li>Prepara pruebas de identidad y residencia continua según el checklist vigente.</li>
+            <li>Paga tarifas con el método que USCIS indique y guarda recibos.</li>
+            <li>Arma el paquete en el orden que pidan las instrucciones; copia todo antes de enviar.</li>
+            <li>Envía a la casilla correcta (USPS/UPS/FedEx según guía) y rastrea la entrega.</li>
+          </ol>
+        </div>
+
+        {/* §3e */}
+        <div>
+          <h2 className="font-serif text-2xl text-navy mb-3">Errores que cuestan el EAD o el tiempo</h2>
+          <ul className="list-disc list-inside space-y-2 text-sm text-gray-700 leading-relaxed">
+            <li>Enviar tarde y quedar sin protección ni permiso de trabajo mientras esperas decisión.</li>
+            <li>Firmar formularios viejos o mezclar páginas de revisiones distintas.</li>
+            <li>Ocultar arrestos o viajes que debieron declararse: puede verse como falta de credibilidad.</li>
+            <li>Mandar cheques o montos incorrectos: USCIS rechaza el paquete completo.</li>
+            <li>No copiar el sobre: dirección o servicio de mensajería equivocado devuelve el envío.</li>
           </ul>
         </div>
 

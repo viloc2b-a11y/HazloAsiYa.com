@@ -160,11 +160,11 @@ export default async function FunnelPage({ params }: Props) {
           </div>
         </div>
 
-        {/* Primary CTA */}
+        {/* Primary CTA — §3f tarjeta post-valor */}
         <div className="card p-6 border-2 border-green text-center">
-          <div className="text-xs font-bold tracking-widest uppercase text-green mb-2">Empieza ahora</div>
-          <h3 className="font-serif text-2xl text-navy mb-2">Responde 5 preguntas — recibe tu plan exacto</h3>
-          <p className="text-gray-500 mb-6">En 5 minutos sabes exactamente qué tienes, qué te falta y cómo completar este trámite.</p>
+          <div className="text-xs font-bold tracking-widest uppercase text-green mb-2">{hero.ctaCardEyebrow}</div>
+          <h3 className="font-serif text-2xl text-navy mb-2">{hero.ctaCardTitle}</h3>
+          <p className="text-gray-500 mb-6">{hero.ctaCardLead}</p>
           <Link href={`/${id}/form`} className="btn-primary px-10 py-3.5 text-base inline-block">
             {hero.ctaCard}
           </Link>
@@ -179,6 +179,14 @@ export default async function FunnelPage({ params }: Props) {
         {id === 'daca' && <DacaEditorialSection />}
         {id === 'taxes' && <TaxesEditorialSection />}
         {id === 'rent' && <RentEditorialSection />}
+
+        {/* CTA final — §3g (copy distinto al hero y a la tarjeta central) */}
+        <div className="card p-6 border border-navy/15 bg-cream-2/80 text-center">
+          <p className="text-navy text-sm leading-relaxed max-w-2xl mx-auto mb-5">{hero.ctaCloseLead}</p>
+          <Link href={`/${id}/form`} className="btn-primary px-10 py-3.5 text-base inline-block">
+            {hero.ctaCloseButton}
+          </Link>
+        </div>
 
         <SeasonalCourseBanner funnelId={id} />
 

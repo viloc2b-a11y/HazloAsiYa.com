@@ -75,22 +75,36 @@ export default function ItinEditorialSection() {
           <Link href="/guias/como-llenar-la-w7/" className="text-green font-semibold hover:underline">
             Guía W-7
           </Link>
+          {' · '}
+          <Link href="/guias/" className="text-green font-semibold hover:underline">
+            Índice de guías
+          </Link>
         </p>
 
+        {/* §3b */}
         <div>
           <h2 id="itin-edu-que-es" className="font-serif text-2xl text-navy mb-3">
-            ¿Qué es el ITIN?
+            ¿Qué es el ITIN y quién lo necesita?
           </h2>
-          <p className="text-gray-600 text-sm leading-relaxed">
-            Es un número de <strong>9 dígitos</strong> que el <strong>IRS</strong> asigna a personas que tienen obligación
-            u necesidad de identificarse ante el fisco federal pero <strong>no califican para un SSN</strong>. El formato
-            habitual es <strong>9XX-XX-XXXX</strong> (empieza en 9). No es un permiso de trabajo ni un estatus migratorio.
-            Fuente general:{' '}
+          <p className="text-gray-600 text-sm leading-relaxed mb-3">
+            Es un número de <strong>9 dígitos</strong> que el <strong>IRS</strong> asigna cuando debes identificarte ante
+            el fisco federal y <strong>no calificas para un SSN</strong>. Formato habitual <strong>9XX-XX-XXXX</strong>. No
+            autoriza empleo ni arregla estatus migratorio. Fuente:{' '}
             <a href="https://www.irs.gov/itin" className="text-green font-semibold underline" target="_blank" rel="noopener noreferrer">
               irs.gov/itin
             </a>
             .
           </p>
+          <p className="text-gray-600 text-sm leading-relaxed mb-3">
+            El trámite oficial va con el formulario <strong>W-7</strong> y documentos de identidad aceptados; versiones y
+            listas cambian, descarga siempre la revisión vigente.
+          </p>
+          <ul className="list-disc list-inside space-y-2 text-sm text-gray-700 leading-relaxed">
+            <li>Personas con ingresos sujetos a declaración federal sin SSN elegible.</li>
+            <li>Cónyuge o dependiente cuando la declaración conjunta o créditos lo requieren.</li>
+            <li>Propietarios de negocio o contratistas que deben reportar ingresos con ID fiscal.</li>
+            <li>Quien necesita ITIN para otro trámite IRS explícito en las instrucciones del W-7.</li>
+          </ul>
         </div>
 
         <div>
@@ -116,14 +130,40 @@ export default function ItinEditorialSection() {
           </div>
         </div>
 
+        {/* §3c — documentos IRS con ejemplos */}
         <div>
-          <h2 className="font-serif text-2xl text-navy mb-3">¿Quién necesita el ITIN?</h2>
-          <ul className="list-disc list-inside space-y-2 text-sm text-gray-700">
-            <li>Personas sin SSN que tienen ingresos sujetos a declaración en EE.UU.</li>
-            <li>Cónyuge o dependiente de residente o ciudadano cuando la declaración conjunta o dependientes lo requiere</li>
-            <li>Estudiantes u otras personas con ingresos reportables aquí sin SSN elegible</li>
-            <li>Quien deba presentar una declaración u otro trámite ante el IRS y no pueda obtener SSN</li>
-          </ul>
+          <h2 className="font-serif text-2xl text-navy mb-3">Documentos que el IRS suele exigir (con ejemplos)</h2>
+          <p className="text-gray-600 text-sm mb-4 leading-relaxed">
+            La lista aceptada depende de tu país y categoría en el W-7. Los ejemplos orientan; confirma la tabla vigente en
+            irs.gov.
+          </p>
+          <div className="space-y-5 text-sm text-gray-700">
+            <div>
+              <h3 className="font-semibold text-navy mb-2">Identidad y estado migratorio (si aplica)</h3>
+              <ul className="list-disc list-inside space-y-1.5 leading-relaxed">
+                <li>Pasaporte válido suele ser documento destacado; matrícula consular solo si las instrucciones lo permiten.</li>
+                <li>Combinaciones de ID + prueba adicional según el país emisor (ver anexo del W-7).</li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="font-semibold text-navy mb-2">Razón fiscal (tax return u excepción)</h3>
+              <ul className="list-disc list-inside space-y-1.5 leading-relaxed">
+                <li>Declaración federal adjunta cuando las instrucciones lo exigen, o carta de excepción permitida (dependiente, etc.).</li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="font-semibold text-navy mb-2">Si usas Acceptance Agent</h3>
+              <ul className="list-disc list-inside space-y-1.5 leading-relaxed">
+                <li>Copias certificadas que el agente revise en persona; no envías originales al IRS salvo regla contraria.</li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="font-semibold text-navy mb-2">Traducciones y calidad</h3>
+              <ul className="list-disc list-inside space-y-1.5 leading-relaxed">
+                <li>Traducción certificada si el documento no está en inglés y el IRS la pide; fotos nítidas, sin recortes.</li>
+              </ul>
+            </div>
+          </div>
         </div>
 
         <div>
@@ -139,6 +179,19 @@ export default function ItinEditorialSection() {
               Ver guía completa del W-7 →
             </Link>
           </p>
+        </div>
+
+        {/* §3d — ≤ 6 pasos */}
+        <div>
+          <h2 className="font-serif text-2xl text-navy mb-3">Pasos típicos para el paquete W-7</h2>
+          <ol className="list-decimal list-inside space-y-2 text-sm text-gray-700 leading-relaxed">
+            <li>Descarga W-7 e instrucciones del año en curso en irs.gov.</li>
+            <li>Elige vía: correo al IRS, Acceptance Agent o centro de asistencia autorizado según tu caso.</li>
+            <li>Completa datos sin tachaduras; firma donde indique el formulario.</li>
+            <li>Adjunta identidad aceptada y declaración u hoja de excepción si aplica.</li>
+            <li>Usa la dirección de envío vigente en las instrucciones; guarda tracking del correo.</li>
+            <li>Espera la carta CP565 o resolución; renueva antes de vencer si declaras cada año.</li>
+          </ol>
         </div>
 
         <div>
@@ -171,6 +224,18 @@ export default function ItinEditorialSection() {
               </a>
               .
             </li>
+          </ul>
+        </div>
+
+        {/* §3e — 5 errores */}
+        <div>
+          <h2 className="font-serif text-2xl text-navy mb-3">Errores que devuelven el W-7 o retrasan meses</h2>
+          <ul className="list-disc list-inside space-y-2 text-sm text-gray-700 leading-relaxed">
+            <li>Enviar matrícula consular cuando el IRS ya no la acepta como documento independiente en tu categoría.</li>
+            <li>Mandar copias ilegibles o cortadas donde no se lee fecha de nacimiento o número de documento.</li>
+            <li>Olvidar la declaración o la excepción cuando las instrucciones las exigen en el mismo envío.</li>
+            <li>Firmar con nombre distinto al del ID o usar formulario W-7 vencido.</li>
+            <li>No incluir traducción certificada cuando el documento está en otro idioma y la tabla lo pide.</li>
           </ul>
         </div>
 

@@ -64,6 +64,10 @@ export default function MedicaidEditorialSection() {
             Medicaid en Texas (detalle estatal)
           </Link>
           {' · '}
+          <Link href="/guias/" className="text-green font-semibold hover:underline">
+            Guías HazloAsíYa
+          </Link>
+          {' · '}
           <Link href="/snap/" className="text-green font-semibold hover:underline">
             SNAP
           </Link>
@@ -77,55 +81,45 @@ export default function MedicaidEditorialSection() {
           </Link>
         </p>
 
+        {/* §3b — 2 párrafos + 4 viñetas */}
         <div>
           <h2 id="medicaid-edu-que-es" className="font-serif text-2xl text-navy mb-3">
-            ¿Qué es Medicaid?
+            ¿Qué es Medicaid y quién suele calificar en Texas?
           </h2>
-          <p className="text-gray-600 text-sm leading-relaxed">
+          <p className="text-gray-600 text-sm leading-relaxed mb-3">
             Medicaid es un <strong>seguro médico gratuito o de muy bajo costo</strong> financiado con fondos federales y
             estatales. En Texas, <strong>HHSC</strong> administra el programa junto con <strong>CHIP</strong> para niños
-            en familias con ingresos moderados. En el lenguaje cotidiano también se dice{' '}
-            <strong>cobertura médica</strong> o <strong>seguro médico gratis</strong> para referirse a estos beneficios,
-            aunque los nombres oficiales y las reglas las publica HHSC.
+            en familias con ingresos moderados; los nombres oficiales y tablas de ingreso los publica HHSC.
           </p>
+          <p className="text-gray-600 text-sm leading-relaxed mb-3">
+            Texas <strong>no</strong> adoptó la expansión Medicaid del ACA: los adultos sin hijos dependientes menores en
+            el hogar <strong>generalmente no</strong> tienen Medicaid regular. La elegibilidad final depende de tu
+            solicitud, pruebas y categoría (niños, embarazo, padres con límites muy bajos, mayores o discapacidad).
+          </p>
+          <ul className="list-disc list-inside space-y-2 text-sm text-gray-700 leading-relaxed">
+            <li>
+              <strong>Niños — CHIP:</strong> típicamente hasta ~<strong>201% del FPL</strong> según tamaño del hogar
+              (niños y adolescentes hasta 18 años).
+            </li>
+            <li>
+              <strong>Embarazadas:</strong> Medicaid de embarazo suele evaluarse hasta ~<strong>198% del FPL</strong>;
+              duración postparto según normas vigentes.
+            </li>
+            <li>
+              <strong>Padres con hijos menores:</strong> umbrales <strong>muy bajos</strong> (históricamente ~18% del FPL u
+              otros límites HHSC — confirma tabla actual).
+            </li>
+            <li>
+              <strong>Mayores 65+ o discapacidad:</strong> a menudo bajo reglas federales vinculadas a SSI/SSA u otras
+              categorías; HHSC decide con tu expediente.
+            </li>
+          </ul>
         </div>
 
         <div className="rounded-xl border-2 border-amber-400/80 bg-amber-50/90 p-4">
-          <h2 className="font-serif text-2xl text-navy mb-3">Quién califica en Texas (dato crítico)</h2>
-          <p className="text-gray-800 text-sm leading-relaxed font-medium mb-3">
-            Texas <strong>no</strong> adoptó la expansión Medicaid del ACA.{' '}
-            <strong>No incluyas a “adultos sin hijos” como grupo que califica por regla general:</strong> en la práctica,
-            los adultos sin hijos dependientes menores en el hogar <strong>generalmente no</strong> tienen Medicaid
-            regular en Texas.
-          </p>
-          <p className="text-gray-700 text-sm leading-relaxed mb-3">
-            Grupos que <strong>sí</strong> pueden calificar (según ingresos, tamaño del hogar y documentación; HHSC
-            decide cada caso):
-          </p>
-          <ul className="list-disc list-inside space-y-2 text-sm text-gray-700">
-            <li>
-              <strong>Niños — CHIP:</strong> típicamente hasta alrededor del <strong>201% del FPL</strong> según el tamaño
-              del hogar (CHIP cubre niños y adolescentes hasta 18 años en hogares con ingresos algo más altos que el
-              límite de Medicaid infantil).
-            </li>
-            <li>
-              <strong>Embarazadas:</strong> Medicaid para embarazadas suele evaluarse hasta cerca del{' '}
-              <strong>198% del FPL</strong>, con cobertura de <strong>perinatal</strong> (embarazo y un periodo
-              postparto; HHSC define la duración exacta según normativa vigente).
-            </li>
-            <li>
-              <strong>Padres o cuidadores con hijos menores dependientes:</strong> Medicaid para padres en Texas es{' '}
-              <strong>muy restrictivo</strong> (históricamente en torno al <strong>18% del FPL</strong> u otros umbrales
-              publicados por HHSC — verifica la tabla actual en fuentes oficiales).
-            </li>
-            <li>
-              <strong>Adultos mayores (65+) y personas con discapacidad:</strong> a menudo bajo reglas federales
-              vinculadas a SSI/SSA u otras categorías; los detalles dependen de tu situación y de lo que HHSC determine.
-            </li>
-          </ul>
-          <p className="text-gray-700 text-sm leading-relaxed mt-4">
+          <p className="text-gray-800 text-sm leading-relaxed font-medium">
             Si eres <strong>adulto sin hijos dependientes</strong> en Texas, Medicaid regular{' '}
-            <strong>generalmente no está disponible</strong>. Puedes explorar planes en{' '}
+            <strong>suele no aplicar</strong>. Explora cobertura en{' '}
             <a
               href="https://www.healthcare.gov"
               className="text-green font-semibold underline"
@@ -134,7 +128,7 @@ export default function MedicaidEditorialSection() {
             >
               healthcare.gov
             </a>{' '}
-            (Marketplace) — algunos planes tienen costo reducido según tus ingresos y circunstancias.
+            (Marketplace).
           </p>
         </div>
 
@@ -183,23 +177,51 @@ export default function MedicaidEditorialSection() {
           </div>
         </div>
 
+        {/* §3c — documentos por categorías con ejemplos */}
         <div>
-          <h2 className="font-serif text-2xl text-navy mb-3">Documentos que suelen pedir</h2>
-          <ul className="list-disc list-inside space-y-2 text-sm text-gray-700">
-            <li>Identificación de los adultos del hogar</li>
-            <li>Prueba de ingresos de quienes aportan al hogar</li>
-            <li>Prueba de domicilio en Texas</li>
-            <li>Actas de nacimiento de los niños (para CHIP o dependientes)</li>
-            <li>Documentación de embarazo si aplica</li>
-          </ul>
+          <h2 className="font-serif text-2xl text-navy mb-3">Documentos que suelen pedir (con ejemplos)</h2>
+          <p className="text-gray-600 text-sm mb-4 leading-relaxed">
+            Tu lista exacta sale del portal y del tipo de solicitud (embarazo, niño, padre, etc.). Mejor sobrar copias
+            claras que reenviar por calidad.
+          </p>
+          <div className="space-y-5 text-sm text-gray-700">
+            <div>
+              <h3 className="font-semibold text-navy mb-2">Identidad y membresía del hogar</h3>
+              <ul className="list-disc list-inside space-y-1.5 leading-relaxed">
+                <li>ID con foto de adultos (licencia, pasaporte, matrícula consular si aplica al caso).</li>
+                <li>Actas de nacimiento de menores o custodia si HHSC pide prueba de parentesco.</li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="font-semibold text-navy mb-2">Ingresos (últimos 30–60 días o más)</h3>
+              <ul className="list-disc list-inside space-y-1.5 leading-relaxed">
+                <li>Talones de cheque, W-2 reciente o declaración si trabajas por cuenta propia.</li>
+                <li>Carta de desempleo, manutención ordenada por tribunal o pensión con monto mensual.</li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="font-semibold text-navy mb-2">Domicilio en Texas</h3>
+              <ul className="list-disc list-inside space-y-1.5 leading-relaxed">
+                <li>Recibo de servicio, contrato de arrendamiento o carta del dueño con fecha.</li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="font-semibold text-navy mb-2">Categorías especiales</h3>
+              <ul className="list-disc list-inside space-y-1.5 leading-relaxed">
+                <li>Prueba de embarazo o informe prenatal si aplicas como embarazada.</li>
+                <li>Cartas de SSI/SSA o discapacidad cuando la categoría lo requiera.</li>
+              </ul>
+            </div>
+          </div>
           <p className="text-sm mt-3">
-            Para listas orientativas por estado:{' '}
+            Más orientación:{' '}
             <Link href="/medicaid/texas/" className="text-green font-bold underline">
               Medicaid Texas — documentos y pasos →
             </Link>
           </p>
         </div>
 
+        {/* §3d — ≤ 6 pasos */}
         <div>
           <h2 className="font-serif text-2xl text-navy mb-3">Cómo aplicar</h2>
           <ol className="list-decimal list-inside space-y-2 text-sm text-gray-700">
@@ -216,6 +238,18 @@ export default function MedicaidEditorialSection() {
               aviso o en el portal)
             </li>
           </ol>
+        </div>
+
+        {/* §3e — 5 errores */}
+        <div>
+          <h2 className="font-serif text-2xl text-navy mb-3">Errores que retrasan o niegan la cobertura</h2>
+          <ul className="list-disc list-inside space-y-2 text-sm text-gray-700 leading-relaxed">
+            <li>Declarar solo a algunos miembros del hogar fiscal para “ver si pasa”: discrepancias disparan revisiones.</li>
+            <li>Mandar ingresos viejos o incompletos cuando hay segundo trabajo o efectivo sin respaldo.</li>
+            <li>No subir prueba de embarazo o actas cuando la categoría lo exige desde el inicio.</li>
+            <li>Perder la fecha límite de pruebas o entrevistas: sin respuesta, HHSC puede cerrar el expediente.</li>
+            <li>Usar dirección o código postal que no coincide donde vive el niño o la embarazada solicitante.</li>
+          </ul>
         </div>
 
         <div className="rounded-xl border border-navy/15 bg-white p-4">

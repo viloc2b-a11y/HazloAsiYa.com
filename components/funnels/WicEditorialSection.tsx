@@ -56,7 +56,7 @@ export default function WicEditorialSection() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
       <section className="card p-6 border border-cream space-y-8 text-navy" aria-labelledby="wic-edu-que-es">
         <p className="text-sm text-gray-700 leading-relaxed rounded-xl border border-green/20 bg-white px-4 py-3">
-          <strong>Texas:</strong>{' '}
+          <strong>Texas y cluster beneficios:</strong>{' '}
           <Link href="/wic/texas/" className="text-green font-semibold hover:underline">
             WIC en Texas (clínicas y pasos)
           </Link>
@@ -68,23 +68,28 @@ export default function WicEditorialSection() {
           <Link href="/medicaid/" className="text-green font-semibold hover:underline">
             Medicaid / CHIP
           </Link>
+          {' · '}
+          <Link href="/guias/" className="text-green font-semibold hover:underline">
+            Guías
+          </Link>
         </p>
 
+        {/* §3b */}
         <div>
           <h2 id="wic-edu-que-es" className="font-serif text-2xl text-navy mb-3">
-            ¿Qué es WIC?
+            ¿Qué es WIC y quién suele calificar?
           </h2>
-          <p className="text-gray-600 text-sm leading-relaxed">
-            WIC ayuda a familias a comprar alimentos nutritivos (fruta, verdura, leche, cereal, etc.) mediante una tarjeta
-            o beneficios electrónicos en tiendas autorizadas. También ofrece educación nutricional y derivaciones a salud.
-            En Texas, el programa opera bajo reglas federales y estatales; la fuente general es{' '}
+          <p className="text-gray-600 text-sm leading-relaxed mb-3">
+            WIC ayuda a comprar alimentos nutritivos (fruta, verdura, leche, cereal, etc.) con tarjeta o beneficios
+            electrónicos en tiendas autorizadas, más educación nutricional y referidos a salud. En Texas operan HHSC y
+            clínicas locales; fuentes generales:{' '}
             <a
               href="https://www.fns.usda.gov/wic"
               className="text-green font-semibold underline"
               target="_blank"
               rel="noopener noreferrer"
             >
-              USDA FNS (WIC)
+              USDA FNS
             </a>{' '}
             y{' '}
             <a
@@ -97,30 +102,60 @@ export default function WicEditorialSection() {
             </a>
             .
           </p>
-        </div>
-
-        <div>
-          <h2 className="font-serif text-2xl text-navy mb-3">Quién suele calificar (orientación)</h2>
-          <ul className="list-disc list-inside space-y-2 text-sm text-gray-700">
-            <li>Embarazadas y mujeres hasta 6 meses posparto (o 12 meses si amamantan, según reglas vigentes).</li>
-            <li>Bebés y niños hasta 5 años, con evaluación de salud o nutrición en la clínica.</li>
-            <li>Ingresos del hogar dentro de los límites que publica el estado (aproximadamente hasta 185% del FPL para WIC).</li>
-          </ul>
-          <p className="text-sm text-gray-600 mt-3">
-            Los números exactos y excepciones las confirma tu clínica WIC al agendar.
+          <p className="text-gray-600 text-sm leading-relaxed mb-3">
+            La clínica confirma elegibilidad con ingresos, tamaño del hogar y evaluación de riesgo nutricional; no es lo
+            mismo que SNAP: los pasos y papeles son distintos.
           </p>
-        </div>
-
-        <div>
-          <h2 className="font-serif text-2xl text-navy mb-3">Documentos que suelen pedir</h2>
-          <ul className="list-disc list-inside space-y-2 text-sm text-gray-700">
-            <li>Identificación de la adulta que aplica</li>
-            <li>Prueba de ingresos o participación en SNAP/Medicaid (si aplica)</li>
-            <li>Comprobante de domicilio</li>
-            <li>Cartilla de vacunas o control del niño, según la clínica</li>
+          <ul className="list-disc list-inside space-y-2 text-sm text-gray-700 leading-relaxed">
+            <li>
+              <strong>Embarazadas y posparto:</strong> ventanas de elegibilidad según amamantamiento (p. ej. 6 o 12
+              meses; confirma en tu cita).
+            </li>
+            <li>
+              <strong>Bebés y niños hasta 5 años:</strong> suelen medir y revisar salud o nutrición en la primera visita.
+            </li>
+            <li>
+              <strong>Ingreso del hogar:</strong> orientación común hasta ~185% del FPL; la clínica aplica la tabla
+              vigente.
+            </li>
+            <li>
+              <strong>Residencia:</strong> suele pedirse comprobante en el área que atiende el proveedor WIC.
+            </li>
           </ul>
         </div>
 
+        {/* §3c */}
+        <div>
+          <h2 className="font-serif text-2xl text-navy mb-3">Documentos que suelen pedir (con ejemplos)</h2>
+          <div className="space-y-5 text-sm text-gray-700">
+            <div>
+              <h3 className="font-semibold text-navy mb-2">Identidad</h3>
+              <ul className="list-disc list-inside space-y-1.5 leading-relaxed">
+                <li>Licencia, matrícula consular o ID aceptada por la clínica para la adulta solicitante.</li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="font-semibold text-navy mb-2">Ingresos o otros programas</h3>
+              <ul className="list-disc list-inside space-y-1.5 leading-relaxed">
+                <li>Últimos talones, carta de empleador o carta de aprobación de SNAP/Medicaid si te eximen de más papeles.</li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="font-semibold text-navy mb-2">Domicilio</h3>
+              <ul className="list-disc list-inside space-y-1.5 leading-relaxed">
+                <li>Recibo de servicio, contrato o correo oficial con tu dirección en el condado.</li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="font-semibold text-navy mb-2">Niño o bebé</h3>
+              <ul className="list-disc list-inside space-y-1.5 leading-relaxed">
+                <li>Cartilla de vacunas, carnet del pediatra o bebé presente si la clínica mide y evalúa en sitio.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        {/* §3d — ≤ 6 pasos */}
         <div>
           <h2 className="font-serif text-2xl text-navy mb-3">Cómo empezar en Texas</h2>
           <ol className="list-decimal list-inside space-y-2 text-sm text-gray-700">
@@ -135,6 +170,18 @@ export default function WicEditorialSection() {
             <li>Lleva documentos y a los niños que inscribas, si te lo piden.</li>
             <li>Completa la orientación inicial; si calificas, activan tus beneficios.</li>
           </ol>
+        </div>
+
+        {/* §3e — 5 errores */}
+        <div>
+          <h2 className="font-serif text-2xl text-navy mb-3">Errores que hacen perder la cita o beneficios</h2>
+          <ul className="list-disc list-inside space-y-2 text-sm text-gray-700 leading-relaxed">
+            <li>Llegar sin el niño cuando la clínica pidió asistencia para medición o vacunas.</li>
+            <li>Llevar ingresos de hace meses si tu sueldo cambió: demoran o piden nueva prueba.</li>
+            <li>Documentos ilegibles o con nombre distinto al de la solicitud.</li>
+            <li>No confirmar la cita o llegar tarde: algunas clínicas reasignan el cupo el mismo día.</li>
+            <li>Asumir que SNAP automático te inscribe en WIC: son trámites separados salvo excepciones locales.</li>
+          </ul>
         </div>
 
         <section className="rounded-xl border border-green/25 bg-emerald-50/50 p-5" aria-labelledby="wic-faq">
