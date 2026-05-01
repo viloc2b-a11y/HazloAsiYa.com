@@ -8,16 +8,29 @@ import { alternatesForPath } from '@/lib/alternates'
 import VerifiedInfoBanner from '@/components/VerifiedInfoBanner'
 import { MONEY_PAGE_REGULATORY_SOURCE, regulatoryMetadataOther } from '@/lib/regulatory-meta'
 import Disclosure from '@/components/legal/Disclosure'
-import { DISCLAIMER_ITIN } from '@/lib/legal-texts'
+import { DISCLAIMER_ITIN, DISCLAIMER_MEDICAID_TX } from '@/lib/legal-texts'
 import SeasonalCourseBanner from '@/components/monetization/SeasonalCourseBanner'
 import AffiliateRecommendations from '@/components/monetization/AffiliateRecommendations'
 import SnapEditorialSection from '@/components/funnels/SnapEditorialSection'
+import MedicaidEditorialSection from '@/components/funnels/MedicaidEditorialSection'
+import ItinEditorialSection from '@/components/funnels/ItinEditorialSection'
 
 interface Props { params: Promise<{ funnel: string }> }
 
 const SNAP_SEO_TITLE = 'Cómo solicitar SNAP en Texas en español | HazloAsíYa'
 const SNAP_SEO_DESCRIPTION =
   '¿Calificas para SNAP? Guía completa: documentos, límites de ingresos Texas 2026 y cómo aplicar sin errores. Evaluación gratis.'
+
+const MEDICAID_SEO_TITLE = 'Medicaid en Texas: CHIP, familias y embarazo | HazloAsíYa'
+const MEDICAID_SEO_DESCRIPTION =
+  'Descubre si calificas para Medicaid o CHIP en Texas: requisitos, grupos elegibles y cómo completar la solicitud en español. Evaluación gratis.'
+
+const ITIN_SEO_TITLE = 'ITIN en español: qué es y formulario W-7 | HazloAsíYa'
+const ITIN_SEO_DESCRIPTION =
+  'Aprende qué es el ITIN, para qué sirve y cómo solicitarlo con el formulario W-7. Guía paso a paso en español. Evaluación gratuita.'
+
+const MEDICAID_H1 = 'Medicaid y CHIP en Texas: quién califica y cómo solicitarlo'
+const ITIN_H1 = 'ITIN: número de contribuyente para declarar impuestos sin SSN'
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { funnel: id } = await params
@@ -28,9 +41,25 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     ? { url: `/images/og/${id}-og.jpg` as const, width: 1200, height: 630, alt: f.name }
     : { url: '/images/og/default-og.jpg' as const, width: 1200, height: 630, alt: f.name }
   const isSnap = id === 'snap'
+  const isMedicaid = id === 'medicaid'
+  const isItin = id === 'itin'
+  const seoTitle = isSnap
+    ? SNAP_SEO_TITLE
+    : isMedicaid
+      ? MEDICAID_SEO_TITLE
+      : isItin
+        ? ITIN_SEO_TITLE
+        : `${f.name} | HazloAsíYa`
+  const seoDescription = isSnap
+    ? SNAP_SEO_DESCRIPTION
+    : isMedicaid
+      ? MEDICAID_SEO_DESCRIPTION
+      : isItin
+        ? ITIN_SEO_DESCRIPTION
+        : f.desc.slice(0, 155)
   const base: Metadata = {
-    title: isSnap ? SNAP_SEO_TITLE : `${f.name} | HazloAsíYa`,
-    description: isSnap ? SNAP_SEO_DESCRIPTION : f.desc.slice(0, 155),
+    title: seoTitle,
+    description: seoDescription,
     alternates: alternatesForPath(path),
     openGraph: {
       url: absoluteUrl(path),
@@ -41,7 +70,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
             title: 'Cómo solicitar SNAP en Texas en español',
             description: SNAP_SEO_DESCRIPTION,
           }
-        : {}),
+        : isMedicaid
+          ? {
+              title: 'Medicaid y CHIP en Texas en español',
+              description: MEDICAID_SEO_DESCRIPTION,
+            }
+          : isItin
+            ? {
+                title: 'ITIN en español: guía y formulario W-7',
+                description: ITIN_SEO_DESCRIPTION,
+              }
+            : {}),
     },
   }
   if (isMoneyPageOgSlug(id)) {
@@ -55,8 +94,22 @@ export default async function FunnelPage({ params }: Props) {
   if (!isValidFunnelId(id)) notFound()
   const f = FUNNELS[id]
   const nextSteps = NEXT_STEP_MAP[id] || []
-  const heroTitle = id === 'snap' ? 'Cómo solicitar SNAP en Texas en español' : f.action
-  const heroIntro = id === 'snap' ? f.action : f.desc
+  const heroTitle =
+    id === 'snap'
+      ? 'Cómo solicitar SNAP en Texas en español'
+      : id === 'medicaid'
+        ? MEDICAID_H1
+        : id === 'itin'
+          ? ITIN_H1
+          : f.action
+  const heroIntro =
+    id === 'snap'
+      ? f.action
+      : id === 'medicaid'
+        ? f.action
+        : id === 'itin'
+          ? 'Te guiamos para preparar el formulario W-7, reunir la identificación que el IRS acepta y evitar rechazos por errores comunes — sin sustituir a un Acceptance Agent ni a un preparador certificado.'
+          : f.desc
 
   return (
     <div className="min-h-screen bg-cream">
@@ -70,12 +123,25 @@ export default async function FunnelPage({ params }: Props) {
           <p className="text-white/60 text-lg leading-relaxed max-w-2xl mb-6">{heroIntro}</p>
 
           <div className="max-w-2xl mb-8 space-y-4">
-            <Disclosure variant="educational" />
-            {(id === 'itin' || id === 'taxes') && (
-              <aside className="rounded-xl border-l-4 border-amber-400 bg-amber-50 px-4 py-3 text-sm text-navy leading-relaxed">
-                {DISCLAIMER_ITIN}
+            {id === 'medicaid' && (
+              <aside
+                className="rounded-xl border-l-4 border-green bg-emerald-50/90 px-4 py-3 text-sm text-navy leading-relaxed"
+                role="note"
+              >
+                <span className="font-bold text-green">Aviso importante</span>
+                <p className="mt-1.5">{DISCLAIMER_MEDICAID_TX}</p>
               </aside>
             )}
+            {(id === 'itin' || id === 'taxes') && (
+              <aside
+                className="rounded-xl border-l-4 border-amber-400 bg-amber-50 px-4 py-3 text-sm text-navy leading-relaxed"
+                role="note"
+              >
+                <span className="font-bold text-amber-800">Aviso fiscal (Circular 230 / IRS)</span>
+                <p className="mt-1.5">{DISCLAIMER_ITIN}</p>
+              </aside>
+            )}
+            {id !== 'medicaid' && id !== 'itin' && id !== 'taxes' && <Disclosure variant="educational" />}
           </div>
 
           <div className="flex flex-wrap gap-3">
@@ -143,6 +209,8 @@ export default async function FunnelPage({ params }: Props) {
         </div>
 
         {id === 'snap' && <SnapEditorialSection />}
+        {id === 'medicaid' && <MedicaidEditorialSection />}
+        {id === 'itin' && <ItinEditorialSection />}
 
         {/* Affiliates */}
         {f.affiliates.length > 0 && (
