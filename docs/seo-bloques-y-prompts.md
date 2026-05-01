@@ -13,6 +13,7 @@ Evita un solo “prompt global” por página: homogeneiza tono, diluye intenci�
 | **Documentos necesarios** (reducir fricción) | Mismo archivo: sección H2 + listas por categoría; ver §3c |
 | **Pasos del trámite** (proceso simple) | Mismo archivo: H2 + lista ordenada; ver §3d |
 | **Errores comunes** (riesgo / confianza) | Mismo archivo: H2 + viñetas; ver §3e |
+| **CTA de avance** (tarjeta central) | `app/[funnel]/page.tsx` bloque “Primary CTA”; ver §3f |
 
 La metadata **no** debe copiarse literal al H1: el H1 sigue la intención **conversión**; el title la intención **búsqueda**.
 
@@ -245,6 +246,39 @@ Typical rejection or delay causes in practice (optional notes): [EJ. documentos 
 ```
 
 **Implementación:** `<section>` con `<h2>` y `<ul>`. Cada viñeta: **error en negrita o frase corta** + una línea de explicación (qué pasa o cómo evitarlo). Prohibido: “siempre te van a negar”, “multas enormes”, “ilegal” sin fundamento. Si aplica YMYL (salud, migración, impuestos), recordar verificar en fuente oficial al final del bloque.
+
+---
+
+## 3f. CTA de avance — tarjeta “Empieza ahora” (después del bloque azul)
+
+Distinto del **HERO (§1)**: aquí el usuario ya vio el valor (“Qué vas a recibir”). Objetivo: **un clic** sin presión falsa.
+
+```
+ROLE: Conversion optimizer
+
+TASK:
+Write a CTA section that pushes the user to start the process.
+
+GOAL:
+- Maximize clicks
+- Reduce hesitation
+
+RULES:
+- Clear benefit
+- Remove fear
+- No hype
+
+OUTPUT:
+- Short paragraph (2–3 lines)
+- CTA button text
+
+CONTEXT:
+Procedure: [TRAMITE]
+What they get in ~5 min (be specific): [EJ. lista de documentos + primeros pasos]
+Objection to neutralize (optional): [EJ. “sin tarjeta”, “sin abogado”]
+```
+
+**Implementación:** hoy el copy genérico vive en `app/[funnel]/page.tsx` (bloque *Primary CTA*: titular, párrafo gris, botón usa `hero.ctaCard` de `FUNNEL_HERO`). Para personalizar por trámite sin tocar el hero: añadir campos opcionales en `data/funnel-landing.ts` (p. ej. `ctaCardTitle`, `ctaCardLead`) y leerlos en esa tarjeta; el **párrafo del prompt** puede partir en titular (línea 1) + resto (líneas 2–3). El **texto del botón** debe coincidir con la promesa (misma acción que el hero o un paso siguiente explícito).
 
 ---
 
