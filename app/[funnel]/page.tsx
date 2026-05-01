@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { FUNNELS, NEXT_STEP_MAP, isValidFunnelId } from '@/data/funnels'
+import { getFunnelHeroCopy, getFunnelSeoMeta } from '@/data/funnel-landing'
 import Topbar from '@/components/Topbar'
 import { absoluteUrl, isMoneyPageOgSlug } from '@/lib/site'
 import { alternatesForPath } from '@/lib/alternates'
@@ -22,48 +23,6 @@ import RentEditorialSection from '@/components/funnels/RentEditorialSection'
 
 interface Props { params: Promise<{ funnel: string }> }
 
-const SNAP_SEO_TITLE = 'Cómo solicitar SNAP en Texas en español | HazloAsíYa'
-const SNAP_SEO_DESCRIPTION =
-  '¿Calificas para SNAP? Guía completa: documentos, límites de ingresos Texas 2026 y cómo aplicar sin errores. Evaluación gratis.'
-
-const MEDICAID_SEO_TITLE = 'Medicaid en Texas: CHIP, familias y embarazo | HazloAsíYa'
-const MEDICAID_SEO_DESCRIPTION =
-  'Descubre si calificas para Medicaid o CHIP en Texas: requisitos, grupos elegibles y cómo completar la solicitud en español. Evaluación gratis.'
-
-const ITIN_SEO_TITLE = 'ITIN en español: qué es y formulario W-7 | HazloAsíYa'
-const ITIN_SEO_DESCRIPTION =
-  'Aprende qué es el ITIN, para qué sirve y cómo solicitarlo con el formulario W-7. Guía paso a paso en español. Evaluación gratuita.'
-
-const MEDICAID_H1 = 'Medicaid y CHIP en Texas: quién califica y cómo solicitarlo'
-const ITIN_H1 = 'ITIN: número de contribuyente para declarar impuestos sin SSN'
-
-const WIC_SEO_TITLE = 'WIC en Texas en español: requisitos y cita | HazloAsíYa'
-const WIC_SEO_DESCRIPTION =
-  'WIC en Texas: quién califica, documentos para la cita y cómo usar texaswic.org. Orientación en español. Evaluación gratis.'
-
-const ESCUELA_SEO_TITLE = 'Inscripción escolar Texas en español | HazloAsíYa'
-const ESCUELA_SEO_DESCRIPTION =
-  'Documentos y pasos para inscribir a tu hijo en escuela pública en Texas: ISD, vacunas y Home Language Survey. Gratis.'
-
-const DACA_SEO_TITLE = 'Renovar DACA: formularios USCIS en español | HazloAsíYa'
-const DACA_SEO_DESCRIPTION =
-  'Renueva DACA con orientación sobre I-821D e I-765, plazos y USCIS. Contenido educativo en español. No es asesoría legal.'
-
-const WIC_H1 = 'WIC en Texas: requisitos, ingresos y cómo pedir cita'
-const ESCUELA_H1 = 'Inscripción escolar en Texas: documentos y pasos en español'
-const DACA_H1 = 'Renovar DACA: I-821D e I-765 paso a paso (orientación USCIS)'
-
-const TAXES_SEO_TITLE = 'Impuestos IRS en español: ITIN y VITA | HazloAsíYa'
-const TAXES_SEO_DESCRIPTION =
-  'Declara impuestos en español: documentos, ITIN, créditos y VITA gratis. Orientación educativa, no preparación oficial.'
-
-const RENT_SEO_TITLE = 'Ayuda para renta en Texas en español | HazloAsíYa'
-const RENT_SEO_DESCRIPTION =
-  'Orientación sobre alquiler, HUD y ayuda para pagar renta en Texas. Listas de espera y enlaces oficiales.'
-
-const TAXES_H1 = 'Declarar impuestos en EE.UU.: ITIN, formularios y ayuda VITA gratis'
-const RENT_H1 = 'Renta en Texas: ayuda para pagar alquiler y recursos HUD'
-
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { funnel: id } = await params
   if (!isValidFunnelId(id)) return {}
@@ -72,74 +31,21 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const ogImage = isMoneyPageOgSlug(id)
     ? { url: `/images/og/${id}-og.jpg` as const, width: 1200, height: 630, alt: f.name }
     : { url: '/images/og/default-og.jpg' as const, width: 1200, height: 630, alt: f.name }
-  const isSnap = id === 'snap'
-  const isMedicaid = id === 'medicaid'
-  const isItin = id === 'itin'
-  const isWic = id === 'wic'
-  const isEscuela = id === 'escuela'
-  const isDaca = id === 'daca'
-  const isTaxes = id === 'taxes'
-  const isRent = id === 'rent'
 
-  let seoTitle = `${f.name} | HazloAsíYa`
-  let seoDescription = f.desc.slice(0, 155)
-  let ogTitle: string | undefined
-  let ogDescription: string | undefined
-
-  if (isSnap) {
-    seoTitle = SNAP_SEO_TITLE
-    seoDescription = SNAP_SEO_DESCRIPTION
-    ogTitle = 'Cómo solicitar SNAP en Texas en español'
-    ogDescription = SNAP_SEO_DESCRIPTION
-  } else if (isMedicaid) {
-    seoTitle = MEDICAID_SEO_TITLE
-    seoDescription = MEDICAID_SEO_DESCRIPTION
-    ogTitle = 'Medicaid y CHIP en Texas en español'
-    ogDescription = MEDICAID_SEO_DESCRIPTION
-  } else if (isItin) {
-    seoTitle = ITIN_SEO_TITLE
-    seoDescription = ITIN_SEO_DESCRIPTION
-    ogTitle = 'ITIN en español: guía y formulario W-7'
-    ogDescription = ITIN_SEO_DESCRIPTION
-  } else if (isWic) {
-    seoTitle = WIC_SEO_TITLE
-    seoDescription = WIC_SEO_DESCRIPTION
-    ogTitle = 'WIC en Texas en español'
-    ogDescription = WIC_SEO_DESCRIPTION
-  } else if (isEscuela) {
-    seoTitle = ESCUELA_SEO_TITLE
-    seoDescription = ESCUELA_SEO_DESCRIPTION
-    ogTitle = 'Inscripción escolar en Texas'
-    ogDescription = ESCUELA_SEO_DESCRIPTION
-  } else if (isDaca) {
-    seoTitle = DACA_SEO_TITLE
-    seoDescription = DACA_SEO_DESCRIPTION
-    ogTitle = 'Renovar DACA — orientación USCIS'
-    ogDescription = DACA_SEO_DESCRIPTION
-  } else if (isTaxes) {
-    seoTitle = TAXES_SEO_TITLE
-    seoDescription = TAXES_SEO_DESCRIPTION
-    ogTitle = 'Impuestos en español — IRS y VITA'
-    ogDescription = TAXES_SEO_DESCRIPTION
-  } else if (isRent) {
-    seoTitle = RENT_SEO_TITLE
-    seoDescription = RENT_SEO_DESCRIPTION
-    ogTitle = 'Ayuda para renta en Texas'
-    ogDescription = RENT_SEO_DESCRIPTION
-  }
+  const seo = getFunnelSeoMeta(id, f.name, f.desc)
 
   const base: Metadata = {
-    title: seoTitle,
-    description: seoDescription,
+    title: seo.title,
+    description: seo.description,
     alternates: alternatesForPath(path),
     openGraph: {
       url: absoluteUrl(path),
       locale: 'es_US',
       images: [ogImage],
-      ...(ogTitle
+      ...(seo.ogTitle
         ? {
-            title: ogTitle,
-            description: ogDescription ?? seoDescription,
+            title: seo.ogTitle,
+            description: seo.description,
           }
         : {}),
     },
@@ -155,34 +61,7 @@ export default async function FunnelPage({ params }: Props) {
   if (!isValidFunnelId(id)) notFound()
   const f = FUNNELS[id]
   const nextSteps = NEXT_STEP_MAP[id] || []
-  const heroTitle =
-    id === 'snap'
-      ? 'Cómo solicitar SNAP en Texas en español'
-      : id === 'medicaid'
-        ? MEDICAID_H1
-        : id === 'itin'
-          ? ITIN_H1
-          : id === 'wic'
-            ? WIC_H1
-            : id === 'escuela'
-              ? ESCUELA_H1
-              : id === 'daca'
-                ? DACA_H1
-                : id === 'taxes'
-                  ? TAXES_H1
-                  : id === 'rent'
-                    ? RENT_H1
-                    : f.action
-  const heroIntro =
-    id === 'snap'
-      ? f.action
-      : id === 'medicaid'
-        ? f.action
-        : id === 'itin'
-          ? 'Te guiamos para preparar el formulario W-7, reunir la identificación que el IRS acepta y evitar rechazos por errores comunes — sin sustituir a un Acceptance Agent ni a un preparador certificado.'
-          : id === 'wic' || id === 'escuela' || id === 'daca' || id === 'taxes' || id === 'rent'
-            ? f.action
-            : f.desc
+  const hero = getFunnelHeroCopy(id, { action: f.action, desc: f.desc, icon: f.icon })
 
   return (
     <div className="min-h-screen bg-cream">
@@ -192,8 +71,8 @@ export default async function FunnelPage({ params }: Props) {
       <section className="bg-navy">
         <div className="max-w-4xl mx-auto px-4 py-14">
           <div className="text-5xl mb-4">{f.icon}</div>
-          <h1 className="font-serif text-3xl sm:text-4xl text-white mb-4 leading-tight">{heroTitle}</h1>
-          <p className="text-white/60 text-lg leading-relaxed max-w-2xl mb-6">{heroIntro}</p>
+          <h1 className="font-serif text-3xl sm:text-4xl text-white mb-4 leading-tight">{hero.headline}</h1>
+          <p className="text-white/60 text-lg leading-relaxed max-w-2xl mb-6">{hero.subhead}</p>
 
           <div className="max-w-2xl mb-8 space-y-4">
             {id === 'medicaid' && (
@@ -230,7 +109,7 @@ export default async function FunnelPage({ params }: Props) {
 
           <div className="flex flex-wrap gap-3">
             <Link href={`/${id}/form`} className="btn-primary text-base px-8 py-3.5">
-              Hazlo ahora →
+              {hero.ctaHero}
             </Link>
             <div className="flex items-center gap-4 text-sm text-white/40">
               <span>⏱ 5 minutos</span>
@@ -287,7 +166,7 @@ export default async function FunnelPage({ params }: Props) {
           <h3 className="font-serif text-2xl text-navy mb-2">Responde 5 preguntas — recibe tu plan exacto</h3>
           <p className="text-gray-500 mb-6">En 5 minutos sabes exactamente qué tienes, qué te falta y cómo completar este trámite.</p>
           <Link href={`/${id}/form`} className="btn-primary px-10 py-3.5 text-base inline-block">
-            {f.icon} Resolver mi trámite →
+            {hero.ctaCard}
           </Link>
           <p className="text-xs text-gray-400 mt-3">Sin registro · Sin tarjeta · Sin redireccionamientos</p>
         </div>

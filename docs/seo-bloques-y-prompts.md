@@ -1,0 +1,133 @@
+# SEO y conversión: bloques estándar + prompts por sección
+
+Evita un solo “prompt global” por página: homogeneiza tono, diluye intención y puede bajar conversión. Edita **un bloque a la vez** con el prompt que corresponda.
+
+## Dónde vive el copy en código
+
+| Bloque        | Archivo / uso |
+|---------------|----------------|
+| **META** (title, description, og) | `data/funnel-landing.ts` → `FUNNEL_SEO` |
+| **HERO** (H1, subtítulo, CTAs)   | `data/funnel-landing.ts` → `FUNNEL_HERO` |
+| **Editorial** (H2, párrafos, FAQ) | `components/funnels/*EditorialSection.tsx` (un archivo por trámite o tema) |
+
+La metadata **no** debe copiarse literal al H1: el H1 sigue la intención **conversión**; el title la intención **búsqueda**.
+
+---
+
+## 1. HERO (conversión + claridad)
+
+```
+ROLE: Conversion-focused landing optimizer
+
+TASK:
+Rewrite the HERO section for a Spanish-speaking audience in the US looking to complete [TRAMITE].
+
+GOAL:
+- Clear what the user gets
+- Reduce confusion
+- Increase click on CTA
+
+RULES:
+- Simple Spanish (8th grade level)
+- No fluff
+- No generic marketing language
+- Do NOT copy the SEO page title verbatim into the headline
+
+OUTPUT:
+- Headline (max 12 words)
+- Subheadline (max 20 words)
+- CTA hero (max 8 words)
+- CTA card secondary (max 8 words)
+
+CONTEXT:
+User wants to complete: [TRAMITE]
+```
+
+**Implementación:** pegar salida en `FUNNEL_HERO[tramite]` en `data/funnel-landing.ts`. No tocar `FUNNEL_SEO` en el mismo paso.
+
+---
+
+## 2. META (SERP + compartir)
+
+```
+ROLE: SEO metadata writer for Spanish US Hispanic queries
+
+TASK:
+Write ONLY title and meta description for [TRAMITE] on HazloAsíYa.
+
+GOAL:
+- Primary query in title where natural
+- Description with benefit + “gratis”/evaluación if applicable
+
+RULES:
+- Title ≤ 60 characters (incl. brand)
+- Description ≤ 155 characters
+- Do not reuse the hero headline word-for-word
+
+OUTPUT:
+- title
+- description
+- ogTitle (shorter social headline optional)
+```
+
+**Implementación:** `FUNNEL_SEO[tramite]` en `data/funnel-landing.ts`.
+
+---
+
+## 3. EDITORIAL (información + confianza)
+
+```
+ROLE: Educational content editor (YMYL-aware)
+
+TASK:
+Rewrite ONE editorial section (one H2 + 2–4 short paragraphs) for [TRAMITE].
+
+GOAL:
+- Answer one specific intent (e.g. documents, steps, eligibility nuance)
+- Cite official source in prose (HHSC, IRS, USCIS, TEA…)
+
+RULES:
+- No duplicate another funnel’s section verbatim
+- No legal/fiscal guarantees; point to official site
+- Spanish, concrete verbs
+
+OUTPUT:
+- H2 title
+- Body (plain text, no HTML)
+```
+
+**Implementación:** el bloque correspondiente dentro del `*EditorialSection.tsx` del trámite. Un prompt = un H2, no toda la página.
+
+---
+
+## 4. FAQ (schema + usuarios)
+
+```
+ROLE: FAQ editor for FAQPage schema
+
+TASK:
+Add or rewrite 3 questions for [TRAMITE] that match real searches, not generic “¿Qué es…?” only.
+
+RULES:
+- Each answer 2–4 sentences, factual
+- No copy-paste from another program’s FAQ
+
+OUTPUT:
+- Q1 / A1, Q2 / A2, Q3 / A3
+```
+
+**Implementación:** array `faqItems` en el mismo `*EditorialSection.tsx`.
+
+---
+
+## Validación después de cada bloque
+
+1. **SEO:** `npm run validate` (longitudes, etc.)
+2. **Conversión:** ¿El hero promete un resultado concreto en 5 min? ¿El CTA promete la siguiente acción?
+3. **Diferenciación:** comparar con otro trámite — si dos H2 o FAQs son intercambiables, reescribir uno.
+
+---
+
+## Trámites con hero + SEO separados hoy
+
+`FUNNEL_HERO` y `FUNNEL_SEO` definidos para: `snap`, `medicaid`, `itin`, `wic`, `escuela`, `daca`, `taxes`, `rent`. El resto de funnels usa `action` / `desc` de `data/funnels.ts` hasta que añadas entradas aquí.
