@@ -9,7 +9,7 @@ Sitio en **español** para orientar a familias hispanas en EE. UU. en trámites 
 | Framework | **Next.js 14** (App Router), `output: 'export'` |
 | Deploy | **Cloudflare Pages** (salida `out/`; `wrangler.toml` → `name = "hazloasiya"`, Functions en `functions/api/`) |
 | Pagos | **Square Hosted Checkout** (`POST /api/checkout` → `checkoutUrl`) |
-| IA | **API de OpenAI (ChatGPT / GPT)** — `lib/ai-client.ts`: SDK `openai`, **Responses API** (`responses.create`) con fallback a **Chat Completions**; modelo vía `OPENAI_MODEL` |
+| IA | **API de OpenAI (ChatGPT / GPT)** — `POST /api/eligibility` (`lib/ai-client.ts`: SDK `openai`, Responses + fallback Chat Completions; `OPENAI_MODEL`) |
 | Datos | **Supabase** (opcional; webhook Square + usuario/plan) |
 | Email marketing | **Mailchimp** (`POST /api/subscribe-email` → alta idempotente **PUT** a la audiencia) |
 | Medición | **GA4** (`gtag` tras consentimiento): eventos personalizados en landings y resultado (ver abajo) |
@@ -46,7 +46,8 @@ En **producción** (Cloudflare Pages), `/api/*` lo atienden los Workers en `func
 
 | Método | Ruta | Uso |
 |--------|------|-----|
-| POST | `/api/generate-result` | Plan / resultado del cuestionario (**OpenAI ChatGPT API**, modelo vía `OPENAI_MODEL`) |
+| POST | `/api/eligibility` | Plan / resultado del cuestionario (**OpenAI**); cuerpo `{ funnelId, formData }` o `{ funnelId, ...campos }` |
+| POST | `/api/generate-result` | Alias de `/api/eligibility` (mismo cuerpo; compatibilidad) |
 | POST | `/api/checkout` | Square Payment Links → `{ checkoutUrl }` |
 | POST | `/api/square-webhook` | Pagos completados; Supabase si aplica |
 | POST | `/api/subscribe-email` | Suscripción Mailchimp (PUT idempotente por MD5 del email; respuesta `{ ok: true }`) |

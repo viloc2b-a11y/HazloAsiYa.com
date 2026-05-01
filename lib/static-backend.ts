@@ -110,7 +110,8 @@ export async function generateResultClient(args: {
   formData: Record<string, unknown>
 }): Promise<DemoResult> {
   const base = (process.env.NEXT_PUBLIC_API_BASE_URL || '').replace(/\/+$/, '')
-  const url = base ? `${base}/api/generate-result` : '/api/generate-result'
+  const path = '/api/eligibility'
+  const url = base ? `${base}${path}` : path
 
   const formStrings: Record<string, string> = {}
   for (const [k, v] of Object.entries(args.formData)) {

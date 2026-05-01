@@ -21,7 +21,6 @@ function json(data: unknown, status = 200) {
 
 export type { GeneratedResult }
 
-/** Alias histórico de `/api/eligibility` — misma firma y cuerpo. */
 export const onRequestPost: PagesFunction<Env> = async context => {
   try {
     let body: Record<string, unknown>
@@ -33,7 +32,10 @@ export const onRequestPost: PagesFunction<Env> = async context => {
 
     const parsed = parseEligibilityBody(body)
     if (!parsed) {
-      return json({ error: 'Trámite inválido o cuerpo incorrecto' }, 400)
+      return json(
+        { error: 'Se requiere funnelId válido y campos del formulario (o formData anidado).' },
+        400,
+      )
     }
 
     const secrets = {
