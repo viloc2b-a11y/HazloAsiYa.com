@@ -9,7 +9,7 @@ Evita un solo “prompt global” por página: homogeneiza tono, diluye intenci�
 | **META** (title, description, og) | `data/funnel-landing.ts` → `FUNNEL_SEO` |
 | **HERO** (H1, subtítulo, CTAs)   | `data/funnel-landing.ts` → `FUNNEL_HERO` |
 | **Editorial** (H2, párrafos, FAQ) | `components/funnels/*EditorialSection.tsx` (un archivo por trámite o tema) |
-| **Qué es / quién califica** (informacional) | Mismo archivo: primer bloque largo tras el hero; ver §3b |
+| **Qué es / quién califica** (informacional + alta intención) | Mismo archivo: primer bloque largo tras el hero; ver §3b |
 | **Documentos necesarios** (reducir fricción) | Mismo archivo: sección H2 + listas por categoría; ver §3c |
 | **Pasos del trámite** (proceso simple) | Mismo archivo: H2 + lista ordenada; ver §3d |
 | **Errores comunes** (riesgo / confianza) | Mismo archivo: H2 + viñetas; ver §3e |
@@ -106,42 +106,42 @@ OUTPUT:
 
 ---
 
-## 3b. EDITORIAL — Qué es y quién califica (intención informacional)
+## 3b. EDITORIAL — Qué es y quién califica (consultas de alta intención)
 
-Usar como **primer bloque editorial** cuando quieras rankear consultas tipo “qué es X”, “quién califica para X”. No sustituye al hero (conversión); complementa al bajar el scroll.
+Usar como **primer bloque editorial** para captar búsquedas tipo “qué es X”, “quién califica para X”, “requisitos X Texas”. No sustituye al hero (§1); el H2 puede incluir la keyword, el hero no debe ser un calco del title.
 
 ```
-ROLE: SEO content writer
+ROLE: SEO content writer (high intent queries)
 
 TASK:
-Write a section that explains clearly what [TRAMITE] is and who qualifies.
+Explain what [TRAMITE] is and who qualifies in the US.
 
 GOAL:
-- Rank for informational intent
-- Keep user reading
+- Capture search traffic
+- Keep user engaged
 
 INCLUDE:
-- Definition
+- Simple definition
 - Who qualifies
-- Basic context in the US
+- Basic criteria
 
 RULES:
 - Spanish
-- Simple, clear, structured
+- Clear, structured
 - No filler
-- Use bullet points if helpful
 
 OUTPUT:
 - H2
-- 2–3 short paragraphs
-- 3–5 bullet points
+- 2 short paragraphs
+- 4 bullet points
 
 CONTEXT:
-Program or procedure: [TRAMITE]
-Official sources to align with (optional): [AGENCIA / URL]
+Procedure: [TRAMITE]
+State / locality if criteria change (optional): [EJ. Texas]
+Official source to align facts (optional): [AGENCIA / URL]
 ```
 
-**Implementación:** convertir la salida a JSX en el `*EditorialSection.tsx` del trámite (primer `<h2>` + `<p>` + `<ul>`). Un trámite = un prompt de este tipo; evita repetir el mismo H2 en otro funnel.
+**Implementación:** JSX en `*EditorialSection.tsx`: un `<h2>`, dos `<p>` breves, `<ul>` con **exactamente 4** `<li>` (criterio por viñeta, sin párrafos genéricos intercambiables entre trámites). Variar el texto del H2 entre funnels para no duplicar plantillas detectables.
 
 ---
 
