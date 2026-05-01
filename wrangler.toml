@@ -1,4 +1,5 @@
 # Pages Functions: `node:crypto` (MD5 del subscriber hash) en subscribe-email
+name = "hazloasiya"
 compatibility_date = "2024-11-01"
 compatibility_flags = ["nodejs_compat"]
 pages_build_output_dir = "out"
