@@ -3,7 +3,7 @@ draft: false
 title: "Ayuda para luz y gas: LIHEAP y programas estatales"
 description: "Cómo buscar asistencia para facturas de energía según ingreso y estado. Empieza por la oficina estatal de LIHEAP y tu compañía eléctrica regulada."
 h1: "Ayuda para pagar luz y gas"
-canonical: "https://hazloasiya.com/guias/ayuda-para-pagar-luz-y-gas/"
+canonical: "https://www.hazloasiya.com/guias/ayuda-para-pagar-luz-y-gas/"
 ogImage: "/images/og/utilities-og.jpg"
 tramiteSlug: "utilities"
 category: "vivienda"

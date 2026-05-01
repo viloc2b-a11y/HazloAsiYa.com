@@ -53,7 +53,7 @@ Prueba local del subscribe: `curl` contra el origen que sirva la ruta (dev: Next
 
 Plantilla: **`.env.local.example`**. Resumen:
 
-- **Públicas:** `NEXT_PUBLIC_APP_URL` (ej. `https://hazloasiya.com`), `NEXT_PUBLIC_API_BASE_URL` si el API no es el mismo origen, Supabase público, WhatsApp, claves `NEXT_PUBLIC_AFFILIATE_*` (Fase 1).
+- **Públicas:** `NEXT_PUBLIC_APP_URL` (ej. `https://www.hazloasiya.com`), `NEXT_PUBLIC_API_BASE_URL` si el API no es el mismo origen, Supabase público, WhatsApp, claves `NEXT_PUBLIC_AFFILIATE_*` (Fase 1).
 - **GA4 (consent-gate):** `NEXT_PUBLIC_GA_MEASUREMENT_ID=G-XXXXXXXXXX`. El script `gtag.js` **no** se inyecta en el HTML estático: solo tras aceptar analítica en el CookieBanner (Consent Mode v2: default `denied` en `layout`).
 - **A/B upsell:** `NEXT_PUBLIC_AB_UPSELL_ACTIVE=false` por defecto; poner `true` cuando haya tráfico suficiente (ver `docs/ab-test-upsell.md`).
 - **Mailchimp:** `MAILCHIMP_API_KEY`, `MAILCHIMP_AUDIENCE_ID`; `MAILCHIMP_SERVER` (opcional si el API key ya termina en `-usXX`, p. ej. `-us21`).
@@ -104,7 +104,7 @@ public/               # estáticos, _redirects → copia a out/
 
 ## Dominio y SEO
 
-- Canónico: **`https://hazloasiya.com`** (`lib/site.ts`, `metadataBase` en `app/layout.tsx`). Opcional: `www` → apex con `_redirects` / Cloudflare.
+- Canónico: **`https://www.hazloasiya.com`** (`lib/site.ts`, `metadataBase` en `app/layout.tsx`). Apex redirige a `www` vía `_redirects` / Cloudflare.
 - Tras el build: comprobar que no queden `pages.dev` ni `aggregateRating` falso en `out/` (`npm run audit:legal`).
 
 ## Licencia / propiedad

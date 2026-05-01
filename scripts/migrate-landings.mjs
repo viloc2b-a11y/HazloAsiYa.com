@@ -116,7 +116,7 @@ draft: true
 title: ${JSON.stringify(safeTitle)}
 description: ${JSON.stringify(safeDesc)}
 h1: ${JSON.stringify(safeH1)}
-canonical: "https://hazloasiya.com/${slug}/"
+canonical: "https://www.hazloasiya.com/${slug}/"
 ogImage: "${og}"
 slug: "${slug}"
 category: "${cat}"

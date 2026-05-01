@@ -3,7 +3,7 @@ draft: false
 title: "Documentos para inscribir a tu hijo en escuela pública"
 description: "Pruebas de domicilio, edad, vacunas e inmunizaciones que suelen pedir los distritos en Texas y EE.UU. Confirma con tu escuela local."
 h1: "Documentos para inscribir a tu hijo en la escuela pública"
-canonical: "https://hazloasiya.com/guias/documentos-para-inscribir-a-tu-hijo-en-la-escuela/"
+canonical: "https://www.hazloasiya.com/guias/documentos-para-inscribir-a-tu-hijo-en-la-escuela/"
 ogImage: "/images/og/escuela-og.jpg"
 tramiteSlug: "escuela"
 category: "escuela"

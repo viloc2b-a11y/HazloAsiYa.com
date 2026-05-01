@@ -10,7 +10,7 @@ Configurar en **Cloudflare Pages → Settings → Environment variables → Prod
 
 | Variable | Valor |
 |---|---|
-| `NEXT_PUBLIC_APP_URL` | `https://hazloasiya.com` |
+| `NEXT_PUBLIC_APP_URL` | `https://www.hazloasiya.com` |
 | `NEXT_PUBLIC_GA_MEASUREMENT_ID` | `G-3BQ19DQ308` |
 | `MAILCHIMP_API_KEY` | `[nueva key rotada]` |
 | `MAILCHIMP_AUDIENCE_ID` | `0331f44a68` |

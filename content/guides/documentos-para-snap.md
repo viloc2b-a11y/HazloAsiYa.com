@@ -3,7 +3,7 @@ draft: false
 title: "Documentos SNAP en Texas: lista y verificación 2026"
 description: "Identidad, ingresos y gastos que suele pedir HHSC para SNAP. Comprueba siempre en Your Texas Benefits antes de enviar tu solicitud."
 h1: "Documentos para solicitar SNAP en Texas"
-canonical: "https://hazloasiya.com/guias/documentos-para-snap/"
+canonical: "https://www.hazloasiya.com/guias/documentos-para-snap/"
 ogImage: "/images/og/snap-og.jpg"
 tramiteSlug: "snap"
 category: "beneficios"

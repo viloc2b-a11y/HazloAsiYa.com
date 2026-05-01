@@ -15,14 +15,14 @@
 
 | Nombre | Valor | Notas |
 |--------|--------|--------|
-| `NEXT_PUBLIC_APP_URL` | `https://hazloasiya.com` | Sin barra final. Evita sitemap/robots/canonical con host equivocado en previews. |
+| `NEXT_PUBLIC_APP_URL` | `https://www.hazloasiya.com` | Sin barra final. Evita sitemap/robots/canonical con host equivocado en previews. |
 
-Opcional: repetir la misma variable en **Preview** para que los despliegues de rama usen el dominio canónico en metadatos (si preferís URLs “de producción” en previews). Si no, el código usa el default `https://hazloasiya.com` en `lib/site.ts`.
+Opcional: repetir la misma variable en **Preview** para que los despliegues de rama usen el dominio canónico en metadatos (si preferís URLs “de producción” en previews). Si no, el código usa el default `https://www.hazloasiya.com` en `lib/site.ts`.
 
 ## Checks tras el primer deploy
 
-1. Abrir `https://hazloasiya.com/buscar/` y comprobar que carga el widget y hay resultados.
-2. **Search Console**: propiedad verificada; enviar `https://hazloasiya.com/sitemap.xml`.
+1. Abrir `https://www.hazloasiya.com/buscar/` y comprobar que carga el widget y hay resultados.
+2. **Search Console**: propiedad verificada; enviar `https://www.hazloasiya.com/sitemap.xml`.
 3. En el HTML de inicio, el JSON-LD `WebSite` debe incluir `SearchAction` con `search_term_string` y `/buscar/`.
 
 ## Monorepo

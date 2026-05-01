@@ -104,7 +104,7 @@ SUPABASE_SERVICE_ROLE_KEY=eyJ...
 OPENAI_API_KEY=sk-...
 
 # App
-NEXT_PUBLIC_APP_URL=https://hazloasiya.com
+NEXT_PUBLIC_APP_URL=https://www.hazloasiya.com
 NEXT_PUBLIC_API_BASE_URL=https://hazloasiya-api.vilomendez.workers.dev
 NEXT_PUBLIC_WHATSAPP_NUMBER=13465550000
 ```
