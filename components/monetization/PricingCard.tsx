@@ -10,6 +10,8 @@ export type PricingCardProps = {
   ctaText: string
   ctaHref: string
   hasAffiliate?: boolean
+  /** Plan $0: sin notas de checkout, Square ni reembolso (solo precio, lista y CTA). */
+  isFree?: boolean
 }
 
 /**
@@ -24,6 +26,7 @@ export default function PricingCard({
   ctaText,
   ctaHref,
   hasAffiliate,
+  isFree,
 }: PricingCardProps) {
   return (
     <div
@@ -35,9 +38,11 @@ export default function PricingCard({
         <span className="text-xs font-bold uppercase tracking-wide text-green mb-2">Más popular</span>
       )}
       <h3 className="font-serif text-xl text-navy mb-1">{plan}</h3>
-      <p className="text-3xl font-bold text-navy mb-1">{price}</p>
-      <p className="text-xs text-gray-500 mb-4">{priceNote}</p>
-      <p className="text-xs text-gray-600 mb-4">Pago procesado de forma segura con Square (checkout alojado).</p>
+      <p className={`text-3xl font-bold text-navy ${isFree ? 'mb-4' : 'mb-1'}`}>{price}</p>
+      {!isFree && <p className="text-xs text-gray-500 mb-4">{priceNote}</p>}
+      {!isFree && (
+        <p className="text-xs text-gray-600 mb-4">Pago procesado de forma segura con Square (checkout alojado).</p>
+      )}
       <ul className="space-y-2 text-sm text-gray-700 flex-1 mb-6">
         {features.map((f) => (
           <li key={f} className="flex gap-2">
@@ -46,23 +51,24 @@ export default function PricingCard({
           </li>
         ))}
       </ul>
-      <p className="text-xs text-gray-500 mb-3">
-        Garantía de reembolso 30 días (sin preguntas). Membresía: cancelación en 1 clic, sin penalización.
-      </p>
+      {!isFree && (
+        <p className="text-xs text-gray-500 mb-3">
+          Garantía de reembolso 30 días (sin preguntas). Membresía: cancelación en 1 clic, sin penalización.
+        </p>
+      )}
       {hasAffiliate && (
         <div className="mb-3">
           <Disclosure variant="affiliate" />
         </div>
       )}
-      <div className="mb-3">
-        <Disclosure variant="paid-service" />
-      </div>
       <Link href={ctaHref} className="btn-primary w-full text-center py-3 block">
         {ctaText}
       </Link>
-      <Link href="/terms/" className="text-xs text-green underline text-center mt-3 block">
-        Términos y reembolsos
-      </Link>
+      {!isFree && (
+        <Link href="/terms/" className="text-xs text-green underline text-center mt-3 block">
+          Términos y reembolsos
+        </Link>
+      )}
     </div>
   )
 }

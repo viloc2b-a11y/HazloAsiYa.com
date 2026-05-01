@@ -38,16 +38,17 @@ export default function PreciosPage() {
       <Topbar />
       <main className="max-w-6xl mx-auto px-4 py-12">
         <h1 className="font-serif text-3xl sm:text-4xl text-navy mb-2">Planes y precios</h1>
+        {/* Dev: montos alineados con Square + data/checkout-prices.json */}
         <p className="text-gray-600 mb-10 max-w-2xl leading-relaxed">
-          Los montos coinciden con el checkout alojado de <strong>Square</strong> (misma fuente que{' '}
-          <code className="text-xs bg-cream-2 px-1 rounded">data/checkout-prices.json</code>). El cuestionario orientativo
-          sigue siendo gratuito.
+          El cuestionario orientativo es gratuito. Los planes de pago desbloquean guías y materiales según el producto que
+          elijas.
         </p>
 
         <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-6 mb-14">
           <PricingCard
             plan="Gratis"
             price="$0"
+            isFree
             features={[
               'Cuestionario de orientación para todos los trámites',
               'Resultado resumido y pasos generales',
@@ -108,11 +109,6 @@ export default function PreciosPage() {
               <strong>{products.kitItin.label}</strong> — {PRICE_KIT_ITIN}
             </li>
           </ul>
-          <p className="text-xs text-gray-500 mt-4">
-            Si cambias precios en producción, actualiza <strong>Square</strong> y el archivo{' '}
-            <code className="text-[10px] bg-cream-2 px-1 rounded">data/checkout-prices.json</code> para que sigan
-            coincidiendo.
-          </p>
         </section>
 
         <p className="text-sm text-gray-500">
