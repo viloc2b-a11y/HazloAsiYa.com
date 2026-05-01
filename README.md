@@ -7,11 +7,12 @@ Sitio en **español** para orientar a familias hispanas en EE. UU. en trámites 
 | Pieza | Detalle |
 |--------|---------|
 | Framework | **Next.js 14** (App Router), `output: 'export'` |
-| Deploy | **Cloudflare Pages** (salida `out/`) |
+| Deploy | **Cloudflare Pages** (salida `out/`; `wrangler.toml` → `name = "hazloasiya"`, Functions en `functions/api/`) |
 | Pagos | **Square Hosted Checkout** (`POST /api/checkout` → `checkoutUrl`) |
 | IA | **OpenAI** (`POST /api/generate-result`) |
 | Datos | **Supabase** (opcional; webhook Square + usuario/plan) |
 | Email marketing | **Mailchimp** (`POST /api/subscribe-email` → alta idempotente **PUT** a la audiencia) |
+| Medición | **GA4** (`gtag` tras consentimiento): eventos personalizados en landings y resultado (ver abajo) |
 
 ## Inicio rápido
 
@@ -28,6 +29,15 @@ Build estático + índice de búsqueda (Pagefind):
 npm run build
 ```
 
+Deploy manual a Pages (requiere [Wrangler](https://developers.cloudflare.com/workers/wrangler/) autenticado):
+
+```bash
+npm run build
+npx wrangler pages deploy out
+```
+
+En CI o Git integrado con Cloudflare, el build suele ser el mismo comando; la salida debe ser **`out/`** (incluye Pagefind en `out/pagefind/`).
+
 ## API
 
 ### Cloudflare Pages (`functions/api/`)
@@ -41,7 +51,7 @@ En **producción** (Cloudflare Pages), `/api/*` lo atienden los Workers en `func
 | POST | `/api/square-webhook` | Pagos completados; Supabase si aplica |
 | POST | `/api/subscribe-email` | Suscripción Mailchimp (PUT idempotente por MD5 del email; respuesta `{ ok: true }`) |
 
-`wrangler.toml` declara `nodejs_compat` para usar `node:crypto` (hash MD5 del subscriber) en `subscribe-email`.
+`wrangler.toml` declara el proyecto Pages (`name`), `pages_build_output_dir = "out"` y `nodejs_compat` para usar `node:crypto` (hash MD5 del subscriber) en `subscribe-email`.
 
 ### Next.js (`app/api/`)
 
@@ -55,6 +65,10 @@ Plantilla: **`.env.local.example`**. Resumen:
 
 - **Públicas:** `NEXT_PUBLIC_APP_URL` (ej. `https://www.hazloasiya.com`), `NEXT_PUBLIC_API_BASE_URL` si el API no es el mismo origen, Supabase público, WhatsApp, claves `NEXT_PUBLIC_AFFILIATE_*` (Fase 1).
 - **GA4 (consent-gate):** `NEXT_PUBLIC_GA_MEASUREMENT_ID=G-XXXXXXXXXX`. El script `gtag.js` **no** se inyecta en el HTML estático: solo tras aceptar analítica en el CookieBanner (Consent Mode v2: default `denied` en `layout`).
+  - Eventos usados para embudo (vía `lib/gtag.ts`; sin `gtag` cargado no hacen nada):
+    - **`cta_click`** — CTA final de `/{funnel}/` (`funnel`, `location`, `variant`, `device`).
+    - **`result_view`** — carga de `/{funnel}/result/` (`funnel`, `source`, `device`); `source` distingue flujo desde landing/form vs directo/externo (`lib/result-view-source.ts`).
+    - **`scroll_70`** — profundidad de scroll en la landing (`funnel`).
 - **A/B upsell:** `NEXT_PUBLIC_AB_UPSELL_ACTIVE=false` por defecto; poner `true` cuando haya tráfico suficiente (ver `docs/ab-test-upsell.md`).
 - **Mailchimp:** `MAILCHIMP_API_KEY`, `MAILCHIMP_AUDIENCE_ID`; `MAILCHIMP_SERVER` (opcional si el API key ya termina en `-usXX`, p. ej. `-us21`).
 - **Functions:** `OPENAI_*`, `SQUARE_*`, `SUPABASE_*`.
@@ -78,7 +92,7 @@ Nunca subas **`.env.local`** (contiene secretos).
 ## Scripts útiles
 
 ```bash
-npm run lint
+npm run lint                  # puede pedir configuración inicial si no hay ESLint; `npm run build` ya valida tipos + reglas Next
 npm run validate              # contenido / metadatos
 npm run setup:mailchimp       # merge fields TRAMITE en la audiencia (requiere vars Mailchimp)
 npm run verify                # comprobaciones locales (Mailchimp, merge fields, etc.)
@@ -92,14 +106,25 @@ CI: `.github/workflows/ci-seo.yml` (build, auditoría estática, legal audit, jo
 ## Estructura (resumen)
 
 ```
-app/                  # Rutas App Router (incl. [funnel]/form, result, guías, legal, precios)
-components/           # UI + legal/, monetization/
-data/funnels.ts       # Trámites y orden
-functions/api/        # Workers Cloudflare
-lib/                  # site, static-backend, payment-products, affiliates, analytics-events, …
-docs/                 # módulos legales / monetización / inventario
-scripts/              # validate, audit-*, migrate-*, …
-public/               # estáticos, _redirects → copia a out/
+app/                       # Rutas App Router (incl. [funnel]/form, result, guías, legal, precios)
+components/                # UI + legal/, monetization/, analytics/ (medición funnel)
+data/
+  funnels.ts               # Trámites, pasos, nextSteps
+  funnel-landing.ts        # Copy hero / CTA por funnel (SEO vs conversión)
+  funnel-internal-links.ts # Enlaces contextuales entre landings
+  email-capture-copy.ts    # Textos del bloque de correo por funnel
+functions/api/             # Workers Cloudflare
+lib/
+  gtag.ts                  # helper `gtagEvent` + `getAnalyticsDevice`
+  result-steps.ts          # Sufijo de pasos / tensión documental en resultado
+  result-trust-action.ts   # Tercera línea del bloque de confianza en /result
+  result-view-source.ts    # Origen del visitante en resultado (GA4 `source`)
+  static-backend.ts, site.ts, analytics-events.ts, …
+types/gtag-global.ts       # Tipado `window.gtag`
+docs/                      # módulos legales / monetización / inventario / deploy Cloudflare
+scripts/                   # validate, audit-*, migrate-*, …
+public/                    # estáticos, _redirects → copia a out/
+wrangler.toml              # Proyecto Pages + `out/` + nodejs_compat
 ```
 
 ## Dominio y SEO
