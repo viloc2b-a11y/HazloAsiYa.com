@@ -11,8 +11,13 @@ import Disclosure from '@/components/legal/Disclosure'
 import { DISCLAIMER_ITIN } from '@/lib/legal-texts'
 import SeasonalCourseBanner from '@/components/monetization/SeasonalCourseBanner'
 import AffiliateRecommendations from '@/components/monetization/AffiliateRecommendations'
+import SnapEditorialSection from '@/components/funnels/SnapEditorialSection'
 
 interface Props { params: Promise<{ funnel: string }> }
+
+const SNAP_SEO_TITLE = 'Cómo solicitar SNAP en Texas en español | HazloAsíYa'
+const SNAP_SEO_DESCRIPTION =
+  '¿Calificas para SNAP? Guía completa: documentos, límites de ingresos Texas 2026 y cómo aplicar sin errores. Evaluación gratis.'
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { funnel: id } = await params
@@ -22,14 +27,21 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const ogImage = isMoneyPageOgSlug(id)
     ? { url: `/images/og/${id}-og.jpg` as const, width: 1200, height: 630, alt: f.name }
     : { url: '/images/og/default-og.jpg' as const, width: 1200, height: 630, alt: f.name }
+  const isSnap = id === 'snap'
   const base: Metadata = {
-    title: `${f.name} | HazloAsíYa`,
-    description: f.desc.slice(0, 155),
+    title: isSnap ? SNAP_SEO_TITLE : `${f.name} | HazloAsíYa`,
+    description: isSnap ? SNAP_SEO_DESCRIPTION : f.desc.slice(0, 155),
     alternates: alternatesForPath(path),
     openGraph: {
       url: absoluteUrl(path),
       locale: 'es_US',
       images: [ogImage],
+      ...(isSnap
+        ? {
+            title: 'Cómo solicitar SNAP en Texas en español',
+            description: SNAP_SEO_DESCRIPTION,
+          }
+        : {}),
     },
   }
   if (isMoneyPageOgSlug(id)) {
@@ -43,33 +55,28 @@ export default async function FunnelPage({ params }: Props) {
   if (!isValidFunnelId(id)) notFound()
   const f = FUNNELS[id]
   const nextSteps = NEXT_STEP_MAP[id] || []
+  const heroTitle = id === 'snap' ? 'Cómo solicitar SNAP en Texas en español' : f.action
+  const heroIntro = id === 'snap' ? f.action : f.desc
 
   return (
     <div className="min-h-screen bg-cream">
       <Topbar />
 
-      <div className="max-w-4xl mx-auto px-4 pt-4">
-        <Disclosure variant="educational" />
-      </div>
-
-      {(id === 'itin' || id === 'taxes') && (
-        <div className="max-w-4xl mx-auto px-4 pt-3">
-          <aside className="rounded-xl border-l-4 border-navy/30 bg-navy/5 px-4 py-3 text-sm text-navy leading-relaxed">
-            {DISCLAIMER_ITIN}
-          </aside>
-        </div>
-      )}
-
-      <SeasonalCourseBanner funnelId={id} />
-
-      {/* Hero */}
+      {/* Hero: H1 → intro → aviso → CTA (Disclosure después del primer párrafo) */}
       <section className="bg-navy">
         <div className="max-w-4xl mx-auto px-4 py-14">
           <div className="text-5xl mb-4">{f.icon}</div>
-          <h1 className="font-serif text-3xl sm:text-4xl text-white mb-4 leading-tight">
-            {f.action}
-          </h1>
-          <p className="text-white/60 text-lg leading-relaxed max-w-2xl mb-8">{f.desc}</p>
+          <h1 className="font-serif text-3xl sm:text-4xl text-white mb-4 leading-tight">{heroTitle}</h1>
+          <p className="text-white/60 text-lg leading-relaxed max-w-2xl mb-6">{heroIntro}</p>
+
+          <div className="max-w-2xl mb-8 space-y-4">
+            <Disclosure variant="educational" />
+            {(id === 'itin' || id === 'taxes') && (
+              <aside className="rounded-xl border-l-4 border-amber-400 bg-amber-50 px-4 py-3 text-sm text-navy leading-relaxed">
+                {DISCLAIMER_ITIN}
+              </aside>
+            )}
+          </div>
 
           <div className="flex flex-wrap gap-3">
             <Link href={`/${id}/form`} className="btn-primary text-base px-8 py-3.5">
@@ -83,6 +90,8 @@ export default async function FunnelPage({ params }: Props) {
           </div>
         </div>
       </section>
+
+      <SeasonalCourseBanner funnelId={id} />
 
       <div className="max-w-4xl mx-auto px-4 py-10 space-y-6">
         {isMoneyPageOgSlug(id) && (
@@ -132,6 +141,8 @@ export default async function FunnelPage({ params }: Props) {
           </Link>
           <p className="text-xs text-gray-400 mt-3">Sin registro · Sin tarjeta · Sin redireccionamientos</p>
         </div>
+
+        {id === 'snap' && <SnapEditorialSection />}
 
         {/* Affiliates */}
         {f.affiliates.length > 0 && (

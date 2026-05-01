@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   description:
     'Busca en español en HazloAsíYa: SNAP, Medicaid, escuela, impuestos, ITIN y más. Resultados en tu navegador.',
   alternates: alternatesForPath(PATH),
-  robots: { index: true, follow: true },
+  robots: { index: false, follow: true },
   openGraph: {
     url: absoluteUrl(PATH),
     locale: 'es_US',

@@ -54,13 +54,13 @@ export default function Topbar({ user }: { user?: { email: string; name?: string
           >
             Buscar
           </Link>
-          {NAV_FUNNELS.map(id => (
+          {NAV_FUNNELS.map((navId) => (
             <Link
-              key={id}
-              href={`/${id}`}
+              key={navId}
+              href={navId === 'id' ? '/id/texas/' : `/${navId}`}
               className="px-3 py-1.5 text-[13px] font-semibold text-white/60 hover:text-white hover:bg-white/8 rounded-lg transition-colors"
             >
-              {FUNNELS[id].name.split(' ')[0]}
+              {navId === 'id' ? 'Texas ID' : FUNNELS[navId].name.split(' ')[0]}
             </Link>
           ))}
         </nav>
@@ -108,15 +108,15 @@ export default function Topbar({ user }: { user?: { email: string; name?: string
           >
             🔍 Buscar en el sitio
           </Link>
-          {FUNNEL_ORDER.map(id => (
+          {FUNNEL_ORDER.map((fid) => (
             <Link
-              key={id}
-              href={`/${id}`}
+              key={fid}
+              href={fid === 'id' ? '/id/texas/' : `/${fid}`}
               onClick={() => setMenuOpen(false)}
               className="flex items-center gap-2 px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/8 rounded-lg transition-colors"
             >
-              <span>{FUNNELS[id].icon}</span>
-              <span>{FUNNELS[id].name.split(' ')[0]}</span>
+              <span>{FUNNELS[fid].icon}</span>
+              <span>{fid === 'id' ? 'Texas ID' : FUNNELS[fid].name.split(' ')[0]}</span>
             </Link>
           ))}
         </div>

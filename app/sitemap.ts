@@ -3,7 +3,7 @@ import { FUNNEL_ORDER } from '@/data/funnels'
 import { getPublishedGuideSlugs } from '@/lib/guides-fs'
 import { SITE_ORIGIN, absoluteUrl } from '@/lib/site'
 
-const GEO_PATHS = ['/snap/texas/', '/medicaid/texas/', '/itin/houston/'] as const
+const GEO_PATHS = ['/snap/texas/', '/medicaid/texas/', '/itin/houston/', '/id/texas/'] as const
 
 /** Fecha de última modificación al construir el sitio (export estático). */
 const LASTMOD = new Date()
@@ -58,12 +58,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: LASTMOD,
       changeFrequency: 'yearly' as const,
       priority: 0.6,
-    },
-    {
-      url: absoluteUrl('/buscar'),
-      lastModified: LASTMOD,
-      changeFrequency: 'monthly' as const,
-      priority: 0.5,
     },
     guiaHub,
     ...guiaPages,
