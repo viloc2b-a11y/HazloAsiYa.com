@@ -26,7 +26,7 @@ const organizationJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
   name: 'HazloAsíYa',
-  url: 'https://www.hazloasiya.com',
+  url: 'https://hazloasiya.com',
   description:
     'Plataforma educativa en español que guía a familias hispanas en EE. UU. a completar trámites de beneficios sociales, impuestos y servicios gubernamentales sin errores y sin intermediarios costosos.',
   areaServed: 'United States',

@@ -129,6 +129,6 @@ jobs:
       - uses: treosh/lighthouse-ci-action@v12
         with:
           urls: |
-            https://www.hazloasiya.com
+            https://hazloasiya.com
           configPath: ${{ steps.lhci.outputs.cfg }}
           uploadArtifacts: true

@@ -26,7 +26,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!g) return {}
   const { data } = g
   const path = `/guias/${slug}/`
-  const ogUrl = data.canonical ?? absoluteUrl(path)
   return {
     title: data.title,
     description: data.description,
@@ -34,7 +33,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title: data.title,
       description: data.description,
-      url: ogUrl,
+      url: absoluteUrl(path),
       locale: 'es_US',
       type: 'article',
       images: [{ url: data.ogImage, width: 1200, height: 630, alt: data.h1 }],

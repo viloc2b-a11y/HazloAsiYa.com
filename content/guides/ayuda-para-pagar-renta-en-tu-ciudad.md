@@ -3,7 +3,7 @@ draft: false
 title: "Ayuda para pagar renta: programas y dónde buscar (EE.UU.)"
 description: "Programas federales y locales tipo ERA pueden ayudar con atrasos de renta según fondos y elegibilidad. Verifica en HUD y tu ciudad o condado."
 h1: "Ayuda para pagar renta en tu ciudad"
-canonical: "https://www.hazloasiya.com/guias/ayuda-para-pagar-renta-en-tu-ciudad/"
+canonical: "https://hazloasiya.com/guias/ayuda-para-pagar-renta-en-tu-ciudad/"
 ogImage: "/images/og/rent-og.jpg"
 tramiteSlug: "rent"
 category: "vivienda"

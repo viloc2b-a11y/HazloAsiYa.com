@@ -11,7 +11,7 @@ Stack:     Next.js 14.2.5 · App Router · TypeScript · output:'export'
 Deploy:    Cloudflare Pages · output directory: out/
 Idioma:    Español (es-US) — nunca generar contenido en inglés
 Audiencia: Familias hispanas en EE. UU., enfoque Texas/Houston
-Dominio:   https://www.hazloasiya.com (siempre con www y https)
+Dominio:   https://hazloasiya.com (apex canónico; www redirige a apex)
 Contexto:  Ecosistema Vilo — VRG, VPL, VITALIS, VIDA, ClinIQ
 
 REGLAS ABSOLUTAS — nunca violar bajo ninguna circunstancia
@@ -61,7 +61,7 @@ REGLAS DE NEXT.JS APP ROUTER
 
 Metadata:
 - Siempre exportar metadata o generateMetadata desde page.tsx (Server)
-- metadataBase: new URL('https://www.hazloasiya.com') en layout.tsx raíz
+- metadataBase: new URL(SITE_ORIGIN) en layout.tsx raíz (`https://hazloasiya.com` por defecto)
 - alternates.canonical vía alternatesForPath() / metadata en cada página money/geo/guias
 - openGraph.locale: 'es_US' en todas las páginas
 - og:image con ruta bajo /images/og/ (metadataBase resuelve URL absoluta) · width:1200, height:630
@@ -82,7 +82,7 @@ Build:
 - npm run build genera out/ y ejecuta pagefind (índice en out/pagefind/) — verificar antes de PR
 - Post-build check: grep -r "pages.dev" out/ → debe ser 0 resultados
 - Post-build check: grep -r "localhost" out/ → debe ser 0 resultados
-- La variable NEXT_PUBLIC_APP_URL debe ser https://www.hazloasiya.com
+- La variable NEXT_PUBLIC_APP_URL debe ser https://hazloasiya.com (canónico)
 
 REGLAS SEO
 

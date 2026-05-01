@@ -1,6 +1,6 @@
 /** Canonical production host (www). Use NEXT_PUBLIC_APP_URL in deploy env — default avoids apex/pages.dev in sitemap/robots. */
 export const SITE_ORIGIN = (
-  process.env.NEXT_PUBLIC_APP_URL || 'https://www.hazloasiya.com'
+  process.env.NEXT_PUBLIC_APP_URL || 'https://hazloasiya.com'
 ).replace(/\/$/, '')
 
 export function withTrailingSlash(path: string): string {

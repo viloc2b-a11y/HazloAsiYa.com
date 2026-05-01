@@ -3,7 +3,7 @@ draft: true
 title: "Título SEO ≤60 caracteres para la guía"
 description: "Meta description ≤155 caracteres. Incluye beneficio principal y llamada a verificar en fuente oficial."
 h1: "Titular visible en la página (puede ser más largo que el title)"
-canonical: "https://www.hazloasiya.com/guias/ejemplo-slug/"
+canonical: "https://hazloasiya.com/guias/ejemplo-slug/"
 ogImage: "/images/og/default-og.jpg"
 tramiteSlug: "snap"
 category: "beneficios"

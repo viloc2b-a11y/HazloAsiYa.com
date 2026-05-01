@@ -81,7 +81,7 @@
 ## Checklist pre-activación
 
 - [ ] Square en producción con montos correctos  
-- [ ] `NEXT_PUBLIC_APP_URL` = `https://www.hazloasiya.com`  
+- [ ] `NEXT_PUBLIC_APP_URL` = `https://hazloasiya.com`  
 - [ ] Redirect post-pago a `/{funnel}/result/?paid=1`  
 - [ ] Disclosure visible en upsells y afiliados  
 - [ ] Newsletter probado (suscriptor + tag/campo trámite)  
