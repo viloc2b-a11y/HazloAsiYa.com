@@ -22,33 +22,34 @@ La metadata **no** debe copiarse literal al H1: el H1 sigue la intención **conv
 ## 1. HERO (conversión + claridad)
 
 ```
-ROLE: Conversion-focused landing optimizer
+ROLE: Conversion-focused UX writer
 
 TASK:
-Rewrite the HERO section for a Spanish-speaking audience in the US looking to complete [TRAMITE].
+Write a HERO section for a Spanish-speaking user in the US trying to complete [TRAMITE].
 
 GOAL:
-- Clear what the user gets
+- Immediate clarity
 - Reduce confusion
-- Increase click on CTA
+- Drive click to CTA
 
 RULES:
-- Simple Spanish (8th grade level)
+- Extremely simple Spanish
 - No fluff
-- No generic marketing language
+- No long sentences
 - Do NOT copy the SEO page title verbatim into the headline
 
 OUTPUT:
-- Headline (max 12 words)
-- Subheadline (max 20 words)
-- CTA hero (max 8 words)
-- CTA card secondary (max 8 words)
+- Headline (max 10 words)
+- Subheadline (max 18 words)
+- CTA (max 6 words)
 
 CONTEXT:
-User wants to complete: [TRAMITE]
+User is unsure how the process works and fears making mistakes.
+
+Procedure: [TRAMITE]
 ```
 
-**Implementación:** pegar salida en `FUNNEL_HERO[tramite]` en `data/funnel-landing.ts`. No tocar `FUNNEL_SEO` en el mismo paso.
+**Implementación:** mapear a `FUNNEL_HERO[tramite]` en `data/funnel-landing.ts`: `headline`, `subhead`, `ctaHero`. Cumple conteo en español (palabras, no caracteres). El botón de la **tarjeta blanca** (“Primary CTA”) sigue en `ctaCard` — mismo tono, sin alargar; si quieres un prompt aparte para esa tarjeta, usa **§3f**. No tocar `FUNNEL_SEO` en el mismo paso.
 
 ---
 

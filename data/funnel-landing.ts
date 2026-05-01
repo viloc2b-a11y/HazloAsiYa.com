@@ -58,8 +58,8 @@ export const FUNNEL_SEO: Partial<
 }
 
 /**
- * Intención conversión (hero). Español claro, sin espejar el title SEO.
- * Límites orientativos: titular ~12 palabras, subtítulo ~20 (ver prompts por bloque).
+ * Intención conversión (hero). Español muy simple; usuario inseguro / miedo a equivocarse.
+ * Límites §1: titular ≤10 palabras, subtítulo ≤18, CTA hero ≤6 (español).
  * @see docs/seo-bloques-y-prompts.md — prompt bloque HERO
  */
 export const FUNNEL_HERO: Partial<
@@ -76,56 +76,56 @@ export const FUNNEL_HERO: Partial<
   snap: {
     headline: 'Tu plan claro para SNAP en Texas, sin adivinar',
     subhead:
-      'Te decimos si encajas en las reglas, qué papeles juntar y cómo mandar la solicitud para que no te la regresen.',
+      'Te guiamos: reglas, papeles y envío para que no te devuelvan la solicitud.',
     ctaHero: 'Empezar evaluación gratis →',
     ctaCard: 'Ver mi plan SNAP →',
   },
   medicaid: {
-    headline: 'Medicaid o CHIP: ver si aplica tu familia y cómo aplicar',
+    headline: 'Medicaid o CHIP: ver si tu familia califica',
     subhead:
-      'Te orientamos según tu hogar y ingresos; en Texas las reglas son distintas al resto del país — lo dejamos claro antes de que entres al portal.',
+      'En Texas las reglas son distintas; alineamos tu hogar con lo que HHSC pide antes del portal.',
     ctaHero: 'Evaluar mi caso gratis →',
     ctaCard: 'Preparar mi solicitud →',
   },
   itin: {
-    headline: 'ITIN y W-7: menos errores y menos meses de espera',
+    headline: 'ITIN y W-7: menos errores, menos espera',
     subhead:
-      'Reunimos la identificación que el IRS suele aceptar y el orden de envío. No sustituimos a un Acceptance Agent ni a un preparador.',
+      'Qué ID pide el IRS y en qué orden enviar. No somos Acceptance Agent ni preparador.',
     ctaHero: 'Armar mi paquete W-7 →',
     ctaCard: 'Siguiente: mi checklist ITIN →',
   },
   wic: {
-    headline: 'WIC: ver si calificas y qué llevar a la cita',
+    headline: 'WIC: ver si calificas y qué llevar',
     subhead:
-      'Embarazo, bebés y niños hasta 5 años: te decimos qué suelen pedir y cómo pedir hora en Texas sin ir en vano.',
+      'Embarazo y niños hasta 5 años: qué piden y cómo pedir cita en Texas.',
     ctaHero: 'Preparar mi cita WIC →',
     ctaCard: 'Organizar documentos WIC →',
   },
   escuela: {
-    headline: 'Inscripción escolar: papeles listos para tu distrito',
+    headline: 'Escuela: papeles listos para tu distrito',
     subhead:
-      'Vacunas, domicilio y acta: armamos la lista según lo que piden las escuelas públicas en Texas antes de que vayas al ISD.',
+      'Vacunas, domicilio y acta: lista según lo que tu ISD en Texas suele pedir.',
     ctaHero: 'Listar mis documentos →',
     ctaCard: 'Ir al checklist escuela →',
   },
   daca: {
-    headline: 'Renovar DACA: formularios y plazos sin adivinar',
+    headline: 'Renovar DACA: formularios y plazos claros',
     subhead:
-      'I-821D e I-765 cambian de versión; te ayudamos a ordenar tu paquete. Si tu caso es delicado, USCIS o un abogado debe revisarlo.',
+      'I-821D e I-765: ordenamos tu paquete. Caso raro: abogado o USCIS debe revisar.',
     ctaHero: 'Revisar mi renovación →',
     ctaCard: 'Preparar envío USCIS →',
   },
   taxes: {
-    headline: 'Declarar impuestos: qué formularios y qué evitar',
+    headline: 'Impuestos: qué formularios y qué evitar',
     subhead:
-      'Sin sermones: qué juntar, qué casillas suelen confundir y dónde buscar ayuda gratis (VITA) si calificas.',
+      'Qué juntar, qué casillas confunden y dónde hay ayuda gratis (VITA) si aplica.',
     ctaHero: 'Armar mi declaración →',
     ctaCard: 'Mi plan de impuestos →',
   },
   rent: {
-    headline: 'Renta atrasada o cara: opciones reales en Texas',
+    headline: 'Renta difícil: opciones reales en Texas',
     subhead:
-      'Listas de espera, HUD y programas locales: te decimos por dónde empezar y qué no pagar a terceros dudosos.',
+      'Esperas, HUD y ayuda local: por dónde empezar sin pagar a intermediarios dudosos.',
     ctaHero: 'Ver opciones de renta →',
     ctaCard: 'Mi plan de vivienda →',
   },
