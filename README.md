@@ -9,7 +9,7 @@ Sitio en **español** para orientar a familias hispanas en EE. UU. en trámites 
 | Framework | **Next.js 14** (App Router), `output: 'export'` |
 | Deploy | **Cloudflare Pages** (salida `out/`; `wrangler.toml` → `name = "hazloasiya"`, Functions en `functions/api/`) |
 | Pagos | **Square Hosted Checkout** (`POST /api/checkout` → `checkoutUrl`) |
-| IA | **OpenAI** (`POST /api/generate-result`) |
+| IA | **API de OpenAI (ChatGPT / GPT)** — `POST /api/generate-result` (`lib/ai-client.ts`; Chat Completions, p. ej. `gpt-4.1-mini`) |
 | Datos | **Supabase** (opcional; webhook Square + usuario/plan) |
 | Email marketing | **Mailchimp** (`POST /api/subscribe-email` → alta idempotente **PUT** a la audiencia) |
 | Medición | **GA4** (`gtag` tras consentimiento): eventos personalizados en landings y resultado (ver abajo) |
@@ -46,7 +46,7 @@ En **producción** (Cloudflare Pages), `/api/*` lo atienden los Workers en `func
 
 | Método | Ruta | Uso |
 |--------|------|-----|
-| POST | `/api/generate-result` | Plan / resultado del cuestionario (OpenAI) |
+| POST | `/api/generate-result` | Plan / resultado del cuestionario (**OpenAI ChatGPT API**, modelo vía `OPENAI_MODEL`) |
 | POST | `/api/checkout` | Square Payment Links → `{ checkoutUrl }` |
 | POST | `/api/square-webhook` | Pagos completados; Supabase si aplica |
 | POST | `/api/subscribe-email` | Suscripción Mailchimp (PUT idempotente por MD5 del email; respuesta `{ ok: true }`) |
@@ -71,7 +71,8 @@ Plantilla: **`.env.local.example`**. Resumen:
     - **`scroll_70`** — profundidad de scroll en la landing (`funnel`).
 - **A/B upsell:** `NEXT_PUBLIC_AB_UPSELL_ACTIVE=false` por defecto; poner `true` cuando haya tráfico suficiente (ver `docs/ab-test-upsell.md`).
 - **Mailchimp:** `MAILCHIMP_API_KEY`, `MAILCHIMP_AUDIENCE_ID`; `MAILCHIMP_SERVER` (opcional si el API key ya termina en `-usXX`, p. ej. `-us21`).
-- **Functions:** `OPENAI_*`, `SQUARE_*`, `SUPABASE_*`.
+- **OpenAI (ChatGPT API):** `OPENAI_API_KEY` y opcional `OPENAI_MODEL` (clave en [platform.openai.com](https://platform.openai.com/api-keys)). Usada en `functions/api/generate-result.ts` y en `npm run monitor:regulations -- --with-ai`.
+- **Functions (otras):** `SQUARE_*`, `SUPABASE_*`.
 
 Nunca subas **`.env.local`** (contiene secretos).
 
@@ -99,9 +100,10 @@ npm run verify                # comprobaciones locales (Mailchimp, merge fields,
 npm run audit:data            # inventario de campos de formulario → regenerar JSON local
 npm run audit:legal           # tras `npm run build`, escanea `out/` + reglas UPL heurísticas
 npm run seo:validate:full     # validación contra export estático
+npm run monitor:regulations   # vigencia de `src/data/program-limits.json`; `--with-ai` usa OpenAI
 ```
 
-CI: `.github/workflows/ci-seo.yml` (build, auditoría estática, legal audit, job opcional `audit:data`).
+CI: `.github/workflows/ci-seo.yml` (build, auditoría estática, legal audit, job opcional `audit:data`). Semanal: `.github/workflows/monitor-regulations.yml`.
 
 ## Estructura (resumen)
 
