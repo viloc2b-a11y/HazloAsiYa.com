@@ -130,40 +130,97 @@ export default function ItinEditorialSection() {
           </div>
         </div>
 
-        {/* §3c — documentos IRS con ejemplos */}
+        {/* §3c — documentos IRS: ejemplos, plan B, problemas típicos */}
         <div>
+          <p
+            className="text-sm text-amber-900/95 bg-amber-50 border border-amber-200/90 rounded-xl px-4 py-3 mb-3 leading-relaxed"
+            role="note"
+          >
+            Un solo documento incorrecto o incompleto suele significar que te regresen la solicitud o te pidan volver con
+            otra cita.
+          </p>
+          <p className="text-sm text-navy/90 bg-emerald-50/80 border border-green/20 rounded-xl px-4 py-3 mb-4 leading-relaxed">
+            Aquí tienes ejemplos reales de lo que sí aceptan, para que no adivines.
+          </p>
           <h2 className="font-serif text-2xl text-navy mb-3">Documentos que el IRS suele exigir (con ejemplos)</h2>
           <p className="text-gray-600 text-sm mb-4 leading-relaxed">
-            La lista aceptada depende de tu país y categoría en el W-7. Los ejemplos orientan; confirma la tabla vigente en
-            irs.gov.
+            La tabla de documentos aceptados cambia por país y año. Antes de enviar, abre el <strong>W-7 y sus
+            instrucciones</strong> del mes en curso. Si no tienes el “documento ideal”, revisa el anexo: a veces hay
+            combinación de dos IDs; mejor eso que mandar solo la matrícula consular porque “es lo único que tengo”.
           </p>
           <div className="space-y-5 text-sm text-gray-700">
             <div>
               <h3 className="font-semibold text-navy mb-2">Identidad y estado migratorio (si aplica)</h3>
               <ul className="list-disc list-inside space-y-1.5 leading-relaxed">
-                <li>Pasaporte válido suele ser documento destacado; matrícula consular solo si las instrucciones lo permiten.</li>
-                <li>Combinaciones de ID + prueba adicional según el país emisor (ver anexo del W-7).</li>
+                <li>
+                  <strong>Ejemplos reales:</strong> pasaporte mexicano o de otro país vigente (mucha gente lo usa como
+                  documento principal); combinación pasaporte + ID nacional según tabla del IRS para tu país.
+                </li>
+                <li>
+                  <strong>Si no tienes pasaporte vigente:</strong> tramítalo primero o revisa si el IRS acepta otra
+                  combinación listada; un Acceptance Agent a veces te orienta sin cobrar consulta inicial.
+                </li>
+                <li>
+                  <strong>Suele fallar:</strong> matrícula consular sola cuando ya no basta; copia donde no se lee fecha de
+                  nacimiento o número de documento; documento vencido.
+                </li>
               </ul>
             </div>
             <div>
               <h3 className="font-semibold text-navy mb-2">Razón fiscal (tax return u excepción)</h3>
               <ul className="list-disc list-inside space-y-1.5 leading-relaxed">
-                <li>Declaración federal adjunta cuando las instrucciones lo exigen, o carta de excepción permitida (dependiente, etc.).</li>
+                <li>
+                  <strong>Ejemplos reales:</strong> declaración 1040 firmada adjunta cuando las instrucciones lo exigen;
+                  excepción para dependiente o treaty si tu categoría lo permite (revisa el apartado correspondiente).
+                </li>
+                <li>
+                  <strong>Si aún no declaras:</strong> no inventes números; prepara la declaración con preparador o VITA y
+                  adjunta según el flujo que aplique a tu primera solicitud de ITIN.
+                </li>
+                <li>
+                  <strong>Suele fallar:</strong> enviar W-7 sin la declaración cuando iban juntos; firmar con nombre distinto
+                  al del ID.
+                </li>
               </ul>
             </div>
             <div>
               <h3 className="font-semibold text-navy mb-2">Si usas Acceptance Agent</h3>
               <ul className="list-disc list-inside space-y-1.5 leading-relaxed">
-                <li>Copias certificadas que el agente revise en persona; no envías originales al IRS salvo regla contraria.</li>
+                <li>
+                  <strong>Qué ganas:</strong> el agente certifica copias y a menudo evitas mandar pasaporte original por
+                  correo.
+                </li>
+                <li>
+                  <strong>Si no hay agente cerca:</strong> envío por correo certificado al IRS con copias según instrucción
+                  (a veces sí piden original del pasaporte — léelo dos veces antes de sellar el sobre).
+                </li>
+                <li>
+                  <strong>Suele fallar:</strong> mezclar paquete de Acceptance Agent con dirección de envío del contribuyente
+                  sin revisar la guía del año.
+                </li>
               </ul>
             </div>
             <div>
               <h3 className="font-semibold text-navy mb-2">Traducciones y calidad</h3>
               <ul className="list-disc list-inside space-y-1.5 leading-relaxed">
-                <li>Traducción certificada si el documento no está en inglés y el IRS la pide; fotos nítidas, sin recortes.</li>
+                <li>
+                  <strong>Ejemplos reales:</strong> traducción certificada al inglés del acta si el IRS la pide; escaneos
+                  300 dpi, todas las esquinas visibles.
+                </li>
+                <li>
+                  <strong>Si solo tienes foto del celular:</strong> vuelve a escanear en copistería o app de escaneo; el IRS
+                  devuelve por ilegible.
+                </li>
+                <li>
+                  <strong>Suele fallar:</strong> traducción hecha en casa sin certificado cuando la instrucción pide
+                  certificación; cortar bordes del pasaporte en la copia.
+                </li>
               </ul>
             </div>
           </div>
+          <p className="text-sm text-navy/90 font-medium mt-4 pt-4 border-t border-cream leading-relaxed">
+            Empieza por tu identificación y el formulario W-7: son la base del paquete.
+          </p>
         </div>
 
         <div>
@@ -181,16 +238,61 @@ export default function ItinEditorialSection() {
           </p>
         </div>
 
-        {/* §3d — ≤ 6 pasos */}
+        {/* §3d — pasos con tiempo y “qué sigue” */}
         <div>
-          <h2 className="font-serif text-2xl text-navy mb-3">Pasos típicos para el paquete W-7</h2>
-          <ol className="list-decimal list-inside space-y-2 text-sm text-gray-700 leading-relaxed">
-            <li>Descarga W-7 e instrucciones del año en curso en irs.gov.</li>
-            <li>Elige vía: correo al IRS, Acceptance Agent o centro de asistencia autorizado según tu caso.</li>
-            <li>Completa datos sin tachaduras; firma donde indique el formulario.</li>
-            <li>Adjunta identidad aceptada y declaración u hoja de excepción si aplica.</li>
-            <li>Usa la dirección de envío vigente en las instrucciones; guarda tracking del correo.</li>
-            <li>Espera la carta CP565 o resolución; renueva antes de vencer si declaras cada año.</li>
+          <h2 className="font-serif text-2xl text-navy mb-2">Pasos típicos para el paquete W-7</h2>
+          <p className="text-gray-600 text-sm mb-4 leading-relaxed">
+            Hacerlo bien una vez suele tomar <strong>1–3 h</strong> repartidas (descargar, llenar, copiar, enviar). La
+            respuesta del IRS suele ser <strong>semanas o meses</strong>, no días — por eso conviene tracking de correo y
+            copia de todo.
+          </p>
+          <ol className="list-decimal list-outside space-y-4 pl-5 text-sm text-gray-700 leading-relaxed">
+            <li>
+              <span className="font-medium text-navy">Descarga W-7 + instrucciones del mes en curso (irs.gov)</span>{' '}
+              <span className="text-gray-500 text-xs whitespace-nowrap">~10 min</span>
+              <span className="block mt-1 text-gray-600">
+                Después: trabajas siempre con la misma versión; evitas que rechacen por formulario viejo.
+              </span>
+            </li>
+            <li>
+              <span className="font-medium text-navy">Elige vía: correo, Acceptance Agent o centro autorizado</span>{' '}
+              <span className="text-gray-500 text-xs whitespace-nowrap">~15 min leer</span>
+              <span className="block mt-1 text-gray-600">
+                Después: sabes si debes enviar originales, citas con agente o sobre certificado; menos sorpresas en el
+                buzón.
+              </span>
+            </li>
+            <li>
+              <span className="font-medium text-navy">Llena a mano o en PDF sin tachaduras; firma</span>{' '}
+              <span className="text-gray-500 text-xs whitespace-nowrap">~20–40 min</span>
+              <span className="block mt-1 text-gray-600">
+                Después: el formulario está listo para adjuntar ID; si dudas en una casilla, revisa instrucciones antes de
+                sellar el sobre.
+              </span>
+            </li>
+            <li>
+              <span className="font-medium text-navy">Adjunta ID aceptada + declaración o excepción si aplica</span>{' '}
+              <span className="text-gray-500 text-xs whitespace-nowrap">~15 min</span>
+              <span className="block mt-1 text-gray-600">
+                Después: el paquete está completo según el checklist del año; haz una copia escaneada antes de enviar.
+              </span>
+            </li>
+            <li>
+              <span className="font-medium text-navy">Envía a la dirección correcta; guarda tracking</span>{' '}
+              <span className="text-gray-500 text-xs whitespace-nowrap">~15 min en oficina postal</span>
+              <span className="block mt-1 text-gray-600">
+                Después: puedes rastrear entrega; cuando aparece “entregado”, empieza la espera del IRS con menos ansiedad.
+                Más adelante recibes confirmación o te piden correcciones; si falta algo, el proceso puede reiniciarse.
+              </span>
+            </li>
+            <li>
+              <span className="font-medium text-navy">Espera carta CP565 u otra respuesta</span>{' '}
+              <span className="text-gray-500 text-xs whitespace-nowrap">suele semanas+</span>
+              <span className="block mt-1 text-gray-600">
+                Después: o tienes ITIN asignado o carta de rechazo con motivo — en ambos casos ya sabes el siguiente
+                movimiento; renueva antes de vencer si declaras cada año.
+              </span>
+            </li>
           </ol>
         </div>
 
@@ -227,15 +329,40 @@ export default function ItinEditorialSection() {
           </ul>
         </div>
 
-        {/* §3e — 5 errores */}
+        {/* §3e — 5 errores con consecuencia clara */}
         <div>
-          <h2 className="font-serif text-2xl text-navy mb-3">Errores que devuelven el W-7 o retrasan meses</h2>
-          <ul className="list-disc list-inside space-y-2 text-sm text-gray-700 leading-relaxed">
-            <li>Enviar matrícula consular cuando el IRS ya no la acepta como documento independiente en tu categoría.</li>
-            <li>Mandar copias ilegibles o cortadas donde no se lee fecha de nacimiento o número de documento.</li>
-            <li>Olvidar la declaración o la excepción cuando las instrucciones las exigen en el mismo envío.</li>
-            <li>Firmar con nombre distinto al del ID o usar formulario W-7 vencido.</li>
-            <li>No incluir traducción certificada cuando el documento está en otro idioma y la tabla lo pide.</li>
+          <h2 className="font-serif text-2xl text-navy mb-2">Errores que devuelven el sobre y congelan tu declaración</h2>
+          <p className="text-gray-600 text-sm mb-4 leading-relaxed">
+            Cada devolución del IRS suele ser <strong>+2 a 4 meses</strong> sin ITIN: sin número no declaras bien, no
+            cobras créditos y a veces no abres cuenta. Mejor frenar un día y revisar que el paquete esté completo.
+          </p>
+          <ul className="list-disc list-outside space-y-3 pl-5 text-sm text-gray-700 leading-relaxed">
+            <li>
+              <strong className="text-navy">Subir documentos incompletos.</strong> Lo más común es que te regresen el caso y
+              tengas que volver a empezar con semanas adicionales de espera.
+            </li>
+            <li>
+              <strong className="text-navy">ID que ya no califica sola (p. ej. matrícula consular mal aplicada).</strong> El
+              IRS <strong>rechaza el lote</strong>; vuelves al final de la cola con el mismo problema si no cambias
+              documento.
+            </li>
+            <li>
+              <strong className="text-navy">Copia ilegible o recortada.</strong> No te llaman a aclarar: mandan carta de
+              rechazo y <strong>pierdes el tiempo desde el envío hasta la respuesta</strong> sin ITIN en mano.
+            </li>
+            <li>
+              <strong className="text-navy">Mandar W-7 sin la declaración o excepción cuando iban juntos.</strong> Paquete
+              incompleto = <strong>devolución total</strong>; el reloj del año fiscal sigue y puedes perder ventana de
+              reembolso.
+            </li>
+            <li>
+              <strong className="text-navy">Firma distinta al ID o formulario vencido.</strong> Motivo automático de{' '}
+              <strong>rechazo administrativo</strong>; algunos esperan meses solo para leer esa línea en la carta.
+            </li>
+            <li>
+              <strong className="text-navy">Sin traducción certificada cuando la tabla la exige.</strong> El IRS no “traduce
+              por ti”: <strong>rechazo</strong> y vuelves a pagar envío y tiempo perdido.
+            </li>
           </ul>
         </div>
 

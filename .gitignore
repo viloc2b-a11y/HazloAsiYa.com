@@ -14,6 +14,7 @@ scripts/migrate-report.json
 # Next.js build outputs
 .next
 out
+*.tsbuildinfo
 
 # Logs
 npm-debug.log*

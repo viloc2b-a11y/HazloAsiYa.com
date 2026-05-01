@@ -124,63 +124,167 @@ export default function WicEditorialSection() {
           </ul>
         </div>
 
-        {/* §3c */}
+        {/* §3c — ejemplos, plan B, problemas típicos */}
         <div>
           <h2 className="font-serif text-2xl text-navy mb-3">Documentos que suelen pedir (con ejemplos)</h2>
+          <p className="text-gray-600 text-sm mb-4 leading-relaxed">
+            Cada clínica WIC publica su lista; llevar <strong>copia y original</strong> cuando puedas evita una segunda
+            cita. Si falta algo, llama antes: a veces aceptan un comprobante distinto o te dan 48 h para volver.
+          </p>
           <div className="space-y-5 text-sm text-gray-700">
             <div>
               <h3 className="font-semibold text-navy mb-2">Identidad</h3>
               <ul className="list-disc list-inside space-y-1.5 leading-relaxed">
-                <li>Licencia, matrícula consular o ID aceptada por la clínica para la adulta solicitante.</li>
+                <li>
+                  <strong>Ejemplos reales:</strong> licencia Texas, pasaporte, matrícula consular si la clínica la acepta;
+                  algunas piden ID del adulto que firma aunque el bebé sea el beneficiario.
+                </li>
+                <li>
+                  <strong>Si tu ID está vencido o en trámite:</strong> pregunta por pasaporte, recibo de renovación o
+                  combinación que ellos usen; no faltes sin llamar.
+                </li>
+                <li>
+                  <strong>Suele fallar:</strong> nombre distinto al de la cita (casada sin actualizar ID); foto del ID
+                  cortada del chat.
+                </li>
               </ul>
             </div>
             <div>
               <h3 className="font-semibold text-navy mb-2">Ingresos o otros programas</h3>
               <ul className="list-disc list-inside space-y-1.5 leading-relaxed">
-                <li>Últimos talones, carta de empleador o carta de aprobación de SNAP/Medicaid si te eximen de más papeles.</li>
+                <li>
+                  <strong>Ejemplos reales:</strong> 2–4 talones recientes, carta de empleo con sueldo por hora, carta de
+                  aprobación de SNAP o Medicaid (a veces acelera la verificación de ingreso).
+                </li>
+                <li>
+                  <strong>Si trabajas por tu cuenta o en efectivo:</strong> libreta de depósitos, 1099, contrato informal o
+                  declaración del patrón en hoja firmada.
+                </li>
+                <li>
+                  <strong>Suele fallar:</strong> ingreso del otro padre en el hogar no declarado; talones viejos cuando el
+                  sueldo subió.
+                </li>
               </ul>
             </div>
             <div>
               <h3 className="font-semibold text-navy mb-2">Domicilio</h3>
               <ul className="list-disc list-inside space-y-1.5 leading-relaxed">
-                <li>Recibo de servicio, contrato o correo oficial con tu dirección en el condado.</li>
+                <li>
+                  <strong>Ejemplos reales:</strong> factura de luz/agua, lease, correo médico o escolar con la dirección
+                  del condado donde te atienden.
+                </li>
+                <li>
+                  <strong>Si todo está a nombre del esposo o del dueño:</strong> carta de residencia firmada + recibo a
+                  nombre de quien vive contigo.
+                </li>
+                <li>
+                  <strong>Suele fallar:</strong> dirección de un familiar en otro condado cuando la clínica exige prueba
+                  local.
+                </li>
               </ul>
             </div>
             <div>
               <h3 className="font-semibold text-navy mb-2">Niño o bebé</h3>
               <ul className="list-disc list-inside space-y-1.5 leading-relaxed">
-                <li>Cartilla de vacunas, carnet del pediatra o bebé presente si la clínica mide y evalúa en sitio.</li>
+                <li>
+                  <strong>Ejemplos reales:</strong> cartilla de vacunas con sellos del pediatra, clínica o condado; carnet
+                  del último control; a veces piden traer al niño para medición.
+                </li>
+                <li>
+                  <strong>Si faltan vacunas:</strong> cita en clínica del condado o pediatra y vuelves con sello; pregunta si
+                  pueden inscribirte con cita pendiente.
+                </li>
+                <li>
+                  <strong>Suele fallar:</strong> llegar sin el niño cuando la cita era de medición; cartilla ilegible o
+                  solo foto del celular.
+                </li>
               </ul>
             </div>
           </div>
+          <p className="text-sm text-navy/90 font-medium mt-4 pt-4 border-t border-cream leading-relaxed">
+            Empieza por identidad e ingresos del hogar y el comprobante de domicilio: la clínica casi siempre los mira
+            primero.
+          </p>
         </div>
 
-        {/* §3d — ≤ 6 pasos */}
+        {/* §3d — pasos con tiempo y “qué sigue” */}
         <div>
-          <h2 className="font-serif text-2xl text-navy mb-3">Cómo empezar en Texas</h2>
-          <ol className="list-decimal list-inside space-y-2 text-sm text-gray-700">
+          <h2 className="font-serif text-2xl text-navy mb-2">Cómo empezar en Texas</h2>
+          <p className="text-gray-600 text-sm mb-4 leading-relaxed">
+            La parte “de casa” son unos <strong>15–20 min</strong> (web o teléfono). El día de la clínica cuenta{' '}
+            <strong>1–2 h</strong> entre llegada, fila y charla; lleva snack para los niños si toca esperar.
+          </p>
+          <ol className="list-decimal list-outside space-y-4 pl-5 text-sm text-gray-700 leading-relaxed">
             <li>
-              Visita{' '}
-              <a href="https://texaswic.org" className="text-green font-semibold underline" target="_blank" rel="noopener noreferrer">
-                texaswic.org
-              </a>{' '}
-              o llama al número que publica HHSC para tu área.
+              <span className="font-medium text-navy">
+                Entra a{' '}
+                <a href="https://texaswic.org" className="text-green font-semibold underline" target="_blank" rel="noopener noreferrer">
+                  texaswic.org
+                </a>{' '}
+                o llama al número de tu área
+              </span>{' '}
+              <span className="text-gray-500 text-xs whitespace-nowrap">~10 min</span>
+              <span className="block mt-1 text-gray-600">
+                Después: sabes qué clínica te corresponde y si hay lista de espera o cita inmediata.
+              </span>
             </li>
-            <li>Agenda cita en la clínica WIC más cercana.</li>
-            <li>Lleva documentos y a los niños que inscribas, si te lo piden.</li>
-            <li>Completa la orientación inicial; si calificas, activan tus beneficios.</li>
+            <li>
+              <span className="font-medium text-navy">Agenda la cita</span>{' '}
+              <span className="text-gray-500 text-xs whitespace-nowrap">~5 min</span>
+              <span className="block mt-1 text-gray-600">
+                Después: recibes fecha, hora y a veces SMS; anótalo en el calendario del teléfono.
+              </span>
+            </li>
+            <li>
+              <span className="font-medium text-navy">Prepara carpeta y niños si la clínica lo pidió</span>{' '}
+              <span className="text-gray-500 text-xs whitespace-nowrap">~15 min la noche anterior</span>
+              <span className="block mt-1 text-gray-600">
+                Después: llegas sin correr por copias; si falta algo, a veces te dan días para volver en vez de cancelar
+                todo.
+              </span>
+            </li>
+            <li>
+              <span className="font-medium text-navy">Asiste a la cita: orientación y evaluación</span>{' '}
+              <span className="text-gray-500 text-xs whitespace-nowrap">~45–90 min en sitio</span>
+              <span className="block mt-1 text-gray-600">
+                Después: si calificas, activan beneficios o te dicen cuándo cargan la tarjeta; si no, te explican por qué
+                o qué traer la próxima vez.
+              </span>
+            </li>
           </ol>
         </div>
 
-        {/* §3e — 5 errores */}
+        {/* §3e — 5 errores con consecuencia clara */}
         <div>
-          <h2 className="font-serif text-2xl text-navy mb-3">Errores que hacen perder la cita o beneficios</h2>
-          <ul className="list-disc list-inside space-y-2 text-sm text-gray-700 leading-relaxed">
-            <li>Llegar sin el niño cuando la clínica pidió asistencia para medición o vacunas.</li>
-            <li>Llevar ingresos de hace meses si tu sueldo cambió: demoran o piden nueva prueba.</li>
-            <li>Documentos ilegibles o con nombre distinto al de la solicitud.</li>
-            <li>No confirmar la cita o llegar tarde: algunas clínicas reasignan el cupo el mismo día.</li>
-            <li>Asumir que SNAP automático te inscribe en WIC: son trámites separados salvo excepciones locales.</li>
+          <h2 className="font-serif text-2xl text-navy mb-2">Errores que te dejan sin cita — o sin leche en la tarjeta</h2>
+          <p className="text-gray-600 text-sm mb-4 leading-relaxed">
+            WIC no espera: si pierdes la ventana, el bebé o la embarazada pueden quedarse{' '}
+            <strong>semanas más sin beneficios</strong> hasta la próxima apertura de cupo.
+          </p>
+          <ul className="list-disc list-outside space-y-3 pl-5 text-sm text-gray-700 leading-relaxed">
+            <li>
+              <strong className="text-navy">Llegar sin el niño cuando pidieron medición o vacunas.</strong> Muchas clínicas{' '}
+              <strong>cancelan y reprograman</strong>; el hueco siguiente puede ser en 2–4 semanas con alimentación de
+              bolsillo mientras tanto.
+            </li>
+            <li>
+              <strong className="text-navy">Talones viejos si tu sueldo cambió.</strong> La clínica puede{' '}
+              <strong>negar elegibilidad ese día</strong> o congelar el caso hasta nuevos comprobantes — sales sin activar
+              la tarjeta.
+            </li>
+            <li>
+              <strong className="text-navy">ID ilegible o nombre distinto al de la cita.</strong> No es “arreglar en el
+              acto”: a menudo te mandan a <strong>volver con copias nuevas</strong> y pierdes el turno del mes.
+            </li>
+            <li>
+              <strong className="text-navy">Llegar tarde o no confirmar.</strong> Cupos ajustados ={' '}
+              <strong>te saltan ese día</strong>; en zonas con lista larga, eso se traduce en menos comida para el hogar
+              inmediato.
+            </li>
+            <li>
+              <strong className="text-navy">Creer que SNAP = WIC automático.</strong> Son sistemas distintos: puedes tener
+              uno y <strong>seguir sin el otro</strong> hasta completar la cita WIC; no esperes que “se sincronice solo”.
+            </li>
           </ul>
         </div>
 

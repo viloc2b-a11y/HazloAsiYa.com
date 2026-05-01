@@ -1,11 +1,19 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import { FUNNELS, NEXT_STEP_MAP, isValidFunnelId } from '@/data/funnels'
 import Link from 'next/link'
 import { authStatic, checkoutStatic, generateResultClient, submitLeadStatic } from '@/lib/static-backend'
 import { generatePDF } from '@/components/PDFGenerator'
 import ResultPhase1Section from '@/components/monetization/ResultPhase1Section'
+import {
+  RESULT_DOC_TENSION_COPY,
+  RESULT_DOC_TENSION_FUNNELS,
+  augmentResultSteps,
+} from '@/lib/result-steps'
+import { getResultTrustActionLine } from '@/lib/result-trust-action'
+import { gtagEvent, getAnalyticsDevice } from '@/lib/gtag'
+import { getResultViewSource } from '@/lib/result-view-source'
 
 interface Result {
   eligible: boolean
@@ -43,6 +51,7 @@ export default function ResultPage() {
   const [authForm, setAuthForm] = useState({ email: '', password: '', name: '', mode: 'login' as 'login'|'register' })
   const [paidInUrl, setPaidInUrl] = useState(false)
   const [purchaseVerified, setPurchaseVerified] = useState(false)
+  const resultViewSent = useRef(false)
 
   const isPaid = user?.plan && !['free', '', undefined].includes(user.plan)
   const hasPaidAccess = Boolean(isPaid) || purchaseVerified
@@ -50,10 +59,6 @@ export default function ResultPage() {
 
   const haveShow  = isLoggedIn ? result?.haveItems || []   : (result?.haveItems || []).slice(0, 2)
   const missShow  = isLoggedIn ? result?.missingItems || [] : (result?.missingItems || []).slice(0, 2)
-  const stepsShow = hasPaidAccess ? result?.steps || []
-                  : isLoggedIn ? (result?.steps || []).slice(0, 3)
-                  : (result?.steps || []).slice(0, 1)
-  const hiddenSteps = (result?.steps?.length || 0) - stepsShow.length
 
   useEffect(() => {
     let cancelled = false
@@ -115,6 +120,17 @@ export default function ResultPage() {
     }
   }, [id, user?.email])
 
+  useEffect(() => {
+    if (loading || !result) return
+    if (typeof id !== 'string' || !id || resultViewSent.current) return
+    resultViewSent.current = true
+    gtagEvent('result_view', {
+      funnel: id,
+      source: getResultViewSource(id),
+      device: getAnalyticsDevice(),
+    })
+  }, [loading, result, id])
+
   const canDownloadFullPdf = hasPaidAccess || paidInUrl
 
   const handleAuth = async () => {
@@ -154,7 +170,7 @@ export default function ResultPage() {
         subheadline: result.subheadline,
         haveItems: result.haveItems,
         missingItems: result.missingItems,
-        steps: result.steps,
+        steps: augmentResultSteps(typeof id === 'string' ? id : '', result.steps),
         isPaid: false,
         userName: user?.name || user?.email,
       })
@@ -176,7 +192,7 @@ export default function ResultPage() {
         subheadline: result.subheadline,
         haveItems: result.haveItems,
         missingItems: result.missingItems,
-        steps: result.steps,
+        steps: augmentResultSteps(typeof id === 'string' ? id : '', result.steps),
         isPaid: true,
         userName: user?.name || user?.email,
       })
@@ -212,6 +228,15 @@ export default function ResultPage() {
   const nextSteps =
     typeof id === 'string' && isValidFunnelId(id) ? NEXT_STEP_MAP[id] || [] : []
 
+  const funnelKey = typeof id === 'string' ? id : ''
+  const augmentedSteps = augmentResultSteps(funnelKey, result.steps)
+  const stepsShow = hasPaidAccess
+    ? augmentedSteps
+    : isLoggedIn
+      ? augmentedSteps.slice(0, 3)
+      : augmentedSteps.slice(0, 1)
+  const hiddenSteps = augmentedSteps.length - stepsShow.length
+
   return (
     <div className="min-h-screen bg-cream">
       {/* Mini header */}
@@ -221,6 +246,19 @@ export default function ResultPage() {
       </header>
 
       <div className="max-w-2xl mx-auto px-4 py-8 space-y-5">
+        {isValidFunnelId(funnelKey) && (
+          <div className="rounded-xl border border-navy/10 bg-white px-4 py-4 shadow-sm space-y-3">
+            <p className="text-sm text-navy/90 leading-relaxed" role="note">
+              Esta lista está basada en lo que normalmente piden para casos como el tuyo.
+            </p>
+            <p className="text-sm text-navy/90 leading-relaxed">
+              Si algo cambia, suele ser un documento específico—no todo el proceso.
+            </p>
+            <p className="text-sm text-navy font-medium leading-relaxed">
+              {getResultTrustActionLine(funnelKey)}
+            </p>
+          </div>
+        )}
 
         {/* Logo + status headline */}
         <div className="flex items-center gap-4 mb-2">
@@ -237,6 +275,15 @@ export default function ResultPage() {
             <p className="text-gray-500 text-sm mt-1">{result.subheadline}</p>
           </div>
         </div>
+
+        {RESULT_DOC_TENSION_FUNNELS.has(funnelKey) && (
+          <p
+            className="text-sm text-amber-900/95 bg-amber-50 border border-amber-200/90 rounded-xl px-4 py-3 leading-relaxed"
+            role="note"
+          >
+            {RESULT_DOC_TENSION_COPY}
+          </p>
+        )}
 
         {/* Have / Missing */}
         <div className="grid sm:grid-cols-2 gap-4">
@@ -301,7 +348,7 @@ export default function ResultPage() {
             {hasPaidAccess ? (
               <span className="text-xs bg-green/25 text-green-light px-2.5 py-1 rounded-full font-bold">COMPLETO</span>
             ) : isLoggedIn ? (
-              <span className="text-xs text-white/40">{stepsShow.length} de {result.steps.length} pasos</span>
+              <span className="text-xs text-white/40">{stepsShow.length} de {augmentedSteps.length} pasos</span>
             ) : null}
           </div>
           <div className="p-5 space-y-4">
@@ -341,7 +388,9 @@ export default function ResultPage() {
           <div className="card p-5 flex items-center justify-between gap-4">
             <div>
               <div className="font-bold text-navy text-sm">PDF básico — descarga gratis</div>
-              <div className="text-xs text-gray-400 mt-0.5">Incluye: elegibilidad + documentos + {stepsShow.length} pasos</div>
+              <div className="text-xs text-gray-400 mt-0.5">
+                Incluye: elegibilidad + documentos + {stepsShow.length} pasos
+              </div>
             </div>
             <button
               onClick={downloadBasicPdf}

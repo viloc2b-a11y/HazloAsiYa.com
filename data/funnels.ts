@@ -368,21 +368,270 @@ export const FUNNEL_ORDER: FunnelId[] = [
   'utilities', 'jobs', 'bank', 'matricula',
 ];
 
-export const NEXT_STEP_MAP: Record<FunnelId, { id: FunnelId; name: string; icon: string; desc: string }[]> = {
-  snap:      [{ id: 'medicaid', name: 'Medicaid', icon: '🏥', desc: 'Si calificas para SNAP probablemente para Medicaid también' }, { id: 'escuela', name: 'Escuela', icon: '🎓', desc: 'Si tienes hijos, inscríbelos en la escuela pública' }],
-  medicaid:  [{ id: 'snap', name: 'SNAP', icon: '🛒', desc: 'Beneficio alimentario que acompaña a Medicaid' }, { id: 'utilities', name: 'Servicios', icon: '💡', desc: 'LIHEAP: descuento en servicios públicos' }],
-  id:        [{ id: 'jobs', name: 'Empleo', icon: '💼', desc: 'Ya con ID puedes trabajar' }, { id: 'bank', name: 'Banco', icon: '🏦', desc: 'Abre tu cuenta con tu nueva ID' }],
-  wic:       [{ id: 'snap', name: 'SNAP', icon: '🛒', desc: 'Si calificas para WIC, probablemente para SNAP también' }, { id: 'medicaid', name: 'Medicaid', icon: '🏥', desc: 'Cobertura médica para tu bebé y tú' }],
-  twc:       [{ id: 'snap', name: 'SNAP', icon: '🛒', desc: 'Mientras buscas trabajo, SNAP puede ayudarte' }, { id: 'bank', name: 'Banco', icon: '🏦', desc: 'Necesitas cuenta para recibir el cheque TWC' }],
-  taxes:     [{ id: 'snap', name: 'SNAP', icon: '🛒', desc: 'Podrías calificar para cupones de comida' }, { id: 'bank', name: 'Banco', icon: '🏦', desc: 'Necesitas cuenta para tu reembolso' }],
-  escuela:   [{ id: 'medicaid', name: 'Medicaid', icon: '🏥', desc: 'Si tienes hijos, verifica elegibilidad para Medicaid' }, { id: 'snap', name: 'SNAP', icon: '🛒', desc: 'Beneficio alimentario para familias con hijos' }],
-  daca:      [{ id: 'id', name: 'ID Texas', icon: '🪪', desc: 'Con DACA puedes sacar tu licencia de Texas' }, { id: 'bank', name: 'Banco', icon: '🏦', desc: 'Con DACA puedes abrir cuenta bancaria' }],
-  iep:       [{ id: 'escuela', name: 'Escuela', icon: '🎓', desc: 'El IEP va de la mano con la inscripción escolar' }, { id: 'medicaid', name: 'Medicaid', icon: '🏥', desc: 'Niños con IEP frecuentemente califican para Medicaid' }],
-  itin:      [{ id: 'taxes', name: 'Taxes', icon: '💰', desc: 'Con ITIN puedes declarar y recibir reembolso' }, { id: 'bank', name: 'Banco', icon: '🏦', desc: 'Tu ITIN te permite abrir cuenta bancaria' }],
-  rent:      [{ id: 'utilities', name: 'Servicios', icon: '💡', desc: 'Conecta luz y agua en tu nuevo hogar' }, { id: 'bank', name: 'Banco', icon: '🏦', desc: 'Necesitas cuenta para pagar la renta' }],
-  prek:      [{ id: 'escuela', name: 'Escuela', icon: '🎓', desc: 'El siguiente paso después del Pre-K' }, { id: 'wic', name: 'WIC', icon: '🤱', desc: 'Beneficio de alimentos para tu familia' }],
-  utilities: [{ id: 'rent', name: 'Vivienda', icon: '🏠', desc: '¿Estás buscando dónde vivir?' }, { id: 'bank', name: 'Banco', icon: '🏦', desc: 'Paga tus servicios sin comisiones' }],
-  jobs:      [{ id: 'bank', name: 'Banco', icon: '🏦', desc: 'Necesitas cuenta para recibir tu cheque' }, { id: 'id', name: 'ID Texas', icon: '🪪', desc: 'Algunos empleos requieren ID de Texas' }],
-  bank:      [{ id: 'taxes', name: 'Taxes', icon: '💰', desc: 'Declara con cuenta bancaria establecida' }, { id: 'jobs', name: 'Empleo', icon: '💼', desc: 'Encuentra trabajo estable' }],
-  matricula: [{ id: 'bank', name: 'Banco', icon: '🏦', desc: 'Muchos bancos aceptan la matrícula consular' }, { id: 'taxes', name: 'Taxes', icon: '💰', desc: 'Con matrícula y ITIN puedes declarar impuestos' }],
+export interface NextStepLink {
+  id: FunnelId
+  name: string
+  icon: string
+  desc: string
+  /** Texto visible del enlace (ancla descriptiva SEO); si falta, la UI usa name */
+  anchor?: string
+}
+
+export const NEXT_STEP_MAP: Record<FunnelId, NextStepLink[]> = {
+  snap: [
+    {
+      id: 'medicaid',
+      name: 'Medicaid',
+      icon: '🏥',
+      desc: 'Si calificas para SNAP probablemente para Medicaid también',
+      anchor: 'Medicaid y CHIP — seguro médico familiar',
+    },
+    {
+      id: 'escuela',
+      name: 'Escuela',
+      icon: '🎓',
+      desc: 'Si tienes hijos, inscríbelos en la escuela pública',
+      anchor: 'Inscripción escolar pública en Texas',
+    },
+  ],
+  medicaid: [
+    {
+      id: 'snap',
+      name: 'SNAP',
+      icon: '🛒',
+      desc: 'Beneficio alimentario que acompaña a Medicaid',
+      anchor: 'SNAP (cupones de comida) para el hogar',
+    },
+    {
+      id: 'utilities',
+      name: 'Servicios',
+      icon: '💡',
+      desc: 'LIHEAP: descuento en servicios públicos',
+      anchor: 'Ayuda para pagar luz y gas (LIHEAP)',
+    },
+  ],
+  id: [
+    {
+      id: 'jobs',
+      name: 'Empleo',
+      icon: '💼',
+      desc: 'Ya con ID puedes trabajar',
+      anchor: 'Buscar empleo y recursos laborales',
+    },
+    {
+      id: 'bank',
+      name: 'Banco',
+      icon: '🏦',
+      desc: 'Abre tu cuenta con tu nueva ID',
+      anchor: 'Abrir cuenta bancaria con tu ID',
+    },
+  ],
+  wic: [
+    {
+      id: 'snap',
+      name: 'SNAP',
+      icon: '🛒',
+      desc: 'Si calificas para WIC, probablemente para SNAP también',
+      anchor: 'SNAP si necesitas más apoyo alimentario',
+    },
+    {
+      id: 'medicaid',
+      name: 'Medicaid',
+      icon: '🏥',
+      desc: 'Cobertura médica para tu bebé y tú',
+      anchor: 'Medicaid/CHIP para salud del menor',
+    },
+  ],
+  twc: [
+    {
+      id: 'snap',
+      name: 'SNAP',
+      icon: '🛒',
+      desc: 'Mientras buscas trabajo, SNAP puede ayudarte',
+      anchor: 'SNAP mientras buscas trabajo',
+    },
+    {
+      id: 'bank',
+      name: 'Banco',
+      icon: '🏦',
+      desc: 'Necesitas cuenta para recibir el cheque TWC',
+      anchor: 'Cuenta bancaria para depósito del desempleo',
+    },
+  ],
+  taxes: [
+    {
+      id: 'snap',
+      name: 'SNAP',
+      icon: '🛒',
+      desc: 'Podrías calificar para cupones de comida',
+      anchor: 'SNAP si el hogar necesita ayuda alimentaria',
+    },
+    {
+      id: 'bank',
+      name: 'Banco',
+      icon: '🏦',
+      desc: 'Necesitas cuenta para tu reembolso',
+      anchor: 'Cuenta para reembolso del IRS',
+    },
+  ],
+  escuela: [
+    {
+      id: 'medicaid',
+      name: 'Medicaid',
+      icon: '🏥',
+      desc: 'Si tienes hijos, verifica elegibilidad para Medicaid',
+      anchor: 'Medicaid/CHIP para tus hijos',
+    },
+    {
+      id: 'snap',
+      name: 'SNAP',
+      icon: '🛒',
+      desc: 'Beneficio alimentario para familias con hijos',
+      anchor: 'SNAP para familias con niños en escuela',
+    },
+  ],
+  daca: [
+    {
+      id: 'id',
+      name: 'ID Texas',
+      icon: '🪪',
+      desc: 'Con DACA puedes sacar tu licencia de Texas',
+      anchor: 'Licencia e identificación en Texas',
+    },
+    {
+      id: 'bank',
+      name: 'Banco',
+      icon: '🏦',
+      desc: 'Con DACA puedes abrir cuenta bancaria',
+      anchor: 'Cuenta bancaria con permiso de trabajo',
+    },
+  ],
+  iep: [
+    {
+      id: 'escuela',
+      name: 'Escuela',
+      icon: '🎓',
+      desc: 'El IEP va de la mano con la inscripción escolar',
+      anchor: 'Inscripción escolar e IEP',
+    },
+    {
+      id: 'medicaid',
+      name: 'Medicaid',
+      icon: '🏥',
+      desc: 'Niños con IEP frecuentemente califican para Medicaid',
+      anchor: 'Medicaid para niños con necesidades especiales',
+    },
+  ],
+  itin: [
+    {
+      id: 'taxes',
+      name: 'Taxes',
+      icon: '💰',
+      desc: 'Con ITIN puedes declarar y recibir reembolso',
+      anchor: 'Declarar impuestos con ITIN',
+    },
+    {
+      id: 'bank',
+      name: 'Banco',
+      icon: '🏦',
+      desc: 'Tu ITIN te permite abrir cuenta bancaria',
+      anchor: 'Banco con número ITIN',
+    },
+  ],
+  rent: [
+    {
+      id: 'utilities',
+      name: 'Servicios',
+      icon: '💡',
+      desc: 'Conecta luz y agua en tu nuevo hogar',
+      anchor: 'Ayuda con luz, gas y agua',
+    },
+    {
+      id: 'bank',
+      name: 'Banco',
+      icon: '🏦',
+      desc: 'Necesitas cuenta para pagar la renta',
+      anchor: 'Cuenta para pagar renta y servicios',
+    },
+  ],
+  prek: [
+    {
+      id: 'escuela',
+      name: 'Escuela',
+      icon: '🎓',
+      desc: 'El siguiente paso después del Pre-K',
+      anchor: 'Kinder e inscripción escolar',
+    },
+    {
+      id: 'wic',
+      name: 'WIC',
+      icon: '🤱',
+      desc: 'Beneficio de alimentos para tu familia',
+      anchor: 'WIC para la familia',
+    },
+  ],
+  utilities: [
+    {
+      id: 'rent',
+      name: 'Vivienda',
+      icon: '🏠',
+      desc: '¿Estás buscando dónde vivir?',
+      anchor: 'Ayuda para renta y vivienda',
+    },
+    {
+      id: 'bank',
+      name: 'Banco',
+      icon: '🏦',
+      desc: 'Paga tus servicios sin comisiones',
+      anchor: 'Cuenta bancaria sin comisiones altas',
+    },
+  ],
+  jobs: [
+    {
+      id: 'bank',
+      name: 'Banco',
+      icon: '🏦',
+      desc: 'Necesitas cuenta para recibir tu cheque',
+      anchor: 'Cuenta para nómina directa',
+    },
+    {
+      id: 'id',
+      name: 'ID Texas',
+      icon: '🪪',
+      desc: 'Algunos empleos requieren ID de Texas',
+      anchor: 'ID o licencia de Texas para empleo',
+    },
+  ],
+  bank: [
+    {
+      id: 'taxes',
+      name: 'Taxes',
+      icon: '💰',
+      desc: 'Declara con cuenta bancaria establecida',
+      anchor: 'Declarar impuestos con cuenta activa',
+    },
+    {
+      id: 'jobs',
+      name: 'Empleo',
+      icon: '💼',
+      desc: 'Encuentra trabajo estable',
+      anchor: 'Empleo y nómina estable',
+    },
+  ],
+  matricula: [
+    {
+      id: 'bank',
+      name: 'Banco',
+      icon: '🏦',
+      desc: 'Muchos bancos aceptan la matrícula consular',
+      anchor: 'Bancos que aceptan matrícula consular',
+    },
+    {
+      id: 'taxes',
+      name: 'Taxes',
+      icon: '💰',
+      desc: 'Con matrícula y ITIN puedes declarar impuestos',
+      anchor: 'Impuestos con matrícula e ITIN',
+    },
+  ],
 };

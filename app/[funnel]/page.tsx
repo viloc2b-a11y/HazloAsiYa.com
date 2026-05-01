@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { FUNNELS, NEXT_STEP_MAP, isValidFunnelId } from '@/data/funnels'
+import { getFunnelContextLinks } from '@/data/funnel-internal-links'
 import { getFunnelHeroCopy, getFunnelSeoMeta } from '@/data/funnel-landing'
 import Topbar from '@/components/Topbar'
 import { absoluteUrl, isMoneyPageOgSlug } from '@/lib/site'
@@ -20,6 +21,7 @@ import EscuelaEditorialSection from '@/components/funnels/EscuelaEditorialSectio
 import DacaEditorialSection from '@/components/funnels/DacaEditorialSection'
 import TaxesEditorialSection from '@/components/funnels/TaxesEditorialSection'
 import RentEditorialSection from '@/components/funnels/RentEditorialSection'
+import { FunnelFinalCtaLink, FunnelScrollDepth } from '@/components/analytics/FunnelLandingMeasurement'
 
 interface Props { params: Promise<{ funnel: string }> }
 
@@ -61,10 +63,12 @@ export default async function FunnelPage({ params }: Props) {
   if (!isValidFunnelId(id)) notFound()
   const f = FUNNELS[id]
   const nextSteps = NEXT_STEP_MAP[id] || []
+  const contextLinks = getFunnelContextLinks(id)
   const hero = getFunnelHeroCopy(id, { action: f.action, desc: f.desc, icon: f.icon })
 
   return (
     <div className="min-h-screen bg-cream">
+      <FunnelScrollDepth funnelId={id} />
       <Topbar />
 
       {/* Hero: H1 → intro → aviso → CTA (Disclosure después del primer párrafo) */}
@@ -139,17 +143,42 @@ export default async function FunnelPage({ params }: Props) {
           />
         )}
 
+        {/* Enlaces internos: SEO + recorrido antes del scroll largo */}
+        {contextLinks.length > 0 && (
+          <nav
+            className="rounded-2xl border border-green/25 bg-white px-4 py-4 sm:px-5"
+            aria-label="Enlaces relacionados en HazloAsíYa"
+          >
+            <p className="text-xs font-bold tracking-widest uppercase text-green mb-3">Sigue en HazloAsíYa</p>
+            <ul className="flex flex-wrap gap-x-4 gap-y-2 text-sm">
+              {contextLinks.map((item) => (
+                <li key={`${item.href}-${item.label}`}>
+                  <Link href={item.href} className="text-navy font-medium text-green hover:underline underline-offset-2">
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        )}
+
         {/* What you get */}
         <div className="bg-navy rounded-2xl p-6 text-white">
           <div className="text-xs font-bold tracking-widest uppercase text-green/70 mb-4">Qué vas a recibir exactamente</div>
-          <div className="font-serif text-xl mb-5">No información — instrucciones que te resuelven el trámite</div>
+          <div className="font-serif text-xl mb-3">Menos vueltas, menos “vuelva mañana con otro papel”</div>
+          <p className="text-white/55 text-sm leading-relaxed max-w-3xl mb-6">
+            La mayoría no falla por flojera: falla porque cada agencia pide cosas distintas, los portales cambian sin
+            avisar y en familia nadie tiene tiempo de leer 40 páginas en inglés. Aquí no te damos otro artículo largo: te
+            damos una lista concreta para <strong className="text-white/80">{f.name}</strong> y el orden en que suele
+            funcionar — para no llegar a la cita o al sobre con el documento equivocado otra vez.
+          </p>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {[
-              ['✅','Lo que ya tienes','Lista exacta — sin suposiciones.'],
-              ['❌','Lo que te falta','Documentos específicos a conseguir.'],
-              ['📋','Pasos en orden','Qué hacer, en qué orden, qué decir.'],
-              ['📝','Ejemplo llenado','El formulario ya completado correctamente.'],
-              ['🤝','Contacto local','Alguien en tu área, en español, primero.'],
+              ['✅','Lo que ya tienes','Para no repetir lo que ya está en tu carpeta y confundir al revisador.'],
+              ['❌','Lo que te falta','Nombre del comprobante o trámite que te falta, no solo “falta un papel”.'],
+              ['📋','Pasos en orden','Qué hacer primero (cita, portal, copias) sin saltarte un paso que reinicia el reloj.'],
+              ['📝','Ejemplo llenado','Cómo se ve un formulario bien lleno; evitas casillas que suelen devolver el caso.'],
+              ['🤝','Contacto local','Dónde buscar ayuda en tu zona cuando el problema ya no es solo de papeles.'],
             ].map(([ico,t,d]) => (
               <div key={t} className="bg-white/7 border border-white/10 rounded-xl p-4">
                 <div className="text-2xl mb-2">{ico}</div>
@@ -180,12 +209,21 @@ export default async function FunnelPage({ params }: Props) {
         {id === 'taxes' && <TaxesEditorialSection />}
         {id === 'rent' && <RentEditorialSection />}
 
-        {/* CTA final — §3g (copy distinto al hero y a la tarjeta central) */}
-        <div className="card p-6 border border-navy/15 bg-cream-2/80 text-center">
-          <p className="text-navy text-sm leading-relaxed max-w-2xl mx-auto mb-5">{hero.ctaCloseLead}</p>
-          <Link href={`/${id}/form`} className="btn-primary px-10 py-3.5 text-base inline-block">
+        {/* CTA final — §3g: entrega inmediata + cierre + tranquilidad */}
+        <div className="card p-6 sm:p-8 border-2 border-green/30 bg-gradient-to-b from-white to-cream-2/90 text-center shadow-sm">
+          <p className="text-xs font-bold tracking-widest uppercase text-green mb-3">Último paso</p>
+          <p className="font-semibold text-navy text-base sm:text-lg leading-snug max-w-xl mx-auto mb-3">
+            {hero.ctaCloseImmediate}
+          </p>
+          <p className="text-gray-600 text-sm leading-relaxed max-w-2xl mx-auto mb-6">{hero.ctaCloseLead}</p>
+          <FunnelFinalCtaLink
+            funnelId={id}
+            href={`/${id}/form`}
+            className="btn-primary px-10 py-4 text-base inline-block font-semibold shadow-md"
+          >
             {hero.ctaCloseButton}
-          </Link>
+          </FunnelFinalCtaLink>
+          <p className="text-xs text-gray-500 mt-4 max-w-lg mx-auto leading-relaxed">{hero.ctaCloseReassurance}</p>
         </div>
 
         <SeasonalCourseBanner funnelId={id} />
@@ -221,12 +259,16 @@ export default async function FunnelPage({ params }: Props) {
           <div className="bg-cream-2 rounded-2xl p-5">
             <div className="text-xs font-bold tracking-widest uppercase text-gray-400 mb-3">Al terminar, también puedes hacer:</div>
             <div className="flex flex-wrap gap-3">
-              {nextSteps.map(ns => (
-                <Link key={ns.id} href={`/${ns.id}`}
-                      className="flex items-center gap-2 bg-white border border-cream rounded-xl px-4 py-2.5 hover:border-green hover:text-green transition-colors text-sm font-medium text-navy">
-                  <span>{ns.icon}</span>
-                  <span>{ns.name}</span>
-                  <span className="text-gray-300">→</span>
+              {nextSteps.map((ns) => (
+                <Link
+                  key={ns.id}
+                  href={`/${ns.id}`}
+                  className="flex items-center gap-2 bg-white border border-cream rounded-xl px-4 py-2.5 hover:border-green hover:text-green transition-colors text-sm font-medium text-navy text-left max-w-full sm:max-w-[20rem]"
+                  title={ns.desc}
+                >
+                  <span aria-hidden>{ns.icon}</span>
+                  <span className="leading-snug">{ns.anchor ?? ns.name}</span>
+                  <span className="text-gray-300 shrink-0">→</span>
                 </Link>
               ))}
             </div>

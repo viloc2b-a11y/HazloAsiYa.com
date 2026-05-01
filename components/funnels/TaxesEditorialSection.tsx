@@ -101,59 +101,169 @@ export default function TaxesEditorialSection() {
           </ul>
         </div>
 
-        {/* §3c */}
+        {/* §3c — ejemplos, plan B, problemas típicos */}
         <div>
           <h2 className="font-serif text-2xl text-navy mb-3">Documentos que conviene reunir (con ejemplos)</h2>
+          <p className="text-gray-600 text-sm mb-4 leading-relaxed">
+            Lleva <strong>originales o PDF oficiales</strong> a VITA o al preparador; si declaras tú sola en casa, una
+            carpeta con todo nombrado por tipo (W-2, 1099, recibos) te ahorra volver a buscar en abril.
+          </p>
           <div className="space-y-5 text-sm text-gray-700">
             <div>
               <h3 className="font-semibold text-navy mb-2">Ingresos</h3>
               <ul className="list-disc list-inside space-y-1.5 leading-relaxed">
-                <li>Último W-2 de cada empleador; 1099 si cobraste como contratista o intereses.</li>
+                <li>
+                  <strong>Ejemplos reales:</strong> W-2 de cada patrón (caja con “Copy B”); 1099-NEC si te pagaron como
+                  contratista; 1099-INT/1099-DIV de bancos; 1099-G si hubo desempleo.
+                </li>
+                <li>
+                  <strong>Si tu patrón no te dio W-2 a tiempo:</strong> reclama copia, usa último talón para estimar y
+                  enmienda si llega tarde; no inventes cajas.
+                </li>
+                <li>
+                  <strong>Suele fallar:</strong> declarar un solo trabajo cuando hubo dos; olvidar el 1099 de app de
+                  delivery; cifras del W-2 mal tecleadas.
+                </li>
               </ul>
             </div>
             <div>
               <h3 className="font-semibold text-navy mb-2">Identificación fiscal</h3>
               <ul className="list-disc list-inside space-y-1.5 leading-relaxed">
-                <li>Tarjetas SSN o carta de ITIN vigente para quien declara y dependientes que apliquen.</li>
+                <li>
+                  <strong>Ejemplos reales:</strong> tarjeta del Seguro Social; carta CP565 o ITIN vigente; número correcto
+                  para cónyuge y dependientes que vayan en la declaración.
+                </li>
+                <li>
+                  <strong>Si el ITIN está por vencer y declaras cada año:</strong> renueva a tiempo; sin número válido se
+                  congela el crédito y el reembolso.
+                </li>
+                <li>
+                  <strong>Suele fallar:</strong> un dígito mal en el SSN del hijo; dos padres reclamando al mismo dependiente.
+                </li>
               </ul>
             </div>
             <div>
               <h3 className="font-semibold text-navy mb-2">Gastos deducibles o créditos</h3>
               <ul className="list-disc list-inside space-y-1.5 leading-relaxed">
-                <li>Facturas de guardería con EIN, formularios 1098-T si estudias, gastos médicos mayores al piso legal.</li>
+                <li>
+                  <strong>Ejemplos reales:</strong> recibo de guardería con nombre del centro y EIN; 1098-T de universidad;
+                  facturas médicas que sumen por encima del piso; registro de millas solo si aplica y con respaldo.
+                </li>
+                <li>
+                  <strong>Si pagas cuidado en efectivo:</strong> recibo firmado, contrato simple o captura de Zelle con
+                  nota “childcare”; mejor poco papel que nada.
+                </li>
+                <li>
+                  <strong>Suele fallar:</strong> EIN incorrecto del proveedor de cuidado; gastos del año equivocado;
+                  mezclar gastos del negocio personal con el empleo W-2 sin Schedule C real.
+                </li>
               </ul>
             </div>
             <div>
               <h3 className="font-semibold text-navy mb-2">Cuenta bancaria para reembolso</h3>
               <ul className="list-disc list-inside space-y-1.5 leading-relaxed">
-                <li>Número de ruta y cuenta para depósito directo; verifica dígitos para evitar rechazo del IRS.</li>
+                <li>
+                  <strong>Ejemplos reales:</strong> número de ruta (9 dígitos) y cuenta del mismo titular que declara;
+                  captura del cheque en blanco si tu banco la usa para verificar.
+                </li>
+                <li>
+                  <strong>Si no tienes cuenta:</strong> abre una cuenta básica antes de declarar o pide cheque por correo
+                  (tarda más); evita cuenta cerrada.
+                </li>
+                <li>
+                  <strong>Suele fallar:</strong> invertir ruta y cuenta; usar cuenta del primo “para recibir más rápido” —
+                  el IRS rechaza y retrasa meses.
+                </li>
               </ul>
             </div>
           </div>
         </div>
 
-        {/* §3d */}
+        {/* §3d — pasos con tiempo y “qué sigue” */}
         <div>
-          <h2 className="font-serif text-2xl text-navy mb-3">Pasos típicos antes de declarar</h2>
-          <ol className="list-decimal list-inside space-y-2 text-sm text-gray-700 leading-relaxed">
-            <li>Junta todos los W-2 y 1099; espera correcciones si un empleador los reemplaza.</li>
-            <li>Decide si usar software, VITA o preparador; no firmes en blanco.</li>
-            <li>Revisa estatus de declaración conjunta vs. separada si te casaste o divorciaste.</li>
-            <li>Calcula créditos aplicables con las tablas del año fiscal en curso.</li>
-            <li>Presenta electrónicamente o por correo según instrucciones; guarda acuse.</li>
-            <li>Corrige con formulario de enmienda si descubres errores después de enviar.</li>
+          <h2 className="font-serif text-2xl text-navy mb-2">Pasos típicos antes de declarar</h2>
+          <p className="text-gray-600 text-sm mb-4 leading-relaxed">
+            Junta papeles primero: suele ser <strong>30–60 min</strong> en una mesa. La cita VITA o con preparador suele
+            ser <strong>1–2 h</strong>; si declaras sola con software, cuenta <strong>1–3 h</strong> según complejidad.
+            Reembolso por depósito directo: a menudo <strong>2–3 semanas</strong> después de aceptada la declaración (puede
+            variar).
+          </p>
+          <ol className="list-decimal list-outside space-y-4 pl-5 text-sm text-gray-700 leading-relaxed">
+            <li>
+              <span className="font-medium text-navy">Reúne todos los W-2 y 1099</span>{' '}
+              <span className="text-gray-500 text-xs whitespace-nowrap">~20–40 min</span>
+              <span className="block mt-1 text-gray-600">
+                Después: si falta uno, pides duplicado al patrón; no empiezas números “aproximados”.
+              </span>
+            </li>
+            <li>
+              <span className="font-medium text-navy">Elige: software en casa, VITA gratis o preparador</span>{' '}
+              <span className="text-gray-500 text-xs whitespace-nowrap">~10 min decidir</span>
+              <span className="block mt-1 text-gray-600">
+                Después: sabes si necesitas cita, qué llevar y si alguien más firma contigo.
+              </span>
+            </li>
+            <li>
+              <span className="font-medium text-navy">¿Declaración conjunta o separada? Una decisión por año</span>{' '}
+              <span className="text-gray-500 text-xs whitespace-nowrap">~15 min</span>
+              <span className="block mt-1 text-gray-600">
+                Después: evitas enmendar solo por haber marcado el casillero equivocado de estado civil.
+              </span>
+            </li>
+            <li>
+              <span className="font-medium text-navy">Créditos y deducciones: revisa tablas del año fiscal</span>{' '}
+              <span className="text-gray-500 text-xs whitespace-nowrap">~20 min</span>
+              <span className="block mt-1 text-gray-600">
+                Después: sabes si reclamas hijo, cuidado, educación, etc., con respaldo en recibos.
+              </span>
+            </li>
+            <li>
+              <span className="font-medium text-navy">Presenta e-file o correo; guarda acuse o certificado</span>{' '}
+              <span className="text-gray-500 text-xs whitespace-nowrap">~15–30 min</span>
+              <span className="block mt-1 text-gray-600">
+                Después: recibes confirmación de recibido; el reloj del reembolso o del saldo adeudado empieza oficialmente.
+              </span>
+            </li>
+            <li>
+              <span className="font-medium text-navy">Si encuentras un error después: enmienda</span>{' '}
+              <span className="text-gray-500 text-xs whitespace-nowrap">~30 min otro día</span>
+              <span className="block mt-1 text-gray-600">
+                Después: el IRS corrige el registro; mejor enmendar que ignorar un 1099 que olvidaste.
+              </span>
+            </li>
           </ol>
         </div>
 
-        {/* §3e */}
+        {/* §3e — 5 errores con consecuencia clara */}
         <div>
-          <h2 className="font-serif text-2xl text-navy mb-3">Errores que disparan auditorías o multas</h2>
-          <ul className="list-disc list-inside space-y-2 text-sm text-gray-700 leading-relaxed">
-            <li>Declarar ingresos en efectivo “en cero” cuando hubo 1099 o depósitos rastreables.</li>
-            <li>Reclamar dependiente que ya reclamó el otro padre sin custodia que corresponda.</li>
-            <li>ITIN vencido o SSN incorrecto: retrasa reembolsos meses.</li>
-            <li>Mezclar años fiscales o usar tablas del año equivocado para créditos.</li>
-            <li>No pagar impuesto estimado si eres por cuenta propia y debías hacerlo: intereses después.</li>
+          <h2 className="font-serif text-2xl text-navy mb-2">Errores que cuestan dinero, tiempo o una carta del IRS</h2>
+          <p className="text-gray-600 text-sm mb-4 leading-relaxed">
+            No es teoría: el IRS cobra <strong>intereses y multas</strong> retroactivas, congela <strong>reembolsos
+            meses</strong> o abre <strong>correspondencia de examen</strong>. Mejor corregir antes de firmar.
+          </p>
+          <ul className="list-disc list-outside space-y-3 pl-5 text-sm text-gray-700 leading-relaxed">
+            <li>
+              <strong className="text-navy">Poner ingresos en cero con 1099 o depósitos visibles.</strong> El IRS cruza
+              sistemas: puedes recibir <strong>aviso de ajuste con multa</strong> y debes pagar impuesto más intereses
+              desde la fecha original.
+            </li>
+            <li>
+              <strong className="text-navy">Dos padres reclamando al mismo hijo.</strong> El segundo en procesarse pierde el
+              crédito; ambos pueden recibir <strong>cartas de verificación</strong> y retraso del reembolso de quien
+              declaró mal.
+            </li>
+            <li>
+              <strong className="text-navy">ITIN vencido o SSN mal tecleado.</strong> Créditos como CTC/ACTC pueden{' '}
+              <strong>quedar en hold</strong> meses; sin número válido no hay depósito directo del reembolso.
+            </li>
+            <li>
+              <strong className="text-navy">Usar tablas o formularios del año equivocado.</strong> Declaración procesada con
+              error puede generar <strong>enmienda obligatoria</strong> y saldo debido que no esperabas.
+            </li>
+            <li>
+              <strong className="text-navy">Ignorar pagos estimados como contratista.</strong> Al final del año debes
+              impuesto más <strong>interés diario</strong> desde los trimestres que faltaron; el fisco no “olvida”, suma.
+            </li>
           </ul>
         </div>
         <section className="rounded-xl border border-green/25 bg-emerald-50/50 p-5">

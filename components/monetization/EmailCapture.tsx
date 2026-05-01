@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { FUNNEL_EVENTS, trackFunnelEvent } from '@/lib/analytics-events'
 import { useAnalyticsConsent } from '@/hooks/useAnalyticsConsent'
+import { getEmailCaptureCopy } from '@/data/email-capture-copy'
 
 type Props = {
   funnelId: string
@@ -11,6 +12,7 @@ type Props = {
 
 export default function EmailCapture({ funnelId, tramiteLabel }: Props) {
   const { analyticsAllowed } = useAnalyticsConsent()
+  const copy = getEmailCaptureCopy(funnelId, tramiteLabel)
   const [email, setEmail] = useState('')
   const [firstName, setFirstName] = useState('')
   const [consent, setConsent] = useState(false)
@@ -46,7 +48,7 @@ export default function EmailCapture({ funnelId, tramiteLabel }: Props) {
       }
       if (analyticsAllowed) trackFunnelEvent(FUNNEL_EVENTS.EMAIL_CAPTURE, { tramite: funnelId })
       setStatus('ok')
-      setMsg('¡Listo! Recibirás alertas sobre este trámite.')
+      setMsg(getEmailCaptureCopy(funnelId, tramiteLabel).success)
     } catch {
       setStatus('err')
       setMsg('Error de red. Intenta más tarde.')
@@ -55,11 +57,15 @@ export default function EmailCapture({ funnelId, tramiteLabel }: Props) {
 
   return (
     <div className="rounded-2xl border-2 border-navy/15 bg-navy/[0.03] p-6">
-      <h3 className="font-serif text-lg text-navy mb-2">Recibe alertas sobre este trámite</h3>
-      <p className="text-sm text-gray-600 mb-4 leading-relaxed">
-        Recibe avisos cuando cambien los requisitos de <strong>{tramiteLabel}</strong> y nuevas guías gratuitas. Sin
-        spam: solo lo relevante para tu situación.
+      <h3 className="font-serif text-lg text-navy mb-2">{copy.title}</h3>
+      <p className="text-sm text-gray-700 mb-3 leading-relaxed">{copy.hook}</p>
+      <p className="text-sm text-navy/90 mb-3 leading-relaxed font-medium">
+        Al pulsar el botón de abajo, guardamos tu correo en una lista de HazloAsíYa etiquetada con{' '}
+        <strong>{tramiteLabel}</strong>. En seguida verás aquí un mensaje en verde de confirmación; no abrimos boletín. El
+        siguiente correo (si llega) será <strong>un solo email</strong> cuando publiquemos un cambio que afecte
+        documentos, montos, fechas o pasos de este trámite.
       </p>
+      <p className="text-sm text-gray-600 mb-4 leading-relaxed">{copy.stakes}</p>
       <form onSubmit={submit} className="space-y-3">
         <input
           type="text"
@@ -92,12 +98,15 @@ export default function EmailCapture({ funnelId, tramiteLabel }: Props) {
             Acepto recibir emails de HazloAsíYa. Puedo cancelar en cualquier momento.
           </span>
         </label>
+        <div className="rounded-xl border border-navy/10 bg-white/80 px-4 py-3 text-sm text-gray-800 leading-relaxed">
+          {copy.closer}
+        </div>
         <button type="submit" disabled={status === 'loading' || !consent} className="btn-primary w-full py-3 text-sm">
-          {status === 'loading' ? 'Enviando…' : 'Recibir alertas'}
+          {status === 'loading' ? 'Guardando tu correo…' : copy.button}
         </button>
       </form>
       <p className="text-xs text-gray-500 mt-3 leading-relaxed">
-        Sin spam. Solo actualizaciones relevantes. Puedes cancelar en cualquier momento con un clic.
+        No vendemos tu correo. Si un día ya no quieres recibir nada, cancelas con un enlace en el mismo email.
       </p>
       {msg && (
         <p className={`text-sm mt-2 ${status === 'ok' ? 'text-green font-medium' : 'text-amber-800'}`}>{msg}</p>

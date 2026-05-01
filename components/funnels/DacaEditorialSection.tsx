@@ -120,63 +120,172 @@ export default function DacaEditorialSection() {
           .
         </p>
 
-        {/* §3c */}
+        {/* §3c — ejemplos, plan B, problemas típicos */}
         <div>
           <h2 className="font-serif text-2xl text-navy mb-3">Documentos que suele pedir USCIS (con ejemplos)</h2>
           <p className="text-sm text-gray-700 mb-4 leading-relaxed">
-            Tu lista exacta depende del formulario y de tu historial. Estos ejemplos orientan; no sustituyen instrucciones
-            oficiales.
+            Tu lista sale del paquete de instrucciones del mes en que envías. Aquí va lo que <strong>más seguido</strong>
+            piden en renovaciones; si falta una prueba, mejor pedir tiempo y reunirla que enviar incompleto y recibir RFE
+            con el EAD por vencer.
           </p>
           <div className="space-y-5 text-sm text-gray-700">
             <div>
               <h3 className="font-semibold text-navy mb-2">Estatus DACA previo</h3>
               <ul className="list-disc list-inside space-y-1.5 leading-relaxed">
-                <li>Copia del último EAD, aviso I-797 o documentos de aprobación reciente.</li>
+                <li>
+                  <strong>Ejemplos reales:</strong> frente y reverso del EAD actual; I-797 de aprobaciones recientes;
+                  copia del último I-821D aprobado si lo tienes.
+                </li>
+                <li>
+                  <strong>Si perdiste el EAD físico:</strong> solicita reemplazo o junta copias de lo que tengas (notificaciones,
+                  fotos nítidas) y declara en el formulario según instrucciones; caso raro: abogado.
+                </li>
+                <li>
+                  <strong>Suele fallar:</strong> copia cortada donde no se lee la fecha de vencimiento; número de receipt
+                  ilegible.
+                </li>
               </ul>
             </div>
             <div>
               <h3 className="font-semibold text-navy mb-2">Identidad</h3>
               <ul className="list-disc list-inside space-y-1.5 leading-relaxed">
-                <li>Pasaporte, permiso estatal o ID que USCIS acepte según las instrucciones vigentes.</li>
+                <li>
+                  <strong>Ejemplos reales:</strong> pasaporte vigente, permiso de manejo estatal, ID emitida por el estado.
+                </li>
+                <li>
+                  <strong>Si el nombre cambió por matrimonio:</strong> acta de matrimonio o orden judicial que enlace el
+                  nombre del ID con el del sistema.
+                </li>
+                <li>
+                  <strong>Suele fallar:</strong> ID vencida cuando las instrucciones piden vigente; foto del pasaporte con
+                  flash que tapa el número.
+                </li>
               </ul>
             </div>
             <div>
               <h3 className="font-semibold text-navy mb-2">Residencia continua</h3>
               <ul className="list-disc list-inside space-y-1.5 leading-relaxed">
-                <li>Arriendos, registros escolares, facturas médicas o bancarias con nombre y fechas dentro del periodo pedido.</li>
+                <li>
+                  <strong>Ejemplos reales:</strong> contratos de renta con fechas, facturas de luz/internet a tu nombre,
+                  reportes de escuela o universidad, registros médicos, extractos bancarios con dirección.
+                </li>
+                <li>
+                  <strong>Si casi todo está a nombre de padres o cónyuge:</strong> carta de hospedaje + prueba de que tú
+                  vives ahí (correo, seguro, trabajo) en el periodo que pide el formulario.
+                </li>
+                <li>
+                  <strong>Suele fallar:</strong> mezclar pruebas de años equivocados; solo declarar “he vivido aquí” sin
+                  documento fechado.
+                </li>
               </ul>
             </div>
             <div>
               <h3 className="font-semibold text-navy mb-2">Antecedentes y preguntas de elegibilidad</h3>
               <ul className="list-disc list-inside space-y-1.5 leading-relaxed">
-                <li>Certificados de arresto sellados o declaraciones bajo juramento si las preguntas del formulario aplican.</li>
+                <li>
+                  <strong>Ejemplos reales:</strong> certificado de no arresto del condado; orden de corte sellada si hubo
+                  caso; declaración jurada solo si las instrucciones lo permiten para tu situación.
+                </li>
+                <li>
+                  <strong>Si hubo contacto con policía:</strong> no ocultes: consulta abogado antes de enviar; el error más
+                  caro es marcar “no” cuando hay registro.
+                </li>
+                <li>
+                  <strong>Suele fallar:</strong> certificado viejo cuando piden reciente; mandar traducción sin certificar.
+                </li>
               </ul>
             </div>
           </div>
         </div>
 
-        {/* §3d */}
+        {/* §3d — pasos con tiempo y “qué sigue” */}
         <div>
-          <h2 className="font-serif text-2xl text-navy mb-3">Pasos típicos de renovación</h2>
-          <ol className="list-decimal list-inside space-y-2 text-sm text-gray-700 leading-relaxed">
-            <li>Lee la página oficial de DACA y descarga formularios e instrucciones del día.</li>
-            <li>Completa I-821D e I-765 con la misma información coherente en ambos.</li>
-            <li>Prepara pruebas de identidad y residencia continua según el checklist vigente.</li>
-            <li>Paga tarifas con el método que USCIS indique y guarda recibos.</li>
-            <li>Arma el paquete en el orden que pidan las instrucciones; copia todo antes de enviar.</li>
-            <li>Envía a la casilla correcta (USPS/UPS/FedEx según guía) y rastrea la entrega.</li>
+          <h2 className="font-serif text-2xl text-navy mb-2">Pasos típicos de renovación</h2>
+          <p className="text-gray-600 text-sm mb-4 leading-relaxed">
+            Reserva <strong>2–4 h</strong> en varias sesiones (leer, imprimir, firmar, pagar). El envío en sí son{' '}
+            <strong>~30 min</strong> en mensajería; la decisión de USCIS va en <strong>meses</strong> salvo que te pidan
+            algo extra (RFE).
+          </p>
+          <ol className="list-decimal list-outside space-y-4 pl-5 text-sm text-gray-700 leading-relaxed">
+            <li>
+              <span className="font-medium text-navy">Lee uscis.gov y descarga I-821D, I-765 e instrucciones del día</span>{' '}
+              <span className="text-gray-500 text-xs whitespace-nowrap">~30–45 min</span>
+              <span className="block mt-1 text-gray-600">
+                Después: sabes tarifas vigentes, orden de páginas y dirección de envío — sin adivinar con un PDF de hace 6
+                meses.
+              </span>
+            </li>
+            <li>
+              <span className="font-medium text-navy">Llena ambos formularios con los mismos datos</span>{' '}
+              <span className="text-gray-500 text-xs whitespace-nowrap">~45–90 min</span>
+              <span className="block mt-1 text-gray-600">
+                Después: menos riesgo de que un dato no coincida y devuelvan todo el sobre.
+              </span>
+            </li>
+            <li>
+              <span className="font-medium text-navy">Fotocopias de ID y pruebas de residencia continua</span>{' '}
+              <span className="text-gray-500 text-xs whitespace-nowrap">~30–60 min</span>
+              <span className="block mt-1 text-gray-600">
+                Después: tienes carpeta numerada como el checklist; falta solo pagar y armar.
+              </span>
+            </li>
+            <li>
+              <span className="font-medium text-navy">Paga tarifas en línea o como indique la guía; imprime recibos</span>{' '}
+              <span className="text-gray-500 text-xs whitespace-nowrap">~15 min</span>
+              <span className="block mt-1 text-gray-600">
+                Después: montos correctos = el sobre no rebota por cheque malo o fee vieja.
+              </span>
+            </li>
+            <li>
+              <span className="font-medium text-navy">Arma el paquete en orden; fotografía o escanea todo antes de cerrar</span>{' '}
+              <span className="text-gray-500 text-xs whitespace-nowrap">~20 min</span>
+              <span className="block mt-1 text-gray-600">
+                Después: si USCIS pierde una página, tienes respaldo con fecha; si no, al menos tú sabes qué enviaste.
+              </span>
+            </li>
+            <li>
+              <span className="font-medium text-navy">Envía con servicio rastreable; guarda número de tracking</span>{' '}
+              <span className="text-gray-500 text-xs whitespace-nowrap">~30 min</span>
+              <span className="block mt-1 text-gray-600">
+                Después: ves “entregado” en el rastreo; luego esperas recibo o notificación en la cuenta USCIS — ahí
+                empieza el tiempo oficial del caso.
+              </span>
+            </li>
           </ol>
         </div>
 
-        {/* §3e */}
+        {/* §3e — 5 errores con consecuencia clara */}
         <div>
-          <h2 className="font-serif text-2xl text-navy mb-3">Errores que cuestan el EAD o el tiempo</h2>
-          <ul className="list-disc list-inside space-y-2 text-sm text-gray-700 leading-relaxed">
-            <li>Enviar tarde y quedar sin protección ni permiso de trabajo mientras esperas decisión.</li>
-            <li>Firmar formularios viejos o mezclar páginas de revisiones distintas.</li>
-            <li>Ocultar arrestos o viajes que debieron declararse: puede verse como falta de credibilidad.</li>
-            <li>Mandar cheques o montos incorrectos: USCIS rechaza el paquete completo.</li>
-            <li>No copiar el sobre: dirección o servicio de mensajería equivocado devuelve el envío.</li>
+          <h2 className="font-serif text-2xl text-navy mb-2">Errores que te dejan sin EAD — o con el sobre de vuelta</h2>
+          <p className="text-gray-600 text-sm mb-4 leading-relaxed">
+            Sin permiso de trabajo vigente, muchas personas <strong>pierden el empleo formal</strong> de un día para otro.
+            Un sobre rechazado puede significar <strong>meses más</strong> sin protección mientras rearmas y reenvías.
+          </p>
+          <ul className="list-disc list-outside space-y-3 pl-5 text-sm text-gray-700 leading-relaxed">
+            <li>
+              <strong className="text-navy">Enviar tarde respecto a tu vencimiento.</strong> Si el EAD expira antes de
+              aprobar renovación, puedes quedar <strong>sin autorización de trabajo</strong> — el patrón por ley suele
+              pararte hasta nuevo EAD.
+            </li>
+            <li>
+              <strong className="text-navy">Formularios viejos o páginas mezcladas.</strong> USCIS{' '}
+              <strong>rechaza el paquete entero</strong>; pierdes el tiempo de ida y vuelta y el lugar en la fila de
+              procesamiento.
+            </li>
+            <li>
+              <strong className="text-navy">Callar arrestos o viajes que debían ir en el formulario.</strong> Si lo
+              descubren, el riesgo no es solo demora: puede ser <strong>negación por credibilidad</strong> o referido a
+              fraude; ante duda, abogado antes de enviar.
+            </li>
+            <li>
+              <strong className="text-navy">Cheque o pago en línea por monto equivocado.</strong> El sobre vuelve sin
+              procesar; <strong>no hay recibo de caso válido</strong> hasta pagar bien — cada semana cuenta si el EAD vence.
+            </li>
+            <li>
+              <strong className="text-navy">Dirección o mensajería incorrecta.</strong> Paquete devuelto ={' '}
+              <strong>cero “received”</strong> hasta que reenvías; algunos pierden la ventana de renovación temprana por
+              ese solo error logístico.
+            </li>
           </ul>
         </div>
 

@@ -177,42 +177,97 @@ export default function MedicaidEditorialSection() {
           </div>
         </div>
 
-        {/* §3c — documentos por categorías con ejemplos */}
+        {/* §3c — documentos: ejemplos, plan B, problemas típicos */}
         <div>
+          <p
+            className="text-sm text-amber-900/95 bg-amber-50 border border-amber-200/90 rounded-xl px-4 py-3 mb-3 leading-relaxed"
+            role="note"
+          >
+            Un solo documento incorrecto o incompleto suele significar que te regresen la solicitud o te pidan volver con
+            otra cita.
+          </p>
+          <p className="text-sm text-navy/90 bg-emerald-50/80 border border-green/20 rounded-xl px-4 py-3 mb-4 leading-relaxed">
+            Aquí tienes ejemplos reales de lo que sí aceptan, para que no adivines.
+          </p>
           <h2 className="font-serif text-2xl text-navy mb-3">Documentos que suelen pedir (con ejemplos)</h2>
           <p className="text-gray-600 text-sm mb-4 leading-relaxed">
-            Tu lista exacta sale del portal y del tipo de solicitud (embarazo, niño, padre, etc.). Mejor sobrar copias
-            claras que reenviar por calidad.
+            Tu lista sale de <strong>YourTexasBenefits</strong> según si es CHIP, embarazo, padre con hijos, etc. Si falta
+            un papel, en muchos casos puedes guardar el borrador y subir después; lo que no conviene es ignorar el aviso
+            con fecha límite.
           </p>
           <div className="space-y-5 text-sm text-gray-700">
             <div>
               <h3 className="font-semibold text-navy mb-2">Identidad y membresía del hogar</h3>
               <ul className="list-disc list-inside space-y-1.5 leading-relaxed">
-                <li>ID con foto de adultos (licencia, pasaporte, matrícula consular si aplica al caso).</li>
-                <li>Actas de nacimiento de menores o custodia si HHSC pide prueba de parentesco.</li>
+                <li>
+                  <strong>Ejemplos reales:</strong> licencia Texas, pasaporte, matrícula consular si aplica; acta de
+                  nacimiento del niño para CHIP; orden de custodia si el solicitante no es el padre en el acta.
+                </li>
+                <li>
+                  <strong>Si el acta está en otro país:</strong> acta + traducción si la piden; tramita copia certificada
+                  antes de la cita si el portal la marca como obligatoria.
+                </li>
+                <li>
+                  <strong>Suele fallar:</strong> hijo del cónyuge no declarado en el hogar fiscal; ID vencido; nombre de la
+                  madre en el acta que no coincide con el nombre que escribiste en la solicitud.
+                </li>
               </ul>
             </div>
             <div>
               <h3 className="font-semibold text-navy mb-2">Ingresos (últimos 30–60 días o más)</h3>
               <ul className="list-disc list-inside space-y-1.5 leading-relaxed">
-                <li>Talones de cheque, W-2 reciente o declaración si trabajas por cuenta propia.</li>
-                <li>Carta de desempleo, manutención ordenada por tribunal o pensión con monto mensual.</li>
+                <li>
+                  <strong>Ejemplos reales:</strong> talones recientes, carta del patrón, W-2 del año si acaba de terminar
+                  temporada de trabajo; captura de depósitos de Uber/DoorDash si aplica; carta de TWC si hay desempleo.
+                </li>
+                <li>
+                  <strong>Si trabajas por tu cuenta:</strong> libro de ingresos/gastos, 1099-NEC, estado de cuenta de
+                  negocio; mejor documentación modesta pero honesta que inventar montos.
+                </li>
+                <li>
+                  <strong>Suele fallar:</strong> ingreso del esposo no reportado; solo un talón cuando el sistema pide 8
+                  semanas; efectivo “sin papeles” que luego no cuadra con el banco.
+                </li>
               </ul>
             </div>
             <div>
               <h3 className="font-semibold text-navy mb-2">Domicilio en Texas</h3>
               <ul className="list-disc list-inside space-y-1.5 leading-relaxed">
-                <li>Recibo de servicio, contrato de arrendamiento o carta del dueño con fecha.</li>
+                <li>
+                  <strong>Ejemplos reales:</strong> factura de servicio con nombre y dirección, lease firmado, carta del
+                  propietario con teléfono de contacto.
+                </li>
+                <li>
+                  <strong>Si vives con familiares:</strong> carta de hospedaje + ID del titular del recibo + prueba de que
+                  el menor vive ahí (correo escolar, etc.) según lo que acepte HHSC.
+                </li>
+                <li>
+                  <strong>Suele fallar:</strong> comprobante a nombre de otra ciudad cuando pides cobertura en otro condado;
+                  dirección vieja del último trámite.
+                </li>
               </ul>
             </div>
             <div>
               <h3 className="font-semibold text-navy mb-2">Categorías especiales</h3>
               <ul className="list-disc list-inside space-y-1.5 leading-relaxed">
-                <li>Prueba de embarazo o informe prenatal si aplicas como embarazada.</li>
-                <li>Cartas de SSI/SSA o discapacidad cuando la categoría lo requiera.</li>
+                <li>
+                  <strong>Ejemplos reales:</strong> resultado de prueba de embarazo con fecha, informe prenatal con nombre
+                  de la clínica; carta de SSI/SSA; documentos de discapacidad o terapia si la categoría lo requiere.
+                </li>
+                <li>
+                  <strong>Si aún no tienes primera cita prenatal:</strong> pregunta si aceptan prueba de farmacia o carta
+                  de clínica comunitaria; no pospongas todo por esperar el primer ultrasonido si el portal te deja avanzar.
+                </li>
+                <li>
+                  <strong>Suele fallar:</strong> subir foto del ultrasonido ilegible; embarazo no vinculado al nombre de la
+                  solicitante en el sistema.
+                </li>
               </ul>
             </div>
           </div>
+          <p className="text-sm text-navy/90 font-medium mt-4 pt-4 border-t border-cream leading-relaxed">
+            Empieza por identidad y domicilio: son los que suelen pedir primero para abrir el caso.
+          </p>
           <p className="text-sm mt-3">
             Más orientación:{' '}
             <Link href="/medicaid/texas/" className="text-green font-bold underline">
@@ -221,34 +276,92 @@ export default function MedicaidEditorialSection() {
           </p>
         </div>
 
-        {/* §3d — ≤ 6 pasos */}
+        {/* §3d — pasos con tiempo y “qué sigue” */}
         <div>
-          <h2 className="font-serif text-2xl text-navy mb-3">Cómo aplicar</h2>
-          <ol className="list-decimal list-inside space-y-2 text-sm text-gray-700">
-            <li>Entra a YourTexasBenefits.com</li>
-            <li>Crea una cuenta o inicia sesión</li>
+          <h2 className="font-serif text-2xl text-navy mb-2">Cómo aplicar</h2>
+          <p className="text-gray-600 text-sm mb-4 leading-relaxed">
+            Todo pasa en el mismo portal. La parte que tú controlas suele ser{' '}
+            <strong>1–2 h</strong> en total (puedes hacerla por partes); lo que lleva esperar la respuesta de HHSC son{' '}
+            <strong>semanas</strong>, no minutos.
+          </p>
+          <ol className="list-decimal list-outside space-y-4 pl-5 text-sm text-gray-700 leading-relaxed">
             <li>
-              Completa la solicitud (una sola solicitud puede aplicar a Medicaid, CHIP y otros programas que maneja
-              HHSC)
+              <span className="font-medium text-navy">Entra a YourTexasBenefits.com</span>{' '}
+              <span className="text-gray-500 text-xs whitespace-nowrap">~1 min</span>
+              <span className="block mt-1 text-gray-600">Después: eliges crear cuenta o iniciar sesión.</span>
             </li>
-            <li>Sube o entrega los documentos que te pidan</li>
             <li>
-              Espera la determinación — HHSC indica plazos orientativos (por ejemplo, alrededor de{' '}
-              <strong>45 días</strong> en muchos casos y plazos más cortos en situaciones de embarazo; confirma en tu
-              aviso o en el portal)
+              <span className="font-medium text-navy">Crea cuenta o inicia sesión</span>{' '}
+              <span className="text-gray-500 text-xs whitespace-nowrap">~5–10 min</span>
+              <span className="block mt-1 text-gray-600">
+                Después: ya puedes abrir la solicitud de beneficios; guarda usuario y contraseña en un lugar seguro.
+              </span>
+            </li>
+            <li>
+              <span className="font-medium text-navy">
+                Completa la solicitud (Medicaid, CHIP y otros programas HHSC en un solo flujo cuando aplica)
+              </span>{' '}
+              <span className="text-gray-500 text-xs whitespace-nowrap">~30–60 min</span>
+              <span className="block mt-1 text-gray-600">
+                Después: recibes número de caso o confirmación; el sistema te dirá qué falta por subir.
+              </span>
+            </li>
+            <li>
+              <span className="font-medium text-navy">Sube o entrega lo que te pidan</span>{' '}
+              <span className="text-gray-500 text-xs whitespace-nowrap">~15–45 min</span>
+              <span className="block mt-1 text-gray-600">
+                Después: el estado “documentos recibidos” o un aviso te confirma; si algo está mal, te lo dicen con plazo
+                para corregir. Recibes confirmación o te piden correcciones; si falta algo, el proceso puede reiniciarse.
+              </span>
+            </li>
+            <li>
+              <span className="font-medium text-navy">Espera la determinación</span>{' '}
+              <span className="text-gray-500 text-xs whitespace-nowrap">días/semanas</span>
+              <span className="block mt-1 text-gray-600">
+                Después: carta o mensaje en el portal — muchos casos ~<strong>45 días</strong>; embarazo u otros pueden
+                ser más cortos. Ahí sabes si aprueban, niegan o piden más pruebas.
+              </span>
             </li>
           </ol>
         </div>
 
-        {/* §3e — 5 errores */}
+        {/* §3e — 5 errores con consecuencia clara */}
         <div>
-          <h2 className="font-serif text-2xl text-navy mb-3">Errores que retrasan o niegan la cobertura</h2>
-          <ul className="list-disc list-inside space-y-2 text-sm text-gray-700 leading-relaxed">
-            <li>Declarar solo a algunos miembros del hogar fiscal para “ver si pasa”: discrepancias disparan revisiones.</li>
-            <li>Mandar ingresos viejos o incompletos cuando hay segundo trabajo o efectivo sin respaldo.</li>
-            <li>No subir prueba de embarazo o actas cuando la categoría lo exige desde el inicio.</li>
-            <li>Perder la fecha límite de pruebas o entrevistas: sin respuesta, HHSC puede cerrar el expediente.</li>
-            <li>Usar dirección o código postal que no coincide donde vive el niño o la embarazada solicitante.</li>
+          <h2 className="font-serif text-2xl text-navy mb-2">Errores que dejan al niño o a la embarazada sin cobertura</h2>
+          <p className="text-gray-600 text-sm mb-4 leading-relaxed">
+            El costo real es <strong>cuentas médicas sin seguro</strong>, <strong>embarazo sin prenatal a tiempo</strong> o
+            meses más en la fila. Evita estos puntos antes de cerrar la solicitud.
+          </p>
+          <ul className="list-disc list-outside space-y-3 pl-5 text-sm text-gray-700 leading-relaxed">
+            <li>
+              <strong className="text-navy">Subir documentos incompletos.</strong> Lo más común es que te regresen el caso y
+              tengas que volver a empezar con semanas adicionales de espera.
+            </li>
+            <li>
+              <strong className="text-navy">“Probar” el hogar con menos gente de la que vive contigo.</strong> Cuando HHSC
+              cruza datos, sale <strong>negación o auditoría</strong>; mientras tanto el niño sigue sin CHIP o Medicaid
+              activo.
+            </li>
+            <li>
+              <strong className="text-navy">Ingresos incompletos o viejos.</strong> Segundo trabajo o efectivo sin respaldo
+              casi siempre genera un <strong>aviso de “falta información”</strong> con fecha límite; si no respondes, el
+              caso se niega y
+              la reaplicación puede correr otro ciclo de 45 días o más.
+            </li>
+            <li>
+              <strong className="text-navy">Saltarte acta o prueba de embarazo cuando la categoría lo exige.</strong> No
+              “siguen después”: muchas veces el sistema <strong>no avanza a elegibilidad</strong> hasta subir lo mínimo, y
+              pierdes citas médicas programadas.
+            </li>
+            <li>
+              <strong className="text-navy">Ignorar la fecha del aviso o la entrevista.</strong> Sin respuesta, HHSC{' '}
+              <strong>cierra el expediente</strong>; volver a abrir puede costarte semanas adicionales sin tarjeta médica.
+            </li>
+            <li>
+              <strong className="text-navy">Código postal o dirección que no coincide con donde vive el menor.</strong>{' '}
+              Puede resultar en <strong>negación por residencia</strong> o asignación al condado equivocado; arreglarlo no
+              es automático.
+            </li>
           </ul>
         </div>
 

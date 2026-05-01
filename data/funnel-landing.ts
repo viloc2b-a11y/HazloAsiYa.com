@@ -73,120 +73,156 @@ export type FunnelHeroFields = {
   ctaCardLead?: string
   ctaCloseLead?: string
   ctaCloseButton?: string
+  /** Una línea: qué ve el usuario en cuanto termina (§3g). */
+  ctaCloseImmediate?: string
+  /** Micro-copy anti-dudas bajo el botón. */
+  ctaCloseReassurance?: string
 }
 
 export const FUNNEL_HERO: Partial<Record<FunnelId, FunnelHeroFields>> = {
   snap: {
-    headline: 'Tu plan claro para SNAP en Texas, sin adivinar',
+    headline: 'SNAP Texas: lista de papeles y pasos antes de HHSC',
     subhead:
-      'Te guiamos: reglas, papeles y envío para que no te devuelvan la solicitud.',
-    ctaHero: 'Empezar evaluación gratis →',
-    ctaCard: 'Ver mi plan SNAP →',
-    ctaCardEyebrow: 'Empieza ahora',
-    ctaCardTitle: 'Tu lista SNAP antes de entrar a HHSC',
+      'Sales con la lista exacta que te van a pedir en tu caso, sin adivinar. Tras el cuestionario ves en pantalla qué traer, qué te falta y qué errores devuelven la solicitud.',
+    ctaHero: 'Ver mi lista SNAP gratis →',
+    ctaCard: 'Obtener mi checklist SNAP →',
+    ctaCardEyebrow: 'En ~5 min · $0',
+    ctaCardTitle: 'Recibes una lista concreta: documentos, orden y qué no enviar',
     ctaCardLead:
-      'Cinco preguntas y ves qué papeles juntar, en qué orden aplicar y qué errores evitar. Sin tarjeta.',
+      'Respondes sobre tu hogar y salen los ítems que HHSC suele pedir en Texas, numerados para imprimir o llevar al teléfono.',
     ctaCloseLead:
-      'Ya viste límites y documentos: el formulario arma tu checklist personalizado para Texas en minutos.',
-    ctaCloseButton: 'Armar mi plan SNAP →',
+      'La mayoría de retrasos pasa por una lista vieja o incompleta. Si eso ocurre, te piden corregir y volver, y el proceso puede moverse semanas. Tómalo ahora y revisa tu carpeta con la versión correcta antes de enviar o ir en persona.',
+    ctaCloseButton: 'Ver mi lista SNAP correcta ahora (gratis) →',
+    ctaCloseImmediate:
+      'Al terminar ves en pantalla tu lista exacta (documentos + orden) para este trámite.',
+    ctaCloseReassurance:
+      'Gratis · sin tarjeta · no sustituimos a HHSC: tú envías la solicitud oficial. Si algo no aplica a tu hogar, lo ves antes de gastar tiempo en fila. Si te falta algo, la tarjeta no se activa hasta corregirlo. Te toma menos de 5 minutos y sales con la lista lista para usar hoy.',
   },
   medicaid: {
-    headline: 'Medicaid o CHIP: ver si tu familia califica',
+    headline: 'CHIP o Medicaid Texas: grupo probable de tu hogar',
     subhead:
-      'En Texas las reglas son distintas; alineamos tu hogar con lo que HHSC pide antes del portal.',
-    ctaHero: 'Evaluar mi caso gratis →',
-    ctaCard: 'Preparar mi solicitud →',
-    ctaCardEyebrow: 'Empieza ahora',
-    ctaCardTitle: 'Ordena Medicaid/CHIP antes de YourTexasBenefits',
+      'Sales con la lista exacta que te van a pedir en tu caso, sin adivinar: hipótesis clara (niño, embarazo, padre, etc.) y pruebas para YourTexasBenefits.',
+    ctaHero: 'Ver mi grupo y papeles →',
+    ctaCard: 'Obtener lista para HHSC →',
+    ctaCardEyebrow: 'Sin cuenta · gratis',
+    ctaCardTitle: 'Recibes qué categoría revisar y qué documentos subir primero',
     ctaCardLead:
-      'Te decimos qué grupo suele aplicar a tu hogar y qué pruebas preparar. Evaluación gratuita.',
+      'El cuestionario mapea tu hogar a las reglas típicas de Texas (sin expansión ACA) y arma la carpeta antes del portal.',
     ctaCloseLead:
-      'Si ya leíste quién califica en Texas, el cuestionario te deja lista la solicitud sin adivinar.',
-    ctaCloseButton: 'Preparar mi solicitud →',
+      'La mayoría de retrasos pasa por usar una lista vieja o incompleta. Si eso ocurre, te piden corregir y volver, y el proceso puede moverse semanas. Tómalo ahora y revisa tu carpeta con la versión correcta antes de enviar o ir en persona.',
+    ctaCloseButton: 'Ver mi lista Medicaid correcta ahora (gratis) →',
+    ctaCloseImmediate:
+      'Al terminar ves en pantalla tu lista exacta (documentos + orden) para este trámite.',
+    ctaCloseReassurance:
+      'Gratis para empezar · sin tarjeta · HHSC decide la elegibilidad; esto solo te prepara el paquete y el orden. Si no respondes a tiempo, el caso puede cerrarse y tocar empezar de nuevo. Te toma menos de 5 minutos y sales con la lista lista para usar hoy.',
   },
   itin: {
-    headline: 'ITIN y W-7: menos errores, menos espera',
+    headline: 'ITIN: ID aceptada y orden del sobre W-7',
     subhead:
-      'Qué ID pide el IRS y en qué orden enviar. No somos Acceptance Agent ni preparador.',
-    ctaHero: 'Armar mi paquete W-7 →',
-    ctaCard: 'Siguiente: mi checklist ITIN →',
-    ctaCardEyebrow: 'Empieza ahora',
-    ctaCardTitle: 'Checklist W-7 sin enviar ID equivocada',
+      'Sales con la lista exacta que te van a pedir en tu caso, sin adivinar. Tras el cuestionario sabes si conviene correo o Acceptance Agent y qué copias mandar para no devolución.',
+    ctaHero: 'Ver mi lista W-7 →',
+    ctaCard: 'Ver orden del sobre →',
+    ctaCardEyebrow: 'No somos IRS ni AA',
+    ctaCardTitle: 'Recibes checklist de ID + anexos según tu situación fiscal',
     ctaCardLead:
-      'Repasamos tu situación y la documentación que el IRS acepta para tu caso. Gratis.',
+      'Respondes y ves qué documento de identidad encaja con tu país/caso y qué va delante del W-7 según instrucciones vigentes.',
     ctaCloseLead:
-      'Cuando ya sabes qué es el ITIN, el formulario te arma el paquete y el orden de envío.',
-    ctaCloseButton: 'Armar mi paquete W-7 →',
+      'La mayoría de retrasos pasa por usar una lista vieja o incompleta. Si eso ocurre, te piden corregir y volver, y el proceso puede moverse semanas. Tómalo ahora y revisa tu carpeta con la versión correcta antes de enviar o ir en persona.',
+    ctaCloseButton: 'Ver mi lista ITIN correcta ahora (gratis) →',
+    ctaCloseImmediate:
+      'Al terminar ves en pantalla tu lista exacta (documentos + orden) para este trámite.',
+    ctaCloseReassurance:
+      'No somos IRS ni Acceptance Agent · $0 para armar el plan · tú envías el paquete; nosotros no lo mandamos por ti. Si el paquete va incompleto, el IRS lo devuelve y el proceso se alarga semanas. Te toma menos de 5 minutos y sales con la lista lista para usar hoy.',
   },
   wic: {
-    headline: 'WIC: ver si calificas y qué llevar',
+    headline: 'WIC Texas: carpeta lista antes de la cita clínica',
     subhead:
-      'Embarazo y niños hasta 5 años: qué piden y cómo pedir cita en Texas.',
-    ctaHero: 'Preparar mi cita WIC →',
-    ctaCard: 'Organizar documentos WIC →',
-    ctaCardEyebrow: 'Empieza ahora',
-    ctaCardTitle: 'Lista para tu cita WIC en Texas',
+      'Sales con lista de IDs, ingresos y vacunas típicos para texaswic.org o tu proveedor local.',
+    ctaHero: 'Ver qué llevar a WIC →',
+    ctaCard: 'Imprimir lista de cita →',
+    ctaCardEyebrow: 'Embarazo o niño ≤5 años',
+    ctaCardTitle: 'Recibes qué meter en la mochila el día de la cita',
     ctaCardLead:
-      'Sabrás qué llevar al proveedor y qué preguntar si falta un papel. Sin costo.',
+      'El cuestionario pregunta por embarazo, niños e ingresos y devuelve ítems concretos (talón, recibo, cartilla, etc.).',
     ctaCloseLead:
-      'Después de leer requisitos y pasos, organiza tu carpeta con el cuestionario en minutos.',
-    ctaCloseButton: 'Organizar documentos WIC →',
+      'Si te quedas solo con la guía general, suele faltar “¿qué llevo yo con mis hijos?”. El cuestionario ajusta la mochila al número de menores y a lo que tu clínica suele pedir.',
+    ctaCloseButton: 'Listo para mi cita WIC — $0 →',
+    ctaCloseImmediate:
+      'Al cerrar ves la lista de cita en pantalla (IDs, ingresos, cartilla). Imprímela o guárdala en el celular para el día.',
+    ctaCloseReassurance:
+      'Gratis · sin tarjeta · la clínica WIC decide elegibilidad; esto reduce idas en vano por un papel que faltaba.',
   },
   escuela: {
-    headline: 'Escuela: papeles listos para tu distrito',
+    headline: 'Inscripción Texas: papeles que pide un ISD típico',
     subhead:
-      'Vacunas, domicilio y acta: lista según lo que tu ISD en Texas suele pedir.',
-    ctaHero: 'Listar mis documentos →',
-    ctaCard: 'Ir al checklist escuela →',
-    ctaCardEyebrow: 'Empieza ahora',
-    ctaCardTitle: 'Checklist según tu distrito (Texas)',
+      'Sales con prioridad: acta, domicilio, vacunas e ID del tutor según lo que más suelen exigir.',
+    ctaHero: 'Ver lista por grado →',
+    ctaCard: 'Obtener checklist escuela →',
+    ctaCardEyebrow: 'K-12 público',
+    ctaCardTitle: 'Recibes qué fotocopiar y en qué orden subir al portal del distrito',
     ctaCardLead:
-      'Te orientamos en vacunas, domicilio y acta según lo que casi siempre pide un ISD.',
+      'Indicas ciudad, hijos y grado aproximado; devolvemos documentos y avisos comunes (HLS, custodia, vacunas).',
     ctaCloseLead:
-      'Si ya revisaste documentos y pasos, el formulario prioriza lo que te falta para inscribir.',
-    ctaCloseButton: 'Ir al checklist escuela →',
+      'El distrito no espera: si te falta un papel, pierdes tiempo en el portal. Aquí marcas pendientes según tu hogar antes de subir archivos que luego rechazan.',
+    ctaCloseButton: 'Ver pendientes de inscripción — gratis →',
+    ctaCloseImmediate:
+      'Sales con “qué fotocopiar primero” y alertas típicas (custodia, HLS, vacunas). Aplica hoy al portal de tu ISD.',
+    ctaCloseReassurance:
+      'Gratis · sin tarjeta · no sustituimos al distrito: tú entregas en su portal o ventanilla.',
   },
   daca: {
-    headline: 'Renovar DACA: formularios y plazos claros',
+    headline: 'Renovar DACA: I-821D e I-765 en orden para el sobre',
     subhead:
-      'I-821D e I-765: ordenamos tu paquete. Caso raro: abogado o USCIS debe revisar.',
-    ctaHero: 'Revisar mi renovación →',
-    ctaCard: 'Preparar envío USCIS →',
-    ctaCardEyebrow: 'Empieza ahora',
-    ctaCardTitle: 'Paquete I-821D + I-765 en orden',
+      'Sales con lista de pruebas, tarifas a verificar en uscis.gov y aviso si tu caso pide abogado.',
+    ctaHero: 'Ver lista de renovación →',
+    ctaCard: 'Armar sobre USCIS →',
+    ctaCardEyebrow: 'Educación, no abogado',
+    ctaCardTitle: 'Recibes lista numerada: formularios, pruebas y copias al día',
     ctaCardLead:
-      'Repasamos plazos, tarifas y pruebas habituales. No sustituimos abogado en casos difíciles.',
+      'Respondes sobre tu último EAD, domicilio y cambios; el flujo ordena I-821D, I-765 y evidencias habituales.',
     ctaCloseLead:
-      'Cuando ya viste formularios y documentos, el cuestionario alinea tu lista antes del sobre.',
-    ctaCloseButton: 'Preparar envío USCIS →',
+      'Un sobre mal armado puede costarte meses sin EAD. El cuestionario alinea respuestas con el orden de copias y envío que suelen pedir las instrucciones vigentes — sin sustituir abogado si tu caso es delicado.',
+    ctaCloseButton: 'Revisar mi sobre antes de USPS — gratis →',
+    ctaCloseImmediate:
+      'Obtienes lista numerada (formularios + pruebas) para contrastar con tu copia física antes de pagar envío.',
+    ctaCloseReassurance:
+      'Educación, no bufete · $0 para este paso · USCIS decide; si hubo arresto o viaje raro, consulta abogado antes de enviar.',
   },
   taxes: {
-    headline: 'Impuestos: qué formularios y qué evitar',
+    headline: 'Declaración IRS: comprobantes listos y multas evitadas',
     subhead:
-      'Qué juntar, qué casillas confunden y dónde hay ayuda gratis (VITA) si aplica.',
-    ctaHero: 'Armar mi declaración →',
-    ctaCard: 'Mi plan de impuestos →',
-    ctaCardEyebrow: 'Empieza ahora',
-    ctaCardTitle: 'Qué juntar antes de declarar',
+      'Sales con lista de W-2/1099, ITIN/SSN y créditos que revisar antes de VITA o preparador.',
+    ctaHero: 'Ver mis comprobantes →',
+    ctaCard: 'Generar lista fiscal →',
+    ctaCardEyebrow: 'No preparación oficial',
+    ctaCardTitle: 'Recibes inventario de formularios y casillas que suelen confundir',
     ctaCardLead:
-      'W-2, 1099, ITIN y créditos: ves qué aplica a ti y qué llevar a VITA si calificas.',
+      'Marcas ingresos, dependientes y banco; devolvemos qué archivos juntar y qué llevar si calificas a VITA.',
     ctaCloseLead:
-      'Tras leer la guía, el formulario te ordena comprobantes y próximos pasos sin pagar preparador.',
-    ctaCloseButton: 'Mi plan de impuestos →',
+      'VITA y preparadores odian cuando llegas sin W-2 o sin ITIN vigente. Esta pasada te deja una sola hoja de “qué traer” para no perder la cita o el reembolso.',
+    ctaCloseButton: 'Generar mi hoja “qué traer” — $0 →',
+    ctaCloseImmediate:
+      'En pantalla queda tu inventario (ingresos, IDs, créditos a revisar). Úsalo hoy para pedir duplicados que faltan.',
+    ctaCloseReassurance:
+      'No somos el IRS ni preparador · gratis para organizarte · tú firmas la declaración oficial.',
   },
   rent: {
-    headline: 'Renta difícil: opciones reales en Texas',
+    headline: 'Renta atrasada: primer trámite según tu ciudad y PHA',
     subhead:
-      'Esperas, HUD y ayuda local: por dónde empezar sin pagar a intermediarios dudosos.',
-    ctaHero: 'Ver opciones de renta →',
-    ctaCard: 'Mi plan de vivienda →',
-    ctaCardEyebrow: 'Empieza ahora',
-    ctaCardTitle: 'Por dónde buscar ayuda sin estafas',
+      'Sales con ruta: lista de espera local, HUD y señales de estafa que cortar de raíz.',
+    ctaHero: 'Ver mi ruta de ayuda →',
+    ctaCard: 'Obtener plan PHA/local →',
+    ctaCardEyebrow: 'Texas / HUD',
+    ctaCardTitle: 'Recibes 3–5 pasos concretos: dónde aplicar y qué documento pedir',
     ctaCardLead:
-      'Listas PHA, HUD y recursos locales: priorizamos según tu ciudad y situación.',
+      'Indicas ciudad, mora e ingresos aproximados; priorizamos PHA, emergencias y defensa si hay aviso de desalojo.',
     ctaCloseLead:
-      'Si ya viste programas y riesgos, el cuestionario te da un plan concreto para tu área.',
-    ctaCloseButton: 'Mi plan de vivienda →',
+      'Cuando el alquiler aprieta, perderse en páginas genéricas cuesta semanas. El cuestionario te deja un orden de llamadas y documentos según tu ciudad — antes de pagar a un estafador por “cupo”.',
+    ctaCloseButton: 'Obtener mi orden de llamadas — gratis →',
+    ctaCloseImmediate:
+      'Terminas con pasos concretos en pantalla (PHA, emergencia, defensa). Empiezas la primera llamada hoy con lista en mano.',
+    ctaCloseReassurance:
+      'Gratis · sin tarjeta · no garantizamos voucher: te organiza para trámites oficiales y evitar pagos dudosos.',
   },
 }
 
@@ -201,6 +237,8 @@ export type FunnelHeroResolved = {
   ctaCardLead: string
   ctaCloseLead: string
   ctaCloseButton: string
+  ctaCloseImmediate: string
+  ctaCloseReassurance: string
 }
 
 type FunnelDefaults = { action: string; desc: string; icon: string }
@@ -211,6 +249,15 @@ const DEFAULT_CARD = {
   lead: 'En 5 minutos sabes qué tienes, qué te falta y los primeros pasos de este trámite. Sin tarjeta.',
 } as const
 
+const DEFAULT_CLOSE = {
+  immediate:
+    'En cuanto terminas, el plan sale en pantalla: qué hacer primero, qué juntar y qué sobra por aclarar.',
+  reassurance:
+    '$0 para empezar · sin tarjeta · sin obligación de comprar nada · no enviamos el trámite por ti: tú lo presentas ante la agencia oficial.',
+} as const
+
+const CTA_REASSURANCE_CLOSER = ' Si lo revisas ahora, evitas que te pidan volver después.'
+
 export function getFunnelHeroCopy(id: FunnelId, defaults: FunnelDefaults): FunnelHeroResolved {
   const h = FUNNEL_HERO[id]
   const cardRaw = h?.ctaCard?.replace(/^\s+/, '') ?? ''
@@ -220,8 +267,11 @@ export function getFunnelHeroCopy(id: FunnelId, defaults: FunnelDefaults): Funne
 
   const closeLead =
     h?.ctaCloseLead ??
-    `Cuando ya repasaste la guía, el cuestionario ordena ${defaults.desc.slice(0, 80).replace(/\.$/, '')} en una lista personalizada. Gratis.`
-  const closeButton = h?.ctaCloseButton ?? 'Ir al formulario gratis →'
+    `Ya leíste la guía: el cuestionario baja ${defaults.desc.slice(0, 70).replace(/\.$/, '')} a una lista que puedes usar hoy. Sin costo para empezar.`
+  const closeButton = h?.ctaCloseButton ?? 'Abrir el cuestionario gratis →'
+  const closeImmediate = h?.ctaCloseImmediate ?? DEFAULT_CLOSE.immediate
+  const closeReassurance =
+    (h?.ctaCloseReassurance ?? DEFAULT_CLOSE.reassurance) + CTA_REASSURANCE_CLOSER
 
   if (h) {
     return {
@@ -234,6 +284,8 @@ export function getFunnelHeroCopy(id: FunnelId, defaults: FunnelDefaults): Funne
       ctaCardLead: h.ctaCardLead ?? DEFAULT_CARD.lead,
       ctaCloseLead: closeLead,
       ctaCloseButton: closeButton,
+      ctaCloseImmediate: closeImmediate,
+      ctaCloseReassurance: closeReassurance,
     }
   }
   return {
@@ -246,6 +298,8 @@ export function getFunnelHeroCopy(id: FunnelId, defaults: FunnelDefaults): Funne
     ctaCardLead: DEFAULT_CARD.lead,
     ctaCloseLead: closeLead,
     ctaCloseButton: closeButton,
+    ctaCloseImmediate: closeImmediate,
+    ctaCloseReassurance: closeReassurance,
   }
 }
 

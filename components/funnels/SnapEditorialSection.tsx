@@ -30,39 +30,28 @@ export default function SnapEditorialSection() {
         </Link>
       </p>
 
-      {/* §3b — qué es / califica: 2 párrafos + 4 viñetas */}
+      {/* §3b — qué es / califica (SEO + fricción real) */}
       <div>
         <h2 id="snap-edu-que-es" className="font-serif text-2xl text-navy mb-3">
-          ¿Qué es SNAP y quién califica en Texas?
+          ¿Qué es SNAP y quién puede calificar?
         </h2>
         <p className="text-gray-600 text-sm leading-relaxed mb-3">
-          SNAP (cupones de comida) es un programa federal que en Texas administra HHSC. Ayuda a hogares con ingresos y
-          recursos dentro de los límites vigentes a comprar alimentos en tiendas autorizadas; no cubre alcohol, tabaco ni
-          comida caliente para llevar.
+          SNAP (cupones de comida) es un programa que ayuda a pagar alimentos en EE.UU. usando una tarjeta mensual.
         </p>
         <p className="text-gray-600 text-sm leading-relaxed mb-3">
-          Si calificas depende del tamaño de tu hogar, ingresos brutos y deducciones permitidas, ciudadanía o categoría
-          migratoria aceptada, y la documentación que presentes. HHSC revisa cada caso; una entrevista o más pruebas son
-          normales si algo no cuadra.
+          Muchas personas no aplican porque creen que no califican o porque no saben qué documentos les van a pedir. En la
+          práctica, el problema suele ser llegar con información incompleta o desactualizada.
         </p>
-        <ul className="list-disc list-inside space-y-2 text-sm text-gray-700 leading-relaxed">
-          <li>
-            <strong>Hogar:</strong> quienes compran y preparan comida juntos suelen contarse juntos; no omitas miembros
-            por miedo.
-          </li>
-          <li>
-            <strong>Ingresos:</strong> salario, trabajo por cuenta propia, beneficios y a veces ayuda de familia cuentan;
-            revisa el límite bruto de tu tamaño de hogar.
-          </li>
-          <li>
-            <strong>Recursos:</strong> límites en efectivo y cuentas (excepciones para ciertos hogares); HHSC puede pedir
-            estados de cuenta.
-          </li>
-          <li>
-            <strong>Trabajo o reglas de empleo y capacitación:</strong> algunos solicitantes deben cumplir requisitos de registro de
-            empleo o exenciones; pregunta en tu aviso si te aplican.
-          </li>
+        <p className="text-gray-600 text-sm font-medium text-navy mb-2">Puedes calificar según:</p>
+        <ul className="list-disc list-inside space-y-2 text-sm text-gray-700 leading-relaxed mb-3">
+          <li>Ingresos del hogar (no solo salario, también gastos)</li>
+          <li>Número de personas en casa</li>
+          <li>Situación laboral o familiar</li>
+          <li>Estado donde vives (reglas cambian por estado)</li>
         </ul>
+        <p className="text-gray-600 text-sm leading-relaxed">
+          En Texas, el proceso se hace con HHSC y suele incluir revisión de documentos y entrevista.
+        </p>
       </div>
 
       <div>
@@ -113,79 +102,134 @@ export default function SnapEditorialSection() {
         </p>
       </div>
 
-      {/* §3c — documentos por categorías con ejemplos concretos */}
+      {/* §3c — documentos (versión optimizada) */}
       <div>
-        <h2 className="font-serif text-2xl text-navy mb-3">Documentos que necesitas (con ejemplos)</h2>
-        <p className="text-gray-600 text-sm mb-4 leading-relaxed">
-          La lista exacta depende de tu hogar y del canal (en línea, teléfono u oficina). Evita fotos borrosas y nombres
-          que no coincidan con la solicitud.
+        <h2 className="font-serif text-2xl text-navy mb-3">Documentos que normalmente te van a pedir</h2>
+        <p
+          className="text-sm text-amber-900/95 bg-amber-50 border border-amber-200/90 rounded-xl px-4 py-3 mb-3 leading-relaxed"
+          role="note"
+        >
+          Un documento incorrecto o incompleto suele significar que te regresen la solicitud o tengas que volver con otra
+          cita.
+        </p>
+        <p className="text-sm text-navy/90 bg-emerald-50/80 border border-green/20 rounded-xl px-4 py-3 mb-5 leading-relaxed">
+          Aquí tienes ejemplos reales de lo que sí aceptan, para que no adivines.
         </p>
         <div className="space-y-5 text-sm text-gray-700">
           <div>
-            <h3 className="font-semibold text-navy mb-2">Identidad y autorización</h3>
+            <h3 className="font-semibold text-navy mb-2">Identidad</h3>
             <ul className="list-disc list-inside space-y-1.5 leading-relaxed">
-              <li>Licencia de Texas o matrícula consular + comprobante alterno si HHSC lo acepta en tu caso.</li>
-              <li>Actas o prueba de parentesco si declaras niños o cónyuge en el hogar.</li>
+              <li>ID estatal o licencia de Texas</li>
+              <li>Pasaporte (aunque esté vencido en algunos casos)</li>
             </ul>
           </div>
           <div>
-            <h3 className="font-semibold text-navy mb-2">Ingresos (últimos 30–60 días o más si te lo piden)</h3>
+            <h3 className="font-semibold text-navy mb-2">Ingresos</h3>
             <ul className="list-disc list-inside space-y-1.5 leading-relaxed">
-              <li>Últimos talones de cheque o carta de salario con horas y tarifa.</li>
-              <li>Estado de cuenta de depósito si cobras por transferencia o efectivo informal documentado.</li>
-              <li>Carta de desempleo, manutención o pensión con monto y periodo.</li>
+              <li>Talones de cheque recientes</li>
+              <li>Carta del empleador</li>
+              <li>W-2 o 1099</li>
             </ul>
+            <p className="text-gray-600 mt-2 leading-relaxed">
+              Si no tienes talones: puedes usar carta firmada del trabajo o historial bancario.
+            </p>
           </div>
           <div>
-            <h3 className="font-semibold text-navy mb-2">Domicilio en Texas</h3>
+            <h3 className="font-semibold text-navy mb-2">Domicilio</h3>
             <ul className="list-disc list-inside space-y-1.5 leading-relaxed">
-              <li>Recibo de luz, gas o agua a tu nombre; o contrato de arrendamiento firmado.</li>
-              <li>Carta del dueño con fecha si vives con familia y no hay recibo a tu nombre (según lo que acepte HHSC).</li>
+              <li>Recibo de luz, gas o agua (ej. CenterPoint, TXU)</li>
+              <li>Contrato de renta</li>
             </ul>
+            <p className="text-gray-600 mt-2 leading-relaxed">
+              Si no tienes contrato: carta del dueño o de la persona con quien vives.
+            </p>
           </div>
           <div>
-            <h3 className="font-semibold text-navy mb-2">Gastos que pueden descontarse</h3>
+            <h3 className="font-semibold text-navy mb-2">Errores comunes aquí</h3>
             <ul className="list-disc list-inside space-y-1.5 leading-relaxed">
-              <li>Pago de renta o hipoteca, recibos de cuidado infantil elegible, gastos médicos altos con factura.</li>
-              <li>Pagos de manutención legalmente ordenados cuando apliquen.</li>
+              <li>Nombres distintos en documentos</li>
+              <li>Talones incompletos</li>
+              <li>Dirección que no coincide</li>
             </ul>
           </div>
         </div>
+        <p className="text-sm text-navy/90 font-medium mt-4 pt-4 border-t border-cream leading-relaxed">
+          Empieza por identidad y domicilio: son los que suelen revisar primero en HHSC.
+        </p>
       </div>
 
-      {/* §3d — pasos ≤ 6 */}
+      {/* §3d — paso a paso (versión final) */}
       <div>
-        <h2 className="font-serif text-2xl text-navy mb-3">Pasos típicos para aplicar</h2>
-        <ol className="list-decimal list-inside space-y-2 text-sm text-gray-700 leading-relaxed">
-          <li>Reúne identificación, ingresos y domicilio antes de abrir la solicitud.</li>
+        <h2 className="font-serif text-2xl text-navy mb-2">Cómo solicitar SNAP paso a paso</h2>
+        <p className="text-gray-600 text-sm mb-4 leading-relaxed">
+          Puedes hacerlo en línea y guardar tu avance. El proceso toma <strong>~45–90 minutos</strong> de tu lado.
+        </p>
+        <ol className="list-decimal list-outside space-y-4 pl-5 text-sm text-gray-700 leading-relaxed">
           <li>
-            Entra a{' '}
-            <a
-              href="https://yourtexasbenefits.com"
-              className="text-green font-semibold underline"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              YourTexasBenefits.com
-            </a>{' '}
-            o usa el canal que prefieras (app, teléfono u oficina local).
+            <span className="font-medium text-navy">
+              Crear cuenta en{' '}
+              <a
+                href="https://yourtexasbenefits.com"
+                className="text-green font-semibold underline"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                YourTexasBenefits
+              </a>
+            </span>{' '}
+            <span className="text-gray-500 text-xs whitespace-nowrap">(~5–10 min)</span>
+            <span className="block mt-1 text-gray-600">Después: ya puedes iniciar y guardar tu solicitud.</span>
           </li>
-          <li>Declara a todos los miembros del hogar que comparten comida y sus ingresos sin redondear “a ojo”.</li>
-          <li>Sube o entrega documentos claros; guarda capturas o números de confirmación.</li>
-          <li>Atiende la entrevista si te la programan y responde avisos antes del plazo.</li>
-          <li>Revisa la carta de elegibilidad: fecha de inicio, monto y qué reportar si cambia tu situación.</li>
+          <li>
+            <span className="font-medium text-navy">Llenar la solicitud</span>{' '}
+            <span className="text-gray-500 text-xs whitespace-nowrap">(~20–40 min)</span>
+            <span className="block mt-1 text-gray-600">Después: el sistema calcula tu caso preliminar.</span>
+          </li>
+          <li>
+            <span className="font-medium text-navy">Subir documentos</span>{' '}
+            <span className="text-gray-500 text-xs whitespace-nowrap">(~10–25 min)</span>
+            <span className="block mt-1 text-gray-600">Después: HHSC revisa tu información.</span>
+          </li>
+          <li>
+            <span className="font-medium text-navy">Esperar contacto o entrevista</span>{' '}
+            <span className="text-gray-500 text-xs whitespace-nowrap">(días–semanas)</span>
+            <span className="block mt-1 text-gray-600">Después: te pueden pedir aclaraciones.</span>
+          </li>
+          <li>
+            <span className="font-medium text-navy">Recibir decisión</span>
+            <span className="block mt-1 text-gray-600">Después: aprobación o solicitud de correcciones.</span>
+          </li>
+          <li>
+            <span className="font-medium text-navy">Corregir si falta algo</span>{' '}
+            <span className="text-gray-500 text-xs whitespace-nowrap">(~10–30 min)</span>
+            <span className="block mt-1 text-gray-600">
+              Después: si algo falta, el proceso puede reiniciarse y moverse semanas.
+            </span>
+          </li>
         </ol>
       </div>
 
-      {/* §3e — exactamente 5 errores, urgencia real */}
+      {/* §3e — errores (versión final) */}
       <div>
-        <h2 className="font-serif text-2xl text-navy mb-3">Errores comunes que retrasan o niegan el caso</h2>
-        <ul className="list-disc list-inside space-y-2 text-sm text-gray-700 leading-relaxed">
-          <li>No listar a un adulto o niño que vive y come en el hogar: HHSC puede cruzar datos y cerrar el caso.</li>
-          <li>Mandar solo un talón de cheque cuando cobras semanal o tienes dos trabajos: falta de prueba = más demoras.</li>
-          <li>Documentos ilegibles, cortados o con nombres distintos al de la solicitud.</li>
-          <li>Ignorar la entrevista o el sobre amarillo: sin respuesta, suelen denegar o cerrar por abandono.</li>
-          <li>Usar una dirección postal donde nadie del hogar vive: puede contarse como fraude o error grave.</li>
+        <h2 className="font-serif text-2xl text-navy mb-2">Errores comunes que retrasan tu solicitud</h2>
+        <ul className="list-disc list-outside space-y-3 pl-5 text-sm text-gray-700 leading-relaxed">
+          <li>
+            <strong className="text-navy">Subir documentos incompletos</strong> → lo más común es que te regresen el caso
+            y tengas que volver a empezar con semanas adicionales de espera.
+          </li>
+          <li>
+            <strong className="text-navy">No revisar notificaciones de HHSC</strong> → puedes perder solicitudes de
+            información y cerrar el caso.
+          </li>
+          <li>
+            <strong className="text-navy">Dirección incorrecta</strong> → retrasos o rechazo por inconsistencia.
+          </li>
+          <li>
+            <strong className="text-navy">No contestar entrevista</strong> → el proceso se detiene automáticamente.
+          </li>
+          <li>
+            <strong className="text-navy">Usar documentos viejos</strong> → te piden volver a enviar todo actualizado.
+          </li>
         </ul>
       </div>
 
