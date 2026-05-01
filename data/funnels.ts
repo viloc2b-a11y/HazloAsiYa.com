@@ -362,6 +362,11 @@ export function isValidFunnelId(slug: string): slug is FunnelId {
   return Object.prototype.hasOwnProperty.call(FUNNELS, slug)
 }
 
+/** URL de la landing principal del trámite (Texas ID → hub `/id/texas/`, alineado con Topbar y SEO). */
+export function funnelLandingPath(id: FunnelId): string {
+  return id === 'id' ? '/id/texas/' : `/${id}/`
+}
+
 export const FUNNEL_ORDER: FunnelId[] = [
   'snap', 'medicaid', 'id', 'wic', 'twc', 'taxes',
   'escuela', 'daca', 'iep', 'itin', 'rent', 'prek',

@@ -153,9 +153,9 @@ export const FUNNEL_HERO: Partial<Record<FunnelId, FunnelHeroFields>> = {
       'Gratis · sin tarjeta · la clínica WIC decide elegibilidad; esto reduce idas en vano por un papel que faltaba.',
   },
   escuela: {
-    headline: 'Inscripción Texas: papeles que pide un ISD típico',
+    headline: 'Cómo inscribir a tu hijo en la escuela pública de Texas',
     subhead:
-      'Sales con prioridad: acta, domicilio, vacunas e ID del tutor según lo que más suelen exigir.',
+      'Lista priorizada: acta, domicilio en el distrito, vacunas e identificación del tutor — lo que más suelen pedir los ISD antes de aceptar la inscripción.',
     ctaHero: 'Ver lista por grado →',
     ctaCard: 'Obtener checklist escuela →',
     ctaCardEyebrow: 'K-12 público',

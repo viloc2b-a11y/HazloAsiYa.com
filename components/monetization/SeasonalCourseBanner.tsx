@@ -1,7 +1,6 @@
 'use client'
 
 import Link from 'next/link'
-import Disclosure from '@/components/legal/Disclosure'
 
 type Month = number
 
@@ -42,7 +41,9 @@ export default function SeasonalCourseBanner({ funnelId }: Props) {
   return (
     <div className="max-w-4xl mx-auto px-4 pb-6">
       <div className="rounded-2xl border border-gold/40 bg-gold/5 p-5">
-        <Disclosure variant="paid-service" />
+        <p className="text-xs text-gray-600">
+          Opcional de pago · no reemplaza el cuestionario gratuito ni las guías públicas de HazloAsíYa.
+        </p>
         <p className="font-serif text-lg text-navy mt-3">{title}</p>
         <p className="text-sm text-gray-600 mt-1">{desc}</p>
         <Link href={href} className="inline-block mt-3 text-green font-semibold underline text-sm">

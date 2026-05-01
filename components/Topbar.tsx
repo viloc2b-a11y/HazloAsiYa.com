@@ -1,7 +1,7 @@
 'use client'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
-import { FUNNEL_ORDER, FUNNELS } from '@/data/funnels'
+import { FUNNEL_ORDER, FUNNELS, funnelLandingPath } from '@/data/funnels'
 
 const LogoMark = ({ size = 36 }: { size?: number }) => (
   <svg width={size} height={size} viewBox="0 0 36 36" fill="none">
@@ -57,7 +57,7 @@ export default function Topbar({ user }: { user?: { email: string; name?: string
           {NAV_FUNNELS.map((navId) => (
             <Link
               key={navId}
-              href={navId === 'id' ? '/id/texas/' : `/${navId}`}
+              href={funnelLandingPath(navId)}
               className="px-3 py-1.5 text-[13px] font-semibold text-white/60 hover:text-white hover:bg-white/8 rounded-lg transition-colors"
             >
               {navId === 'id' ? 'Texas ID' : FUNNELS[navId].name.split(' ')[0]}
@@ -111,7 +111,7 @@ export default function Topbar({ user }: { user?: { email: string; name?: string
           {FUNNEL_ORDER.map((fid) => (
             <Link
               key={fid}
-              href={fid === 'id' ? '/id/texas/' : `/${fid}`}
+              href={funnelLandingPath(fid)}
               onClick={() => setMenuOpen(false)}
               className="flex items-center gap-2 px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/8 rounded-lg transition-colors"
             >

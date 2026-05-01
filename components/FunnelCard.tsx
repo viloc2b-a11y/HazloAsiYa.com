@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { funnelLandingPath, isValidFunnelId, type FunnelId } from '@/data/funnels'
 
 interface FunnelCardProps {
   id: string
@@ -10,9 +11,10 @@ interface FunnelCardProps {
 }
 
 export default function FunnelCard({ id, name, icon, action, color, bg }: FunnelCardProps) {
+  const href = isValidFunnelId(id) ? funnelLandingPath(id as FunnelId) : `/${id}/`
   return (
     <Link
-      href={`/${id}`}
+      href={href}
       className="group card p-5 hover:shadow-md hover:-translate-y-1 transition-all duration-200 flex flex-col gap-3"
     >
       <div className="flex items-start gap-3">

@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { FUNNELS, NEXT_STEP_MAP, isValidFunnelId } from '@/data/funnels'
+import { FUNNELS, NEXT_STEP_MAP, funnelLandingPath, isValidFunnelId } from '@/data/funnels'
 import { getFunnelContextLinks } from '@/data/funnel-internal-links'
 import { getFunnelHeroCopy, getFunnelSeoMeta } from '@/data/funnel-landing'
 import Topbar from '@/components/Topbar'
@@ -77,6 +77,16 @@ export default async function FunnelPage({ params }: Props) {
           <div className="text-5xl mb-4">{f.icon}</div>
           <h1 className="font-serif text-3xl sm:text-4xl text-white mb-4 leading-tight">{hero.headline}</h1>
           <p className="text-white/60 text-lg leading-relaxed max-w-2xl mb-6">{hero.subhead}</p>
+
+          {id === 'escuela' && (
+            <p className="text-white/55 text-base leading-relaxed max-w-2xl mb-6 border-l-4 border-green/60 pl-4">
+              <strong className="text-white/85">Educación pública K-12:</strong> en general, los distritos no pueden
+              denegar la inscripción por estatus migratorio (<em className="text-white/70">Plyler v. Doe</em>). Si tu
+              hogar está en transición o sin vivienda fija, pregunta por apoyos{' '}
+              <em className="text-white/70">McKinney-Vento</em> en la oficina del distrito — reglas y formularios varían
+              por ISD.
+            </p>
+          )}
 
           <div className="max-w-2xl mb-8 space-y-4">
             {id === 'medicaid' && (
@@ -226,8 +236,6 @@ export default async function FunnelPage({ params }: Props) {
           <p className="text-xs text-gray-500 mt-4 max-w-lg mx-auto leading-relaxed">{hero.ctaCloseReassurance}</p>
         </div>
 
-        <SeasonalCourseBanner funnelId={id} />
-
         {/* Affiliates */}
         {f.affiliates.length > 0 && (
           <div className="card p-6">
@@ -262,7 +270,7 @@ export default async function FunnelPage({ params }: Props) {
               {nextSteps.map((ns) => (
                 <Link
                   key={ns.id}
-                  href={`/${ns.id}`}
+                  href={funnelLandingPath(ns.id)}
                   className="flex items-center gap-2 bg-white border border-cream rounded-xl px-4 py-2.5 hover:border-green hover:text-green transition-colors text-sm font-medium text-navy text-left max-w-full sm:max-w-[20rem]"
                   title={ns.desc}
                 >
@@ -274,6 +282,8 @@ export default async function FunnelPage({ params }: Props) {
             </div>
           </div>
         )}
+
+        <SeasonalCourseBanner funnelId={id} />
       </div>
     </div>
   )

@@ -1,7 +1,7 @@
 'use client'
 import { useState, useEffect, useRef } from 'react'
 import { useParams, useRouter } from 'next/navigation'
-import { FUNNELS, NEXT_STEP_MAP, isValidFunnelId } from '@/data/funnels'
+import { FUNNELS, NEXT_STEP_MAP, funnelLandingPath, isValidFunnelId } from '@/data/funnels'
 import Link from 'next/link'
 import { authStatic, checkoutStatic, generateResultClient, submitLeadStatic } from '@/lib/static-backend'
 import { generatePDF } from '@/components/PDFGenerator'
@@ -493,7 +493,7 @@ export default function ResultPage() {
             <div className="text-xs font-bold tracking-widest uppercase text-gray-400 mb-3">Al terminar, también puedes hacer:</div>
             <div className="flex flex-wrap gap-3">
               {nextSteps.map(ns => (
-                <Link key={ns.id} href={`/${ns.id}`}
+                <Link key={ns.id} href={funnelLandingPath(ns.id)}
                       className="flex items-center gap-2 bg-white border border-cream rounded-xl px-4 py-2.5 hover:border-green hover:text-green transition-colors text-sm font-medium">
                   <span>{ns.icon}</span><span>{ns.name}</span><span className="text-gray-300">→</span>
                 </Link>
