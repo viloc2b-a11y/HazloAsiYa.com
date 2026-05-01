@@ -6,6 +6,16 @@ import Link from 'next/link'
 export default function SnapEditorialSection() {
   return (
     <section className="card p-6 border border-cream space-y-8 text-navy" aria-labelledby="snap-edu-que-es">
+      <p className="text-sm text-gray-700 leading-relaxed rounded-xl border border-green/20 bg-white px-4 py-3">
+        <strong>Mismo tema:</strong>{' '}
+        <Link href="/snap/texas/" className="text-green font-semibold hover:underline">
+          SNAP en Texas (datos locales)
+        </Link>
+        {' · '}
+        <Link href="/guias/documentos-para-snap/" className="text-green font-semibold hover:underline">
+          Documentos para SNAP (guía detallada)
+        </Link>
+      </p>
       <div>
         <h2 id="snap-edu-que-es" className="font-serif text-2xl text-navy mb-3">
           ¿Qué es SNAP y quién califica en Texas?

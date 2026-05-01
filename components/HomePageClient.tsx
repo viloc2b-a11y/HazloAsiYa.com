@@ -46,14 +46,12 @@ export default function HomePageClient() {
           </div>
 
           <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl text-white leading-tight mb-6">
-            Haz tus trámites en EE.UU.
-            <br/>
-            <em className="text-green not-italic">sin errores</em>
+            Haz tus trámites en EE.UU. en español, paso a paso
           </h1>
 
           <p className="text-white/60 text-lg max-w-2xl mx-auto mb-10 leading-relaxed">
             Te decimos exactamente qué hacer, qué documentos necesitas y cómo completar
-            tus trámites correctamente desde la primera vez.
+            tus trámites correctamente desde la primera vez — sin errores.
           </p>
 
           {/* Proof pills */}
@@ -130,6 +128,100 @@ export default function HomePageClient() {
             <FunnelCard key={id} id={id} {...FUNNELS[id]}/>
           ))}
         </div>
+
+        <section className="mt-16 max-w-4xl mx-auto text-left" aria-labelledby="home-preguntas-buscan">
+          <h2 id="home-preguntas-buscan" className="font-serif text-2xl text-navy mb-4">
+            Preguntas que la gente busca
+          </h2>
+          <ul className="space-y-3 text-gray-700">
+            <li>
+              <Link href="/guias/documentos-para-snap/" className="text-green font-semibold hover:underline">
+                ¿Qué documentos necesito para SNAP?
+              </Link>
+            </li>
+            <li>
+              <Link href="/itin/" className="text-green font-semibold hover:underline">
+                ¿Cómo sacar ITIN por primera vez?
+              </Link>
+            </li>
+            <li>
+              <Link href="/medicaid/texas/" className="text-green font-semibold hover:underline">
+                ¿Cómo aplicar a Medicaid en Texas?
+              </Link>
+            </li>
+            <li>
+              <Link href="/escuela/" className="text-green font-semibold hover:underline">
+                ¿Qué piden para inscribir a un niño en la escuela pública?
+              </Link>
+            </li>
+            <li>
+              <Link href="/wic/" className="text-green font-semibold hover:underline">
+                ¿Cómo saber si califico para WIC?
+              </Link>
+            </li>
+            <li>
+              <Link href="/daca/" className="text-green font-semibold hover:underline">
+                ¿Qué es DACA y cómo aplico?
+              </Link>
+            </li>
+          </ul>
+        </section>
+
+        <section className="mt-14" aria-labelledby="home-guias-recientes">
+          <h2 id="home-guias-recientes" className="font-serif text-2xl text-navy mb-6 text-center">
+            Guías recientes
+          </h2>
+          <div className="grid sm:grid-cols-2 gap-4 max-w-4xl mx-auto">
+            {[
+              ['Documentos para SNAP en Texas', '/guias/documentos-para-snap/'],
+              ['Cómo solicitar Medicaid en Texas', '/medicaid/texas/'],
+              ['Qué es ITIN y cómo sacarlo', '/itin/'],
+              ['Inscripción escolar: documentos y pasos', '/escuela/'],
+            ].map(([label, href]) => (
+              <Link
+                key={href}
+                href={href}
+                className="block rounded-2xl border border-navy/10 bg-white p-5 shadow-sm hover:border-green/40 hover:shadow-md transition text-navy font-medium"
+              >
+                {label} →
+              </Link>
+            ))}
+          </div>
+          <p className="text-center mt-6">
+            <Link href="/guias/" className="text-green font-semibold hover:underline">
+              Ver todas las guías →
+            </Link>
+          </p>
+        </section>
+
+        <section
+          className="mt-14 rounded-2xl border border-green/25 bg-emerald-50/80 px-6 py-8 max-w-4xl mx-auto"
+          aria-labelledby="home-texas"
+        >
+          <h2 id="home-texas" className="font-serif text-xl text-navy mb-3">
+            Disponible en Texas
+          </h2>
+          <p className="text-gray-700 text-sm leading-relaxed mb-4">
+            Guías específicas para Texas con datos de HHSC, YourTexasBenefits y recursos del área de Houston.
+          </p>
+          <ul className="flex flex-wrap gap-4 text-sm">
+            <li>
+              <Link href="/snap/texas/" className="text-green font-semibold hover:underline">
+                SNAP en Texas
+              </Link>
+            </li>
+            <li>
+              <Link href="/medicaid/texas/" className="text-green font-semibold hover:underline">
+                Medicaid en Texas
+              </Link>
+            </li>
+            <li>
+              <Link href="/itin/houston/" className="text-green font-semibold hover:underline">
+                ITIN Houston
+              </Link>
+            </li>
+          </ul>
+        </section>
       </section>
 
       {/* HOW IT WORKS */}

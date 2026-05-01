@@ -81,6 +81,19 @@ export default async function GuiaPage({ params }: Props) {
 
         <VerifiedInfoBanner officialUrl={firstOfficial} displayPeriod={data.lastVerified} />
 
+        {slug === 'documentos-para-snap' && (
+          <p className="mt-6 text-sm text-gray-700 leading-relaxed rounded-xl border border-green/20 bg-white px-4 py-3">
+            <strong>Relacionado:</strong>{' '}
+            <Link href="/snap/" className="text-green font-semibold hover:underline">
+              Cuestionario SNAP (gratis)
+            </Link>
+            {' · '}
+            <Link href="/snap/texas/" className="text-green font-semibold hover:underline">
+              SNAP en Texas (HHSC y YourTexasBenefits)
+            </Link>
+          </p>
+        )}
+
         {showItinDisclaimer && (
           <aside
             className="mt-6 rounded-xl border-l-4 border-green bg-emerald-50/90 px-4 py-3 text-sm text-navy leading-relaxed"
