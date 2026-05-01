@@ -220,6 +220,16 @@ export default function HomePageClient() {
                 ITIN Houston
               </Link>
             </li>
+            <li>
+              <Link href="/wic/texas/" className="text-green font-semibold hover:underline">
+                WIC en Texas
+              </Link>
+            </li>
+            <li>
+              <Link href="/escuela/houston/" className="text-green font-semibold hover:underline">
+                Escuela en Houston
+              </Link>
+            </li>
           </ul>
         </section>
       </section>

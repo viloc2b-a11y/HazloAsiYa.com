@@ -218,6 +218,16 @@ export default function GuiasIndexPage() {
                 ITIN y recursos en Houston
               </Link>
             </li>
+            <li>
+              <Link href="/wic/texas/" className="text-green font-medium hover:underline">
+                WIC en Texas — clínicas y cita
+              </Link>
+            </li>
+            <li>
+              <Link href="/escuela/houston/" className="text-green font-medium hover:underline">
+                Inscripción escolar en Houston
+              </Link>
+            </li>
           </ul>
         </section>
 

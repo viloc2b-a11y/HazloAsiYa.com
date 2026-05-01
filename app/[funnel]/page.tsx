@@ -8,12 +8,17 @@ import { alternatesForPath } from '@/lib/alternates'
 import VerifiedInfoBanner from '@/components/VerifiedInfoBanner'
 import { MONEY_PAGE_REGULATORY_SOURCE, regulatoryMetadataOther } from '@/lib/regulatory-meta'
 import Disclosure from '@/components/legal/Disclosure'
-import { DISCLAIMER_ITIN, DISCLAIMER_MEDICAID_TX } from '@/lib/legal-texts'
+import { DISCLAIMER_INMIGRACION, DISCLAIMER_ITIN, DISCLAIMER_MEDICAID_TX } from '@/lib/legal-texts'
 import SeasonalCourseBanner from '@/components/monetization/SeasonalCourseBanner'
 import AffiliateRecommendations from '@/components/monetization/AffiliateRecommendations'
 import SnapEditorialSection from '@/components/funnels/SnapEditorialSection'
 import MedicaidEditorialSection from '@/components/funnels/MedicaidEditorialSection'
 import ItinEditorialSection from '@/components/funnels/ItinEditorialSection'
+import WicEditorialSection from '@/components/funnels/WicEditorialSection'
+import EscuelaEditorialSection from '@/components/funnels/EscuelaEditorialSection'
+import DacaEditorialSection from '@/components/funnels/DacaEditorialSection'
+import TaxesEditorialSection from '@/components/funnels/TaxesEditorialSection'
+import RentEditorialSection from '@/components/funnels/RentEditorialSection'
 
 interface Props { params: Promise<{ funnel: string }> }
 
@@ -32,6 +37,33 @@ const ITIN_SEO_DESCRIPTION =
 const MEDICAID_H1 = 'Medicaid y CHIP en Texas: quién califica y cómo solicitarlo'
 const ITIN_H1 = 'ITIN: número de contribuyente para declarar impuestos sin SSN'
 
+const WIC_SEO_TITLE = 'WIC en Texas en español: requisitos y cita | HazloAsíYa'
+const WIC_SEO_DESCRIPTION =
+  'WIC en Texas: quién califica, documentos para la cita y cómo usar texaswic.org. Orientación en español. Evaluación gratis.'
+
+const ESCUELA_SEO_TITLE = 'Inscripción escolar Texas en español | HazloAsíYa'
+const ESCUELA_SEO_DESCRIPTION =
+  'Documentos y pasos para inscribir a tu hijo en escuela pública en Texas: ISD, vacunas y Home Language Survey. Gratis.'
+
+const DACA_SEO_TITLE = 'Renovar DACA: formularios USCIS en español | HazloAsíYa'
+const DACA_SEO_DESCRIPTION =
+  'Renueva DACA con orientación sobre I-821D e I-765, plazos y USCIS. Contenido educativo en español. No es asesoría legal.'
+
+const WIC_H1 = 'WIC en Texas: requisitos, ingresos y cómo pedir cita'
+const ESCUELA_H1 = 'Inscripción escolar en Texas: documentos y pasos en español'
+const DACA_H1 = 'Renovar DACA: I-821D e I-765 paso a paso (orientación USCIS)'
+
+const TAXES_SEO_TITLE = 'Impuestos IRS en español: ITIN y VITA | HazloAsíYa'
+const TAXES_SEO_DESCRIPTION =
+  'Declara impuestos en español: documentos, ITIN, créditos y VITA gratis. Orientación educativa, no preparación oficial.'
+
+const RENT_SEO_TITLE = 'Ayuda para renta en Texas en español | HazloAsíYa'
+const RENT_SEO_DESCRIPTION =
+  'Orientación sobre alquiler, HUD y ayuda para pagar renta en Texas. Listas de espera y enlaces oficiales.'
+
+const TAXES_H1 = 'Declarar impuestos en EE.UU.: ITIN, formularios y ayuda VITA gratis'
+const RENT_H1 = 'Renta en Texas: ayuda para pagar alquiler y recursos HUD'
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { funnel: id } = await params
   if (!isValidFunnelId(id)) return {}
@@ -43,20 +75,59 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const isSnap = id === 'snap'
   const isMedicaid = id === 'medicaid'
   const isItin = id === 'itin'
-  const seoTitle = isSnap
-    ? SNAP_SEO_TITLE
-    : isMedicaid
-      ? MEDICAID_SEO_TITLE
-      : isItin
-        ? ITIN_SEO_TITLE
-        : `${f.name} | HazloAsíYa`
-  const seoDescription = isSnap
-    ? SNAP_SEO_DESCRIPTION
-    : isMedicaid
-      ? MEDICAID_SEO_DESCRIPTION
-      : isItin
-        ? ITIN_SEO_DESCRIPTION
-        : f.desc.slice(0, 155)
+  const isWic = id === 'wic'
+  const isEscuela = id === 'escuela'
+  const isDaca = id === 'daca'
+  const isTaxes = id === 'taxes'
+  const isRent = id === 'rent'
+
+  let seoTitle = `${f.name} | HazloAsíYa`
+  let seoDescription = f.desc.slice(0, 155)
+  let ogTitle: string | undefined
+  let ogDescription: string | undefined
+
+  if (isSnap) {
+    seoTitle = SNAP_SEO_TITLE
+    seoDescription = SNAP_SEO_DESCRIPTION
+    ogTitle = 'Cómo solicitar SNAP en Texas en español'
+    ogDescription = SNAP_SEO_DESCRIPTION
+  } else if (isMedicaid) {
+    seoTitle = MEDICAID_SEO_TITLE
+    seoDescription = MEDICAID_SEO_DESCRIPTION
+    ogTitle = 'Medicaid y CHIP en Texas en español'
+    ogDescription = MEDICAID_SEO_DESCRIPTION
+  } else if (isItin) {
+    seoTitle = ITIN_SEO_TITLE
+    seoDescription = ITIN_SEO_DESCRIPTION
+    ogTitle = 'ITIN en español: guía y formulario W-7'
+    ogDescription = ITIN_SEO_DESCRIPTION
+  } else if (isWic) {
+    seoTitle = WIC_SEO_TITLE
+    seoDescription = WIC_SEO_DESCRIPTION
+    ogTitle = 'WIC en Texas en español'
+    ogDescription = WIC_SEO_DESCRIPTION
+  } else if (isEscuela) {
+    seoTitle = ESCUELA_SEO_TITLE
+    seoDescription = ESCUELA_SEO_DESCRIPTION
+    ogTitle = 'Inscripción escolar en Texas'
+    ogDescription = ESCUELA_SEO_DESCRIPTION
+  } else if (isDaca) {
+    seoTitle = DACA_SEO_TITLE
+    seoDescription = DACA_SEO_DESCRIPTION
+    ogTitle = 'Renovar DACA — orientación USCIS'
+    ogDescription = DACA_SEO_DESCRIPTION
+  } else if (isTaxes) {
+    seoTitle = TAXES_SEO_TITLE
+    seoDescription = TAXES_SEO_DESCRIPTION
+    ogTitle = 'Impuestos en español — IRS y VITA'
+    ogDescription = TAXES_SEO_DESCRIPTION
+  } else if (isRent) {
+    seoTitle = RENT_SEO_TITLE
+    seoDescription = RENT_SEO_DESCRIPTION
+    ogTitle = 'Ayuda para renta en Texas'
+    ogDescription = RENT_SEO_DESCRIPTION
+  }
+
   const base: Metadata = {
     title: seoTitle,
     description: seoDescription,
@@ -65,22 +136,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       url: absoluteUrl(path),
       locale: 'es_US',
       images: [ogImage],
-      ...(isSnap
+      ...(ogTitle
         ? {
-            title: 'Cómo solicitar SNAP en Texas en español',
-            description: SNAP_SEO_DESCRIPTION,
+            title: ogTitle,
+            description: ogDescription ?? seoDescription,
           }
-        : isMedicaid
-          ? {
-              title: 'Medicaid y CHIP en Texas en español',
-              description: MEDICAID_SEO_DESCRIPTION,
-            }
-          : isItin
-            ? {
-                title: 'ITIN en español: guía y formulario W-7',
-                description: ITIN_SEO_DESCRIPTION,
-              }
-            : {}),
+        : {}),
     },
   }
   if (isMoneyPageOgSlug(id)) {
@@ -101,7 +162,17 @@ export default async function FunnelPage({ params }: Props) {
         ? MEDICAID_H1
         : id === 'itin'
           ? ITIN_H1
-          : f.action
+          : id === 'wic'
+            ? WIC_H1
+            : id === 'escuela'
+              ? ESCUELA_H1
+              : id === 'daca'
+                ? DACA_H1
+                : id === 'taxes'
+                  ? TAXES_H1
+                  : id === 'rent'
+                    ? RENT_H1
+                    : f.action
   const heroIntro =
     id === 'snap'
       ? f.action
@@ -109,7 +180,9 @@ export default async function FunnelPage({ params }: Props) {
         ? f.action
         : id === 'itin'
           ? 'Te guiamos para preparar el formulario W-7, reunir la identificación que el IRS acepta y evitar rechazos por errores comunes — sin sustituir a un Acceptance Agent ni a un preparador certificado.'
-          : f.desc
+          : id === 'wic' || id === 'escuela' || id === 'daca' || id === 'taxes' || id === 'rent'
+            ? f.action
+            : f.desc
 
   return (
     <div className="min-h-screen bg-cream">
@@ -141,7 +214,18 @@ export default async function FunnelPage({ params }: Props) {
                 <p className="mt-1.5">{DISCLAIMER_ITIN}</p>
               </aside>
             )}
-            {id !== 'medicaid' && id !== 'itin' && id !== 'taxes' && <Disclosure variant="educational" />}
+            {id === 'daca' && (
+              <aside
+                className="rounded-xl border-l-4 border-green bg-emerald-50/90 px-4 py-3 text-sm text-navy leading-relaxed"
+                role="note"
+              >
+                <span className="font-bold text-green">Aviso migratorio</span>
+                <p className="mt-1.5">{DISCLAIMER_INMIGRACION}</p>
+              </aside>
+            )}
+            {id !== 'medicaid' && id !== 'itin' && id !== 'taxes' && id !== 'daca' && (
+              <Disclosure variant="educational" />
+            )}
           </div>
 
           <div className="flex flex-wrap gap-3">
@@ -157,21 +241,21 @@ export default async function FunnelPage({ params }: Props) {
         </div>
       </section>
 
-      <SeasonalCourseBanner funnelId={id} />
-
       <div className="max-w-4xl mx-auto px-4 py-10 space-y-6">
         {isMoneyPageOgSlug(id) && (
           <VerifiedInfoBanner
             officialUrl={
-              id === 'snap' || id === 'medicaid' || id === 'wic'
-                ? 'https://www.hhs.texas.gov/'
-                : id === 'itin' || id === 'taxes'
-                  ? 'https://www.irs.gov/'
-                  : id === 'escuela'
-                    ? 'https://tea.texas.gov/'
-                    : id === 'rent'
-                      ? 'https://www.hud.gov/'
-                      : 'https://www.acf.hhs.gov/ocs/programs/liheap'
+              id === 'daca'
+                ? 'https://www.uscis.gov/humanitarian/consideration-deferred-action-childhood-arrivals-daca'
+                : id === 'snap' || id === 'medicaid' || id === 'wic'
+                  ? 'https://www.hhs.texas.gov/'
+                  : id === 'itin' || id === 'taxes'
+                    ? 'https://www.irs.gov/'
+                    : id === 'escuela'
+                      ? 'https://tea.texas.gov/'
+                      : id === 'rent'
+                        ? 'https://www.hud.gov/'
+                        : 'https://www.acf.hhs.gov/ocs/programs/liheap'
             }
           />
         )}
@@ -211,6 +295,13 @@ export default async function FunnelPage({ params }: Props) {
         {id === 'snap' && <SnapEditorialSection />}
         {id === 'medicaid' && <MedicaidEditorialSection />}
         {id === 'itin' && <ItinEditorialSection />}
+        {id === 'wic' && <WicEditorialSection />}
+        {id === 'escuela' && <EscuelaEditorialSection />}
+        {id === 'daca' && <DacaEditorialSection />}
+        {id === 'taxes' && <TaxesEditorialSection />}
+        {id === 'rent' && <RentEditorialSection />}
+
+        <SeasonalCourseBanner funnelId={id} />
 
         {/* Affiliates */}
         {f.affiliates.length > 0 && (

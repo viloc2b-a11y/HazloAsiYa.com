@@ -3,7 +3,14 @@ import { FUNNEL_ORDER } from '@/data/funnels'
 import { getPublishedGuideSlugs } from '@/lib/guides-fs'
 import { SITE_ORIGIN, absoluteUrl } from '@/lib/site'
 
-const GEO_PATHS = ['/snap/texas/', '/medicaid/texas/', '/itin/houston/', '/id/texas/'] as const
+const GEO_PATHS = [
+  '/snap/texas/',
+  '/medicaid/texas/',
+  '/itin/houston/',
+  '/id/texas/',
+  '/wic/texas/',
+  '/escuela/houston/',
+] as const
 
 /** Fecha de última modificación al construir el sitio (export estático). */
 const LASTMOD = new Date()

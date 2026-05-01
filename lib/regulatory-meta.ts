@@ -16,7 +16,7 @@ export function regulatoryMetadataOther(regulatorySource: string): NonNullable<M
 
 /** Fuente resumida por trámite (money pages). */
 export const MONEY_PAGE_REGULATORY_SOURCE: Record<
-  'snap' | 'medicaid' | 'itin' | 'escuela' | 'wic' | 'taxes' | 'rent' | 'utilities',
+  'snap' | 'medicaid' | 'itin' | 'escuela' | 'wic' | 'taxes' | 'rent' | 'utilities' | 'daca',
   string
 > = {
   snap: 'USDA FNS / HHSC Texas',
@@ -27,4 +27,5 @@ export const MONEY_PAGE_REGULATORY_SOURCE: Record<
   taxes: 'IRS',
   rent: 'HUD / Texas',
   utilities: 'HHS LIHEAP / Texas',
+  daca: 'USCIS',
 }

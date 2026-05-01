@@ -25,6 +25,7 @@ export const MONEY_PAGE_OG_SLUGS = [
   'taxes',
   'rent',
   'utilities',
+  'daca',
 ] as const
 
 export type MoneyPageOgSlug = (typeof MONEY_PAGE_OG_SLUGS)[number]
