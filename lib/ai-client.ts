@@ -1,3 +1,4 @@
+import OpenAI from 'openai'
 import type { FunnelId } from '../data/funnels'
 import type { AIOutput, GeneratedResult } from '../types/ai'
 import { getSystemPrompt, STANDARD_DISCLAIMER } from './ai-prompts'
@@ -15,6 +16,27 @@ function resolveSecrets(overrides?: AiSecrets): Required<Pick<AiSecrets, 'OPENAI
     OPENAI_API_KEY: overrides?.OPENAI_API_KEY ?? process.env.OPENAI_API_KEY,
     OPENAI_MODEL: overrides?.OPENAI_MODEL ?? process.env.OPENAI_MODEL ?? 'gpt-4.1-mini',
   }
+}
+
+/** Extrae texto de `responses.create` (SDK v5: `output_text` o `output[].content[].text`). */
+function responseOutputText(res: unknown): string {
+  if (!res || typeof res !== 'object') return ''
+  const r = res as Record<string, unknown>
+  if (typeof r.output_text === 'string' && r.output_text.trim()) return r.output_text
+  const output = r.output
+  if (!Array.isArray(output)) return ''
+  for (const item of output) {
+    if (!item || typeof item !== 'object') continue
+    const content = (item as { content?: unknown }).content
+    if (!Array.isArray(content)) continue
+    for (const part of content) {
+      if (part && typeof part === 'object' && 'text' in part) {
+        const t = (part as { text?: unknown }).text
+        if (typeof t === 'string' && t.trim()) return t
+      }
+    }
+  }
+  return ''
 }
 
 function stripJsonFence(text: string): string {
@@ -87,6 +109,42 @@ function fallbackOutput(): AIOutput {
   }
 }
 
+function useResponsesApiFirst(): boolean {
+  return process.env.OPENAI_USE_RESPONSES_API !== 'false' && process.env.OPENAI_USE_RESPONSES_API !== '0'
+}
+
+async function callOpenAIResponses(
+  client: OpenAI,
+  system: string,
+  userJson: string,
+  model: string,
+): Promise<string> {
+  const response = await client.responses.create({
+    model,
+    instructions: system,
+    input: `Datos del usuario (JSON):\n${userJson}\n\nResponde solo con el objeto JSON acordado en las instrucciones.`,
+  })
+  return responseOutputText(response)
+}
+
+async function callOpenAIChat(
+  client: OpenAI,
+  system: string,
+  userJson: string,
+  model: string,
+): Promise<string> {
+  const completion = await client.chat.completions.create({
+    model,
+    messages: [
+      { role: 'system', content: system },
+      { role: 'user', content: userJson },
+    ],
+    response_format: { type: 'json_object' },
+    max_tokens: 1000,
+  })
+  return completion.choices[0]?.message?.content ?? ''
+}
+
 async function callOpenAI(
   system: string,
   userJson: string,
@@ -94,34 +152,22 @@ async function callOpenAI(
 ): Promise<string> {
   const apiKey = secrets.OPENAI_API_KEY
   if (!apiKey) throw new Error('Missing OPENAI_API_KEY')
-  const r = await fetch('https://api.openai.com/v1/chat/completions', {
-    method: 'POST',
-    headers: {
-      authorization: `Bearer ${apiKey}`,
-      'content-type': 'application/json',
-    },
-    body: JSON.stringify({
-      model: secrets.OPENAI_MODEL,
-      messages: [
-        { role: 'system', content: system },
-        { role: 'user', content: userJson },
-      ],
-      response_format: { type: 'json_object' },
-      max_tokens: 1000,
-    }),
-  })
-  const data = (await r.json().catch(() => null)) as {
-    choices?: { message?: { content?: string } }[]
-    error?: { message?: string }
-  } | null
-  if (!r.ok) {
-    throw new Error(data?.error?.message || `OpenAI HTTP ${r.status}`)
+
+  const client = new OpenAI({ apiKey })
+  const model = secrets.OPENAI_MODEL
+
+  if (useResponsesApiFirst()) {
+    try {
+      return await callOpenAIResponses(client, system, userJson, model)
+    } catch {
+      /* p. ej. modelo sin Responses API — seguir con Chat Completions */
+    }
   }
-  return data?.choices?.[0]?.message?.content ?? ''
+  return callOpenAIChat(client, system, userJson, model)
 }
 
 /**
- * Respuesta JSON estándar (`AIOutput`) vía API de OpenAI (ChatGPT).
+ * Respuesta JSON estándar (`AIOutput`): OpenAI SDK — Responses API si aplica, si no Chat Completions.
  */
 export async function getEligibilityResult(
   funnelId: FunnelId,
