@@ -75,6 +75,9 @@ export default function HomePageClient() {
             <Link href="#tramites" className="bg-white/10 hover:bg-white/15 border border-white/20 text-white font-semibold rounded-xl px-8 py-3.5 transition-colors">
               Ver los 16 trámites
             </Link>
+            <Link href="/pdf/" className="bg-white/10 hover:bg-white/15 border border-white/20 text-white font-semibold rounded-xl px-8 py-3.5 transition-colors">
+              Formularios PDF →
+            </Link>
           </div>
 
           {/* Stats */}
@@ -325,6 +328,7 @@ export default function HomePageClient() {
             <div className="text-white/50 text-xs font-bold tracking-widest uppercase mb-3">Legal</div>
             {[
               ['Guías','/guias/'],
+              ['Formularios PDF','/pdf/'],
               ['Planes y precios','/precios/'],
               ['Quiénes somos','/sobre-nosotros'],
               ['Términos de Uso','/terms/'],

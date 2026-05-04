@@ -54,6 +54,12 @@ export default function Topbar({ user }: { user?: { email: string; name?: string
           >
             Buscar
           </Link>
+          <Link
+            href="/pdf/"
+            className="px-3 py-1.5 text-[13px] font-semibold text-green/90 hover:text-green hover:bg-white/8 rounded-lg transition-colors"
+          >
+            Formularios PDF
+          </Link>
           {NAV_FUNNELS.map((navId) => (
             <Link
               key={navId}
@@ -107,6 +113,13 @@ export default function Topbar({ user }: { user?: { email: string; name?: string
             className="flex items-center gap-2 px-3 py-2 text-sm text-green font-semibold hover:bg-white/8 rounded-lg transition-colors col-span-2"
           >
             🔍 Buscar en el sitio
+          </Link>
+          <Link
+            href="/pdf/"
+            onClick={() => setMenuOpen(false)}
+            className="flex items-center gap-2 px-3 py-2 text-sm text-green font-semibold hover:bg-white/8 rounded-lg transition-colors col-span-2"
+          >
+            📄 Formularios PDF (borradores)
           </Link>
           {FUNNEL_ORDER.map((fid) => (
             <Link
