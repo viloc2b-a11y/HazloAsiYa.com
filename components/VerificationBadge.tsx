@@ -2,10 +2,23 @@ import Link from 'next/link'
 import type { MoneyPageOgSlug } from '@/lib/site'
 import { isMoneyPageOgSlug } from '@/lib/site'
 import { getMoneyPageVerificationDisplay } from '@/lib/money-page-sources'
+import {
+  getRegistryVerificationDisplay,
+  getVerificationMetaForFunnel,
+} from '@/lib/program-limits'
+import { isValidFunnelId, type FunnelId } from '@/data/funnels'
 
 type Props = {
-  /** Slug del trámite (solo landings money muestran badge con datos). */
+  /**
+   * Slug de trámite (`snap`, `medicaid`, …) cuando no usas `registryKey`.
+   * Si hay datos en `program-limits.json` para ese trámite, se muestran fechas agregadas.
+   */
   programId: string
+  /**
+   * Clave exacta en `src/data/program-limits.json` (p. ej. `snap_texas_gross_monthly_1p`).
+   * Si se define, tiene prioridad sobre `programId`.
+   */
+  registryKey?: string
   className?: string
 }
 
@@ -20,14 +33,13 @@ function formatEsUtc(iso: string): string {
   })
 }
 
-/**
- * Fechas y enlace oficial alineados con `src/data/program-limits.json` o respaldo editorial.
- */
-export default function VerificationBadge({ programId, className = '' }: Props) {
-  if (!isMoneyPageOgSlug(programId)) return null
-
-  const meta = getMoneyPageVerificationDisplay(programId as MoneyPageOgSlug)
-
+function BadgeBody({
+  meta,
+  className,
+}: {
+  meta: { lastVerified: string; validUntil: string; sourceUrl: string }
+  className: string
+}) {
   return (
     <p
       className={`text-xs text-gray-600 leading-relaxed ${className}`.trim()}
@@ -45,4 +57,28 @@ export default function VerificationBadge({ programId, className = '' }: Props) 
       </Link>
     </p>
   )
+}
+
+/**
+ * Transparencia regulatoria: fechas y enlace desde `src/data/program-limits.json`
+ * (y respaldo editorial en landings money si no hay prefijo en JSON).
+ */
+export default function VerificationBadge({ programId, registryKey, className = '' }: Props) {
+  if (registryKey) {
+    const meta = getRegistryVerificationDisplay(registryKey)
+    if (!meta) return null
+    return <BadgeBody meta={meta} className={className} />
+  }
+
+  if (isValidFunnelId(programId)) {
+    const meta = getVerificationMetaForFunnel(programId as FunnelId)
+    if (meta) return <BadgeBody meta={meta} className={className} />
+  }
+
+  if (isMoneyPageOgSlug(programId)) {
+    const meta = getMoneyPageVerificationDisplay(programId as MoneyPageOgSlug)
+    return <BadgeBody meta={meta} className={className} />
+  }
+
+  return null
 }

@@ -114,3 +114,14 @@ export function getProgramLimitEntry(programLimitId: string): ProgramLimitEntry 
   const e = programLimits[programLimitId]
   return e ?? null
 }
+
+/** Metadatos de una sola fila del JSON (p. ej. badge granular por clave de registro). */
+export function getRegistryVerificationDisplay(registryKey: string): VerificationMeta | null {
+  const e = programLimits[registryKey]
+  if (!e) return null
+  return {
+    lastVerified: e.lastVerified,
+    validUntil: e.validUntil,
+    sourceUrl: e.sourceUrl,
+  }
+}

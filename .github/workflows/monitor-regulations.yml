@@ -1,11 +1,11 @@
-# Vigencia de src/data/program-limits.json + comprobación opcional con OpenAI (--with-ai).
-# Añade el secret OPENAI_API_KEY en el repo si quieres el paso con IA en CI.
+# Vigencia de src/data/program-limits.json + comprobación opcional con OpenAI o Claude.
+# Secretos opcionales: OPENAI_API_KEY, ANTHROPIC_API_KEY
 
 name: Monitor regulations
 
 on:
   schedule:
-    - cron: '0 10 * * 1' # lunes 10:00 UTC
+    - cron: '0 10 * * 1' # semanal: lunes 10:00 UTC
   workflow_dispatch:
 
 jobs:
@@ -34,13 +34,17 @@ jobs:
         working-directory: ${{ steps.appdir.outputs.dir }}
         run: npm run monitor:regulations
 
-      - name: Cruce con OpenAI (si hay API key)
+      - name: Cruce con IA (OpenAI y/o Claude, opcional)
         working-directory: ${{ steps.appdir.outputs.dir }}
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: |
-          if [ -z "$OPENAI_API_KEY" ]; then
-            echo "OPENAI_API_KEY no configurada — se omite --with-ai."
+          ARGS=""
+          if [ -n "$OPENAI_API_KEY" ]; then ARGS="$ARGS --with-ai"; fi
+          if [ -n "$ANTHROPIC_API_KEY" ]; then ARGS="$ARGS --with-claude"; fi
+          if [ -z "$ARGS" ]; then
+            echo "Sin OPENAI_API_KEY ni ANTHROPIC_API_KEY — solo validación Zod/fechas arriba."
             exit 0
           fi
-          npm run monitor:regulations -- --with-ai
+          npm run monitor:regulations -- $ARGS

@@ -1,13 +1,17 @@
 #!/usr/bin/env npx tsx
 /**
- * Vigila vigencia de `src/data/program-limits.json` y, con --with-ai, pide a OpenAI
- * que extraiga cifras desde un extracto HTTP de sourceUrl y las compare con el JSON.
+ * Vigila vigencia de `src/data/program-limits.json` y, opcionalmente, compara con valores
+ * extraídos por IA desde el HTML de `sourceUrl`:
+ *
+ *   --with-ai      → OpenAI Chat Completions (OPENAI_API_KEY)
+ *   --with-claude  → Anthropic Messages API (ANTHROPIC_API_KEY)
  *
  *   npx tsx scripts/monitor-regulations.ts
  *   npx tsx scripts/monitor-regulations.ts --with-ai
- *   npx tsx scripts/monitor-regulations.ts --with-ai --strict
+ *   npx tsx scripts/monitor-regulations.ts --with-claude
+ *   npx tsx scripts/monitor-regulations.ts --with-ai --with-claude --strict
  *
- * Requiere en .env o entorno: OPENAI_API_KEY (solo con --with-ai).
+ * Variables: OPENAI_API_KEY, ANTHROPIC_API_KEY, OPENAI_MONITOR_MODEL, ANTHROPIC_MONITOR_MODEL, OPENAI_MODEL
  */
 import 'dotenv/config'
 import fs from 'fs'
@@ -40,6 +44,65 @@ async function fetchTextExcerpt(url: string, maxChars: number): Promise<string> 
     .replace(/\s+/g, ' ')
     .trim()
   return stripped.slice(0, maxChars)
+}
+
+function stripPossibleJsonFence(text: string): string {
+  const t = text.trim()
+  const m = t.match(/```(?:json)?\s*([\s\S]*?)```/)
+  if (m) return m[1].trim()
+  return t
+}
+
+async function claudeExtractNumber(args: {
+  programKey: string
+  storedValue: number
+  unit: string
+  sourceUrl: string
+  excerpt: string
+  model: string
+}): Promise<z.infer<typeof extractionSchema>> {
+  const apiKey = process.env.ANTHROPIC_API_KEY
+  if (!apiKey) throw new Error('ANTHROPIC_API_KEY requerida con --with-claude')
+
+  const system = `Extrae UN solo número regulatorio del extracto y del contexto del programa.
+Responde solo un objeto JSON: {"extractedValue": number | null, "confidence": "high"|"medium"|"low", "note": string opcional}.
+Si no encuentras el valor para la clave indicada, extractedValue null.
+Respeta la unidad indicada (USD mensual, anual, porcentaje FPL, etc.).`
+
+  const user = JSON.stringify({
+    programKey: args.programKey,
+    storedValue: args.storedValue,
+    unit: args.unit,
+    sourceUrl: args.sourceUrl,
+    excerpt: args.excerpt.slice(0, 12_000),
+  })
+
+  const r = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: {
+      'x-api-key': apiKey,
+      'anthropic-version': '2023-06-01',
+      'content-type': 'application/json',
+    },
+    body: JSON.stringify({
+      model: args.model,
+      max_tokens: 1024,
+      system,
+      messages: [{ role: 'user', content: user }],
+    }),
+    signal: AbortSignal.timeout(120_000),
+  })
+
+  const data = (await r.json()) as {
+    content?: { type: string; text?: string }[]
+    error?: { message?: string }
+  }
+  if (!r.ok) throw new Error(data.error?.message || `Anthropic ${r.status}`)
+
+  const text = data.content?.find(c => c.type === 'text')?.text ?? '{}'
+  const raw = stripPossibleJsonFence(text)
+  const parsed = JSON.parse(raw) as unknown
+  return extractionSchema.parse(parsed)
 }
 
 async function openAiExtractNumber(args: {
@@ -94,8 +157,11 @@ El valor debe estar en la misma unidad que indique el usuario (USD mensual anual
 
 async function main() {
   const withAi = process.argv.includes('--with-ai')
+  const withClaude = process.argv.includes('--with-claude')
   const strict = process.argv.includes('--strict')
   const model = process.env.OPENAI_MONITOR_MODEL || process.env.OPENAI_MODEL || 'gpt-4.1-mini'
+  const claudeModel =
+    process.env.ANTHROPIC_MONITOR_MODEL || 'claude-sonnet-4-20250514'
 
   const raw = fs.readFileSync(LIMITS_PATH, 'utf8')
   const limits = programLimitsFileSchema.parse(JSON.parse(raw))
@@ -126,43 +192,89 @@ async function main() {
 
   console.log('[limits] Zod OK. Entradas:', Object.keys(limits).length)
 
-  if (!withAi) {
+  if (!withAi && !withClaude) {
     process.exit(exitCode)
     return
   }
 
   let discrepancies = 0
+
+  function scoreMismatch(entryValue: number, extracted: number): boolean {
+    return Math.abs(extracted - entryValue) > 0.001 && Math.round(extracted) !== Math.round(entryValue)
+  }
+
   for (const [key, entry] of Object.entries(limits)) {
-    if (entry.unit.includes('approx') || entry.unit.includes('reference')) {
-      console.log(`[openai] skip (referencia): ${key}`)
+    const skipAi =
+      entry.unit.includes('approx') ||
+      entry.unit.includes('reference') ||
+      entry.unit.includes('regulatory_reference')
+
+    if (skipAi) {
+      console.log(`[monitor] skip (referencia): ${key}`)
       continue
     }
+
+    let excerpt: string
     try {
-      const excerpt = await fetchTextExcerpt(entry.sourceUrl, 14_000)
-      const result = await openAiExtractNumber({
-        programKey: key,
-        storedValue: entry.value,
-        unit: entry.unit,
-        sourceUrl: entry.sourceUrl,
-        excerpt,
-        model,
-      })
-      const ev = result.extractedValue
-      if (ev == null) {
-        console.warn(`[openai] ${key}: no extrajo valor (${result.confidence}) ${result.note ?? ''}`)
-        continue
-      }
-      if (Math.abs(ev - entry.value) > 0.001 && Math.round(ev) !== Math.round(entry.value)) {
-        console.warn(
-          `[openai] DISCREPANCIA ${key}: JSON=${entry.value} modelo=${ev} (${result.confidence}) ${result.note ?? ''}`,
-        )
-        discrepancies++
-      } else {
-        console.log(`[openai] OK ${key}: ~${ev}`)
-      }
+      excerpt = await fetchTextExcerpt(entry.sourceUrl, 14_000)
     } catch (e) {
-      console.warn(`[openai] ${key}: error`, e instanceof Error ? e.message : e)
+      console.warn(`[monitor] ${key}: fetch fuente`, e instanceof Error ? e.message : e)
       discrepancies++
+      continue
+    }
+
+    if (withAi) {
+      try {
+        const result = await openAiExtractNumber({
+          programKey: key,
+          storedValue: entry.value,
+          unit: entry.unit,
+          sourceUrl: entry.sourceUrl,
+          excerpt,
+          model,
+        })
+        const ev = result.extractedValue
+        if (ev == null) {
+          console.warn(`[openai] ${key}: sin valor (${result.confidence}) ${result.note ?? ''}`)
+        } else if (scoreMismatch(entry.value, ev)) {
+          console.warn(
+            `[openai] DISCREPANCIA ${key}: JSON=${entry.value} modelo=${ev} (${result.confidence}) ${result.note ?? ''}`,
+          )
+          discrepancies++
+        } else {
+          console.log(`[openai] OK ${key}: ~${ev}`)
+        }
+      } catch (e) {
+        console.warn(`[openai] ${key}:`, e instanceof Error ? e.message : e)
+        discrepancies++
+      }
+    }
+
+    if (withClaude) {
+      try {
+        const result = await claudeExtractNumber({
+          programKey: key,
+          storedValue: entry.value,
+          unit: entry.unit,
+          sourceUrl: entry.sourceUrl,
+          excerpt,
+          model: claudeModel,
+        })
+        const ev = result.extractedValue
+        if (ev == null) {
+          console.warn(`[claude] ${key}: sin valor (${result.confidence}) ${result.note ?? ''}`)
+        } else if (scoreMismatch(entry.value, ev)) {
+          console.warn(
+            `[claude] DISCREPANCIA ${key}: JSON=${entry.value} modelo=${ev} (${result.confidence}) ${result.note ?? ''}`,
+          )
+          discrepancies++
+        } else {
+          console.log(`[claude] OK ${key}: ~${ev}`)
+        }
+      } catch (e) {
+        console.warn(`[claude] ${key}:`, e instanceof Error ? e.message : e)
+        discrepancies++
+      }
     }
   }
 
