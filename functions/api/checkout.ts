@@ -63,6 +63,8 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       userId?: string
       email?: string
       funnelId?: string
+      /** Ruta absoluta en el sitio (p. ej. `/pdf/itin/?paid=1`) para volver tras Square. */
+      returnPath?: string
     }
 
     const productId = body.productId?.trim() || ''
@@ -79,7 +81,12 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     const lineItemPrice = PRODUCT_PRICE_CENTS[productId]
     const label = PRODUCT_LABEL[productId] || productId
 
-    const appUrl = env.NEXT_PUBLIC_APP_URL || new URL(context.request.url).origin
+    const appUrl = (env.NEXT_PUBLIC_APP_URL || new URL(context.request.url).origin).replace(/\/+$/, '')
+    const returnPathRaw = typeof body.returnPath === 'string' ? body.returnPath.trim() : ''
+    const redirectUrl =
+      returnPathRaw && returnPathRaw.startsWith('/')
+        ? `${appUrl}${returnPathRaw}`
+        : `${appUrl}/${funnelId || 'snap'}/result/?paid=1`
 
     const idempotencyKey = crypto.randomUUID()
 
@@ -103,7 +110,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       },
       payment_note: buildPaymentNote({ userId, productId, funnelId, email }),
       checkout_options: {
-        redirect_url: `${appUrl}/${funnelId || 'snap'}/result/?paid=1`,
+        redirect_url: redirectUrl,
         ask_for_shipping_address: false,
       },
       pre_populated_data: {

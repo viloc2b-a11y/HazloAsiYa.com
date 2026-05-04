@@ -54,6 +54,8 @@ export async function checkoutStatic(args: {
   funnelId?: string
   /** Correo obligatorio para Square (`pre_populated_data.buyer_email` / metadata). Si hay sesión, se usa la del usuario. */
   userEmail?: string
+  /** Ruta de retorno tras pago (debe empezar por `/`). */
+  returnPath?: string
 }) {
   let user = getStoredUser()
   if (!user && args.userEmail?.trim()) {
@@ -76,6 +78,7 @@ export async function checkoutStatic(args: {
       userId: user.id,
       email,
       funnelId: args.funnelId,
+      returnPath: args.returnPath,
     }),
   })
   const data = await res.json().catch(() => ({}))

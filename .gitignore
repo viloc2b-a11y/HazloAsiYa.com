@@ -28,5 +28,8 @@ Thumbs.db
 # Entregas / artefactos zip locales
 *.zip
 
+# Extracción local de paquetes de integración (no versionar)
+.pdf-integration-extract/
+
 # Generado por npm run audit:data (regenerable)
 docs/data-inventory-auto.json
