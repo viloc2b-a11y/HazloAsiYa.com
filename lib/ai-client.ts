@@ -113,16 +113,27 @@ function useResponsesApiFirst(): boolean {
   return process.env.OPENAI_USE_RESPONSES_API !== 'false' && process.env.OPENAI_USE_RESPONSES_API !== '0'
 }
 
+function buildResponsesPrompt(system: string, userJson: string): string {
+  return [
+    system,
+    '',
+    `Datos del usuario (JSON):\n${userJson}`,
+    '',
+    'Responde solo con el objeto JSON acordado en las instrucciones.',
+  ].join('\n')
+}
+
 async function callOpenAIResponses(
   client: OpenAI,
   system: string,
   userJson: string,
   model: string,
 ): Promise<string> {
+  // Responses API: JSON mode is `text.format`, not Chat Completions' `response_format`.
   const response = await client.responses.create({
     model,
-    instructions: system,
-    input: `Datos del usuario (JSON):\n${userJson}\n\nResponde solo con el objeto JSON acordado en las instrucciones.`,
+    input: buildResponsesPrompt(system, userJson),
+    text: { format: { type: 'json_object' } },
   })
   return responseOutputText(response)
 }
