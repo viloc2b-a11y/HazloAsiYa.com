@@ -3,7 +3,8 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import type { PdfFormMeta, PdfAssistResponse } from '@/types/pdf'
 import type { PdfFormId } from '@/types/pdf'
-import { generatePdf, downloadPdfBytes } from '@/lib/pdf-generator'
+import { downloadPdfBytes } from '@/lib/pdf-generator'
+import { generateFormPdf } from '@/lib/acroform'
 import { validatePdfStep } from '@/lib/pdf-step-validate'
 import { checkoutStatic, getStoredUser } from '@/lib/static-backend'
 import { checkPdfPurchase, isPdfPaywallDisabled, isUuid, pdfUnlockStorageKey } from '@/lib/pdf-access'
@@ -188,11 +189,12 @@ export default function PdfWizard({
       setLogLines(prev => [...prev, logs[i]])
     }
     try {
-      const pdf = await generatePdf(form.id as PdfFormId, formData)
+      const result = await generateFormPdf(form.id as PdfFormId, formData)
       const safeName = String(formData.firstName || formData.fn || formData.sfn || 'formulario')
         .replace(/[^\w\-]+/g, '')
         .slice(0, 24)
-      downloadPdfBytes(pdf.bytes, `hazloasiya-${form.id}-${safeName || 'descarga'}.pdf`)
+      const suffix = result.source === 'acroform' ? '-oficial' : ''
+      downloadPdfBytes(result.bytes, `hazloasiya-${form.id}-${safeName || 'descarga'}${suffix}.pdf`)
       setStatus('done')
     } catch (err) {
       console.error(err)
