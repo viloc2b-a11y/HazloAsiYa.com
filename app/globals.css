@@ -13,18 +13,16 @@
   --cream2:    #EDE8E0;
   --teal:      #12A493;
   --teal-lt:   #7AEADB;
-  --font-serif: 'DM Serif Display', Georgia, serif;
-  --font-sans:  'Outfit', system-ui, sans-serif;
 }
 
 @layer base {
   * { box-sizing: border-box; }
   body {
     background: var(--cream);
-    font-family: var(--font-sans);
+    font-family: var(--font-outfit), system-ui, sans-serif;
   }
   h1,h2,h3,h4 {
-    font-family: var(--font-serif);
+    font-family: var(--font-dm-serif), Georgia, serif;
   }
 }
 
@@ -65,7 +63,7 @@
   }
   .input {
     @apply w-full border border-gray-200 rounded-xl px-4 py-3 text-sm transition-colors;
-    font-family: var(--font-sans);
+    font-family: var(--font-outfit), system-ui, sans-serif;
     outline: none;
   }
   .input:focus {
@@ -86,7 +84,7 @@
     background: rgba(192,122,12,.12);
     color: var(--gold);
   }
-  .font-serif { font-family: var(--font-serif) !important; }
+  .font-serif { font-family: var(--font-dm-serif), Georgia, serif !important; }
   .text-navy { color: var(--navy) !important; }
   .text-green { color: var(--green) !important; }
   .text-gold { color: var(--gold) !important; }

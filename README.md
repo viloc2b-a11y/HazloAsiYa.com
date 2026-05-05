@@ -99,7 +99,7 @@ Nunca subas **`.env.local`** (contiene secretos).
 ## Scripts útiles
 
 ```bash
-npm run lint                  # puede pedir configuración inicial si no hay ESLint; `npm run build` ya valida tipos + reglas Next
+npm run lint                  # ESLint (`next/core-web-vitals`); también corre integrado en `next build`
 npm run validate              # contenido / metadatos
 npm run setup:mailchimp       # merge fields TRAMITE en la audiencia (requiere vars Mailchimp)
 npm run verify                # comprobaciones locales (Mailchimp, merge fields, etc.)
@@ -115,7 +115,7 @@ npm run monitor:regulations   # vigencia + esquema Zod de program-limits.json
 |--------|-----------|
 | `npm run monitor:regulations` | Valida el JSON con Zod y comprueba fechas de vigencia (`validUntil`). |
 | `npm run monitor:regulations -- --with-ai` | Además, descarga el HTML de cada `sourceUrl`, pide a OpenAI un número de referencia y lo compara con `value` (requiere `OPENAI_API_KEY`; modelo opcional `OPENAI_MONITOR_MODEL` o `OPENAI_MODEL`). |
-| `npm run monitor:regulations -- --with-ai --strict` | Falla (exit ≠ 0) si hay discrepancias o errores de fetch/API — útil en CI. |
+| `npm run monitor:regulations -- --with-ai --strict` | Falla si hay discrepancias, errores de fetch/API, o si la IA no extrae número (`extractedValue: null`). |
 | `npm run monitor:regulations -- --report-json ./monitor-regulatory-report.json` | Escribe un informe JSON; si hay fallo, también genera `*.issue.md` para revisar o pegar en un Issue. |
 
 No sobreescribe `program-limits.json` automáticamente: ante fallos de red o de la API se mantienen los datos locales y el informe lista el problema.

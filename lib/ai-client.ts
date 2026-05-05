@@ -109,7 +109,7 @@ function fallbackOutput(): AIOutput {
   }
 }
 
-function useResponsesApiFirst(): boolean {
+function shouldTryResponsesApi(): boolean {
   return process.env.OPENAI_USE_RESPONSES_API !== 'false' && process.env.OPENAI_USE_RESPONSES_API !== '0'
 }
 
@@ -167,7 +167,7 @@ async function callOpenAI(
   const client = new OpenAI({ apiKey })
   const model = secrets.OPENAI_MODEL
 
-  if (useResponsesApiFirst()) {
+  if (shouldTryResponsesApi()) {
     try {
       return await callOpenAIResponses(client, system, userJson, model)
     } catch {

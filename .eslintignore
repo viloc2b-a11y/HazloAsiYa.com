@@ -1,0 +1,7 @@
+node_modules
+.next
+out
+pdf-integration-extract
+.pdf-integration-extract
+next-env.d.ts
+*.tsbuildinfo

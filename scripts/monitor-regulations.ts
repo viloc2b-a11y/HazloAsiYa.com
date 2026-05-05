@@ -8,6 +8,7 @@
  *   npx tsx scripts/monitor-regulations.ts
  *   npx tsx scripts/monitor-regulations.ts --with-ai
  *   npx tsx scripts/monitor-regulations.ts --with-ai --strict
+ *   (en --strict, «sin valor» de la API cuenta como fallo además de discrepancias/errores)
  *   npx tsx scripts/monitor-regulations.ts --report-json ./monitor-report.json
  *
  * Variables: OPENAI_API_KEY, OPENAI_MONITOR_MODEL, OPENAI_MODEL
@@ -356,6 +357,7 @@ async function main() {
           confidence: result.confidence,
           note: result.note,
         })
+        if (strict) discrepancies++
       } else if (scoreMismatch(entry.value, ev)) {
         console.warn(
           `[openai] DISCREPANCIA ${key}: JSON=${entry.value} modelo=${ev} (${result.confidence}) ${result.note ?? ''}`,
