@@ -474,7 +474,14 @@ export default function PdfWizard({
 
 function getStepTitle(formId: string, stepIndex: number): string {
   const stepTitles: Record<string, string[]> = {
-    i821d: ['Información personal', 'Entrada a EE.UU.', 'Dirección', 'Residencia continua', 'Educación y empleo', 'Revisa y genera PDF'],
+    i821d: [
+      'Tipo de solicitud y datos personales',
+      'Entrada a EE.UU.',
+      'Dirección',
+      'Residencia continua',
+      'Educación y empleo',
+      'Revisa y genera PDF',
+    ],
     i765: ['Información personal', 'Categoría EAD', 'Dirección', 'Empleo previo (opcional)', 'Revisa y genera PDF'],
     w7: ['Información personal', 'Razón del ITIN', 'Dirección e identificación', 'Revisa y genera PDF'],
     h1010: ['Beneficios solicitados', 'Solicitante principal', 'Dirección', 'Miembros del hogar', 'Ingresos y gastos', 'Revisa y genera PDF'],

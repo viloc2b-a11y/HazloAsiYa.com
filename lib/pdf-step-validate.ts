@@ -19,7 +19,8 @@ export function validatePdfStep(formId: PdfFormId, stepIndex: number, data: Reco
 
   switch (formId) {
     case 'i821d':
-      if (stepIndex === 0) req(['lastName', 'firstName', 'dob', 'countryBirth', 'countryCitizenship'])
+      if (stepIndex === 0)
+        req(['dacaRequestType', 'lastName', 'firstName', 'dob', 'countryBirth', 'countryCitizenship'])
       if (stepIndex === 1) req(['lastArrival'])
       if (stepIndex === 2) req(['streetAddr', 'city', 'zip'])
       if (stepIndex === 3) req(['firstEntry'])

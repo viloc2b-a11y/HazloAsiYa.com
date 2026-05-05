@@ -77,6 +77,29 @@ export default function PdfFormSteps({ formId, stepIndex, formData, onChange, er
     if (stepIndex === 0)
       return (
         <div className="space-y-4">
+          <div className="rounded-xl border border-stone-200 bg-stone-50/80 p-4 space-y-3">
+            <div className="text-xs font-bold text-stone-700">Tipo de solicitud (Formulario I-821D)</div>
+            <p className="text-xs text-stone-600">
+              Esto marca el PDF oficial como solicitud inicial o renovación. Confirma con tus documentos o un representante acreditado.
+            </p>
+            <div className="space-y-2">
+              <R
+                name="dacaRequestType"
+                value="initial"
+                label="Primera solicitud DACA (initial)"
+                current={v('dacaRequestType')}
+                onChange={onChange}
+              />
+              <R
+                name="dacaRequestType"
+                value="renewal"
+                label="Renovación DACA"
+                current={v('dacaRequestType')}
+                onChange={onChange}
+              />
+            </div>
+            {e('dacaRequestType') && <p className="text-xs text-red-600">Selecciona una opción.</p>}
+          </div>
           <div className="flex justify-end">
             <AssistBtn onAskAssist={onAskAssist} id="nombre" />
           </div>

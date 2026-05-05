@@ -186,9 +186,10 @@ export function toW4FormData(data: Record<string, unknown>): W4FormData {
   }
 }
 
-/** I-821D — coincide con `pdf-form-steps` (i821d). */
+/** I-821D — `dacaRequestType`: `initial` | `renewal` (paso 0 del wizard). */
 export function toI821dFormData(data: Record<string, unknown>): I821dFormData {
   const rt = raw(data, 'dacaRequestType').toLowerCase()
+  const requestType: I821dFormData['requestType'] = rt === 'initial' ? 'initial' : 'renewal'
   return {
     familyName: raw(data, 'lastName'),
     givenName: raw(data, 'firstName'),
@@ -214,7 +215,7 @@ export function toI821dFormData(data: Record<string, unknown>): I821dFormData {
     inSchool: raw(data, 'inSchool') === 'yes',
     graduated: raw(data, 'graduated') === 'yes',
     employed: raw(data, 'employed') === 'yes',
-    requestType: rt === 'initial' ? 'initial' : 'renewal',
+    requestType,
   }
 }
 
