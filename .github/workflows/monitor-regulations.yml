@@ -1,5 +1,6 @@
-# Vigencia de src/data/program-limits.json + comprobación opcional con OpenAI o Claude.
-# Secretos opcionales: OPENAI_API_KEY, ANTHROPIC_API_KEY
+# Vigencia de src/data/program-limits.json + comprobación opcional con OpenAI (ChatGPT API).
+# Secrets opcionales: OPENAI_API_KEY
+# Si el monitor falla, se abre un Issue (o se comenta uno abierto con label regulatory-monitor).
 
 name: Monitor regulations
 
@@ -7,6 +8,10 @@ on:
   schedule:
     - cron: '0 10 * * 1' # semanal: lunes 10:00 UTC
   workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
 
 jobs:
   monitor:
@@ -30,21 +35,45 @@ jobs:
         working-directory: ${{ steps.appdir.outputs.dir }}
         run: npm ci
 
-      - name: Validar límites (Zod + fechas)
-        working-directory: ${{ steps.appdir.outputs.dir }}
-        run: npm run monitor:regulations
-
-      - name: Cruce con IA (OpenAI y/o Claude, opcional)
+      - name: Monitor regulatorio (Zod + opcional OpenAI estricto)
+        id: monitor
+        continue-on-error: true
         working-directory: ${{ steps.appdir.outputs.dir }}
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: |
-          ARGS=""
-          if [ -n "$OPENAI_API_KEY" ]; then ARGS="$ARGS --with-ai"; fi
-          if [ -n "$ANTHROPIC_API_KEY" ]; then ARGS="$ARGS --with-claude"; fi
-          if [ -z "$ARGS" ]; then
-            echo "Sin OPENAI_API_KEY ni ANTHROPIC_API_KEY — solo validación Zod/fechas arriba."
-            exit 0
+          REPORT="monitor-regulatory-report.json"
+          if [ -n "$OPENAI_API_KEY" ]; then
+            npm run monitor:regulations -- --with-ai --strict --report-json "$REPORT"
+          else
+            npm run monitor:regulations -- --report-json "$REPORT"
           fi
-          npm run monitor:regulations -- $ARGS
+
+      - name: Issue en GitHub si el monitor falló
+        if: steps.monitor.outcome == 'failure'
+        working-directory: ${{ steps.appdir.outputs.dir }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -e
+          LABEL="regulatory-monitor"
+          gh label create "$LABEL" --color FBCA04 --description "Alertas del workflow Monitor regulations" 2>/dev/null || true
+          MD_FILE="monitor-regulatory-report.issue.md"
+          if [ ! -f "$MD_FILE" ]; then
+            echo "::error::No se encontró $MD_FILE (¿--report-json en el paso anterior?)."
+            exit 1
+          fi
+          TITLE="[Monitor] Revisar program-limits.json"
+          EXISTING=$(gh issue list --repo "${{ github.repository }}" --label "$LABEL" --state open --json number --jq '.[0].number // empty')
+          if [ -n "$EXISTING" ]; then
+            gh issue comment "$EXISTING" --repo "${{ github.repository }}" --body-file "$MD_FILE"
+            echo "Comentario añadido en issue #$EXISTING"
+          else
+            gh issue create --repo "${{ github.repository }}" --title "$TITLE" --body-file "$MD_FILE" --label "$LABEL"
+          fi
+
+      - name: Fallar el job si el monitor falló
+        if: steps.monitor.outcome == 'failure'
+        run: |
+          echo "::error::El monitor regulatorio falló. Revisa el log del paso anterior y el Issue creado."
+          exit 1

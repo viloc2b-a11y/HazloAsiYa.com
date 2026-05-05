@@ -33,3 +33,7 @@ Thumbs.db
 
 # Generado por npm run audit:data (regenerable)
 docs/data-inventory-auto.json
+
+# Reporte local del monitor regulatorio (npm run monitor:regulations -- --report-json …)
+monitor-regulatory-report.json
+monitor-regulatory-report.issue.md
