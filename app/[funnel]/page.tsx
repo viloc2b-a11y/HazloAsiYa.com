@@ -6,6 +6,8 @@ import { getFunnelContextLinks } from '@/data/funnel-internal-links'
 import { getFunnelHeroCopy, getFunnelSeoMeta } from '@/data/funnel-landing'
 import Topbar from '@/components/Topbar'
 import { absoluteUrl, isMoneyPageOgSlug } from '@/lib/site'
+import { buildFunnelJsonLd } from '@/lib/funnel-json-ld'
+import { resolvedFunnelOgImageUrl } from '@/lib/funnel-og-image'
 import { getMoneyPageVerificationDisplay } from '@/lib/money-page-sources'
 import { alternatesForPath } from '@/lib/alternates'
 import VerifiedInfoBanner from '@/components/VerifiedInfoBanner'
@@ -32,9 +34,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!isValidFunnelId(id)) return {}
   const f = FUNNELS[id]
   const path = `/${id}/`
-  const ogImage = isMoneyPageOgSlug(id)
-    ? { url: `/images/og/${id}-og.jpg` as const, width: 1200, height: 630, alt: f.name }
-    : { url: '/images/og/default-og.jpg' as const, width: 1200, height: 630, alt: f.name }
+  const ogImage = {
+    url: resolvedFunnelOgImageUrl(id),
+    width: 1200,
+    height: 630,
+    alt: f.name,
+  }
 
   const seo = getFunnelSeoMeta(id, f.name, f.desc)
 
@@ -68,9 +73,23 @@ export default async function FunnelPage({ params }: Props) {
   const contextLinks = getFunnelContextLinks(id)
   const hero = getFunnelHeroCopy(id, { action: f.action, desc: f.desc, icon: f.icon })
   const moneyVerification = isMoneyPageOgSlug(id) ? getMoneyPageVerificationDisplay(id) : null
+  const seoForLd = getFunnelSeoMeta(id, f.name, f.desc)
+  const pageUrl = absoluteUrl(`/${id}/`)
+  const jsonLd = buildFunnelJsonLd({
+    id,
+    funnel: f,
+    pageUrl,
+    pageTitle: seoForLd.title,
+    pageDescription: seoForLd.description,
+  })
 
   return (
-    <div className="min-h-screen bg-cream">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <div className="min-h-screen bg-cream">
       <FunnelScrollDepth funnelId={id} />
       <Topbar />
 
@@ -282,5 +301,6 @@ export default async function FunnelPage({ params }: Props) {
         <SeasonalCourseBanner funnelId={id} />
       </div>
     </div>
+    </>
   )
 }

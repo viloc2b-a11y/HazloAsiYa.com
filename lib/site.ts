@@ -1,3 +1,6 @@
+import type { FunnelId } from '@/data/funnels'
+import { FUNNEL_ORDER, isValidFunnelId } from '@/data/funnels'
+
 /** Canonical production host (www). Use NEXT_PUBLIC_APP_URL in deploy env — default avoids apex/pages.dev en sitemap/robots. */
 export const SITE_ORIGIN = (
   process.env.NEXT_PUBLIC_APP_URL || 'https://www.hazloasiya.com'
@@ -15,21 +18,13 @@ export function absoluteUrl(path: string): string {
   return `${SITE_ORIGIN}${tail}`
 }
 
-/** Funnel landing pages that should use dedicated OG images. */
-export const MONEY_PAGE_OG_SLUGS = [
-  'snap',
-  'medicaid',
-  'itin',
-  'escuela',
-  'wic',
-  'taxes',
-  'rent',
-  'utilities',
-  'daca',
-] as const
+/**
+ * Mismo conjunto y orden que `FUNNEL_ORDER` en `data/funnels.ts` (landings con fuente oficial + OG).
+ */
+export const MONEY_PAGE_OG_SLUGS: readonly FunnelId[] = FUNNEL_ORDER
 
-export type MoneyPageOgSlug = (typeof MONEY_PAGE_OG_SLUGS)[number]
+export type MoneyPageOgSlug = FunnelId
 
 export function isMoneyPageOgSlug(id: string): id is MoneyPageOgSlug {
-  return (MONEY_PAGE_OG_SLUGS as readonly string[]).includes(id)
+  return isValidFunnelId(id)
 }

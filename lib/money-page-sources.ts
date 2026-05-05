@@ -16,6 +16,13 @@ export const MONEY_PAGE_OFFICIAL_URL: Record<MoneyPageOgSlug, string> = {
   rent: 'https://www.hud.gov/states/texas/renting',
   utilities: 'https://www.tdhca.state.tx.us/community-affairs/weatherization',
   daca: 'https://www.uscis.gov/humanitarian/consideration-deferred-action-childhood-arrivals-daca',
+  id: 'https://www.dps.texas.gov/section/driver-license-services',
+  twc: 'https://www.twc.texas.gov/jobseekers/unemployment-benefits-services',
+  iep: 'https://tea.texas.gov/academics/special-student-populations/special-education',
+  prek: 'https://tea.texas.gov/academics/early-childhood-education/prekindergarten',
+  jobs: 'https://www.twc.texas.gov/jobseekers/workintexas-jobs',
+  bank: 'https://www.fdic.gov/resources/consumers/banking-basics/',
+  matricula: 'https://mx.usembassy.gov/services/matricula-consular/',
 }
 
 export type MoneyPageVerification = {
