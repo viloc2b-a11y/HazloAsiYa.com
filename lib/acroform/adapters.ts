@@ -4,6 +4,9 @@
 import type { I765FormData } from './i765-mapper'
 import type { W7DocType, W7FormData } from './w7-mapper'
 import type { I9Section1Data } from './i9-mapper'
+import type { W4FormData } from './w4-mapper'
+import type { I821dFormData } from './i821d-mapper'
+import type { H1010FormData } from './h1010-mapper'
 
 function raw(data: Record<string, unknown>, key: string): string {
   const v = data[key]
@@ -144,5 +147,103 @@ export function toI9Section1Data(data: Record<string, unknown>): I9Section1Data 
     i94Num: raw(data, 'i94') || undefined,
     foreignPassNum: raw(data, 'foreignPassport') || undefined,
     foreignPassCountry: raw(data, 'foreignPassCountry') || undefined,
+  }
+}
+
+function splitAddressBlock(full: string): { line1: string; cityStateZip: string } {
+  const t = full.trim()
+  if (!t) return { line1: '', cityStateZip: '' }
+  const lines = t.split(/\r?\n/).map(s => s.trim()).filter(Boolean)
+  if (lines.length >= 2) return { line1: lines[0], cityStateZip: lines.slice(1).join(', ') }
+  const comma = t.lastIndexOf(',')
+  if (comma > 0 && comma < t.length - 1)
+    return { line1: t.slice(0, comma).trim(), cityStateZip: t.slice(comma + 1).trim() }
+  return { line1: t, cityStateZip: '' }
+}
+
+/** W-4 — coincide con `pdf-form-steps` (w4). */
+export function toW4FormData(data: Record<string, unknown>): W4FormData {
+  const fs = raw(data, 'filingStatus')
+  const filingStatus: W4FormData['filingStatus'] =
+    fs === 'married' ? 'married' : fs === 'hoh' ? 'hoh' : 'single'
+
+  const addr = raw(data, 'address')
+  const { line1, cityStateZip } = splitAddressBlock(addr)
+
+  return {
+    firstName: raw(data, 'firstName'),
+    lastName: raw(data, 'lastName'),
+    address: line1 || addr,
+    cityStateZip,
+    ssn: raw(data, 'ssn'),
+    filingStatus,
+    childrenUnder17: raw(data, 'childrenUnder17'),
+    otherDependents: raw(data, 'otherDependents'),
+    otherIncome: raw(data, 'otherIncome'),
+    deductions: raw(data, 'deductions'),
+    extraWithholding: raw(data, 'extraWithholding'),
+    exempt: raw(data, 'exempt') === 'yes',
+  }
+}
+
+/** I-821D — coincide con `pdf-form-steps` (i821d). */
+export function toI821dFormData(data: Record<string, unknown>): I821dFormData {
+  const rt = raw(data, 'dacaRequestType').toLowerCase()
+  return {
+    familyName: raw(data, 'lastName'),
+    givenName: raw(data, 'firstName'),
+    middleName: raw(data, 'middleName') || undefined,
+    dob: raw(data, 'dob'),
+    countryBirth: raw(data, 'countryBirth'),
+    countryCitizenship: raw(data, 'countryCitizenship') || undefined,
+    ssn: raw(data, 'ssn') || undefined,
+    aNumber: raw(data, 'aNumber') || undefined,
+    uscisAccount: raw(data, 'uscisAccount') || undefined,
+    lastArrival: raw(data, 'lastArrival'),
+    i94: raw(data, 'i94') || undefined,
+    passportNumber: raw(data, 'passportNumber') || undefined,
+    passportCountry: raw(data, 'passportCountry') || undefined,
+    passportExpiry: raw(data, 'passportExpiry') || undefined,
+    streetAddr: raw(data, 'streetAddr'),
+    city: raw(data, 'city'),
+    state: 'TX',
+    zip: raw(data, 'zip'),
+    phone: raw(data, 'phone') || undefined,
+    email: raw(data, 'email') || undefined,
+    firstEntry: raw(data, 'firstEntry'),
+    inSchool: raw(data, 'inSchool') === 'yes',
+    graduated: raw(data, 'graduated') === 'yes',
+    employed: raw(data, 'employed') === 'yes',
+    requestType: rt === 'initial' ? 'initial' : 'renewal',
+  }
+}
+
+/** H1010 — coincide con `pdf-form-steps` (h1010). */
+export function toH1010FormData(data: Record<string, unknown>): H1010FormData {
+  return {
+    wantSNAP: !!data.wantSNAP,
+    wantMedicaid: !!data.wantMedicaid,
+    wantCHIP: !!data.wantCHIP,
+    wantTANF: !!data.wantTANF,
+    emergency: raw(data, 'emergency') === 'yes',
+    householdSize: raw(data, 'householdSize'),
+    streetAddr: raw(data, 'streetAddr'),
+    city: raw(data, 'city'),
+    county: raw(data, 'county'),
+    zip: raw(data, 'zip'),
+    lastName: raw(data, 'lastName'),
+    firstName: raw(data, 'firstName'),
+    middleName: raw(data, 'middleName') || undefined,
+    dob: raw(data, 'dob'),
+    ssn: raw(data, 'ssn') || undefined,
+    gender: raw(data, 'gender') || undefined,
+    phone: raw(data, 'phone'),
+    email: raw(data, 'email') || undefined,
+    hasEmployment: raw(data, 'hasEmployment') === 'yes',
+    employmentIncome: raw(data, 'employmentIncome'),
+    rent: raw(data, 'rent'),
+    utilities: raw(data, 'utilities'),
+    medical: raw(data, 'medical'),
+    childcare: raw(data, 'childcare'),
   }
 }

@@ -132,8 +132,8 @@ app/                       # Rutas App Router (incl. [funnel]/form, result, guí
 components/                # UI + legal/, monetization/, analytics/ (medición funnel)
 src/data/program-limits.json
 src/schemas/limits.schema.ts  # Zod para program-limits
-lib/acroform/                # PDF oficiales AcroForm (I-765, W-7, I-9) + fallback visual en pdf-generator
-public/forms/                # fw7.pdf, i765.pdf, i-9.pdf (oficiales)
+lib/acroform/                # AcroForm: W-4, H1010, I-821D, I-765, W-7, I-9 (+ fallback visual)
+public/forms/                # PDFs oficiales (irs.gov / uscis.gov); añade h1010.pdf desde Your Texas Benefits si aplica
 data/
   funnels.ts               # Trámites, pasos, nextSteps
   funnel-landing.ts        # Copy hero / CTA por funnel (SEO vs conversión)
