@@ -72,7 +72,7 @@ Plantilla: **`.env.local.example`**. Resumen:
     - **`scroll_70`** — profundidad de scroll en la landing (`funnel`).
 - **A/B upsell:** `NEXT_PUBLIC_AB_UPSELL_ACTIVE=false` por defecto; poner `true` cuando haya tráfico suficiente (ver `docs/ab-test-upsell.md`).
 - **Mailchimp:** `MAILCHIMP_API_KEY`, `MAILCHIMP_AUDIENCE_ID`; `MAILCHIMP_SERVER` (opcional si el API key ya termina en `-usXX`, p. ej. `-us21`).
-- **OpenAI (ChatGPT API):** `OPENAI_API_KEY` y opcional `OPENAI_MODEL` (clave en [platform.openai.com](https://platform.openai.com/api-keys)). Usada en `functions/api/generate-result.ts` y en `npm run monitor:regulations -- --with-ai`.
+- **OpenAI (ChatGPT API):** `OPENAI_API_KEY` y opcional `OPENAI_MODEL` (clave en [platform.openai.com](https://platform.openai.com/api-keys)). Usada en las rutas de elegibilidad/resultado (`functions/api/`), en `npm run monitor:regulations -- --with-ai` y en otras integraciones documentadas en `.env.local.example`.
 - **Functions (otras):** `SQUARE_*`, `SUPABASE_*`.
 
 Nunca subas **`.env.local`** (contiene secretos).
@@ -91,6 +91,11 @@ Nunca subas **`.env.local`** (contiene secretos).
 - Add-on monetización Fase 1: **`docs/modulo-12-monetizacion-fase1.md`**.
 - Inventario interno: `docs/data-processing-register.md`, plantilla `docs/data-inventory-template.md`.
 
+## Datos regulatorios (límites SNAP, WIC, Medicaid, etc.)
+
+- **Fuente única:** `src/data/program-limits.json` — cada entrada incluye `value`, `unit`, `lastVerified`, `validUntil` (ISO-8601) y `sourceUrl`.
+- **Validación:** `src/schemas/limits.schema.ts` (Zod); consumo tipado en `lib/program-limits.ts` (prompts del cuestionario) y **VerificationBadge** (`components/VerificationBadge.tsx`) en landings para mostrar vigencia y enlace oficial.
+
 ## Scripts útiles
 
 ```bash
@@ -101,16 +106,32 @@ npm run verify                # comprobaciones locales (Mailchimp, merge fields,
 npm run audit:data            # inventario de campos de formulario → regenerar JSON local
 npm run audit:legal           # tras `npm run build`, escanea `out/` + reglas UPL heurísticas
 npm run seo:validate:full     # validación contra export estático
-npm run monitor:regulations   # vigencia de `src/data/program-limits.json`; `--with-ai` usa OpenAI
+npm run monitor:regulations   # vigencia + esquema Zod de program-limits.json
 ```
 
-CI: `.github/workflows/ci-seo.yml` (build, auditoría estática, legal audit, job opcional `audit:data`). Semanal: `.github/workflows/monitor-regulations.yml`.
+**Monitor regulatorio (`scripts/monitor-regulations.ts`):**
+
+| Comando | Qué hace |
+|--------|-----------|
+| `npm run monitor:regulations` | Valida el JSON con Zod y comprueba fechas de vigencia (`validUntil`). |
+| `npm run monitor:regulations -- --with-ai` | Además, descarga el HTML de cada `sourceUrl`, pide a OpenAI un número de referencia y lo compara con `value` (requiere `OPENAI_API_KEY`; modelo opcional `OPENAI_MONITOR_MODEL` o `OPENAI_MODEL`). |
+| `npm run monitor:regulations -- --with-ai --strict` | Falla (exit ≠ 0) si hay discrepancias o errores de fetch/API — útil en CI. |
+| `npm run monitor:regulations -- --report-json ./monitor-regulatory-report.json` | Escribe un informe JSON; si hay fallo, también genera `*.issue.md` para revisar o pegar en un Issue. |
+
+No sobreescribe `program-limits.json` automáticamente: ante fallos de red o de la API se mantienen los datos locales y el informe lista el problema.
+
+## CI / GitHub Actions
+
+- **`ci-seo.yml`:** build, auditoría estática, legal audit, job opcional `audit:data`.
+- **`monitor-regulations.yml`:** cada **lunes** (cron) y manual (`workflow_dispatch`). Ejecuta el monitor; si existe el secret **`OPENAI_API_KEY`**, corre también `--with-ai --strict`. Si el monitor falla, el workflow intenta **abrir un Issue** o **comentar** uno abierto con la etiqueta `regulatory-monitor`. El token por defecto necesita permiso `issues: write` (ya declarado en el workflow).
 
 ## Estructura (resumen)
 
 ```
 app/                       # Rutas App Router (incl. [funnel]/form, result, guías, legal, precios)
 components/                # UI + legal/, monetization/, analytics/ (medición funnel)
+src/data/program-limits.json
+src/schemas/limits.schema.ts  # Zod para program-limits
 data/
   funnels.ts               # Trámites, pasos, nextSteps
   funnel-landing.ts        # Copy hero / CTA por funnel (SEO vs conversión)
