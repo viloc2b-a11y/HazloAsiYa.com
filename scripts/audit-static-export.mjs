@@ -185,6 +185,8 @@ function main() {
   const redir = fs.readFileSync(redirectsPath, 'utf8')
   const need = [
     'https://hazloasiya.pages.dev/*  https://www.hazloasiya.com/:splat  301!',
+    'http://hazloasiya.com/*  https://www.hazloasiya.com/:splat  301!',
+    'http://www.hazloasiya.com/*  https://www.hazloasiya.com/:splat  301!',
     'https://hazloasiya.com/*  https://www.hazloasiya.com/:splat  301!',
   ]
   for (const line of need) {

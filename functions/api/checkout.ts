@@ -1,4 +1,5 @@
 /** Precios y etiquetas: fuente única `data/checkout-prices.json`. */
+import { normalizeHazloOrigin } from '../../lib/canonical-origin'
 import checkoutPricesData from '../../data/checkout-prices.json'
 
 type Env = {
@@ -81,7 +82,9 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     const lineItemPrice = PRODUCT_PRICE_CENTS[productId]
     const label = PRODUCT_LABEL[productId] || productId
 
-    const appUrl = (env.NEXT_PUBLIC_APP_URL || new URL(context.request.url).origin).replace(/\/+$/, '')
+    const appUrl = normalizeHazloOrigin(
+      env.NEXT_PUBLIC_APP_URL || new URL(context.request.url).origin,
+    )
     const returnPathRaw = typeof body.returnPath === 'string' ? body.returnPath.trim() : ''
     const redirectUrl =
       returnPathRaw && returnPathRaw.startsWith('/')

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import Topbar from '@/components/Topbar'
-import { absoluteUrl } from '@/lib/site'
+import { SITE_ORIGIN, absoluteUrl } from '@/lib/site'
 import { alternatesForPath } from '@/lib/alternates'
 
 const CANONICAL_PATH = '/sobre-nosotros/'
@@ -26,7 +26,7 @@ const organizationJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
   name: 'HazloAsíYa',
-  url: 'https://www.hazloasiya.com',
+  url: SITE_ORIGIN,
   description:
     'Plataforma educativa en español que guía a familias hispanas en EE. UU. a completar trámites de beneficios sociales, impuestos y servicios gubernamentales sin errores y sin intermediarios costosos.',
   areaServed: 'United States',

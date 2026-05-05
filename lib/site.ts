@@ -1,10 +1,23 @@
 import type { FunnelId } from '@/data/funnels'
 import { FUNNEL_ORDER, isValidFunnelId } from '@/data/funnels'
+import { HAZLO_CANONICAL_ORIGIN, normalizeHazloOrigin } from '@/lib/canonical-origin'
 
-/** Canonical production host (www). Use NEXT_PUBLIC_APP_URL in deploy env — default avoids apex/pages.dev en sitemap/robots. */
-export const SITE_ORIGIN = (
-  process.env.NEXT_PUBLIC_APP_URL || 'https://www.hazloasiya.com'
-).replace(/\/$/, '')
+function resolveRawSiteOrigin(): string {
+  const fromEnv = process.env.NEXT_PUBLIC_APP_URL?.replace(/\/+$/, '') ?? ''
+  /** `next build` no debe emitir canonicals a localhost aunque `.env.local` sea de desarrollo. */
+  if (process.env.NODE_ENV === 'production') {
+    if (!fromEnv || /localhost|127\.0\.0\.1/i.test(fromEnv)) {
+      return HAZLO_CANONICAL_ORIGIN
+    }
+  }
+  return fromEnv || HAZLO_CANONICAL_ORIGIN
+}
+
+/**
+ * Host canónico del sitio (siempre `https://www.hazloasiya.com` para el dominio de producción,
+ * aunque `NEXT_PUBLIC_APP_URL` apunte al apex o a `http`).
+ */
+export const SITE_ORIGIN = normalizeHazloOrigin(resolveRawSiteOrigin())
 
 export function withTrailingSlash(path: string): string {
   if (!path || path === '/') return '/'
