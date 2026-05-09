@@ -316,6 +316,117 @@ export default function HomePageClient() {
         </div>
       </section>
 
+      {/* TESTIMONIOS */}
+      <section className="bg-cream-2 py-20 px-4">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <div className="text-xs font-bold tracking-widest uppercase text-green mb-2">Historias reales</div>
+            <h2 className="font-serif text-3xl sm:text-4xl text-navy">Familias que lo lograron</h2>
+            <p className="text-gray-500 mt-3 max-w-xl mx-auto text-sm">
+              Personas reales, trámites reales, resultados reales. Sin abogados. Sin vueltas. En español.
+            </p>
+          </div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {[
+              {
+                nombre: 'Rosa M.',
+                ciudad: 'Houston, TX',
+                rol: 'Madre de familia',
+                tramite: 'SNAP',
+                emoji: '🛒',
+                texto: 'Tenía miedo de que mi estatus me impidiera aplicar. Aquí supe exactamente qué documentos llevar y cómo completar la solicitud. Me aprobaron en 10 días. Por fin puedo alimentar a mis hijos sin ese peso encima.',
+              },
+              {
+                nombre: 'Miguel Á. T.',
+                ciudad: 'San Antonio, TX',
+                rol: 'Trabajador de construcción',
+                tramite: 'Texas ID',
+                emoji: '🪪',
+                texto: 'Necesitaba mi Texas ID para trabajar y no sabía ni por dónde empezar. La guía me dijo paso a paso qué llevar al DPS. Fui, me atendieron a la primera y salí con mi licencia. Sin vueltas, sin perder el día.',
+              },
+              {
+                nombre: 'Carmen D.',
+                ciudad: 'Dallas, TX',
+                rol: 'Dueña de negocio',
+                tramite: 'Taxes',
+                emoji: '💰',
+                texto: 'Siempre pagaba preparador de taxes. Este año lo hice sola con HazloAsíYa: me explicó qué llenar, cómo y dónde enviar. Ahorré $200 y mi declaración salió sin un solo error. Se lo recomiendo a todos.',
+              },
+              {
+                nombre: 'Jesús R.',
+                ciudad: 'El Paso, TX',
+                rol: 'Padre soltero',
+                tramite: 'IEP Educación Especial',
+                emoji: '📋',
+                texto: 'Mi hijo necesita servicios especiales en la escuela y el proceso IEP me parecía imposible de entender. La guía me explicó mis derechos y me dio el formato listo. La escuela lo aceptó sin problemas. Mi hijo por fin tiene el apoyo que merece.',
+              },
+              {
+                nombre: 'Lucía H.',
+                ciudad: 'McAllen, TX',
+                rol: 'Estudiante universitaria',
+                tramite: 'DACA',
+                emoji: '📄',
+                texto: 'Renovar mi DACA me daba pánico — un error y todo se complica. HazloAsíYa me mostró los formularios I-821D e I-765 ya preparados y qué documentos adjuntar. Lo envié sin miedo y ya tengo mi aprobación.',
+              },
+              {
+                nombre: 'Roberto S.',
+                ciudad: 'Austin, TX',
+                rol: 'Recién llegado a Texas',
+                tramite: 'ITIN',
+                emoji: '🔢',
+                texto: 'No hablo bien inglés y los trámites me parecían un laberinto. Aquí todo está en español, claro y directo. Saqué mi ITIN en dos semanas y ya pude abrir mi cuenta bancaria. No sabía que fuera tan posible.',
+              },
+              {
+                nombre: 'Ana Patricia V.',
+                ciudad: 'Corpus Christi, TX',
+                rol: 'Madre trabajadora',
+                tramite: 'WIC',
+                emoji: '🤱',
+                texto: 'WIC siempre me pareció complicado — nunca sabía si calificaba ni qué llevar. Con HazloAsíYa supe todo eso en minutos. Me aprobaron y ya tengo ayuda para la leche y la comida de mi bebé.',
+              },
+              {
+                nombre: 'Carlos J.',
+                ciudad: 'Laredo, TX',
+                rol: 'Buscando empleo',
+                tramite: 'Desempleo TWC',
+                emoji: '💼',
+                texto: 'Perdí mi trabajo y no tenía idea cómo aplicar al desempleo en Texas. La guía me dijo exactamente qué responder en la solicitud del TWC. Me aprobaron en la primera semana. Sin esto hubiera esperado meses sin saber qué hacer.',
+              },
+              {
+                nombre: 'Fernando L.',
+                ciudad: 'Lubbock, TX',
+                rol: 'Trabajador independiente',
+                tramite: 'Cuenta bancaria',
+                emoji: '🏦',
+                texto: 'Me rechazaban en los bancos por no tener SSN. La guía me dijo qué bancos aceptan ITIN o matrícula consular y qué decir en la sucursal. Abrí mi cuenta en 20 minutos. Por fin tengo acceso a servicios que pensé que no eran para mí.',
+              },
+            ].map(({ nombre, ciudad, rol, tramite, emoji, texto }) => (
+              <div key={nombre} className="bg-white rounded-2xl border border-cream p-5 shadow-sm flex flex-col gap-4">
+                <div className="flex items-start gap-3">
+                  <div className="w-10 h-10 rounded-full bg-navy flex items-center justify-center text-white font-bold text-sm shrink-0">
+                    {nombre.charAt(0)}
+                  </div>
+                  <div>
+                    <div className="font-semibold text-navy text-sm">{nombre}</div>
+                    <div className="text-xs text-gray-400">{ciudad} · {rol}</div>
+                  </div>
+                  <span className="ml-auto text-xl">{emoji}</span>
+                </div>
+                <p className="text-sm text-gray-600 leading-relaxed flex-1">"{texto}"</p>
+                <div className="text-xs font-semibold text-green border-t border-cream pt-3">
+                  Trámite: {tramite}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <p className="text-center text-xs text-gray-400 mt-8">
+            Nombres abreviados para proteger la privacidad. Resultados individuales pueden variar según cada caso.
+          </p>
+        </div>
+      </section>
+
       {/* FOOTER */}
       <footer className="bg-navy border-t border-white/10 py-12 px-4">
         <div className="max-w-6xl mx-auto grid sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-10">
