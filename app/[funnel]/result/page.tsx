@@ -15,6 +15,7 @@ import { getResultTrustActionLine } from '@/lib/result-trust-action'
 import { gtagEvent, getAnalyticsDevice } from '@/lib/gtag'
 import { getResultViewSource } from '@/lib/result-view-source'
 import { getRecommendedFormForFunnel } from '@/types/pdf'
+import EmailGate, { getEmailGateData } from '@/components/EmailGate'
 
 interface Result {
   eligible: boolean
@@ -55,6 +56,7 @@ export default function ResultPage() {
   const [authForm, setAuthForm] = useState({ email: '', password: '', name: '', mode: 'login' as 'login'|'register' })
   const [paidInUrl, setPaidInUrl] = useState(false)
   const [purchaseVerified, setPurchaseVerified] = useState(false)
+  const [emailGatePassed, setEmailGatePassed] = useState(false)
   const resultViewSent = useRef(false)
 
   const isPaid = user?.plan && !['free', '', undefined].includes(user.plan)
@@ -72,6 +74,8 @@ export default function ResultPage() {
 
     const storedUser = localStorage.getItem('haya_user')
     if (storedUser) setUser(JSON.parse(storedUser))
+    // Email gate: skip if already logged in or already passed the gate
+    if (storedUser || getEmailGateData()) setEmailGatePassed(true)
 
     if (new URLSearchParams(window.location.search).get('paid') === '1') {
       // FIX #3: applyPendingPlan() busca en sessionStorage Y localStorage como fallback,
@@ -223,6 +227,16 @@ export default function ResultPage() {
   }
 
   if (!f || !result) return <div className="p-8 text-center">Error al cargar el resultado.</div>
+
+  // Show email gate for anonymous users who haven't provided email yet
+  if (!emailGatePassed && !isLoggedIn) {
+    return (
+      <EmailGate
+        funnelName={f.name}
+        onContinue={(_email, _name) => setEmailGatePassed(true)}
+      />
+    )
+  }
 
   const nextSteps =
     typeof id === 'string' && isValidFunnelId(id) ? NEXT_STEP_MAP[id] || [] : []
