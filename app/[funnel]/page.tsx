@@ -26,6 +26,7 @@ import DacaEditorialSection from '@/components/funnels/DacaEditorialSection'
 import TaxesEditorialSection from '@/components/funnels/TaxesEditorialSection'
 import RentEditorialSection from '@/components/funnels/RentEditorialSection'
 import { FunnelFinalCtaLink, FunnelScrollDepth } from '@/components/analytics/FunnelLandingMeasurement'
+import PrivacyBadge from '@/components/PrivacyBadge'
 
 interface Props { params: Promise<{ funnel: string }> }
 
@@ -111,6 +112,9 @@ export default async function FunnelPage({ params }: Props) {
           )}
 
           <div className="max-w-2xl mb-8 space-y-4">
+            {(id === 'daca' || id === 'itin' || id === 'matricula') && (
+              <PrivacyBadge />
+            )}
             {id === 'medicaid' && (
               <aside
                 className="rounded-xl border-l-4 border-green bg-emerald-50/90 px-4 py-3 text-sm text-navy leading-relaxed"

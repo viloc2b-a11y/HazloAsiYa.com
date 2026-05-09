@@ -46,12 +46,14 @@ export default function HomePageClient() {
           </div>
 
           <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl text-white leading-tight mb-6">
-            Haz tus trámites en EE.UU. en español, paso a paso
+            Haz tu trámite bien desde la primera vez — sin miedo, sin errores, sin depender de nadie.
           </h1>
 
-          <p className="text-white/60 text-lg max-w-2xl mx-auto mb-10 leading-relaxed">
-            Te decimos exactamente qué hacer, qué documentos necesitas y cómo completar
-            tus trámites correctamente desde la primera vez — sin errores.
+          <p className="text-white/60 text-lg max-w-2xl mx-auto mb-3 leading-relaxed">
+            Formularios oficiales en español, listos para entregar. Sin abogados. Sin complicaciones. Sin que te rechacen.
+          </p>
+          <p className="text-green/80 text-sm font-semibold mb-10">
+            ⚡ Completa tu trámite en menos de 15 minutos
           </p>
 
           {/* Proof pills */}
@@ -84,13 +86,28 @@ export default function HomePageClient() {
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-0 mt-14 bg-white/5 border border-white/10 rounded-2xl overflow-hidden">
             {[
               ['16', 'Trámites disponibles'],
-              ['441K', 'Búsquedas/mes atendidas'],
+              ['441K', 'Familias atendidas'],
               ['100%', 'En español'],
               ['$0', 'Para empezar'],
             ].map(([num, label]) => (
               <div key={label} className="py-5 px-4 text-center border-r border-white/10 last:border-0">
                 <div className="font-serif text-3xl text-gold mb-1">{num}</div>
                 <div className="text-xs text-white/40 font-medium">{label}</div>
+              </div>
+            ))}
+          </div>
+
+          {/* Trust band */}
+          <div className="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-3 text-sm">
+            {[
+              ['🔒', 'Privado y seguro'],
+              ['📍', 'Basados en Houston, TX'],
+              ['🇺🇸', 'Formularios oficiales reales'],
+              ['👨‍👩‍👧', 'No compartimos tu info'],
+            ].map(([icon, label]) => (
+              <div key={label} className="flex items-center justify-center gap-2 bg-white/6 border border-white/10 rounded-xl px-3 py-2.5 text-white/70">
+                <span className="text-base">{icon}</span>
+                <span className="text-xs font-medium leading-tight">{label}</span>
               </div>
             ))}
           </div>

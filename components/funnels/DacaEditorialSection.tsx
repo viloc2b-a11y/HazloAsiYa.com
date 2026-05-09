@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { absoluteUrl } from '@/lib/site'
+import PrivacyBadge from '@/components/PrivacyBadge'
 
 const faqItems = [
   {
@@ -55,6 +56,7 @@ export default function DacaEditorialSection() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
       <section className="card p-6 border border-cream space-y-8 text-navy" aria-labelledby="daca-edu-que-es">
+        <PrivacyBadge />
         <p className="text-sm text-gray-700 leading-relaxed rounded-xl border border-green/20 bg-white px-4 py-3">
           <strong>Fuente oficial:</strong>{' '}
           <a

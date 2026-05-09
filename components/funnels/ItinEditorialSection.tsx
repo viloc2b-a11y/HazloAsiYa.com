@@ -1,9 +1,6 @@
 import Link from 'next/link'
 import { absoluteUrl } from '@/lib/site'
-
-const faqItems = [
-  {
-    q: '¿Qué es el ITIN y quién lo emite?',
+import PrivacyBadge from '@/components/PrivacyBadge'
     a: 'El ITIN (Individual Taxpayer Identification Number) es un número de identificación fiscal de 9 dígitos que emite el IRS para personas que deben declarar impuestos en EE.UU. pero no califican para un Social Security Number (SSN). El formato suele mostrarse como 9XX-XX-XXXX (el primer dígito es 9). Más información: irs.gov/itin.',
   },
   {
@@ -58,6 +55,7 @@ export default function ItinEditorialSection() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
       <section className="card p-6 border border-cream space-y-8 text-navy" aria-labelledby="itin-edu-que-es">
+        <PrivacyBadge />
         <p className="text-sm text-gray-700 leading-relaxed rounded-xl border border-green/20 bg-white px-4 py-3">
           <strong>En la misma línea:</strong>{' '}
           <Link href="/itin/houston/" className="text-green font-semibold hover:underline">
