@@ -312,19 +312,57 @@ export default function PdfWizard({
             </div>
             {status === 'done' && (
               <div className="space-y-3">
+                {/* Checklist de documentos del formulario */}
+                {form.docs && form.docs.length > 0 && (
+                  <div className="bg-amber-50 border border-amber-200 rounded-xl p-4">
+                    <div className="text-xs font-bold text-amber-800 mb-2">📋 Documentos que debes llevar</div>
+                    <ul className="space-y-1">
+                      {form.docs.map(doc => (
+                        <li key={doc.id} className="flex items-start gap-2 text-xs text-amber-900">
+                          <span className={`mt-0.5 shrink-0 font-bold ${doc.required ? 'text-red-600' : 'text-amber-600'}`}>
+                            {doc.required ? '✦' : '◦'}
+                          </span>
+                          <span>{doc.label}{doc.note ? ` — ${doc.note}` : ''}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    <p className="text-xs text-amber-700 mt-2">✦ Requerido &nbsp;◦ Opcional</p>
+                  </div>
+                )}
+                {/* Instrucciones de entrega */}
+                <div className="bg-teal-50 border border-teal-200 rounded-xl p-4">
+                  <div className="text-xs font-bold text-teal-800 mb-2">🗺️ ¿Dónde entregar este documento?</div>
+                  <p className="text-xs text-teal-900 leading-relaxed">
+                    {getDeliveryInstructions(form.id)}
+                  </p>
+                </div>
                 <button
                   type="button"
                   onClick={handleGenerate}
                   className="w-full bg-teal-600 hover:bg-teal-700 text-white font-bold py-3 rounded-xl"
                 >
-                  ⬇️ Descargar de nuevo
+                  ⬇️ Descargar PDF de nuevo
                 </button>
                 <button
                   type="button"
-                  onClick={() => { setStatus('idle'); setCurrentStep(0) }}
+                  onClick={() => window.print()}
+                  className="w-full bg-stone-700 hover:bg-stone-800 text-white font-bold py-3 rounded-xl"
+                >
+                  🖨️ Imprimir
+                </button>
+                <button
+                  type="button"
+                  onClick={() => { setStatus('idle'); setCurrentStep(totalSteps - 1) }}
                   className="w-full bg-stone-100 hover:bg-stone-200 text-stone-700 font-bold py-3 rounded-xl"
                 >
-                  Volver al inicio del asistente
+                  ✏️ Editar respuestas
+                </button>
+                <button
+                  type="button"
+                  onClick={() => { setStatus('idle'); setCurrentStep(0); setFormData({}) }}
+                  className="w-full border border-stone-200 text-stone-500 py-2.5 rounded-xl text-sm"
+                >
+                  Empezar de nuevo
                 </button>
               </div>
             )}
@@ -490,6 +528,36 @@ function getStepTitle(formId: string, stepIndex: number): string {
     dl14a: ['Tipo de solicitud', 'Información personal', 'Dirección en Texas', 'Documentos', 'Revisa y genera PDF'],
     matricula: ['Consulado y trámite', 'Datos personales', 'Domicilio', 'Documentos', 'Revisa y genera PDF'],
     escuela: ['Estudiante', 'Padre o tutor', 'Domicilio y salud', 'Documentos', 'Revisa y genera PDF'],
+    saws1:    ['Programas solicitados', 'Datos personales', 'Dirección en California', 'Condiciones especiales', 'Revisa y genera PDF'],
+    cfes2337: ['Programas solicitados', 'Datos personales', 'Dirección en Florida', 'Ingresos del hogar', 'Revisa y genera PDF'],
+    cawic100: ['Tipo de participante', 'Datos personales', 'Dirección en California', 'Ingresos e idioma', 'Revisa y genera PDF'],
   }
   return stepTitles[formId]?.[stepIndex] ?? `Paso ${stepIndex + 1}`
+}
+
+function getDeliveryInstructions(formId: string): string {
+  const map: Record<string, string> = {
+    // Texas
+    h1010: 'Lleva este formulario a tu oficina local de Texas HHSC o súbelo en YourTexasBenefits.com. También puedes enviarlo por correo a tu condado. Llama al 2-1-1 para ubicar la oficina más cercana.',
+    // California
+    saws1: 'Lleva este formulario a tu oficina del condado (County Social Services) o súbelo en BenefitsCal.com. También puedes enviarlo por fax o correo postal. Llama al 1-877-847-3663 para ayuda en español.',
+    cawic100: 'Lleva este formulario a tu clínica WIC más cercana. Llama al 1-800-852-5770 para encontrar la clínica de tu condado o visita MyBenefitsCalWIN.org. La cita es gratuita y sin importar tu estatus migratorio.',
+    // Florida
+    cfes2337: 'Sube este formulario en MyACCESS Florida (myaccess.myflfamilies.com) o llévalo a tu Family Resource Center local. También puedes llamar al 1-866-762-2237 para asistencia en español.',
+    // Federal / IRS
+    w7: 'Envía este formulario por correo al IRS (Austin, TX 78714-9342), llévalo a un Acceptance Agent certificado, o visita un Taxpayer Assistance Center del IRS. Incluye documentos de identidad originales o copias certificadas.',
+    w4: 'Entrega este formulario directamente a tu empleador (departamento de Recursos Humanos o nómina). No se envía al IRS.',
+    // USCIS
+    i821d: 'Envía este formulario a USCIS por correo certificado. Consulta uscis.gov/i-821d para la dirección correcta según tu estado. Guarda el recibo de envío.',
+    i765: 'Envía este formulario a USCIS por correo certificado. Consulta uscis.gov/i-765 para la dirección correcta según tu categoría. Guarda el recibo de envío.',
+    // Texas DPS
+    dl14a: 'Lleva este formulario a tu oficina del DPS Texas más cercana. Agenda tu cita en dps.texas.gov. Lleva todos los documentos de identidad requeridos.',
+    // Consulado
+    matricula: 'Lleva este formulario al Consulado de México más cercano. Agenda tu cita en mexitel.gob.mx o llama al consulado de tu ciudad.',
+    // Escuela
+    escuela: 'Lleva este formulario a la secretaría de la escuela o distrito escolar. Puedes pedir ayuda al Family Liaison o al Coordinador de Educación Bilingüe de tu distrito.',
+    // I-9
+    i9: 'Este formulario se completa con tu empleador en los primeros 3 días de trabajo. No se envía a ninguna agencia gubernamental — el empleador lo guarda en sus archivos.',
+  }
+  return map[formId] ?? 'Lleva este documento a la agencia correspondiente o súbelo al portal oficial del programa. Guarda siempre una copia firmada para tus registros.'
 }

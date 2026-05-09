@@ -14,6 +14,7 @@ import {
 import { getResultTrustActionLine } from '@/lib/result-trust-action'
 import { gtagEvent, getAnalyticsDevice } from '@/lib/gtag'
 import { getResultViewSource } from '@/lib/result-view-source'
+import { getRecommendedFormForFunnel } from '@/types/pdf'
 
 interface Result {
   eligible: boolean
@@ -228,6 +229,12 @@ export default function ResultPage() {
 
   const funnelKey = typeof id === 'string' ? id : ''
   const augmentedSteps = augmentResultSteps(funnelKey, result.steps)
+
+  // Formulario oficial recomendado según funnel + estado del usuario
+  const _storedFormRaw = typeof window !== 'undefined'
+    ? sessionStorage.getItem(`haya_form_${id}`) : null
+  const _storedFormData = _storedFormRaw ? (() => { try { return JSON.parse(_storedFormRaw) } catch { return {} } })() : {}
+  const recommendedForm = getRecommendedFormForFunnel(funnelKey, _storedFormData?.state_of_residence as string | undefined)
   const stepsShow = hasPaidAccess
     ? augmentedSteps
     : isLoggedIn
@@ -380,6 +387,26 @@ export default function ResultPage() {
             </div>
           )}
         </div>
+
+        {/* Formulario oficial recomendado — CTA contextual (solo usuarios con acceso pago) */}
+        {recommendedForm && hasPaidAccess && (
+          <div className="bg-teal-50 border border-teal-200 rounded-2xl p-5">
+            <div className="text-xs font-bold tracking-widest uppercase text-teal-700 mb-1">Formulario oficial</div>
+            <h3 className="font-serif text-lg text-navy mb-1">
+              {recommendedForm.icon} {recommendedForm.title}
+            </h3>
+            <p className="text-gray-500 text-sm mb-3">{recommendedForm.description}</p>
+            <Link
+              href={`/pdf/${recommendedForm.slug}`}
+              className="inline-flex items-center gap-2 bg-teal-600 hover:bg-teal-700 text-white font-bold py-2.5 px-5 rounded-xl text-sm transition-colors"
+            >
+              Llenar formulario {recommendedForm.formCode} →
+            </Link>
+            <p className="text-xs text-teal-600 mt-2">
+              Formulario pre-llenado con tus datos · Listo para entregar a la agencia
+            </p>
+          </div>
+        )}
 
         {/* Free PDF (registered) */}
         {isLoggedIn && !hasPaidAccess && (

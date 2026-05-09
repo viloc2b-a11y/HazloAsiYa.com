@@ -43,31 +43,37 @@ function p(body: string): string {
 }
 
 export const SYSTEM_PROMPTS: Record<FunnelId, string> = {
-  snap: p(`Eres el asistente de HazloAsíYa para SNAP Texas. Analiza el input y devuelve JSON válido.
-
-${snapTexasGrossMonthlyPromptLine()}
+  snap: p(`Eres el asistente de HazloAsíYa para SNAP. Analiza el input y devuelve JSON válido.
+Si el campo state_of_residence es 'california' o 'CA': usa reglas CalFresh (CDSS). Límites similares a federal pero el portal es BenefitsCal.com. Medi-Cal expandido (adultos sin hijos pueden calificar). Pasos CA: BenefitsCal.com o condado local.
+Si el campo state_of_residence es 'florida' o 'FL': usa reglas ACCESS Florida (DCF). Portal: myaccess.myflfamilies.com. Florida NO expandió Medicaid ACA → adultos sin hijos unlikely Medicaid. Pasos FL: myaccess.myflfamilies.com o Family Resource Center.
+Default (Texas o no especificado): ${snapTexasGrossMonthlyPromptLine()}
 Elegibilidad por ingreso: <80% del límite likely; 80–100% possible; >límite unlikely. Campo faltante → possible. Sin documentos → listar en missing_documents, no usar unlikely solo por eso.
-Documentos típicos: ID con foto, comprobante domicilio TX, comprobante ingresos, SSN o ITIN si aplica, datos de todos en el hogar.
-Pasos TX: YourTexasBenefits.com cuenta → solicitud en línea → subir o llevar documentos → entrevista HHSC si la piden → revisar estado en portal/app.
-Errores comunes: fotos borrosas; no reportar ingresos de todos; no contestar HHSC; olvidar firmar/fechar.
-Enlaces: https://www.yourtexasbenefits.com https://www.hhs.texas.gov/services/food/snap-food-benefits https://www.fns.usda.gov/snap
-Migración: sin papeles puede aplicar para hijos ciudadanos → possible; DACA en Texas generalmente no califica SNAP federal → unlikely salvo hijos ciudadanos.`),
+Documentos típicos: ID con foto, comprobante domicilio, comprobante ingresos, SSN o ITIN si aplica, datos de todos en el hogar.
+Errores comunes: fotos borrosas; no reportar ingresos de todos; no contestar la agencia; olvidar firmar/fechar.
+Migración: sin papeles puede aplicar para hijos ciudadanos → possible; DACA generalmente no califica SNAP federal → unlikely salvo hijos ciudadanos.
+Enlaces TX: https://www.yourtexasbenefits.com https://www.hhs.texas.gov/services/food/snap-food-benefits
+Enlaces CA: https://www.benefitscal.com https://www.cdss.ca.gov/inforesources/calfresh
+Enlaces FL: https://myaccess.myflfamilies.com https://www.myflfamilies.com/service-programs/access-florida
+Enlace federal: https://www.fns.usda.gov/snap`),
 
-  medicaid: p(`Eres el asistente de HazloAsíYa para Medicaid y CHIP en Texas.
-
-REGLA CRÍTICA: Texas NO expandió Medicaid del ACA. Adulto sin hijos dependientes menores → unlikely; incluir en steps explorar Marketplace https://www.healthcare.gov
+  medicaid: p(`Eres el asistente de HazloAsíYa para Medicaid y CHIP.
+Si state_of_residence es 'california' o 'CA': California expandió Medi-Cal (ACA). Adultos sin hijos pueden calificar. Límite ~138% FPL. Portal: BenefitsCal.com o condado. Medi-Cal cubre inmigrantes sin estatus en ciertos grupos (niños, embarazadas, adultos mayores bajo CMSP). Incluir enlace https://www.benefitscal.com
+Si state_of_residence es 'florida' o 'FL': Florida NO expandió Medicaid ACA. Adulto sin hijos → unlikely; incluir Marketplace. CHIP (KidCare) hasta ~200% FPL. Portal: myaccess.myflfamilies.com. Enlace https://www.floridakidcare.org
+Default (Texas): REGLA CRÍTICA: Texas NO expandió Medicaid del ACA. Adulto sin hijos dependientes menores → unlikely; incluir en steps explorar Marketplace https://www.healthcare.gov
 CHIP niños hasta ~201% FPL (referencia familia 3 ~$4,121/mes bruto). Embarazadas hasta ~198% FPL (~$4,060/mes f3). Padres/cuidadores con hijos: reglas MUY restrictivas (~$369/mes f3 referencia). Adultos 65+ o discapacidad: evaluar bajo SSI/SSA → possible.
-Documentos: ID adultos, domicilio TX, ingresos, actas niños, documentación embarazo si aplica.
-Apply: YourTexasBenefits.com (Medicaid/CHIP junto con otros beneficios).
-Enlaces: https://www.yourtexasbenefits.com https://www.hhs.texas.gov/services/health/medicaid-chip https://www.healthcare.gov`),
+Documentos: ID adultos, domicilio, ingresos, actas niños, documentación embarazo si aplica.
+Enlaces TX: https://www.yourtexasbenefits.com https://www.hhs.texas.gov/services/health/medicaid-chip https://www.healthcare.gov
+Enlaces CA: https://www.benefitscal.com https://www.dhcs.ca.gov/services/medi-cal
+Enlaces FL: https://myaccess.myflfamilies.com https://www.floridakidcare.org`),
 
-  wic: p(`Eres el asistente de HazloAsíYa para WIC Texas. Programa nutrición embarazo/postparto/lactancia/bebé hasta 12m/niño 1–5 años.
-
-${wicTexas185fplPromptLine()}
+  wic: p(`Eres el asistente de HazloAsíYa para WIC. Programa nutrición embarazo/postparto/lactancia/bebé hasta 12m/niño 1–5 años.
+Si state_of_residence es 'california' o 'CA': WIC California (CDPH). Mismos grupos federales. Portal: 1-800-852-5770 o clínica local. Enlace https://www.cdph.ca.gov/Programs/CFH/DWICSN
+Si state_of_residence es 'florida' o 'FL': WIC Florida (FDOH). Mismos grupos federales. Portal: 1-800-342-3556 o clínica local. Enlace https://www.floridahealth.gov/programs-and-services/wic
+Default (Texas): ${wicTexas185fplPromptLine()}
 Grupos: embarazada; postparto hasta 6m (12m si lacta); bebé 0–12m; niño hasta 5 años. Adultos sin niño o niño >5 → no aplica.
-Documentos: ID, domicilio TX, ingresos, prueba categoría (acta, carta embarazo, etc.).
-Apply: 1-800-942-3678 o clínica en texaswic.org
-Enlaces: https://www.dshs.texas.gov/wic https://texaswic.org https://www.fns.usda.gov/wic`),
+Documentos: ID, domicilio, ingresos, prueba categoría (acta, carta embarazo, etc.).
+Enlaces TX: https://www.dshs.texas.gov/wic https://texaswic.org
+Enlace federal: https://www.fns.usda.gov/wic`),
 
   twc: p(`Eres el asistente de HazloAsíYa para desempleo TWC Texas.
 Requiere SSN y autorización legal de trabajo → sin SSN unlikely. Despido sin causa + base de salarios/semanas: likely si cumple. Renuncia voluntaria sin causa justificada unlikely. Reducción involuntaria possible. Base period: típicamente primeros 4 de últimos 5 trimestres (orientativo).
@@ -148,6 +154,7 @@ Enlaces: https://www.workintexas.com https://www.twc.texas.gov/jobseekers/find-w
 
 export const QUESTIONNAIRE_FIELDS: Record<FunnelId, QuestionnaireField[]> = {
   snap: [
+    { id: 'state_of_residence', label: '¿En qué estado vives?', type: 'enum', options: ['Texas', 'California', 'Florida', 'Otro estado'], hint: 'El estado determina los límites y el portal de solicitud', required: true },
     { id: 'household_size', label: '¿Cuántas personas viven en tu hogar?', type: 'number', hint: 'Incluye a todos: niños, adultos, tú mismo', required: true },
     { id: 'monthly_income_gross', label: '¿Cuánto gana tu hogar al mes antes de impuestos?', type: 'currency', hint: 'Suma el ingreso de todos los adultos del hogar', required: true },
     { id: 'has_children', label: '¿Hay niños menores de 18 años en tu hogar?', type: 'boolean', required: false },
@@ -159,6 +166,7 @@ export const QUESTIONNAIRE_FIELDS: Record<FunnelId, QuestionnaireField[]> = {
     { id: 'monthly_expenses_medical', label: 'Gasto mensual médico', type: 'currency', required: false },
   ],
   medicaid: [
+    { id: 'state_of_residence', label: '¿En qué estado vives?', type: 'enum', options: ['Texas', 'California', 'Florida', 'Otro estado'], hint: 'El estado determina los programas disponibles y los límites de ingreso', required: true },
     { id: 'applicant_category', label: '¿Para quién es el Medicaid?', type: 'enum', options: ['embarazada', 'niño (CHIP)', 'adulto con hijos menores', 'adulto mayor 65+', 'persona con discapacidad', 'adulto sin hijos'], required: true },
     { id: 'household_size', label: '¿Cuántas personas viven en tu hogar?', type: 'number', required: false },
     { id: 'monthly_income_gross', label: 'Ingreso bruto mensual del hogar', type: 'currency', required: false },
@@ -166,15 +174,15 @@ export const QUESTIONNAIRE_FIELDS: Record<FunnelId, QuestionnaireField[]> = {
     { id: 'pregnancy_weeks', label: '¿Cuántas semanas de embarazo? (si aplica)', type: 'number', required: false },
     { id: 'has_disability_certification', label: '¿Tienes certificación de discapacidad?', type: 'boolean', required: false },
     { id: 'immigration_status', label: '¿Cuál es tu estatus migratorio?', type: 'enum', options: ['ciudadano/residente', 'DACA', 'permiso', 'sin documentos', 'prefiero no decir'], required: false },
-    { id: 'documents_available', label: 'Documentos disponibles', type: 'multiselect', options: ['ID adultos', 'comprobante domicilio TX', 'comprobante ingresos', 'actas de nacimiento niños', 'documentación embarazo'], required: false },
+    { id: 'documents_available', label: 'Documentos disponibles', type: 'multiselect', options: ['ID adultos', 'comprobante de domicilio', 'comprobante ingresos', 'actas de nacimiento niños', 'documentación embarazo'], required: false },
   ],
   wic: [
+    { id: 'state_of_residence', label: '¿En qué estado vives?', type: 'enum', options: ['Texas', 'California', 'Florida', 'Otro estado'], hint: 'El estado determina la clínica WIC y los límites de ingreso', required: true },
     { id: 'wic_category', label: '¿Para quién es el WIC?', type: 'enum', options: ['embarazada', 'madre postparto (hasta 6 meses)', 'madre lactando (hasta 12 meses)', 'bebé (hasta 12 meses)', 'niño (1–5 años)'], required: true },
     { id: 'child_age_months', label: 'Edad del niño en meses (si aplica)', type: 'number', required: false },
     { id: 'household_size', label: '¿Cuántas personas viven en tu hogar?', type: 'number', required: false },
     { id: 'monthly_income_gross', label: 'Ingreso bruto mensual del hogar', type: 'currency', required: false },
-    { id: 'texas_resident', label: '¿Vives en Texas actualmente?', type: 'boolean', required: false },
-    { id: 'documents_available', label: 'Documentos disponibles', type: 'multiselect', options: ['ID con foto', 'comprobante domicilio TX', 'comprobante ingresos', 'documentación embarazo/parto', 'acta nacimiento del bebé o niño'], required: false },
+    { id: 'documents_available', label: 'Documentos disponibles', type: 'multiselect', options: ['ID con foto', 'comprobante de domicilio', 'comprobante ingresos', 'documentación embarazo/parto', 'acta nacimiento del bebé o niño'], required: false },
   ],
   twc: [
     { id: 'employment_status', label: '¿Por qué dejaste de trabajar?', type: 'enum', options: ['me despidieron sin causa', 'redujeron mis horas', 'renuncié por causa justificada', 'renuncié voluntariamente', 'empresa cerró', 'otro'], required: true },

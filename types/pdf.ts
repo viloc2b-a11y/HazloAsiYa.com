@@ -369,3 +369,55 @@ export function getFormBySlug(slug: string): PdfFormMeta | undefined {
 export function getFormsByTier(tier: PdfTier): PdfFormMeta[] {
   return PDF_CATALOG.filter(f => f.tier === tier)
 }
+
+/**
+ * Devuelve el formulario oficial recomendado para un funnel + estado.
+ * Usado en la página de resultado para enlazar directamente al wizard del formulario.
+ */
+export function getRecommendedFormForFunnel(
+  funnelId: string,
+  stateOfResidence?: string,
+): PdfFormMeta | undefined {
+  const state = (stateOfResidence ?? '').toLowerCase()
+  const isCA = state.includes('california') || state === 'ca'
+  const isFL = state.includes('florida') || state === 'fl'
+
+  const map: Record<string, PdfFormId> = {
+    // SNAP
+    snap_ca: 'saws1',
+    snap_fl: 'cfes2337',
+    snap_tx: 'h1010',
+    snap_default: 'h1010',
+    // Medicaid
+    medicaid_ca: 'saws1',
+    medicaid_fl: 'cfes2337',
+    medicaid_tx: 'h1010',
+    medicaid_default: 'h1010',
+    // WIC
+    wic_ca: 'cawic100',
+    wic_fl: 'cawic100', // WIC FL visual, same wizard
+    wic_tx: 'cawic100',
+    wic_default: 'cawic100',
+    // DACA / Inmigración
+    daca_default: 'i821d',
+    // ITIN
+    itin_default: 'w7',
+    // Impuestos
+    taxes_default: 'w4',
+    // ID Texas
+    id_default: 'dl14a',
+    // Matrícula
+    matricula_default: 'matricula',
+    // Escuela
+    escuela_default: 'escuela',
+  }
+
+  const suffix = isCA ? 'ca' : isFL ? 'fl' : 'tx'
+  const key = `${funnelId}_${suffix}` in map
+    ? `${funnelId}_${suffix}`
+    : `${funnelId}_default`
+
+  const formId = map[key]
+  if (!formId) return undefined
+  return getFormMeta(formId)
+}
