@@ -8,16 +8,16 @@ export const FUNNEL_SEO: Partial<
   Record<FunnelId, { title: string; description: string; ogTitle?: string }>
 > = {
   snap: {
-    title: 'Cómo solicitar SNAP en Texas en español | HazloAsíYa',
+    title: 'Cómo solicitar SNAP en español — TX, CA, FL, NY | HazloAsíYa',
     description:
-      '¿Calificas para SNAP? Guía completa: documentos, límites de ingresos Texas 2026 y cómo aplicar sin errores. Evaluación gratis.',
-    ogTitle: 'Cómo solicitar SNAP en Texas en español',
+      '¿Calificas para SNAP? Guía completa: documentos, límites de ingresos 2026 y cómo aplicar sin errores en Texas, California, Florida o Nueva York. Evaluación gratis.',
+    ogTitle: 'Cómo solicitar SNAP en español — 4 estados',
   },
   medicaid: {
-    title: 'Medicaid en Texas: CHIP, familias y embarazo | HazloAsíYa',
+    title: 'Medicaid en español — TX, CA, FL, NY | HazloAsíYa',
     description:
-      'Descubre si calificas para Medicaid o CHIP en Texas: requisitos, grupos elegibles y cómo completar la solicitud en español. Evaluación gratis.',
-    ogTitle: 'Medicaid y CHIP en Texas en español',
+      'Descubre si calificas para Medicaid o CHIP: requisitos, grupos elegibles y cómo completar la solicitud en español. Disponible en Texas, California, Florida y Nueva York.',
+    ogTitle: 'Medicaid y CHIP en español — 4 estados',
   },
   itin: {
     title: 'ITIN en español: qué es y formulario W-7 | HazloAsíYa',
@@ -81,7 +81,7 @@ export type FunnelHeroFields = {
 
 export const FUNNEL_HERO: Partial<Record<FunnelId, FunnelHeroFields>> = {
   snap: {
-    headline: 'SNAP Texas: lista de papeles y pasos antes de HHSC',
+    headline: 'SNAP: lista de papeles y pasos para tu estado',
     subhead:
       'Sales con la lista exacta que te van a pedir en tu caso, sin adivinar. Tras el cuestionario ves en pantalla qué traer, qué te falta y qué errores devuelven la solicitud.',
     ctaHero: 'Ver mi lista SNAP gratis →',
@@ -89,32 +89,32 @@ export const FUNNEL_HERO: Partial<Record<FunnelId, FunnelHeroFields>> = {
     ctaCardEyebrow: 'En ~5 min · $0',
     ctaCardTitle: 'Recibes una lista concreta: documentos, orden y qué no enviar',
     ctaCardLead:
-      'Respondes sobre tu hogar y salen los ítems que HHSC suele pedir en Texas, numerados para imprimir o llevar al teléfono.',
+      'Respondes sobre tu hogar y estado, y salen los ítems que la agencia suele pedir en tu caso, numerados para imprimir o llevar al teléfono.',
     ctaCloseLead:
       'La mayoría de retrasos pasa por una lista vieja o incompleta. Si eso ocurre, te piden corregir y volver, y el proceso puede moverse semanas. Tómalo ahora y revisa tu carpeta con la versión correcta antes de enviar o ir en persona.',
     ctaCloseButton: 'Ver mi lista SNAP correcta ahora (gratis) →',
     ctaCloseImmediate:
       'Al terminar ves en pantalla tu lista exacta (documentos + orden) para este trámite.',
     ctaCloseReassurance:
-      'Gratis · sin tarjeta · no sustituimos a HHSC: tú envías la solicitud oficial. Si algo no aplica a tu hogar, lo ves antes de gastar tiempo en fila. Si te falta algo, la tarjeta no se activa hasta corregirlo. Te toma menos de 5 minutos y sales con la lista lista para usar hoy.',
+      'Gratis · sin tarjeta · tú envías la solicitud oficial a la agencia de tu estado. Si algo no aplica a tu hogar, lo ves antes de gastar tiempo en fila. Si te falta algo, la tarjeta no se activa hasta corregirlo. Te toma menos de 5 minutos y sales con la lista lista para usar hoy.',
   },
   medicaid: {
-    headline: 'CHIP o Medicaid Texas: grupo probable de tu hogar',
+    headline: 'Medicaid / CHIP: grupo probable de tu hogar según tu estado',
     subhead:
-      'Sales con la lista exacta que te van a pedir en tu caso, sin adivinar: hipótesis clara (niño, embarazo, padre, etc.) y pruebas para YourTexasBenefits.',
+      'Sales con la lista exacta que te van a pedir en tu caso, sin adivinar: hipótesis clara (niño, embarazo, padre, etc.) y los documentos para el portal de tu estado.',
     ctaHero: 'Ver mi grupo y papeles →',
-    ctaCard: 'Obtener lista para HHSC →',
+    ctaCard: 'Obtener lista para Medicaid →',
     ctaCardEyebrow: 'Sin cuenta · gratis',
     ctaCardTitle: 'Recibes qué categoría revisar y qué documentos subir primero',
     ctaCardLead:
-      'El cuestionario mapea tu hogar a las reglas típicas de Texas (sin expansión ACA) y arma la carpeta antes del portal.',
+      'El cuestionario mapea tu hogar a las reglas de tu estado y arma la carpeta antes del portal oficial.',
     ctaCloseLead:
       'La mayoría de retrasos pasa por usar una lista vieja o incompleta. Si eso ocurre, te piden corregir y volver, y el proceso puede moverse semanas. Tómalo ahora y revisa tu carpeta con la versión correcta antes de enviar o ir en persona.',
     ctaCloseButton: 'Ver mi lista Medicaid correcta ahora (gratis) →',
     ctaCloseImmediate:
       'Al terminar ves en pantalla tu lista exacta (documentos + orden) para este trámite.',
     ctaCloseReassurance:
-      'Gratis para empezar · sin tarjeta · HHSC decide la elegibilidad; esto solo te prepara el paquete y el orden. Si no respondes a tiempo, el caso puede cerrarse y tocar empezar de nuevo. Te toma menos de 5 minutos y sales con la lista lista para usar hoy.',
+      'Gratis para empezar · sin tarjeta · la agencia de tu estado decide la elegibilidad; esto solo te prepara el paquete y el orden. Si no respondes a tiempo, el caso puede cerrarse y tocar empezar de nuevo. Te toma menos de 5 minutos y sales con la lista lista para usar hoy.',
   },
   itin: {
     headline: 'ITIN: ID aceptada y orden del sobre W-7',
@@ -135,9 +135,9 @@ export const FUNNEL_HERO: Partial<Record<FunnelId, FunnelHeroFields>> = {
       'No somos IRS ni Acceptance Agent · $0 para armar el plan · tú envías el paquete; nosotros no lo mandamos por ti. Si el paquete va incompleto, el IRS lo devuelve y el proceso se alarga semanas. Te toma menos de 5 minutos y sales con la lista lista para usar hoy.',
   },
   wic: {
-    headline: 'WIC Texas: carpeta lista antes de la cita clínica',
+    headline: 'WIC: carpeta lista antes de la cita clínica',
     subhead:
-      'Sales con lista de IDs, ingresos y vacunas típicos para texaswic.org o tu proveedor local.',
+      'Sales con lista de IDs, ingresos y vacunas típicos para la clínica WIC de tu estado.',
     ctaHero: 'Ver qué llevar a WIC →',
     ctaCard: 'Imprimir lista de cita →',
     ctaCardEyebrow: 'Embarazo o niño ≤5 años',

@@ -86,7 +86,7 @@ export default function MedicaidCaliforniaPage() {
         <nav className="text-sm text-gray-500 mb-6" aria-label="Ruta de navegación">
           <Link href="/" className="hover:text-navy">Inicio</Link>
           {' › '}
-          <Link href="/medicaid/" className="hover:text-navy">Medicaid</Link>
+          <Link href="/medicaid/form?state=california" className="hover:text-navy">Medicaid</Link>
           {' › '}
           <span className="text-navy font-medium">California</span>
         </nav>
@@ -107,7 +107,7 @@ export default function MedicaidCaliforniaPage() {
             <p className="font-semibold text-lg mb-1">¿Calificas para Medi-Cal?</p>
             <p className="text-white/70 text-sm">Responde 5 preguntas y te decimos qué documentos necesitas.</p>
           </div>
-          <Link href="/medicaid/" className="bg-green hover:bg-green/90 text-white font-bold px-6 py-3 rounded-xl text-sm whitespace-nowrap transition-colors">
+          <Link href="/medicaid/form?state=california" className="bg-green hover:bg-green/90 text-white font-bold px-6 py-3 rounded-xl text-sm whitespace-nowrap transition-colors">
             Evalúate gratis →
           </Link>
         </div>
@@ -221,7 +221,7 @@ export default function MedicaidCaliforniaPage() {
           <section className="rounded-xl border border-green/25 bg-emerald-50/60 p-5">
             <h2 className="font-serif text-xl text-navy mb-3">Recursos relacionados</h2>
             <ul className="space-y-2 text-sm">
-              <li><Link href="/medicaid/" className="text-green font-semibold hover:underline">Medicaid general (cuestionario)</Link></li>
+              <li><Link href="/medicaid/form?state=california" className="text-green font-semibold hover:underline">Medicaid general (cuestionario)</Link></li>
               <li><Link href="/medicaid/florida/" className="text-green font-semibold hover:underline">Medicaid Florida</Link></li>
               <li><Link href="/medicaid/texas/" className="text-green font-semibold hover:underline">Medicaid Texas</Link></li>
               <li><Link href="/snap/california/" className="text-green font-semibold hover:underline">CalFresh (SNAP) California</Link></li>

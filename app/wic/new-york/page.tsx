@@ -93,7 +93,7 @@ export default function WicNewYorkPage() {
             <nav className="text-xs text-stone-400 mb-6 flex items-center gap-1.5">
               <Link href={withTrailingSlash('/')} className="hover:text-white transition-colors">Inicio</Link>
               <span>/</span>
-              <Link href={withTrailingSlash('/wic')} className="hover:text-white transition-colors">WIC</Link>
+              <Link href={'/wic/form?state=nueva-york'} className="hover:text-white transition-colors">WIC</Link>
               <span>/</span>
               <span className="text-white">Nueva York</span>
             </nav>
@@ -113,7 +113,7 @@ export default function WicNewYorkPage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-3">
               <Link
-                href={withTrailingSlash('/wic')}
+                href={'/wic/form?state=nueva-york'}
                 className="inline-flex items-center justify-center gap-2 bg-rose-500 hover:bg-rose-400 text-white font-black px-6 py-3 rounded-xl transition-colors text-sm"
               >
                 Verificar elegibilidad gratis →
@@ -259,7 +259,7 @@ export default function WicNewYorkPage() {
               Responde el cuestionario gratis y recibe tu formulario WIC NY oficial ya completado con tus datos.
             </p>
             <Link
-              href={withTrailingSlash('/wic')}
+              href={'/wic/form?state=nueva-york'}
               className="inline-flex items-center gap-2 bg-rose-500 hover:bg-rose-400 text-white font-black px-8 py-3 rounded-xl transition-colors"
             >
               Empezar cuestionario gratis →

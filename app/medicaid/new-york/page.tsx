@@ -104,7 +104,7 @@ export default function MedicaidNewYorkPage() {
             <nav className="text-xs text-stone-400 mb-6 flex items-center gap-1.5">
               <Link href={withTrailingSlash('/')} className="hover:text-white transition-colors">Inicio</Link>
               <span>/</span>
-              <Link href={withTrailingSlash('/medicaid')} className="hover:text-white transition-colors">Medicaid</Link>
+              <Link href={'/medicaid/form?state=nueva-york'} className="hover:text-white transition-colors">Medicaid</Link>
               <span>/</span>
               <span className="text-white">Nueva York</span>
             </nav>
@@ -124,7 +124,7 @@ export default function MedicaidNewYorkPage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-3">
               <Link
-                href={withTrailingSlash('/medicaid')}
+                href={'/medicaid/form?state=nueva-york'}
                 className="inline-flex items-center justify-center gap-2 bg-blue-500 hover:bg-blue-400 text-white font-black px-6 py-3 rounded-xl transition-colors text-sm"
               >
                 Verificar elegibilidad gratis →
@@ -270,7 +270,7 @@ export default function MedicaidNewYorkPage() {
               Responde el cuestionario gratis y recibe tu formulario DOH-4220 oficial ya completado con tus datos.
             </p>
             <Link
-              href={withTrailingSlash('/medicaid')}
+              href={'/medicaid/form?state=nueva-york'}
               className="inline-flex items-center gap-2 bg-blue-500 hover:bg-blue-400 text-white font-black px-8 py-3 rounded-xl transition-colors"
             >
               Empezar cuestionario gratis →

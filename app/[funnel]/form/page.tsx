@@ -1,7 +1,7 @@
 'use client'
 
-import { useState, useEffect, useMemo } from 'react'
-import { useRouter, useParams } from 'next/navigation'
+import { useState, useEffect, useMemo, Suspense } from 'react'
+import { useRouter, useParams, useSearchParams } from 'next/navigation'
 import { FUNNELS, type FunnelId, isValidFunnelId } from '@/data/funnels'
 import Link from 'next/link'
 import { trackEvent } from '@/lib/static-backend'
@@ -42,7 +42,7 @@ const LogoMark = () => (
 const AI_MESSAGES: Partial<Record<FunnelId | 'default', string[]>> = {
   snap: [
     'Analizando ingresos del hogar…',
-    'Comparando con límites de SNAP en Texas…',
+    'Comparando con límites de SNAP en tu estado…',
     'Calculando beneficio estimado…',
     'Verificando documentos requeridos…',
     '✅ Evaluación completa',
@@ -77,14 +77,27 @@ const AI_MESSAGES: Partial<Record<FunnelId | 'default', string[]>> = {
   ],
 }
 
-export default function WizardPage() {
+function WizardPageInner() {
   const { funnel: id } = useParams<{ funnel: string }>()
   const router = useRouter()
+  const searchParams = useSearchParams()
   const { isEU, ready } = useIsEU()
   const f = typeof id === 'string' && isValidFunnelId(id) ? FUNNELS[id] : undefined
 
+  // Pre-populate state_of_residence from ?state= URL param (e.g. from /snap/new-york/ CTA)
+  const stateParam = searchParams.get('state') ?? ''
+  const STATE_MAP: Record<string, string> = {
+    'texas': 'Texas', 'tx': 'Texas',
+    'california': 'California', 'ca': 'California',
+    'florida': 'Florida', 'fl': 'Florida',
+    'nueva-york': 'Nueva York', 'new-york': 'Nueva York', 'ny': 'Nueva York',
+  }
+  const prefilledState = STATE_MAP[stateParam.toLowerCase()] ?? ''
+
   const [step, setStep] = useState(0)
-  const [formData, setFormData] = useState<Record<string, string>>({})
+  const [formData, setFormData] = useState<Record<string, string>>(
+    prefilledState ? { state_of_residence: prefilledState } : {}
+  )
   const [aiIdx, setAiIdx] = useState(0)
   const [loading, setLoading] = useState(false)
   const [stepError, setStepError] = useState<string | null>(null)
@@ -312,5 +325,13 @@ export default function WizardPage() {
         </div>
       </div>
     </AgeGate>
+  )
+}
+
+export default function WizardPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-cream flex items-center justify-center"><div className="text-gray-400">Cargando…</div></div>}>
+      <WizardPageInner />
+    </Suspense>
   )
 }

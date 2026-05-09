@@ -86,7 +86,7 @@ export default function WicFloridaPage() {
         <nav className="text-sm text-gray-500 mb-6" aria-label="Ruta de navegación">
           <Link href="/" className="hover:text-navy">Inicio</Link>
           {' › '}
-          <Link href="/wic/" className="hover:text-navy">WIC</Link>
+          <Link href="/wic/form?state=florida" className="hover:text-navy">WIC</Link>
           {' › '}
           <span className="text-navy font-medium">Florida</span>
         </nav>
@@ -107,7 +107,7 @@ export default function WicFloridaPage() {
             <p className="font-semibold text-lg mb-1">¿Calificas para WIC en Florida?</p>
             <p className="text-white/70 text-sm">Responde 5 preguntas y te decimos qué documentos necesitas.</p>
           </div>
-          <Link href="/wic/" className="bg-green hover:bg-green/90 text-white font-bold px-6 py-3 rounded-xl text-sm whitespace-nowrap transition-colors">
+          <Link href="/wic/form?state=florida" className="bg-green hover:bg-green/90 text-white font-bold px-6 py-3 rounded-xl text-sm whitespace-nowrap transition-colors">
             Evalúate gratis →
           </Link>
         </div>
@@ -204,7 +204,7 @@ export default function WicFloridaPage() {
           <section className="rounded-xl border border-green/25 bg-emerald-50/60 p-5">
             <h2 className="font-serif text-xl text-navy mb-3">Recursos relacionados</h2>
             <ul className="space-y-2 text-sm">
-              <li><Link href="/wic/" className="text-green font-semibold hover:underline">WIC general (cuestionario)</Link></li>
+              <li><Link href="/wic/form?state=florida" className="text-green font-semibold hover:underline">WIC general (cuestionario)</Link></li>
               <li><Link href="/wic/california/" className="text-green font-semibold hover:underline">WIC en California</Link></li>
               <li><Link href="/wic/texas/" className="text-green font-semibold hover:underline">WIC en Texas</Link></li>
               <li><Link href="/snap/florida/" className="text-green font-semibold hover:underline">SNAP Florida</Link></li>

@@ -108,7 +108,7 @@ export default function SnapNewYorkPage() {
             <nav className="text-xs text-stone-400 mb-6 flex items-center gap-1.5">
               <Link href={withTrailingSlash('/')} className="hover:text-white transition-colors">Inicio</Link>
               <span>/</span>
-              <Link href={withTrailingSlash('/snap')} className="hover:text-white transition-colors">SNAP</Link>
+              <Link href={'/snap/form?state=nueva-york'} className="hover:text-white transition-colors">SNAP</Link>
               <span>/</span>
               <span className="text-white">Nueva York</span>
             </nav>
@@ -128,7 +128,7 @@ export default function SnapNewYorkPage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-3">
               <Link
-                href={withTrailingSlash('/snap')}
+                href={'/snap/form?state=nueva-york'}
                 className="inline-flex items-center justify-center gap-2 bg-emerald-500 hover:bg-emerald-400 text-stone-900 font-black px-6 py-3 rounded-xl transition-colors text-sm"
               >
                 Verificar elegibilidad gratis →
@@ -279,7 +279,7 @@ export default function SnapNewYorkPage() {
               Responde el cuestionario gratis y recibe tu formulario LDSS-2921 oficial ya completado con tus datos.
             </p>
             <Link
-              href={withTrailingSlash('/snap')}
+              href={'/snap/form?state=nueva-york'}
               className="inline-flex items-center gap-2 bg-emerald-500 hover:bg-emerald-400 text-stone-900 font-black px-8 py-3 rounded-xl transition-colors"
             >
               Empezar cuestionario gratis →
