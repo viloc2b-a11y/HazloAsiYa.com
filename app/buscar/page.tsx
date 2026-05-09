@@ -26,23 +26,51 @@ export default function BuscarPage() {
   return (
     <div className="min-h-screen bg-cream">
       <Topbar />
-      <main className="max-w-3xl mx-auto px-4 py-10">
-        <nav className="text-sm text-gray-500 mb-4">
+
+      {/* ── Hero: navy background (mismo estilo que /pdf/) ── */}
+      <div className="bg-navy text-white">
+        <div className="max-w-3xl mx-auto px-6 py-12">
+          <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-3 py-1 text-xs font-bold text-green tracking-widest uppercase mb-5">
+            🔍 BÚSQUEDA EN EL SITIO
+          </div>
+          <h1 className="font-serif text-3xl sm:text-4xl text-white leading-tight mb-3">
+            Buscar en{' '}
+            <span className="text-green">HazloAsíYa</span>
+          </h1>
+          <p className="text-white/65 text-sm leading-relaxed max-w-xl">
+            Escribe palabras como <span className="text-white/90 font-semibold">&quot;SNAP&quot;</span>,{' '}
+            <span className="text-white/90 font-semibold">&quot;Medicaid&quot;</span>,{' '}
+            <span className="text-white/90 font-semibold">&quot;W-7&quot;</span> o{' '}
+            <span className="text-white/90 font-semibold">&quot;escuela&quot;</span>. Los resultados son locales a este
+            sitio — tu consulta no se envía a servidores de terceros.
+          </p>
+        </div>
+      </div>
+
+      {/* ── Search body: cream background ── */}
+      <main className="max-w-3xl mx-auto px-6 py-10">
+
+        {/* Breadcrumb */}
+        <nav className="text-sm mb-6" aria-label="Breadcrumb">
           <Link href="/" className="text-green hover:underline">
             Inicio
           </Link>
-          <span className="mx-2">/</span>
-          <span className="text-navy">Buscar</span>
+          <span className="mx-2 text-[#0A2540]/30">/</span>
+          <span className="text-[#0A2540]/60">Buscar</span>
         </nav>
-        <h1 className="font-serif text-3xl text-navy mb-2">Buscar en HazloAsíYa</h1>
-        <p className="text-gray-600 text-sm mb-8 leading-relaxed">
-          Escribe palabras como &quot;SNAP&quot;, &quot;Medicaid&quot;, &quot;W-7&quot; o &quot;escuela&quot;. Los
-          resultados son locales a este sitio (sin enviar tu consulta a un servidor de terceros).
-        </p>
+
+        {/* Pagefind search widget */}
         <PagefindSearch />
-        <p className="text-xs text-gray-500 mt-10 border-t border-cream pt-6">
+
+        {/* Footer note */}
+        <p className="text-xs text-[#0A2540]/35 mt-10 border-t border-[#E8E2D8] pt-6">
           Búsqueda con{' '}
-          <a href="https://pagefind.app/" className="text-green underline" target="_blank" rel="noopener noreferrer">
+          <a
+            href="https://pagefind.app/"
+            className="text-green underline"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             Pagefind
           </a>
           . Si no ves resultados tras un despliegue, confirma que el pipeline ejecutó el indexado post-build.
