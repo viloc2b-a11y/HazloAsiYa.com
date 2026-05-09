@@ -49,77 +49,157 @@ export default function SobreNosotrosPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
       />
       <Topbar />
-      <div className="max-w-3xl mx-auto px-4 py-12">
-        <h1 className="font-serif text-4xl text-navy mb-4">Quiénes somos</h1>
-        <p className="text-gray-500 text-sm mb-8">Última revisión de esta página: abril 2026</p>
 
-        <div className="space-y-10 text-gray-700 leading-relaxed">
-          <section>
-            <h2 className="font-serif text-2xl text-navy mb-3">Quiénes somos</h2>
-            <p>
-              <strong>HazloAsíYa</strong> es una plataforma educativa en español que guía a familias hispanas en EE. UU.
-              a completar trámites de beneficios sociales, impuestos y servicios gubernamentales sin errores y sin
-              intermediarios costosos. Operamos desde <strong>Houston, Texas</strong>.
-            </p>
-          </section>
-
-          <section>
-            <h2 className="font-serif text-2xl text-navy mb-3">Nuestra metodología</h2>
-            <p className="mb-4">
-              La información de cada guía se verifica contra fuentes oficiales antes de publicarse y se revisa cuando
-              las regulaciones cambian. Nuestras fuentes incluyen:
-            </p>
-            <ul className="list-disc list-inside space-y-2">
-              <li>
-                <ExtLink href="https://www.fns.usda.gov/">USDA Food and Nutrition Service (fns.usda.gov)</ExtLink> —
-                SNAP, WIC
-              </li>
-              <li>
-                <ExtLink href="https://www.irs.gov/">IRS.gov</ExtLink> — ITIN, formulario W-7, declaración de impuestos
-              </li>
-              <li>
-                <ExtLink href="https://www.hhs.texas.gov/">Texas HHSC (hhs.texas.gov)</ExtLink> — Medicaid Texas, CHIP
-                Texas
-              </li>
-              <li>
-                <ExtLink href="https://www.hud.gov/">HUD.gov</ExtLink> — programas de vivienda y renta
-              </li>
-              <li>
-                <ExtLink href="https://tea.texas.gov/">Texas Education Agency (tea.texas.gov)</ExtLink> — inscripción
-                escolar
-              </li>
-            </ul>
-          </section>
-
-          <section
-            className="rounded-2xl border-4 border-navy/25 bg-white p-6 shadow-sm"
-            aria-label="Aviso importante"
-          >
-            <h2 className="font-serif text-2xl text-navy mb-3">Aviso importante</h2>
-            <p className="leading-relaxed">
-              HazloAsíYa no es una agencia gubernamental, no somos abogados y no representamos al gobierno de EE. UU.
-              ni del estado de Texas. La información que ofrecemos es educativa. Para asesoría legal o representación
-              oficial, consulta a un abogado certificado o una organización de servicios legales gratuitos en tu área.
-            </p>
-          </section>
-
-          <section>
-            <h2 className="font-serif text-2xl text-navy mb-3">Contacto</h2>
-            <p>
-              Escríbenos a{' '}
-              <a href="mailto:hola@hazloasiya.com" className="text-green font-semibold underline">
-                hola@hazloasiya.com
-              </a>{' '}
-              para soporte del producto o aclaraciones sobre el uso del sitio.
-            </p>
-          </section>
-
-          <p>
-            <Link href="/" className="text-green font-semibold">
-              ← Volver al inicio
-            </Link>
+      {/* Hero */}
+      <section className="bg-navy px-4 py-16">
+        <div className="max-w-3xl mx-auto text-center">
+          <div className="text-xs font-bold tracking-widest uppercase text-green/70 mb-3">Quiénes somos</div>
+          <h1 className="font-serif text-4xl sm:text-5xl text-white leading-tight mb-5">
+            Somos de Houston.<br />Entendemos lo que vives.
+          </h1>
+          <p className="text-white/60 text-lg leading-relaxed max-w-xl mx-auto">
+            HazloAsíYa nació en el área de Houston/Katy, Texas — construido por personas que han visto de cerca
+            lo difícil que es navegar el sistema sin ayuda, sin tiempo y sin que nadie te explique en español.
           </p>
         </div>
+      </section>
+
+      <div className="max-w-3xl mx-auto px-4 py-14 space-y-12 text-gray-700 leading-relaxed">
+
+        {/* Historia */}
+        <section>
+          <h2 className="font-serif text-2xl text-navy mb-4">Por qué existe HazloAsíYa</h2>
+          <p className="mb-4">
+            La comunidad hispana de Houston es una de las más grandes y trabajadoras del país. Pero navegar
+            los trámites del gobierno en EE.&nbsp;UU. — SNAP, Medicaid, ITIN, DACA, escuela, taxes — es
+            complicado incluso para quien habla inglés perfectamente.
+          </p>
+          <p className="mb-4">
+            Para una familia hispana, el proceso se complica todavía más: formularios en inglés, instrucciones
+            confusas, requisitos que cambian, miedo a equivocarse, miedo a preguntar. La mayoría termina
+            posponiendo trámites que les corresponden — o pagando a alguien que les cobra de más por hacer
+            algo que deberían poder hacer solos.
+          </p>
+          <p>
+            Creamos HazloAsíYa para cambiar eso. No somos una organización de caridad ni una startup de Silicon
+            Valley. Somos un equipo local, basado en Houston y Katy, Texas, que construyó esta plataforma con
+            una sola pregunta en mente:{' '}
+            <strong className="text-navy">
+              ¿cómo le explicarías esto a un familiar que acaba de llegar?
+            </strong>
+          </p>
+        </section>
+
+        {/* Qué hacemos */}
+        <section className="rounded-2xl bg-white border border-cream p-6 shadow-sm">
+          <h2 className="font-serif text-2xl text-navy mb-5">Lo que hacemos — y lo que no hacemos</h2>
+          <div className="grid sm:grid-cols-2 gap-6">
+            <div>
+              <div className="text-xs font-bold tracking-widest uppercase text-green mb-3">Sí hacemos</div>
+              <ul className="space-y-2 text-sm">
+                {[
+                  'Guías paso a paso en español para trámites reales',
+                  'Formularios oficiales pre-llenados con tus datos',
+                  'Instrucciones exactas: qué llevar, qué decir, qué evitar',
+                  'Contenido verificado contra fuentes del gobierno de EE.UU.',
+                  'Ayudarte a conectar con recursos locales en Houston',
+                ].map(t => (
+                  <li key={t} className="flex gap-2 items-start">
+                    <span className="text-green font-bold mt-0.5 shrink-0">✓</span>
+                    <span>{t}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <div className="text-xs font-bold tracking-widest uppercase text-gray-400 mb-3">No hacemos</div>
+              <ul className="space-y-2 text-sm text-gray-500">
+                {[
+                  'No somos abogados ni damos asesoría legal',
+                  'No representamos al gobierno ni a ninguna agencia',
+                  'No compartimos tu información con ICE ni autoridades',
+                  'No vendemos tu información a terceros',
+                  'No prometemos resultados — la agencia decide',
+                ].map(t => (
+                  <li key={t} className="flex gap-2 items-start">
+                    <span className="text-red-400 font-bold mt-0.5 shrink-0">✗</span>
+                    <span>{t}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* Privacidad */}
+        <section className="rounded-2xl border border-green/25 bg-emerald-50/80 px-6 py-5">
+          <h2 className="font-serif text-xl text-navy mb-3">🔒 Tu información es tuya</h2>
+          <p className="text-sm leading-relaxed">
+            Solo usamos tus respuestas para preparar tu formulario y mejorar tu experiencia en la plataforma.
+            Nunca vendemos tu información. No compartimos tus datos con agencias de inmigración ni con ninguna
+            entidad gubernamental. Puedes leer nuestra{' '}
+            <Link href="/privacy/" className="text-green font-semibold hover:underline">
+              política de privacidad completa
+            </Link>
+            {' '}o solicitar la eliminación de tus datos en{' '}
+            <Link href="/mis-datos/" className="text-green font-semibold hover:underline">
+              Mis datos
+            </Link>.
+          </p>
+        </section>
+
+        {/* Metodología */}
+        <section>
+          <h2 className="font-serif text-2xl text-navy mb-4">Cómo verificamos la información</h2>
+          <p className="mb-4 text-sm">
+            Cada guía se verifica contra fuentes oficiales antes de publicarse y se actualiza cuando las
+            regulaciones cambian. No inventamos requisitos ni fechas — todo viene de la fuente.
+          </p>
+          <ul className="space-y-3 text-sm">
+            {[
+              ['https://www.fns.usda.gov/', 'USDA Food and Nutrition Service', 'SNAP, WIC'],
+              ['https://www.irs.gov/', 'IRS.gov', 'ITIN, W-7, declaración de impuestos'],
+              ['https://www.hhs.texas.gov/', 'Texas HHSC', 'Medicaid Texas, CHIP'],
+              ['https://www.uscis.gov/', 'USCIS.gov', 'DACA, renovación, permisos de trabajo'],
+              ['https://tea.texas.gov/', 'Texas Education Agency', 'Inscripción escolar, Pre-K, IEP'],
+              ['https://www.twc.texas.gov/', 'Texas Workforce Commission', 'Desempleo TWC'],
+            ].map(([href, name, scope]) => (
+              <li key={name} className="flex gap-3 items-start">
+                <span className="text-green mt-0.5 shrink-0">→</span>
+                <span>
+                  <ExtLink href={href}>{name}</ExtLink>
+                  <span className="text-gray-400"> — {scope}</span>
+                </span>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        {/* Ubicación + contacto */}
+        <section className="rounded-2xl bg-navy px-6 py-8 text-white">
+          <div className="text-xs font-bold tracking-widest uppercase text-green/70 mb-3">Dónde estamos</div>
+          <h2 className="font-serif text-2xl mb-3">📍 Houston / Katy, Texas</h2>
+          <p className="text-white/60 text-sm leading-relaxed mb-5">
+            Somos un equipo local. Conocemos los recursos del área, los consulados, los distritos escolares,
+            las clínicas y las oficinas de beneficios de Greater Houston. Eso nos permite darte información
+            que realmente aplica donde vives.
+          </p>
+          <p className="text-sm text-white/60">
+            ¿Tienes preguntas sobre el sitio?{' '}
+            <a href="mailto:hola@hazloasiya.com" className="text-green font-semibold underline">
+              hola@hazloasiya.com
+            </a>
+          </p>
+        </section>
+
+        {/* CTA */}
+        <div className="text-center pt-2 pb-6">
+          <Link href="/" className="btn-primary px-8 py-3.5 text-base inline-block">
+            Ver todos los trámites →
+          </Link>
+          <p className="text-xs text-gray-400 mt-3">Última revisión: abril 2026</p>
+        </div>
+
       </div>
     </div>
   )
