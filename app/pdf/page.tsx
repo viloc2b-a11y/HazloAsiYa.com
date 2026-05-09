@@ -53,21 +53,41 @@ export default function PdfHubPage() {
       <div className="bg-navy text-white">
         <div className="max-w-4xl mx-auto px-6 py-14">
           <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-3 py-1 text-xs font-bold text-green tracking-widest uppercase mb-5">
-            📄 {PDF_CATALOG.length} FORMULARIOS
+            📄 {PDF_CATALOG.length} FORMULARIOS OFICIALES
           </div>
           <h1 className="font-serif text-3xl sm:text-4xl text-white leading-tight mb-4">
-            Borradores oficiales{' '}
-            <span className="text-green">en español.</span>
+            Tu formulario oficial{' '}
+            <span className="text-green">ya lleno, listo para firmar.</span>
           </h1>
-          <p className="text-white/65 text-base leading-relaxed max-w-xl mb-8">
-            Asistente paso a paso y PDF para imprimir. Gratis para empezar; la descarga completa usa el checkout seguro del
-            sitio (Square).
+          <p className="text-white/65 text-base leading-relaxed max-w-2xl mb-8">
+            Responde un cuestionario breve en español. Con tus respuestas llenamos automáticamente el formulario oficial
+            que pide la agencia — SNAP, Medicaid, WIC, ITIN y más. Al final descargas el PDF completo con tus datos,
+            listo para firmar y presentar en la oficina correspondiente.
           </p>
+
+          {/* Process steps */}
+          <div className="flex flex-col sm:flex-row gap-4 mb-10">
+            {[
+              { step: '1', icon: '📝', title: 'Responde el cuestionario', desc: '5–10 preguntas en español sobre tu situación' },
+              { step: '2', icon: '⚙️', title: 'Llenamos el formulario', desc: 'Tus datos se colocan en los campos oficiales' },
+              { step: '3', icon: '📄', title: 'Descarga y presenta', desc: 'PDF listo para firmar y entregar a la agencia' },
+            ].map(s => (
+              <div key={s.step} className="flex items-start gap-3 bg-white/8 rounded-xl px-4 py-3 flex-1">
+                <div className="text-2xl mt-0.5">{s.icon}</div>
+                <div>
+                  <div className="text-xs font-bold text-white/40 uppercase tracking-widest mb-0.5">Paso {s.step}</div>
+                  <div className="text-sm font-bold text-white">{s.title}</div>
+                  <div className="text-xs text-white/55 mt-0.5">{s.desc}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+
           <div className="flex flex-wrap gap-6">
             {[
-              { num: String(PDF_CATALOG.length), label: 'formularios' },
-              { num: 'GPT', label: 'ayuda en campos' },
-              { num: 'PDF', label: 'descarga local' },
+              { num: String(PDF_CATALOG.length), label: 'formularios disponibles' },
+              { num: '4', label: 'estados: TX · CA · FL · NY' },
+              { num: '$0', label: 'para empezar' },
             ].map(s => (
               <div key={s.label}>
                 <div className="text-2xl font-bold text-white">{s.num}</div>
