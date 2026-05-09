@@ -8,9 +8,15 @@ type Props = {
   affiliate: VerifiedAffiliate
 }
 
+const IS_DEV = process.env.NODE_ENV !== 'production'
+
 export default function AffiliateCard({ affiliate }: Props) {
   const href = affiliate.url?.trim()
   const disabled = !href
+
+  // En producción: si no hay URL, no renderizar nada (evita aviso visible al usuario).
+  // En desarrollo: mostrar aviso para facilitar la configuración.
+  if (disabled && !IS_DEV) return null
 
   const onClick = () => {
     if (disabled) return
@@ -27,9 +33,11 @@ export default function AffiliateCard({ affiliate }: Props) {
       <h3 className="font-semibold text-navy text-sm">{affiliate.name}</h3>
       <p className="text-sm text-gray-600 leading-relaxed">{affiliate.description}</p>
       {disabled ? (
+        /* Solo visible en desarrollo */
         <p className="text-xs text-amber-800 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2">
-          Enlace de afiliado pendiente de configuración. No uses esta tarjeta en producción hasta definir{' '}
-          <code className="text-[10px]">NEXT_PUBLIC_AFFILIATE_*</code> en el entorno.
+          ⚙️ <strong>Dev only:</strong> Enlace pendiente. Configura{' '}
+          <code className="text-[10px]">NEXT_PUBLIC_AFFILIATE_{affiliate.slug.toUpperCase().replace('-', '_')}</code>{' '}
+          en Cloudflare Pages para activar este afiliado en producción.
         </p>
       ) : (
         <a
@@ -37,7 +45,7 @@ export default function AffiliateCard({ affiliate }: Props) {
           target="_blank"
           rel="nofollow sponsored noopener noreferrer"
           onClick={onClick}
-          className="inline-flex items-center gap-2 text-green font-semibold text-sm underline underline-offset-2 hover:text-navy"
+          className="inline-flex items-center gap-2 text-green font-semibold text-sm underline underline-offset-2 hover:text-navy transition-colors"
         >
           Ver opciones y requisitos en el sitio del proveedor →
         </a>

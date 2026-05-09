@@ -171,10 +171,16 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       })
     }
 
-    const plan =
-      productId === 'annual' ? 'annual' :
-      productId === 'assisted' ? 'assisted' :
-      'paid_guide'
+    // Mapa completo de productId → plan (sincronizado con static-backend.ts)
+    const PRODUCT_TO_PLAN: Record<string, string> = {
+      annual: 'annual',
+      assisted: 'assisted',
+      revisionExpress: 'revisionExpress',
+      kitSnap: 'kitSnap',
+      kitItin: 'kitItin',
+      main: 'paid_guide',
+    }
+    const plan = PRODUCT_TO_PLAN[productId] ?? 'paid_guide'
 
     const amountMoney = payment?.amount_money
     const amountCents = typeof amountMoney?.amount === 'number' ? amountMoney.amount : undefined

@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import { FUNNELS, NEXT_STEP_MAP, funnelLandingPath, isValidFunnelId } from '@/data/funnels'
 import Link from 'next/link'
-import { authStatic, checkoutStatic, generateResultClient, submitLeadStatic } from '@/lib/static-backend'
+import { authStatic, checkoutStatic, generateResultClient, submitLeadStatic, applyPendingPlan } from '@/lib/static-backend'
 import { generatePDF } from '@/components/PDFGenerator'
 import ResultPhase1Section from '@/components/monetization/ResultPhase1Section'
 import {
@@ -31,6 +31,9 @@ interface User {
 function productIdToPlan(productId: string): NonNullable<User['plan']> {
   if (productId === 'annual') return 'annual'
   if (productId === 'assisted') return 'assisted'
+  if (productId === 'revisionExpress') return 'revisionExpress'
+  if (productId === 'kitSnap') return 'kitSnap'
+  if (productId === 'kitItin') return 'kitItin'
   return 'paid_guide'
 }
 
@@ -70,19 +73,14 @@ export default function ResultPage() {
     if (storedUser) setUser(JSON.parse(storedUser))
 
     if (new URLSearchParams(window.location.search).get('paid') === '1') {
-      try {
-        const raw = sessionStorage.getItem('haya_pending_checkout')
-        const pending = raw ? (JSON.parse(raw) as { productId?: string; funnelId?: string }) : null
+      // FIX #3: applyPendingPlan() busca en sessionStorage Y localStorage como fallback,
+      // cubriendo el caso en que el usuario cerró la pestaña antes de que cargara.
+      const { applied } = applyPendingPlan()
+      if (applied) {
         const uRaw = localStorage.getItem('haya_user')
-        if (pending?.productId && uRaw && (!pending.funnelId || pending.funnelId === id)) {
-          const u = JSON.parse(uRaw) as User
-          u.plan = productIdToPlan(pending.productId)
-          localStorage.setItem('haya_user', JSON.stringify(u))
-          setUser(u)
-          sessionStorage.removeItem('haya_pending_checkout')
+        if (uRaw) {
+          try { setUser(JSON.parse(uRaw) as User) } catch { /* ignore */ }
         }
-      } catch {
-        /* ignore */
       }
     }
 

@@ -4,12 +4,21 @@ import { getPublishedGuideSlugs } from '@/lib/guides-fs'
 import { SITE_ORIGIN, absoluteUrl } from '@/lib/site'
 
 const GEO_PATHS = [
+  // Texas
   '/snap/texas/',
   '/medicaid/texas/',
   '/itin/houston/',
   '/id/texas/',
   '/wic/texas/',
   '/escuela/houston/',
+  // California
+  '/snap/california/',
+  '/medicaid/california/',
+  '/wic/california/',
+  // Florida
+  '/snap/florida/',
+  '/medicaid/florida/',
+  '/wic/florida/',
 ] as const
 
 /** Fecha de última modificación al construir el sitio (export estático). */
