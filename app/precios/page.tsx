@@ -36,13 +36,15 @@ export default function PreciosPage() {
   return (
     <div className="min-h-screen bg-cream">
       <Topbar />
-      <main className="max-w-6xl mx-auto px-4 py-12">
-        <h1 className="font-serif text-3xl sm:text-4xl text-navy mb-2">Planes y precios</h1>
-        {/* Dev: montos alineados con Square + data/checkout-prices.json */}
-        <p className="text-gray-600 mb-10 max-w-2xl leading-relaxed">
-          El cuestionario orientativo es gratuito. Los planes de pago desbloquean guías y materiales según el producto que
-          elijas.
+      <section className="bg-navy text-white px-4 py-16 text-center">
+        <p className="text-xs font-bold tracking-widest uppercase text-green mb-3">PLANES Y PRECIOS</p>
+        <h1 className="font-serif text-3xl sm:text-4xl text-white max-w-xl mx-auto mb-4">Elige el plan que se adapta a tu trámite</h1>
+        <p className="text-white/65 text-base max-w-lg mx-auto">
+          El cuestionario orientativo es gratuito. Los planes de pago desbloquean guías y materiales según el producto que elijas.
         </p>
+      </section>
+      <main className="max-w-6xl mx-auto px-4 py-12">
+        {/* Dev: montos alineados con Square + data/checkout-prices.json */}
 
         <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-6 mb-14">
           <PricingCard

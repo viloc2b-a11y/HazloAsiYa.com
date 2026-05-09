@@ -66,13 +66,13 @@ export default function Topbar({ user }: { user?: { email: string; name?: string
         <nav className="hidden lg:flex items-center gap-0.5">
           <Link
             href="/buscar/"
-            className="px-3 py-1.5 text-[13px] font-semibold text-white/60 hover:text-white hover:bg-white/8 rounded-lg transition-colors"
+            className="px-3 py-1.5 text-[13px] font-semibold text-white/55 hover:text-white hover:bg-white/8 rounded-lg transition-colors"
           >
             Buscar
           </Link>
           <Link
             href="/pdf/"
-            className="px-3 py-1.5 text-[13px] font-semibold text-green/90 hover:text-green hover:bg-white/8 rounded-lg transition-colors"
+            className="px-3 py-1.5 text-[13px] font-bold text-white/90 hover:text-white hover:bg-white/8 rounded-lg transition-colors whitespace-nowrap"
           >
             Formularios PDF
           </Link>
@@ -81,7 +81,7 @@ export default function Topbar({ user }: { user?: { email: string; name?: string
           <div className="relative" onClick={e => e.stopPropagation()}>
             <button
               onClick={() => setStatesOpen(!statesOpen)}
-              className="flex items-center gap-1 px-3 py-1.5 text-[13px] font-semibold text-green hover:text-white hover:bg-white/8 rounded-lg transition-colors"
+              className="flex items-center gap-1 px-3 py-1.5 text-[13px] font-bold text-white/90 hover:text-white hover:bg-white/8 rounded-lg transition-colors whitespace-nowrap"
             >
               📍 Por estado
               <svg className={`w-3 h-3 transition-transform ${statesOpen ? 'rotate-180' : ''}`} fill="currentColor" viewBox="0 0 20 20">
@@ -120,7 +120,7 @@ export default function Topbar({ user }: { user?: { email: string; name?: string
             <Link
               key={navId}
               href={funnelLandingPath(navId)}
-              className="px-3 py-1.5 text-[13px] font-semibold text-white/60 hover:text-white hover:bg-white/8 rounded-lg transition-colors"
+              className="px-3 py-1.5 text-[13px] font-semibold text-white/75 hover:text-white hover:bg-white/8 rounded-lg transition-colors whitespace-nowrap"
             >
               {navId === 'id' ? 'Texas ID' : FUNNELS[navId].name.split(' ')[0]}
             </Link>
@@ -137,7 +137,7 @@ export default function Topbar({ user }: { user?: { email: string; name?: string
               <span className="text-white/80 text-[13px] font-medium hidden sm:block">Mi cuenta</span>
             </Link>
           ) : (
-            <Link href="/?auth=login" className="text-[13px] font-semibold text-white/70 hover:text-white px-3 py-1.5 transition-colors">
+            <Link href="/?auth=login" className="text-[13px] font-semibold text-white/55 hover:text-white px-3 py-1.5 transition-colors">
               Entrar
             </Link>
           )}

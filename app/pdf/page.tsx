@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { PDF_CATALOG, getFormsByTier } from '@/types/pdf'
 import type { PdfTier } from '@/types/pdf'
 import { SITE_ORIGIN, withTrailingSlash } from '@/lib/site'
+import Topbar from '@/components/Topbar'
 
 export const metadata: Metadata = {
   title: 'Formularios y borradores en español | HazloAsíYa',
@@ -48,17 +49,17 @@ export default function PdfHubPage() {
 
   return (
     <main className="min-h-screen bg-stone-50">
-      <div className="bg-stone-900 text-white">
+      <Topbar />
+      <div className="bg-navy text-white">
         <div className="max-w-4xl mx-auto px-6 py-14">
-          <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-3 py-1 text-xs font-mono font-bold text-emerald-400 mb-5">
+          <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-3 py-1 text-xs font-bold text-green tracking-widest uppercase mb-5">
             📄 {PDF_CATALOG.length} FORMULARIOS
           </div>
-          <h1 className="text-3xl sm:text-4xl font-black leading-tight mb-4">
-            Borradores oficiales
-            <br />
-            <span className="text-emerald-400">en español.</span>
+          <h1 className="font-serif text-3xl sm:text-4xl text-white leading-tight mb-4">
+            Borradores oficiales{' '}
+            <span className="text-green">en español.</span>
           </h1>
-          <p className="text-stone-300 text-base leading-relaxed max-w-xl mb-8">
+          <p className="text-white/65 text-base leading-relaxed max-w-xl mb-8">
             Asistente paso a paso y PDF para imprimir. Gratis para empezar; la descarga completa usa el checkout seguro del
             sitio (Square).
           </p>
@@ -69,8 +70,8 @@ export default function PdfHubPage() {
               { num: 'PDF', label: 'descarga local' },
             ].map(s => (
               <div key={s.label}>
-                <div className="text-2xl font-black text-white">{s.num}</div>
-                <div className="text-xs text-stone-400">{s.label}</div>
+                <div className="text-2xl font-bold text-white">{s.num}</div>
+                <div className="text-xs text-white/45">{s.label}</div>
               </div>
             ))}
           </div>

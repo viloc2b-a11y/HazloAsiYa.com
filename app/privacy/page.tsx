@@ -4,6 +4,7 @@ import { alternatesForPath } from '@/lib/alternates'
 import { absoluteUrl } from '@/lib/site'
 import { GDPR_LEGAL_BASIS } from '@/lib/gdpr-legal-basis'
 import { AVISO_GDPR } from '@/lib/legal-texts'
+import Topbar from '@/components/Topbar'
 
 export const metadata: Metadata = {
   title: 'Política de privacidad | HazloAsíYa',
@@ -21,14 +22,17 @@ export const metadata: Metadata = {
 export default function PrivacyPage() {
   return (
     <div className="min-h-screen bg-cream">
-      <header className="bg-navy px-4 h-14 flex items-center">
-        <Link href="/" className="font-serif text-white">
-          HazloAsí<span className="text-green">Ya</span>
-        </Link>
-      </header>
+      <Topbar />
+      <section className="bg-navy px-4 py-10">
+        <div className="max-w-3xl mx-auto">
+          <p className="text-xs text-white/40 mb-1.5">
+            <Link href="/" className="text-green hover:underline">Inicio</Link> / Legal
+          </p>
+          <h1 className="font-serif text-2xl sm:text-3xl text-white">Política de privacidad</h1>
+          <p className="text-white/40 text-sm mt-1">Última actualización: abril 2026 · Houston, Texas</p>
+        </div>
+      </section>
       <div className="max-w-3xl mx-auto px-4 py-12">
-        <h1 className="font-serif text-4xl text-navy mb-2">Política de privacidad</h1>
-        <p className="text-gray-400 text-sm mb-8">Última actualización: abril 2026 · Houston, Texas</p>
         <div className="space-y-8 text-gray-700 text-sm leading-relaxed">
           <section>
             <h2 className="font-serif text-2xl text-navy mb-3">1. Quiénes somos y cómo contactarnos</h2>

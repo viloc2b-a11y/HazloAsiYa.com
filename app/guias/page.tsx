@@ -45,16 +45,14 @@ export default function GuiasIndexPage() {
     <div className="min-h-screen bg-cream">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionJsonLd) }} />
       <Topbar />
+      <section className="bg-navy text-white px-4 py-16 text-center">
+        <p className="text-xs font-bold tracking-widest uppercase text-green mb-3">GUÍAS</p>
+        <h1 className="font-serif text-3xl sm:text-4xl text-white max-w-2xl mx-auto mb-4">Guías de trámites en EE.UU. en español</h1>
+        <p className="text-white/65 text-base max-w-lg mx-auto">
+          Artículos con pasos concretos, listas de documentos y requisitos — en español, con fuentes oficiales.
+        </p>
+      </section>
       <div className="max-w-3xl mx-auto px-4 py-12">
-        <nav className="text-sm text-gray-500 mb-6">
-          <Link href="/" className="hover:text-green">
-            Inicio
-          </Link>
-          <span className="mx-2">/</span>
-          <span className="text-navy">Guías</span>
-        </nav>
-
-        <h1 className="font-serif text-3xl sm:text-4xl text-navy mb-6">Guías de trámites en EE.UU. en español</h1>
 
         <div className="space-y-4 text-gray-700 text-sm leading-relaxed mb-10">
           <p>

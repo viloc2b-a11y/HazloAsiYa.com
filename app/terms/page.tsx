@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import { alternatesForPath } from '@/lib/alternates'
 import { absoluteUrl } from '@/lib/site'
 import { UPL_LIMITATION_BLOCK } from '@/lib/legal-texts'
+import Topbar from '@/components/Topbar'
 
 export const metadata: Metadata = {
   title: 'Términos de uso | HazloAsíYa',
@@ -19,14 +20,17 @@ export const metadata: Metadata = {
 export default function TermsPage() {
   return (
     <div className="min-h-screen bg-cream">
-      <header className="bg-navy px-4 h-14 flex items-center">
-        <Link href="/" className="font-serif text-white">
-          HazloAsí<span className="text-green">Ya</span>
-        </Link>
-      </header>
+      <Topbar />
+      <section className="bg-navy px-4 py-10">
+        <div className="max-w-3xl mx-auto">
+          <p className="text-xs text-white/40 mb-1.5">
+            <Link href="/" className="text-green hover:underline">Inicio</Link> / Legal
+          </p>
+          <h1 className="font-serif text-2xl sm:text-3xl text-white">Términos de uso</h1>
+          <p className="text-white/40 text-sm mt-1">Última actualización: abril 2026 · Houston, Texas</p>
+        </div>
+      </section>
       <div className="max-w-3xl mx-auto px-4 py-12">
-        <h1 className="font-serif text-4xl text-navy mb-2">Términos de uso</h1>
-        <p className="text-gray-400 text-sm mb-8">Última actualización: abril 2026 · Houston, Texas</p>
         <div className="prose prose-sm max-w-none text-gray-700 space-y-6">
           <section>
             <h2 className="font-serif text-2xl text-navy mb-3">1. Quiénes somos y qué ofrecemos</h2>
