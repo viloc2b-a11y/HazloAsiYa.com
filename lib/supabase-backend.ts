@@ -55,8 +55,20 @@ export type SupabaseDocument = {
 
 export function isSupabaseConfigured(): boolean {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL
-  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  // Support both legacy (ANON_KEY) and new (PUBLISHABLE_KEY) env var names
+  const key =
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
+    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY
   return Boolean(url && key && url.includes('supabase.co'))
+}
+
+/** Helper to get the anon/publishable key regardless of env var name */
+function getAnonKey(): string {
+  return (
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
+    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ||
+    ''
+  )
 }
 
 // ── Auth ───────────────────────────────────────────────────────────────────
@@ -92,7 +104,7 @@ export async function authSupabase(args: {
   }
 
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
-  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  const supabaseAnonKey = getAnonKey()
   const supabase = createClient(supabaseUrl, supabaseAnonKey)
 
   if (args.action === 'logout') {

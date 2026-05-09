@@ -1,6 +1,8 @@
 type Env = {
   SUPABASE_URL: string
-  SUPABASE_SERVICE_ROLE_KEY: string
+  NEXT_PUBLIC_SUPABASE_URL?: string
+  SUPABASE_SERVICE_ROLE_KEY?: string  // legacy JWT: eyJ...
+  SUPABASE_SECRET_KEY?: string        // new format: sb_secret_...
 }
 
 type PagesFunction<E = unknown> = (context: { request: Request; env: E }) => Promise<Response>
@@ -17,8 +19,8 @@ function json(data: unknown, status = 200) {
 
 export const onRequestGet: PagesFunction<Env> = async (context) => {
   try {
-    const url = context.env.SUPABASE_URL
-    const key = context.env.SUPABASE_SERVICE_ROLE_KEY
+    const url = context.env.SUPABASE_URL || context.env.NEXT_PUBLIC_SUPABASE_URL
+    const key = context.env.SUPABASE_SERVICE_ROLE_KEY || context.env.SUPABASE_SECRET_KEY
     if (!url || !key) {
       return json({ error: 'Configuración incompleta' }, 500)
     }

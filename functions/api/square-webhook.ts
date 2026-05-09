@@ -2,7 +2,8 @@ type Env = {
   SQUARE_WEBHOOK_SIGNATURE_KEY: string
   SUPABASE_URL?: string
   NEXT_PUBLIC_SUPABASE_URL?: string
-  SUPABASE_SERVICE_ROLE_KEY: string
+  SUPABASE_SERVICE_ROLE_KEY?: string  // legacy JWT format: eyJ...
+  SUPABASE_SECRET_KEY?: string        // new format: sb_secret_...
 }
 
 type PagesFunction<E = unknown> = (context: { request: Request; env: E }) => Promise<Response>
@@ -121,7 +122,8 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     const req = context.request
     const signatureKey = context.env.SQUARE_WEBHOOK_SIGNATURE_KEY
     const supabaseUrl = context.env.SUPABASE_URL || context.env.NEXT_PUBLIC_SUPABASE_URL
-    const serviceKey = context.env.SUPABASE_SERVICE_ROLE_KEY
+    // Support both legacy (SUPABASE_SERVICE_ROLE_KEY) and new (SUPABASE_SECRET_KEY) formats
+    const serviceKey = context.env.SUPABASE_SERVICE_ROLE_KEY || context.env.SUPABASE_SECRET_KEY
 
     if (!signatureKey || !supabaseUrl || !serviceKey) return json({ error: 'Missing env' }, 500)
 
