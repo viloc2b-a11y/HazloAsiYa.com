@@ -184,7 +184,7 @@ export async function generatePDF(data: PDFData): Promise<void> {
     doc.setTextColor(...GRAY)
     doc.setFont('helvetica', 'italic')
     doc.setFontSize(9)
-    doc.text(`+ ${data.steps.length - 3} pasos mas disponibles en la guia completa — hazloasiya.com/guia ($19)`, M + 12, y + 22)
+    doc.text(`+ ${data.steps.length - 3} pasos mas disponibles en la guia completa — hazloasiya.com/guia ($29)`, M + 12, y + 22)
     y += 48
   }
 

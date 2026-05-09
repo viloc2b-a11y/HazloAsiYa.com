@@ -93,7 +93,7 @@ export default function DashboardPage() {
             {plan === 'free' && (
               <div className="bg-navy rounded-2xl p-6 text-center">
                 <div className="font-serif text-xl text-white mb-2">
-                  Primera guía por $19 · O acceso anual por $49
+                  Formulario oficial por $29 · O acceso anual por $79
                 </div>
                 <p className="text-white/50 text-sm mb-4">PDF completo con checklist, formulario de ejemplo y pasos exactos.</p>
                 <Link href="/snap" className="btn-primary inline-block">Ver opciones →</Link>
@@ -153,8 +153,8 @@ export default function DashboardPage() {
                   ['✅','Cuestionario completo'],
                   ['✅','Elegibilidad evaluada'],
                   ['✅','Primeros 3 pasos'],
-                  ['🔒','Plan completo ($19)'],
-                  ['🔒','Ejemplos de formularios ($19)'],
+                  ['🔒','Formulario oficial pre-llenado ($29)'],
+                  ['🔒','Instrucciones exactas de entrega ($29)'],
                 ] : plan === 'annual' || plan === 'assisted' ? [
                   ['✅','16 trámites ilimitados'],
                   ['✅','Planes completos con ejemplos'],
@@ -164,7 +164,7 @@ export default function DashboardPage() {
                 ] : [
                   ['✅','Plan completo desbloqueado'],
                   ['✅','PDF profesional'],
-                  ['🔒','Acceso anual ($49/año)'],
+                  ['🔒','Acceso anual ($79/año)'],
                 ]).map(([ico, label]) => (
                   <div key={label} className="flex items-center gap-3 text-sm">
                     <span>{ico}</span>
@@ -176,12 +176,12 @@ export default function DashboardPage() {
             {plan === 'free' && (
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="card p-5 border-2 border-gold">
-                  <div className="font-serif text-2xl text-navy mb-1">$19</div>
+                  <div className="font-serif text-2xl text-navy mb-1">$29</div>
                   <div className="font-bold text-sm mb-3">Guía por Trámite</div>
                   <Link href="/snap" className="btn-gold block text-center py-2.5 text-sm">Comprar →</Link>
                 </div>
                 <div className="card p-5 border-2 border-navy">
-                  <div className="font-serif text-2xl text-navy mb-1">$49<span className="text-sm text-gray-400">/año</span></div>
+                  <div className="font-serif text-2xl text-navy mb-1">$79<span className="text-sm text-gray-400">/año</span></div>
                   <div className="font-bold text-sm mb-3">Acceso Anual — 16 Trámites</div>
                   <Link href="/snap" className="btn-navy block text-center py-2.5 text-sm">Comprar →</Link>
                 </div>

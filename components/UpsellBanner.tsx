@@ -59,7 +59,7 @@ export default function UpsellBanner({ onUpgrade, onDismiss }: UpsellBannerProps
                 <h3 className="font-serif text-2xl mb-2" style={{ color: 'var(--navy)' }}>
                   La oferta ha expirado
                 </h3>
-                <p className="text-gray-400 text-sm">El precio regular del acceso anual es $49/año.</p>
+                <p className="text-gray-400 text-sm">El precio regular del acceso anual es $79/año.</p>
               </>
             ) : (
               <>
@@ -70,7 +70,7 @@ export default function UpsellBanner({ onUpgrade, onDismiss }: UpsellBannerProps
                   Por solo $30 más, accede a<br/>los 16 trámites durante un año
                 </h3>
                 <p className="text-gray-500 text-sm">
-                  Acabas de comprar 1 guía por $19. Por $30 más tienes los 16 trámites ilimitados por 12 meses.
+                  Acabas de comprar 1 formulario por $29. Por $50 más tienes los 16 trámites ilimitados por 12 meses.
                 </p>
               </>
             )}
@@ -89,7 +89,7 @@ export default function UpsellBanner({ onUpgrade, onDismiss }: UpsellBannerProps
               {/* Price */}
               <div className="text-center mb-6">
                 <div className="flex items-baseline justify-center gap-3">
-                  <span className="font-serif text-5xl" style={{ color: 'var(--navy)' }}>$49</span>
+                  <span className="font-serif text-5xl" style={{ color: 'var(--navy)' }}>$79</span>
                   <span className="text-gray-400 text-sm line-through">$266 si compras por separado</span>
                 </div>
                 <div className="text-sm text-gray-400 mt-1">16 trámites × 12 meses · Menos de $3.07/mes</div>
@@ -119,7 +119,7 @@ export default function UpsellBanner({ onUpgrade, onDismiss }: UpsellBannerProps
             </button>
             {!expired && (
               <button onClick={onUpgrade} className="flex-[2] btn-gold py-3 text-base">
-                Sí, quiero el acceso anual por $49 →
+                Sí, quiero el acceso anual por $79 →
               </button>
             )}
           </div>

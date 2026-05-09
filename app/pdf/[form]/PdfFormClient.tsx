@@ -122,14 +122,14 @@ function PdfFormInner({ formMeta }: { formMeta: PdfFormMeta }) {
 
             <div className="bg-teal-600 text-white rounded-2xl p-5">
               <div className="text-xs font-mono font-bold text-teal-200 mb-1">PRECIO</div>
-              <div className="text-3xl font-black mb-1">Desde $19</div>
+              <div className="text-3xl font-black mb-1">$29</div>
               <div className="text-teal-200 text-sm mb-4">
-                Mismo flujo de pago Square que las guías del sitio. Puedes llenar gratis y pagar al descargar.
+                Llena gratis — paga solo al descargar tu formulario oficial pre-llenado.
               </div>
               <ul className="text-sm space-y-1.5 text-teal-100">
-                <li>✓ PDF listo para imprimir</li>
-                <li>✓ Checklist orientativo</li>
-                <li>✓ Asistente GPT opcional</li>
+                <li>✓ Formulario oficial listo para entregar</li>
+                <li>✓ Checklist de documentos requeridos</li>
+                <li>✓ Instrucciones exactas de entrega</li>
               </ul>
               <div className="mt-4 pt-4 border-t border-teal-500 text-xs text-teal-200">
                 ¿Varios trámites?
@@ -140,7 +140,7 @@ function PdfFormInner({ formMeta }: { formMeta: PdfFormMeta }) {
             </div>
 
             <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 text-xs text-amber-800 leading-relaxed">
-              ⚖️ HazloAsíYa prepara borradores educativos. No sustituye formularios oficiales ni asesoría legal.
+              ⚖️ HazloAsíYa NO es una agencia gubernamental ni bufete de abogados. Este formulario es un borrador orientativo. Revisa todos los campos antes de firmar y enviar.
             </div>
           </aside>
         </div>
