@@ -98,7 +98,7 @@ export default function SnapTexasPage() {
 
         <p className="text-sm text-gray-700 mb-6 leading-relaxed rounded-xl border border-green/20 bg-white px-4 py-3">
           <strong>Enlazado en este tema:</strong>{' '}
-          <Link href="/snap/" className="text-green font-semibold hover:underline">
+          <Link href="/snap/form?state=texas" className="text-green font-semibold hover:underline">
             Cuestionario SNAP (gratis)
           </Link>
           {' · '}
@@ -294,8 +294,8 @@ export default function SnapTexasPage() {
             </h2>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="/snap/" className="text-green font-semibold hover:underline">
-                  SNAP general (cuestionario)
+                <Link href="/snap/form?state=texas" className="text-green font-semibold hover:underline">
+                  SNAP (cuestionario — Texas)
                 </Link>
               </li>
               <li>

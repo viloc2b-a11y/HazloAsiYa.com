@@ -91,7 +91,7 @@ export default function WicTexasPage() {
 
         <p className="text-sm text-gray-700 mb-6 leading-relaxed rounded-xl border border-green/20 bg-white px-4 py-3">
           <strong>Relacionado:</strong>{' '}
-          <Link href="/wic/" className="text-green font-semibold hover:underline">
+          <Link href="/wic/form?state=texas" className="text-green font-semibold hover:underline">
             Cuestionario WIC (gratis)
           </Link>
           {' · '}

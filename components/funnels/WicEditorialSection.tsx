@@ -3,12 +3,12 @@ import { absoluteUrl } from '@/lib/site'
 
 const faqItems = [
   {
-    q: '¿Qué es WIC y quién puede recibirlo en Texas?',
-    a: 'WIC (Women, Infants and Children) es un programa de nutrición federal que en Texas coordinan HHSC y proveedores locales. Suele dirigirse a embarazadas, mujeres posparto, bebés y niños hasta 5 años que califican por ingresos y riesgo nutricional. La elegibilidad la determina la clínica WIC con una evaluación.',
+    q: '¿Qué es WIC y quién puede recibirlo?',
+    a: 'WIC (Women, Infants and Children) es un programa de nutrición federal administrado por cada estado. Suele dirigirse a embarazadas, mujeres posparto, bebés y niños hasta 5 años que califican por ingresos y riesgo nutricional. La elegibilidad la determina la clínica WIC de tu área con una evaluación.',
   },
   {
-    q: '¿Dónde me inscribo a WIC en Texas?',
-    a: 'Puedes empezar en texaswic.org para información y agendar cita, o contactar la clínica WIC de tu condado (por ejemplo Harris County o tu proveedor local). Lleva identificación, comprobante de ingresos y domicilio según te indiquen.',
+    q: '¿Dónde me inscribo a WIC según mi estado?',
+    a: 'Texas: texaswic.org · California: cdph.ca.gov/wic · Florida: wicflorida.com · Nueva York: health.ny.gov/wic. En todos los casos lleva identificación, comprobante de ingresos y domicilio. Contacta la clínica WIC de tu condado para agendar cita.',
   },
   {
     q: '¿WIC afecta mi caso migratorio o es carga pública?',
@@ -19,13 +19,18 @@ const faqItems = [
 const serviceJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Service',
-  name: 'Orientación WIC (Texas)',
+  name: 'Orientación WIC — TX, CA, FL, NY',
   serviceType: 'Programa de nutrición para familia',
   description:
-    'Contenido educativo en español sobre el programa WIC en Texas, documentos comunes y cómo preparar una cita. No sustituye la determinación de la clínica WIC.',
+    'Contenido educativo en español sobre el programa WIC en Texas, California, Florida y Nueva York: documentos comunes y cómo preparar una cita. No sustituye la determinación de la clínica WIC.',
   provider: { '@type': 'Organization', name: 'HazloAsíYa', url: absoluteUrl('/') },
   url: absoluteUrl('/wic/'),
-  areaServed: { '@type': 'State', name: 'Texas' },
+  areaServed: [
+    { '@type': 'State', name: 'Texas' },
+    { '@type': 'State', name: 'California' },
+    { '@type': 'State', name: 'Florida' },
+    { '@type': 'State', name: 'New York' },
+  ],
   availableLanguage: 'Spanish',
 }
 
@@ -56,9 +61,21 @@ export default function WicEditorialSection() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
       <section className="card p-6 border border-cream space-y-8 text-navy" aria-labelledby="wic-edu-que-es">
         <p className="text-sm text-gray-700 leading-relaxed rounded-xl border border-green/20 bg-white px-4 py-3">
-          <strong>Texas y cluster beneficios:</strong>{' '}
+          <strong>WIC por estado:</strong>{' '}
           <Link href="/wic/texas/" className="text-green font-semibold hover:underline">
-            WIC en Texas (clínicas y pasos)
+            Texas
+          </Link>
+          {' · '}
+          <Link href="/wic/california/" className="text-green font-semibold hover:underline">
+            California
+          </Link>
+          {' · '}
+          <Link href="/wic/florida/" className="text-green font-semibold hover:underline">
+            Florida
+          </Link>
+          {' · '}
+          <Link href="/wic/new-york/" className="text-green font-semibold hover:underline">
+            Nueva York
           </Link>
           {' · '}
           <Link href="/snap/" className="text-green font-semibold hover:underline">
@@ -81,8 +98,8 @@ export default function WicEditorialSection() {
           </h2>
           <p className="text-gray-600 text-sm leading-relaxed mb-3">
             WIC ayuda a comprar alimentos nutritivos (fruta, verdura, leche, cereal, etc.) con tarjeta o beneficios
-            electrónicos en tiendas autorizadas, más educación nutricional y referidos a salud. En Texas operan HHSC y
-            clínicas locales; fuentes generales:{' '}
+            electrónicos en tiendas autorizadas, más educación nutricional y referidos a salud. Cada estado tiene su
+            propia agencia WIC; fuente federal:{' '}
             <a
               href="https://www.fns.usda.gov/wic"
               className="text-green font-semibold underline"
@@ -90,15 +107,6 @@ export default function WicEditorialSection() {
               rel="noopener noreferrer"
             >
               USDA FNS
-            </a>{' '}
-            y{' '}
-            <a
-              href="https://www.hhs.texas.gov/services/health/women-infants-children"
-              className="text-green font-semibold underline"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              HHSC Texas
             </a>
             .
           </p>
@@ -136,7 +144,7 @@ export default function WicEditorialSection() {
               <h3 className="font-semibold text-navy mb-2">Identidad</h3>
               <ul className="list-disc list-inside space-y-1.5 leading-relaxed">
                 <li>
-                  <strong>Ejemplos reales:</strong> licencia Texas, pasaporte, matrícula consular si la clínica la acepta;
+                  <strong>Ejemplos reales:</strong> licencia de conducir de tu estado, pasaporte, matrícula consular si la clínica la acepta;
                   algunas piden ID del adulto que firma aunque el bebé sea el beneficiario.
                 </li>
                 <li>
@@ -209,7 +217,7 @@ export default function WicEditorialSection() {
 
         {/* §3d — pasos con tiempo y “qué sigue” */}
         <div>
-          <h2 className="font-serif text-2xl text-navy mb-2">Cómo empezar en Texas</h2>
+          <h2 className="font-serif text-2xl text-navy mb-2">Cómo empezar</h2>
           <p className="text-gray-600 text-sm mb-4 leading-relaxed">
             La parte “de casa” son unos <strong>15–20 min</strong> (web o teléfono). El día de la clínica cuenta{' '}
             <strong>1–2 h</strong> entre llegada, fila y charla; lleva snack para los niños si toca esperar.
@@ -218,10 +226,8 @@ export default function WicEditorialSection() {
             <li>
               <span className="font-medium text-navy">
                 Entra a{' '}
-                <a href="https://texaswic.org" className="text-green font-semibold underline" target="_blank" rel="noopener noreferrer">
-                  texaswic.org
-                </a>{' '}
-                o llama al número de tu área
+                el portal WIC de tu estado (TX: texaswic.org · CA: cdph.ca.gov/wic · FL: wicflorida.com · NY: health.ny.gov/wic)
+                o llama al número de tu clínica local
               </span>{' '}
               <span className="text-gray-500 text-xs whitespace-nowrap">~10 min</span>
               <span className="block mt-1 text-gray-600">
@@ -302,7 +308,7 @@ export default function WicEditorialSection() {
           </dl>
         </section>
 
-        <p className="text-xs text-gray-500">HazloAsíYa no es HHSC ni USDA. La elegibilidad la determina la clínica WIC.</p>
+        <p className="text-xs text-gray-500">HazloAsíYa no es una agencia gubernamental. La elegibilidad la determina la clínica WIC de tu estado.</p>
       </section>
     </>
   )

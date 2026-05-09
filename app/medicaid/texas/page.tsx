@@ -175,8 +175,8 @@ export default function MedicaidTexasPage() {
 
           <h2 className="font-serif text-2xl text-navy">Próximo paso con HazloAsíYa</h2>
           <p>
-            <Link href="/medicaid/" className="text-green font-semibold underline">
-              Abrir la guía general de Medicaid / CHIP
+            <Link href="/medicaid/form?state=texas" className="text-green font-semibold underline">
+              Evaluar elegibilidad Medicaid / CHIP en Texas (gratis)
             </Link>{' '}
             para preparar documentos antes de la solicitud.
           </p>
