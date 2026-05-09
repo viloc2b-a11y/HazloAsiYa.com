@@ -22,7 +22,7 @@ export default function SnapEditorialSection() {
         </Link>
         {' · '}
         <Link href="/wic/" className="text-green font-semibold hover:underline">
-          WIC en Texas
+          WIC
         </Link>
         {' · '}
         <Link href="/guias/" className="text-green font-semibold hover:underline">
@@ -50,15 +50,15 @@ export default function SnapEditorialSection() {
           <li>Estado donde vives (reglas cambian por estado)</li>
         </ul>
         <p className="text-gray-600 text-sm leading-relaxed">
-          En Texas, el proceso se hace con HHSC y suele incluir revisión de documentos y entrevista.
+          Cada estado tiene su propia agencia: HHSC en Texas, CDSS en California, DCF en Florida, y OTDA en Nueva York. Todos incluyen revisión de documentos y entrevista.
         </p>
       </div>
 
       <div>
-        <h2 className="font-serif text-2xl text-navy mb-3">Límites de ingresos SNAP Texas 2026</h2>
+        <h2 className="font-serif text-2xl text-navy mb-3">Límites de ingresos SNAP 2026 (referencia federal)</h2>
         <p className="text-gray-600 text-sm mb-4 leading-relaxed">
           Referencia federal <strong>bruta mensual</strong> para el periodo{' '}
-          <strong>octubre 2025 – septiembre 2026</strong>. HHSC aplica las reglas vigentes y puede pedir comprobantes.
+          <strong>octubre 2025 – septiembre 2026</strong>. La agencia de tu estado aplica las reglas vigentes y puede pedir comprobantes.
         </p>
         <div className="overflow-x-auto rounded-xl border border-cream bg-white">
           <table className="w-full text-sm text-left">
@@ -119,7 +119,7 @@ export default function SnapEditorialSection() {
           <div>
             <h3 className="font-semibold text-navy mb-2">Identidad</h3>
             <ul className="list-disc list-inside space-y-1.5 leading-relaxed">
-              <li>ID estatal o licencia de Texas</li>
+              <li>ID estatal o licencia de conducir de tu estado</li>
               <li>Pasaporte (aunque esté vencido en algunos casos)</li>
             </ul>
           </div>
@@ -137,7 +137,7 @@ export default function SnapEditorialSection() {
           <div>
             <h3 className="font-semibold text-navy mb-2">Domicilio</h3>
             <ul className="list-disc list-inside space-y-1.5 leading-relaxed">
-              <li>Recibo de luz, gas o agua (ej. CenterPoint, TXU)</li>
+              <li>Recibo de luz, gas o agua a tu nombre</li>
               <li>Contrato de renta</li>
             </ul>
             <p className="text-gray-600 mt-2 leading-relaxed">
@@ -154,7 +154,7 @@ export default function SnapEditorialSection() {
           </div>
         </div>
         <p className="text-sm text-navy/90 font-medium mt-4 pt-4 border-t border-cream leading-relaxed">
-          Empieza por identidad y domicilio: son los que suelen revisar primero en HHSC.
+          Empieza por identidad y domicilio: son los que suelen revisar primero en la agencia de tu estado.
         </p>
       </div>
 
@@ -167,18 +167,12 @@ export default function SnapEditorialSection() {
         <ol className="list-decimal list-outside space-y-4 pl-5 text-sm text-gray-700 leading-relaxed">
           <li>
             <span className="font-medium text-navy">
-              Crear cuenta en{' '}
-              <a
-                href="https://yourtexasbenefits.com"
-                className="text-green font-semibold underline"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                YourTexasBenefits
-              </a>
+              Crear cuenta en el portal de tu estado
             </span>{' '}
             <span className="text-gray-500 text-xs whitespace-nowrap">(~5–10 min)</span>
-            <span className="block mt-1 text-gray-600">Después: ya puedes iniciar y guardar tu solicitud.</span>
+            <span className="block mt-1 text-gray-600">
+              TX: YourTexasBenefits.com · CA: BenefitsCal.com · FL: AccessFlorida.com · NY: myBenefits.ny.gov
+            </span>
           </li>
           <li>
             <span className="font-medium text-navy">Llenar la solicitud</span>{' '}
@@ -188,7 +182,7 @@ export default function SnapEditorialSection() {
           <li>
             <span className="font-medium text-navy">Subir documentos</span>{' '}
             <span className="text-gray-500 text-xs whitespace-nowrap">(~10–25 min)</span>
-            <span className="block mt-1 text-gray-600">Después: HHSC revisa tu información.</span>
+            <span className="block mt-1 text-gray-600">Después: la agencia de tu estado revisa tu información.</span>
           </li>
           <li>
             <span className="font-medium text-navy">Esperar contacto o entrevista</span>{' '}
@@ -218,7 +212,7 @@ export default function SnapEditorialSection() {
             y tengas que volver a empezar con semanas adicionales de espera.
           </li>
           <li>
-            <strong className="text-navy">No revisar notificaciones de HHSC</strong> → puedes perder solicitudes de
+            <strong className="text-navy">No revisar notificaciones de la agencia</strong> → puedes perder solicitudes de
             información y cerrar el caso.
           </li>
           <li>
@@ -234,9 +228,21 @@ export default function SnapEditorialSection() {
       </div>
 
       <p className="text-sm text-gray-600 leading-relaxed border-t border-cream pt-6">
-        Más detalle local:{' '}
+        Más detalle por estado:{' '}
         <Link href="/snap/texas/" className="text-green font-semibold underline">
-          SNAP en Texas (guía ampliada)
+          Texas
+        </Link>
+        {' · '}
+        <Link href="/snap/california/" className="text-green font-semibold underline">
+          California
+        </Link>
+        {' · '}
+        <Link href="/snap/florida/" className="text-green font-semibold underline">
+          Florida
+        </Link>
+        {' · '}
+        <Link href="/snap/new-york/" className="text-green font-semibold underline">
+          Nueva York
         </Link>
         . Lista documental paso a paso:{' '}
         <Link href="/guias/documentos-para-snap/" className="text-green font-semibold underline">
