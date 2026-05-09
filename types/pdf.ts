@@ -4,9 +4,10 @@
 // ─────────────────────────────────────────────────────────────
 
 export type PdfFormId =
-  | 'i821d' | 'i765' | 'w7'          // Tier 1: DACA / ITIN
-  | 'h1010' | 'w4'  | 'i9'           // Tier 2: SNAP / W-4 / Empleo
-  | 'dl14a' | 'matricula' | 'escuela' // Tier 3: ID / Consulado / Escuela
+  | 'i821d' | 'i765' | 'w7'                    // Tier 1: DACA / ITIN
+  | 'h1010' | 'w4'  | 'i9'                    // Tier 2: SNAP Texas / W-4 / Empleo
+  | 'saws1' | 'cfes2337'                       // Tier 2: SNAP/Medicaid California + Florida
+  | 'dl14a' | 'matricula' | 'escuela'          // Tier 3: ID / Consulado / Escuela
 
 export type PdfTier = 1 | 2 | 3
 
@@ -222,6 +223,50 @@ export const PDF_CATALOG: PdfFormMeta[] = [
     docs: [
       { id: 'lista_a', label: 'Lista A: Un documento (pasaporte, Green Card, EAD)', required: false, category: 'identity' },
       { id: 'lista_bc', label: 'Lista B + C: ID + Social Security Card', required: false, category: 'identity' },
+    ],
+  },
+  // TIER 2 — California
+  {
+    id: 'saws1',
+    tier: 2,
+    slug: 'calfresh-california',
+    title: 'CalFresh / Medi-Cal California',
+    subtitle: 'SAWS-1 — California Dept. of Social Services',
+    description: 'Prepara tu solicitud oficial SAWS-1 de California para CalFresh (SNAP), Medi-Cal y CalWORKs. El PDF se rellena con tus datos y está listo para entregar en tu condado.',
+    icon: '🏄',
+    agency: 'California CDSS',
+    formCode: 'SAWS-1',
+    price: 1900,
+    freeSteps: 2,
+    totalSteps: 5,
+    tags: ['CalFresh', 'Medi-Cal', 'California', 'SNAP', 'beneficios', 'CDSS'],
+    who: 'Familias de bajos ingresos residentes en California',
+    docs: [
+      { id: 'id', label: 'Identificación con foto', required: true, category: 'identity' },
+      { id: 'address', label: 'Comprobante de domicilio en California', required: true, category: 'address' },
+      { id: 'income', label: 'Comprobante de ingresos (si tienes)', required: false, category: 'income' },
+    ],
+  },
+  // TIER 2 — Florida
+  {
+    id: 'cfes2337',
+    tier: 2,
+    slug: 'access-florida',
+    title: 'ACCESS Florida — SNAP / Medicaid',
+    subtitle: 'CF-ES 2337 — Florida Dept. of Children and Families',
+    description: 'Prepara tu solicitud CF-ES 2337 de Florida para Food Assistance (SNAP), Medicaid y TCA. El documento se genera con tus datos y está listo para subir a myaccess.myflfamilies.com.',
+    icon: '🌴',
+    agency: 'Florida DCF',
+    formCode: 'CF-ES 2337',
+    price: 1900,
+    freeSteps: 2,
+    totalSteps: 5,
+    tags: ['SNAP', 'Medicaid', 'Florida', 'ACCESS', 'beneficios', 'DCF'],
+    who: 'Familias de bajos ingresos residentes en Florida',
+    docs: [
+      { id: 'id', label: 'Identificación con foto', required: true, category: 'identity' },
+      { id: 'address', label: 'Comprobante de domicilio en Florida', required: true, category: 'address' },
+      { id: 'income', label: 'Comprobante de ingresos (si tienes)', required: false, category: 'income' },
     ],
   },
   // TIER 3

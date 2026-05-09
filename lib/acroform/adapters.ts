@@ -7,6 +7,8 @@ import type { I9Section1Data } from './i9-mapper'
 import type { W4FormData } from './w4-mapper'
 import type { I821dFormData } from './i821d-mapper'
 import type { H1010FormData } from './h1010-mapper'
+import type { Saws1FormData } from './saws1-mapper'
+import type { CfEs2337FormData } from './cfes2337-mapper'
 
 function raw(data: Record<string, unknown>, key: string): string {
   const v = data[key]
@@ -216,6 +218,83 @@ export function toI821dFormData(data: Record<string, unknown>): I821dFormData {
     graduated: raw(data, 'graduated') === 'yes',
     employed: raw(data, 'employed') === 'yes',
     requestType,
+  }
+}
+
+/** SAWS-1 California — CalFresh / Medi-Cal / CalWORKs. */
+export function toSaws1FormData(data: Record<string, unknown>): Saws1FormData {
+  return {
+    fullName: `${raw(data, 'lastName')}, ${raw(data, 'firstName')}${raw(data, 'middleName') ? ' ' + raw(data, 'middleName').slice(0, 1) + '.' : ''}`,
+    otherName: raw(data, 'otherName') || undefined,
+    ssn: raw(data, 'ssn') || undefined,
+    streetAddress: raw(data, 'streetAddr'),
+    unit: raw(data, 'unit') || undefined,
+    city: raw(data, 'city'),
+    county: raw(data, 'county'),
+    state: 'CA',
+    zip: raw(data, 'zip'),
+    sameMailAddress: raw(data, 'sameMailAddress') !== 'no',
+    phone: raw(data, 'phone'),
+    altPhone: raw(data, 'altPhone') || undefined,
+    email: raw(data, 'email') || undefined,
+    wantEmailNotifications: raw(data, 'wantEmailNotifications') === 'yes',
+    wantCalFresh: !!data.wantCalFresh || raw(data, 'program') === 'calfresh',
+    wantMediCal: !!data.wantMediCal || raw(data, 'program') === 'medicaid',
+    wantCalWORKs: !!data.wantCalWORKs,
+    hasDisability: raw(data, 'hasDisability') === 'yes' ? true : raw(data, 'hasDisability') === 'no' ? false : undefined,
+    isHomeless: raw(data, 'isHomeless') === 'yes' ? true : raw(data, 'isHomeless') === 'no' ? false : undefined,
+    isPregnant: raw(data, 'isPregnant') === 'yes' ? true : raw(data, 'isPregnant') === 'no' ? false : undefined,
+    requestExpedited: raw(data, 'emergency') === 'yes',
+    emergLess100: raw(data, 'emergLess100') === 'yes',
+    emergLowIncome: raw(data, 'emergLowIncome') === 'yes',
+    emergUnemployed: raw(data, 'emergUnemployed') === 'yes',
+    emergMigrant: raw(data, 'emergMigrant') === 'yes',
+    emergEviction: raw(data, 'emergEviction') === 'yes',
+    emergOther: raw(data, 'emergOther') === 'yes',
+    emergOtherText: raw(data, 'emergOtherText') || undefined,
+    isHispanic: raw(data, 'isHispanic') === 'yes' ? true : raw(data, 'isHispanic') === 'no' ? false : undefined,
+    race: (raw(data, 'race') as Saws1FormData['race']) || undefined,
+  }
+}
+
+/** CF-ES 2337 Florida — SNAP / Medicaid / TCA. */
+export function toCfEs2337FormData(data: Record<string, unknown>): CfEs2337FormData {
+  const hhSize = parseInt(raw(data, 'householdSize') || '1', 10)
+  return {
+    firstName: raw(data, 'firstName'),
+    lastName: raw(data, 'lastName'),
+    middleInitial: raw(data, 'middleName') ? raw(data, 'middleName').slice(0, 1) : undefined,
+    ssn: raw(data, 'ssn') || undefined,
+    dob: raw(data, 'dob'),
+    gender: (raw(data, 'gender') as 'M' | 'F') || undefined,
+    streetAddress: raw(data, 'streetAddr'),
+    apt: raw(data, 'unit') || undefined,
+    city: raw(data, 'city'),
+    county: raw(data, 'county'),
+    zip: raw(data, 'zip'),
+    phone: raw(data, 'phone'),
+    altPhone: raw(data, 'altPhone') || undefined,
+    email: raw(data, 'email') || undefined,
+    wantFoodAssistance: !!data.wantSNAP || raw(data, 'program') === 'snap',
+    wantMedicaid: !!data.wantMedicaid || raw(data, 'program') === 'medicaid',
+    wantTCA: !!data.wantTCA,
+    isUSCitizen: raw(data, 'isUSCitizen') === 'yes' ? true : raw(data, 'isUSCitizen') === 'no' ? false : undefined,
+    immigrationStatus: raw(data, 'immigrationStatus') || undefined,
+    householdSize: isNaN(hhSize) ? 1 : hhSize,
+    hasEmployment: raw(data, 'hasEmployment') === 'yes',
+    employerName: raw(data, 'employerName') || undefined,
+    monthlyWages: raw(data, 'employmentIncome') || undefined,
+    hasSelfEmployment: raw(data, 'hasSelfEmployment') === 'yes',
+    selfEmploymentIncome: raw(data, 'selfEmploymentIncome') || undefined,
+    hasOtherIncome: raw(data, 'hasOtherIncome') === 'yes',
+    otherIncomeType: raw(data, 'otherIncomeType') || undefined,
+    otherIncomeAmount: raw(data, 'otherIncome') || undefined,
+    hasBankAccount: raw(data, 'hasBankAccount') === 'yes',
+    bankBalance: raw(data, 'bankBalance') || undefined,
+    hasVehicle: raw(data, 'hasVehicle') === 'yes',
+    vehicleValue: raw(data, 'vehicleValue') || undefined,
+    rentAmount: raw(data, 'rent') || undefined,
+    mortgageAmount: raw(data, 'mortgage') || undefined,
   }
 }
 

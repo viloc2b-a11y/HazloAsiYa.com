@@ -1,0 +1,313 @@
+<!DOCTYPE HTML>
+
+<html lang="en">
+    <head><script src="/emie-world-to-so-in-Capt-is-of-Graue-loody-Then-" async></script>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="x-ua-compatible" content="ie=edge"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    
+    <title>Page Not Found</title>
+    <meta name="keywords" content="NoIndex"/>
+    <meta name="description" content="County of Los Angeles DPSS"/>
+    <meta name="template" content="content-page"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    
+    <script defer="defer" type="text/javascript" src="https://rum.hlx.page/.rum/@adobe/helix-rum-js@%5E2/dist/rum-standalone.js" data-routing="env=prod,tier=publish,ams=County of Los Angeles DPSS Web"></script>
+<link rel="canonical" href="https://dpss.lacounty.gov/en/errors/404.html"/>
+    
+
+    <!-- DPSS css/less files included-->
+
+    
+<link rel="stylesheet" href="/etc.clientlibs/dpss/clientlibs/clientlib-base.min.c022aefae72e0cd82d4f026c3bc70e97.css" type="text/css">
+
+
+
+
+
+
+
+
+
+
+<script>
+	window.digitalData = window.digitalData || {};
+	window.digitalData.pageInfo = window.digitalData.pageInfo || {};
+	window.digitalData = {
+		pageInfo : {
+			pageName : '404',
+			pageURL : window.location.href,
+			siteSection : 'errors', //Main Section as per the Site Hierarchy
+			language : 'en', //Language where the user has visted(en, etc)
+			pageType : 'errorPage'
+		}
+	}
+</script>
+
+
+<script src="https://siteimproveanalytics.com/js/siteanalyze_1310736.js" async></script>
+
+
+
+<script src="//assets.adobedtm.com/c70179af6cc1/689b8691df2c/launch-10ba7464bf15.min.js" async></script>
+
+<!-- CSRF files included-->
+
+    
+<script src="/etc.clientlibs/clientlibs/granite/jquery/granite/csrf.min.56934e461ff6c436f962a5990541a527.js"></script>
+
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" crossorigin=""/>
+
+<script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" crossorigin=""></script>
+<!-- Load Esri Leaflet from CDN -->
+
+<script src="https://unpkg.com/esri-leaflet@3.0.10/dist/esri-leaflet.js"></script>
+
+<script src="https://unpkg.com/esri-leaflet-vector@4.0.1/dist/esri-leaflet-vector.js"></script>
+
+<script src="https://unpkg.com/esri-leaflet-geocoder@3.1.6/dist/esri-leaflet-geocoder.js"></script>
+
+<script src="https://alcdn.msauth.net/browser/2.1.0/js/msal-browser.min.js" integrity="sha384-EmYPwkfj+VVmL1brMS1h6jUztl4QMS8Qq8xlZNgIT/luzg7MAzDVrRa2JxbNmk/e" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@microsoft/microsoft-graph-client/lib/graph-js-sdk.js"></script>
+
+    
+    
+    
+
+    
+
+    
+    
+    
+
+    
+    <link rel="icon" type="image/png" href="/etc.clientlibs/dpss/clientlibs/clientlib-site/resources/favicon/apple-icon.png"/>
+   <!-- <link rel="apple-touch-icon" sizes="180x180" href="/etc.clientlibs/dpss/clientlibs/clientlib-site/resources/apple-touch-icon-180x180.png">
+    <link rel="apple-touch-icon" sizes="167x167" href="/etc.clientlibs/dpss/clientlibs/clientlib-site/resources/apple-touch-icon-167x167.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/etc.clientlibs/dpss/clientlibs/clientlib-site/resources/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/etc.clientlibs/dpss/clientlibs/clientlib-site/resources/apple-touch-icon-120x120.png">
+    <meta name="msapplication-square310x310logo" content="/etc.clientlibs/dpss/clientlibs/clientlib-site/resources/icon-310x310.png">
+    <meta name="msapplication-wide310x150logo" content="/etc.clientlibs/dpss/clientlibs/clientlib-site/resources/icon-310x150.png">
+    <meta name="msapplication-square150x150logo" content="/etc.clientlibs/dpss/clientlibs/clientlib-site/resources/icon-150x150.png">
+    <meta name="msapplication-square70x70logo" content="/etc.clientlibs/dpss/clientlibs/clientlib-site/resources/icon-70x70.png"> -->
+
+</head>
+    <body class="base-page page basicpage">
+    <div class="b-skip-navigation"><a href="">Skip to Main Content</a></div>
+        
+        
+            
+
+
+
+            
+ 
+<header class="header__content">
+    <div class="container">
+        <div class="header__logo">
+            <a href="http://www.lacounty.gov" title="LACOUNTY.GOV" class="header__logo--text">LACOUNTY.GOV</a>
+            <a href="/en.html" title="DPSS Logo">
+                <picture class=" news__img">
+                    <source srcset="/content/dam/dpss-solution-guide/logo/web-tab-logo.svg" media="(min-width: 767)"/>
+                    <img src="/content/dam/dpss-solution-guide/logo/web-tab-logo.svg" alt="DPSS Logo" title="DPSS Logo" class="header__logo-img"/>
+                </picture>
+            </a></div>
+        <button type="button" class="navbar__toggle">
+            <span class="navbar__title">Menu</span>
+            <span class="fa-solid fa-bars navbar__toggle-icon"></span>
+        </button>
+        <nav class="navbar">
+            <div class="navbar__close">
+                <span>Menu</span>
+                <a href="#" class="navbar__close-icon"><span class="header__menu-close fa-solid fa-xmark"></span></a>
+            </div>
+            <ul class="header__list">
+                
+                    <li class="header__item"><a href="/en/resources/contact.html" class="header__link" title="Contact Us">Contact Us</a></li>
+                
+                    <li class="header__item"><a href="https://my.dpss.lacounty.gov/" class="header__link" title="MyDPSS">MyDPSS</a></li>
+                
+                    <li class="header__item"><a href="https://lacounty.gov/accessibility/" target="_blank" class="header__link" title="Accessibility">Accessibility</a></li>
+                
+                <li class="header__item header__item-language google-translate-header">
+                    <a href="#" class="header__item-dropdown" title="Language">
+                        <span class="header__link header__item-current notranslate " title="Translations ">Translations <i class="fa-solid fa-language"></i></span>
+                        <span></span><span class="fa-solid fa-caret-right"></span></a>
+                    <div class="header__item-list hide">
+                        <span class="fa-solid fa-xmark language-close-icon"></span>
+                        <ul>
+                            <li><a href="#" class="backToOriginal notranslate">English</a></li>
+                            
+                                <li><a href="/es/errors/404.html" class="aem-translate notranslate" title="Spanish">Spanish</a></li>
+                            
+                        </ul>
+                        <ul class="translation-links" aria-hidden="true"></ul>
+                    </div>
+                    <p/><div id="google_translate_element"></div>
+<script>
+      function googleTranslateElementInit() {
+      new google.translate.TranslateElement({
+        pageLanguage: document.querySelector('html').getAttribute('lang'), // Replace with your webpage's default language code
+        includedLanguages: 'ar,hy,ko,km,zh-TW,fa,ru,tl,th,vi', // Replace with the languages you want to include in the dropdown menu
+
+      }, 'google_translate_element');
+    }
+</script>
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+                </li>
+                <li class="header__item header__search">
+                    
+
+
+<form action="/en/search.html" class="search" role="search" aria-label="Site Search">
+	<label for="js-search-results" class="sr-only">Search</label>
+	<input type="text" id="js-search-results" class="cmp-search-bar__field--text header__item header__search autoComplete__search" placeholder="Search" name="query" aria-label="Search"/>
+	<button type="submit" class="btn-search-visible-hidden" aria-label="Search">
+		<span class="fa-solid fa-magnifying-glass search__icon--header-position" role="presentation"></span>
+		<span class="sr-only">Search</span>
+	</button>
+	<div class="rsp-auto_complete"></div>
+</form>
+
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+<!-- Include Alert-Notification Exf -->
+
+<!-- Include Alert-Notification Exf -->
+<div class="root responsivegrid container">
+
+
+<div class="aem-Grid aem-Grid--12 aem-Grid--default--12 ">
+    
+    <div class="breadcrumb aem-GridColumn aem-GridColumn--default--12">
+<nav class="breadcrumb__content width--full" id="breadcrumb" aria-label="Breadcrumb navigation">
+    <div class="container">
+        
+    <ul class="breadcrumb__list">
+            
+        <li class="breadcrumb__item breadcrumb__link--currentLink">
+        <span class="fa-solid fa-caret-left breadcrumb__item--left-arrow" aria-hidden="true"></span>
+         <a href="/en.html" title="Home" class="breadcrumb__link breadcrumb__link--previousLink" aria-label="Navigate to Home">
+        <span class="breadcrumb__page">Home</span>
+        </a>
+         
+            </li>
+        </ul>
+    </div>
+</nav></div>
+<div class="responsivegrid aem-GridColumn aem-GridColumn--default--12">
+
+
+<div class="aem-Grid aem-Grid--12 aem-Grid--default--12 ">
+    
+    <div class="text aem-GridColumn aem-GridColumn--default--12">
+<div class="cmp-text rte__content" id="root-responsivegrid-text">
+    <p style="	text-align: center;
+"><strong>404 ERROR</strong></p>
+<p style="	text-align: center;
+">The page you are looking for wasn&#39;t found.</p>
+
+</div>
+
+    
+
+</div>
+<div class="button card--button icon__bg--blue icon__bg--light-blue banner--button font-2x aem-GridColumn--default--none aem-GridColumn aem-GridColumn--default--8 aem-GridColumn--offset--default--2">
+
+<button id="root-responsivegrid-button" aria-label="Department of Public Social Services" onclick="location.href='/content/dpss/en.html'">
+	<span class="list__view--icon fa fa-info"></span>
+	<small>Department of Public Social Services</small> <span class="fa-solid fa-caret-right gutterAll15"></span>
+</button>
+</div>
+
+    
+</div>
+</div>
+
+    
+</div>
+</div>
+
+
+<footer class="footer__content">
+    <div class="container">
+        <div class="footer__seal">
+            <img src="/content/dam/dpss-solution-guide/images/LA-County.png" alt="Los Angeles County Seal"/>
+        </div>
+        <div class="footer__copyRight">
+            <p class="footer__copyRightText"><p>© 2026 DPSS Site.</p>
+<p> All rights reserved</p>
+ </p>
+        </div>
+        <ul class="footer__list">
+            <li class="nav__item"><a href="/en/about.html" class="nav__link" aria-label="About Us / Reports">About Us / Reports</a></li>
+            <li>|</li>            
+        
+            <li class="nav__item"><a href="/en/programs.html" class="nav__link" aria-label="All Programs &amp; Services">All Programs &amp; Services</a></li>
+            <li>|</li>            
+        
+            <li class="nav__item"><a href="/en/web-forms/contact-webmaster.html" class="nav__link" aria-label="Contact Webmaster">Contact Webmaster</a></li>
+            <li>|</li>            
+        
+            <li class="nav__item"><a href="/en/web-forms/submit-jobs.html" class="nav__link" aria-label="Submit Your Job Now">Submit Your Job Now</a></li>
+            <li>|</li>            
+        
+            <li class="nav__item"><a href="https://lacounty.gov/disclaimer/" target="_blank" class="nav__link" aria-label="Disclaimer">Disclaimer</a></li>
+            <li>|</li>            
+        
+            <li class="nav__item"><a href="https://lacounty.gov/user-rights/" target="_blank" class="nav__link" aria-label="User Rights">User Rights</a></li>
+            <li>|</li>            
+        
+            <li class="nav__item"><a href="https://lacounty.gov/privacy-policy/" target="_blank" class="nav__link" aria-label="Privacy Policy">Privacy Policy</a></li>
+                        
+        </ul>
+        <ul class="social__list">
+            <li class="social__item"><a href="https://x.com/LACo_DPSS" target="_blank" aria-label="Follow us on Twitter">
+                    <span class="fa-brands fa-x-twitter"></span>
+                </a></li>            
+        
+            <li class="social__item"><a href="https://www.instagram.com/laco_dpss" target="_blank" aria-label="Follow us on Instagram">
+                    <span class="fa-brands fa-instagram"></span>
+                </a></li>            
+        
+            <li class="social__item"><a href="https://www.facebook.com/LACoDPSS/" target="_blank" aria-label="Follow us on Facebook">
+                    <span class="fa-brands fa-facebook"></span>
+                </a></li>            
+        
+            <li class="social__item"><a href="http://www.youtube.com/channel/UCv2HnBRDaDmTJXTMjFshT0g" target="_blank" aria-label="Follow us on Youtube">
+                    <span class="fa-brands fa-youtube"></span>
+                </a></li>            
+        </ul>
+    </div>
+</footer>
+            
+    
+    <!-- DPSS js files included-->
+
+    
+    
+<script src="/etc.clientlibs/core/wcm/components/commons/site/clientlibs/container.min.0a6aff292f5cc42142779cde92054524.js"></script>
+<script src="/etc.clientlibs/clientlibs/granite/jquery.min.cf5bdf053ce8fb11dd5d95ebdc71b234.js"></script>
+<script src="/etc.clientlibs/clientlibs/granite/utils.min.899004cc02c33efc1f6694b1aee587fd.js"></script>
+<script src="/etc.clientlibs/dpss/clientlibs/clientlib-base.min.0f7f19b5d75d1762c5a305a17d360036.js"></script>
+
+
+
+
+
+    
+
+    
+
+
+            
+
+        
+    <script type="text/javascript" src="/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=1&cb=1061188422" async></script></body>
+</html>

@@ -635,6 +635,203 @@ export default function PdfFormSteps({ formId, stepIndex, formData, onChange, er
     return <p className="text-sm text-stone-600">Plyler v. Doe: derecho a educación pública en Texas.</p>
   }
 
+  // ── SAWS-1 California (CalFresh / Medi-Cal / CalWORKs) ──────────────────
+  if (formId === 'saws1') {
+    if (stepIndex === 0)
+      return (
+        <div className="space-y-4">
+          <div className="rounded-xl border border-blue-100 bg-blue-50/60 p-3 text-xs text-blue-800">
+            <strong>SAWS-1 — California</strong> · CalFresh (SNAP), Medi-Cal y CalWORKs
+          </div>
+          <div>
+            <div className="text-xs font-bold text-stone-600 mb-2">Programas que solicitas</div>
+            <C id="wantCalFresh" label="CalFresh (SNAP) — Asistencia de alimentos" checked={!!v('wantCalFresh')} onChange={onChange} />
+            <C id="wantMediCal" label="Medi-Cal — Cobertura médica" checked={!!v('wantMediCal')} onChange={onChange} />
+            <C id="wantCalWORKs" label="CalWORKs — Asistencia en efectivo" checked={!!v('wantCalWORKs')} onChange={onChange} />
+          </div>
+          <div>
+            <div className="text-xs font-bold text-stone-600 mb-2">¿Necesitas CalFresh de emergencia (expedited)?</div>
+            <R name="emergency" value="yes" label="Sí — tengo menos de $100 o situación urgente" current={v('emergency')} onChange={onChange} />
+            <R name="emergency" value="no" label="No — solicitud regular" current={v('emergency')} onChange={onChange} />
+          </div>
+        </div>
+      )
+    if (stepIndex === 1)
+      return (
+        <div className="grid sm:grid-cols-2 gap-3">
+          <T id="lastName" label="Apellido" value={v('lastName')} onChange={onChange} err={e('lastName')} />
+          <T id="firstName" label="Nombre" value={v('firstName')} onChange={onChange} err={e('firstName')} />
+          <T id="middleName" label="Segundo nombre" value={v('middleName')} onChange={onChange} />
+          <T id="otherName" label="Otro nombre (si aplica)" value={v('otherName')} onChange={onChange} />
+          <T id="dob" label="Fecha de nacimiento" value={v('dob')} onChange={onChange} err={e('dob')} ph="MM/DD/YYYY" />
+          <T id="ssn" label="Social Security Number (opcional)" value={v('ssn')} onChange={onChange} />
+        </div>
+      )
+    if (stepIndex === 2)
+      return (
+        <div className="grid sm:grid-cols-2 gap-3">
+          <div className="sm:col-span-2">
+            <T id="streetAddr" label="Dirección en California" value={v('streetAddr')} onChange={onChange} err={e('streetAddr')} />
+          </div>
+          <T id="unit" label="Apt / Unidad" value={v('unit')} onChange={onChange} />
+          <T id="city" label="Ciudad" value={v('city')} onChange={onChange} err={e('city')} />
+          <T id="county" label="Condado" value={v('county')} onChange={onChange} err={e('county')} ph="Los Angeles, San Diego…" />
+          <T id="zip" label="ZIP" value={v('zip')} onChange={onChange} err={e('zip')} />
+          <T id="phone" label="Teléfono" value={v('phone')} onChange={onChange} err={e('phone')} type="tel" />
+          <T id="altPhone" label="Teléfono alternativo" value={v('altPhone')} onChange={onChange} type="tel" />
+          <div className="sm:col-span-2">
+            <T id="email" label="Correo electrónico" value={v('email')} onChange={onChange} type="email" />
+          </div>
+        </div>
+      )
+    if (stepIndex === 3)
+      return (
+        <div className="space-y-4">
+          <div>
+            <div className="text-xs font-bold text-stone-600 mb-2">Condiciones especiales</div>
+            <div className="grid sm:grid-cols-2 gap-2">
+              <div>
+                <div className="text-xs text-stone-500 mb-1">¿Tienes discapacidad?</div>
+                <R name="hasDisability" value="yes" label="Sí" current={v('hasDisability')} onChange={onChange} />
+                <R name="hasDisability" value="no" label="No" current={v('hasDisability')} onChange={onChange} />
+              </div>
+              <div>
+                <div className="text-xs text-stone-500 mb-1">¿Estás sin hogar?</div>
+                <R name="isHomeless" value="yes" label="Sí" current={v('isHomeless')} onChange={onChange} />
+                <R name="isHomeless" value="no" label="No" current={v('isHomeless')} onChange={onChange} />
+              </div>
+              <div>
+                <div className="text-xs text-stone-500 mb-1">¿Estás embarazada?</div>
+                <R name="isPregnant" value="yes" label="Sí" current={v('isPregnant')} onChange={onChange} />
+                <R name="isPregnant" value="no" label="No" current={v('isPregnant')} onChange={onChange} />
+              </div>
+            </div>
+          </div>
+          <div>
+            <div className="text-xs font-bold text-stone-600 mb-2">Etnicidad (opcional)</div>
+            <div className="grid sm:grid-cols-2 gap-2">
+              <div>
+                <div className="text-xs text-stone-500 mb-1">¿Eres hispano/latino?</div>
+                <R name="isHispanic" value="yes" label="Sí" current={v('isHispanic')} onChange={onChange} />
+                <R name="isHispanic" value="no" label="No" current={v('isHispanic')} onChange={onChange} />
+              </div>
+              <div>
+                <div className="text-xs text-stone-500 mb-1">Raza</div>
+                <R name="race" value="white" label="Blanco" current={v('race')} onChange={onChange} />
+                <R name="race" value="black" label="Negro / Afroamericano" current={v('race')} onChange={onChange} />
+                <R name="race" value="asian" label="Asiático" current={v('race')} onChange={onChange} />
+                <R name="race" value="native" label="Nativo americano" current={v('race')} onChange={onChange} />
+                <R name="race" value="other" label="Otro" current={v('race')} onChange={onChange} />
+              </div>
+            </div>
+          </div>
+        </div>
+      )
+    return (
+      <div className="space-y-2 text-sm text-stone-700">
+        <p>Tu solicitud SAWS-1 está lista. El PDF oficial de California se descargará con tus datos pre-llenados.</p>
+        <p className="text-xs text-stone-500">Entrégalo en tu condado o aplica en línea en <strong>BenefitsCal.com</strong></p>
+      </div>
+    )
+  }
+
+  // ── CF-ES 2337 Florida (SNAP / Medicaid / TCA) ───────────────────────────
+  if (formId === 'cfes2337') {
+    if (stepIndex === 0)
+      return (
+        <div className="space-y-4">
+          <div className="rounded-xl border border-orange-100 bg-orange-50/60 p-3 text-xs text-orange-800">
+            <strong>CF-ES 2337 — Florida ACCESS</strong> · Food Assistance (SNAP), Medicaid y TCA
+          </div>
+          <div>
+            <div className="text-xs font-bold text-stone-600 mb-2">Programas que solicitas</div>
+            <C id="wantSNAP" label="Food Assistance (SNAP) — Asistencia de alimentos" checked={!!v('wantSNAP')} onChange={onChange} />
+            <C id="wantMedicaid" label="Medicaid — Cobertura médica" checked={!!v('wantMedicaid')} onChange={onChange} />
+            <C id="wantTCA" label="TCA — Temporary Cash Assistance" checked={!!v('wantTCA')} onChange={onChange} />
+          </div>
+          <div>
+            <div className="text-xs font-bold text-stone-600 mb-2">¿Eres ciudadano o nacional de EE.UU.?</div>
+            <R name="isUSCitizen" value="yes" label="Sí — ciudadano o nacional" current={v('isUSCitizen')} onChange={onChange} />
+            <R name="isUSCitizen" value="no" label="No — inmigrante calificado" current={v('isUSCitizen')} onChange={onChange} />
+          </div>
+          {String(v('isUSCitizen')) === 'no' && (
+            <T id="immigrationStatus" label="Estado migratorio (ej: LPR, DACA, Refugiado)" value={v('immigrationStatus')} onChange={onChange} />
+          )}
+        </div>
+      )
+    if (stepIndex === 1)
+      return (
+        <div className="grid sm:grid-cols-2 gap-3">
+          <T id="lastName" label="Apellido" value={v('lastName')} onChange={onChange} err={e('lastName')} />
+          <T id="firstName" label="Nombre" value={v('firstName')} onChange={onChange} err={e('firstName')} />
+          <T id="middleName" label="Inicial del segundo nombre" value={v('middleName')} onChange={onChange} />
+          <T id="dob" label="Fecha de nacimiento" value={v('dob')} onChange={onChange} err={e('dob')} ph="MM/DD/YYYY" />
+          <T id="ssn" label="Social Security Number (opcional)" value={v('ssn')} onChange={onChange} />
+          <div>
+            <div className="text-xs font-bold text-stone-600 mb-2">Género</div>
+            <R name="gender" value="F" label="Femenino" current={v('gender')} onChange={onChange} />
+            <R name="gender" value="M" label="Masculino" current={v('gender')} onChange={onChange} />
+          </div>
+          <T id="householdSize" label="Tamaño del hogar (personas)" value={v('householdSize')} onChange={onChange} err={e('householdSize')} type="number" />
+        </div>
+      )
+    if (stepIndex === 2)
+      return (
+        <div className="grid sm:grid-cols-2 gap-3">
+          <div className="sm:col-span-2">
+            <T id="streetAddr" label="Dirección en Florida" value={v('streetAddr')} onChange={onChange} err={e('streetAddr')} />
+          </div>
+          <T id="unit" label="Apt / Unidad" value={v('unit')} onChange={onChange} />
+          <T id="city" label="Ciudad" value={v('city')} onChange={onChange} err={e('city')} />
+          <T id="county" label="Condado" value={v('county')} onChange={onChange} err={e('county')} ph="Miami-Dade, Broward…" />
+          <T id="zip" label="ZIP" value={v('zip')} onChange={onChange} err={e('zip')} />
+          <T id="phone" label="Teléfono" value={v('phone')} onChange={onChange} err={e('phone')} type="tel" />
+          <T id="altPhone" label="Teléfono alternativo" value={v('altPhone')} onChange={onChange} type="tel" />
+          <div className="sm:col-span-2">
+            <T id="email" label="Correo electrónico" value={v('email')} onChange={onChange} type="email" />
+          </div>
+        </div>
+      )
+    if (stepIndex === 3)
+      return (
+        <div className="space-y-4">
+          <div>
+            <div className="text-xs font-bold text-stone-600 mb-2">Ingresos del hogar</div>
+            <C id="hasEmployment" label="Empleo (salario)" checked={!!v('hasEmployment')} onChange={onChange} />
+            {!!v('hasEmployment') && (
+              <div className="grid sm:grid-cols-2 gap-3 mt-2 pl-4">
+                <T id="employerName" label="Nombre del empleador" value={v('employerName')} onChange={onChange} />
+                <T id="employmentIncome" label="Ingreso mensual ($)" value={v('employmentIncome')} onChange={onChange} type="number" />
+              </div>
+            )}
+            <C id="hasSelfEmployment" label="Trabajo independiente" checked={!!v('hasSelfEmployment')} onChange={onChange} />
+            {!!v('hasSelfEmployment') && (
+              <div className="mt-2 pl-4">
+                <T id="selfEmploymentIncome" label="Ingreso neto mensual ($)" value={v('selfEmploymentIncome')} onChange={onChange} type="number" />
+              </div>
+            )}
+            <C id="hasOtherIncome" label="Otros ingresos (SSI, pensión, etc.)" checked={!!v('hasOtherIncome')} onChange={onChange} />
+            {!!v('hasOtherIncome') && (
+              <div className="grid sm:grid-cols-2 gap-3 mt-2 pl-4">
+                <T id="otherIncomeType" label="Tipo de ingreso" value={v('otherIncomeType')} onChange={onChange} />
+                <T id="otherIncome" label="Monto mensual ($)" value={v('otherIncome')} onChange={onChange} type="number" />
+              </div>
+            )}
+          </div>
+          <div>
+            <div className="text-xs font-bold text-stone-600 mb-2">Gastos de vivienda</div>
+            <T id="rent" label="Renta mensual ($)" value={v('rent')} onChange={onChange} type="number" />
+          </div>
+        </div>
+      )
+    return (
+      <div className="space-y-2 text-sm text-stone-700">
+        <p>Tu solicitud CF-ES 2337 de Florida está lista. El PDF se descargará con todos tus datos.</p>
+        <p className="text-xs text-stone-500">Súbela en <strong>myaccess.myflfamilies.com</strong> o llévala a tu Family Resource Center local.</p>
+      </div>
+    )
+  }
+
   return <p className="text-sm text-stone-500">Formulario no disponible.</p>
 }
 

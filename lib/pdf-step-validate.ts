@@ -71,6 +71,26 @@ export function validatePdfStep(formId: PdfFormId, stepIndex: number, data: Reco
       if (stepIndex === 1) req(['fn', 'ln', 'rel', 'phone'])
       if (stepIndex === 2) req(['str', 'cty', 'zip', 'en', 'ep'])
       return miss
+    case 'saws1':
+      // Paso 0: al menos un programa seleccionado
+      if (stepIndex === 0 && !anyTrue(data, ['wantCalFresh', 'wantMediCal', 'wantCalWORKs'])) {
+        miss.push('programs')
+      }
+      // Paso 1: datos personales
+      if (stepIndex === 1) req(['lastName', 'firstName', 'dob'])
+      // Paso 2: dirección en California
+      if (stepIndex === 2) req(['streetAddr', 'city', 'county', 'zip', 'phone'])
+      return miss
+    case 'cfes2337':
+      // Paso 0: al menos un programa seleccionado
+      if (stepIndex === 0 && !anyTrue(data, ['wantSNAP', 'wantMedicaid', 'wantTCA'])) {
+        miss.push('programs')
+      }
+      // Paso 1: datos personales
+      if (stepIndex === 1) req(['lastName', 'firstName', 'dob', 'householdSize'])
+      // Paso 2: dirección en Florida
+      if (stepIndex === 2) req(['streetAddr', 'city', 'county', 'zip', 'phone'])
+      return miss
     default:
       return miss
   }
