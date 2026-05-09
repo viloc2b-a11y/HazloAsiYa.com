@@ -31,6 +31,8 @@ import { fillI9AcroForm } from './i9-mapper'
 import { fillSaws1AcroForm } from './saws1-mapper'
 import { fillCfEs2337Form } from './cfes2337-mapper'
 import { generateCaWic100 } from './cawic100-mapper'
+import { generateLdss2921Pdf } from './ldss2921-mapper'
+import { generateNyWicPdf } from './nywic-mapper'
 
 import {
   toH1010FormData,
@@ -42,6 +44,8 @@ import {
   toSaws1FormData,
   toCfEs2337FormData,
   toCaWic100FormData,
+  toLdss2921FormData,
+  toNyWicFormData,
 } from './adapters'
 
 // Formularios que tienen PDF oficial con campos AcroForm rellenables
@@ -59,6 +63,8 @@ const ACROFORM_READY: ReadonlySet<PdfFormId> = new Set([
 const VISUAL_ONLY: ReadonlySet<PdfFormId> = new Set([
   'cfes2337',
   'cawic100',
+  'ldss2921',
+  'nywic',
 ])
 
 export type PdfSource = 'acroform' | 'visual'
@@ -151,6 +157,10 @@ async function fillVisualDirect(
       return fillCfEs2337Form(toCfEs2337FormData(data))
     case 'cawic100':
       return generateCaWic100(toCaWic100FormData(data))
+    case 'ldss2921':
+      return generateLdss2921Pdf(toLdss2921FormData(data))
+    case 'nywic':
+      return generateNyWicPdf(toNyWicFormData(data))
     default:
       throw new Error(`No visual generator for: ${formId}`)
   }
@@ -180,7 +190,9 @@ function officialFilename(formId: PdfFormId): string {
     i9:       'I-9 Employment Eligibility',
     saws1:    'SAWS-1 California CalFresh Medi-Cal Application',
     cfes2337: 'CF-ES-2337 Florida ACCESS Application',
-  cawic100: 'CA-WIC-100 California WIC Application',
+    cawic100: 'CA-WIC-100 California WIC Application',
+    ldss2921: 'LDSS-2921 New York SNAP Medicaid Application',
+    nywic:    'NY WIC New York WIC Application',
   }
   return names[formId] ?? formId
 }

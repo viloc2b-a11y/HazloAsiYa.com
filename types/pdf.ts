@@ -7,6 +7,7 @@ export type PdfFormId =
   | 'i821d' | 'i765' | 'w7'                    // Tier 1: DACA / ITIN
   | 'h1010' | 'w4'  | 'i9'                    // Tier 2: SNAP Texas / W-4 / Empleo
   | 'saws1' | 'cfes2337' | 'cawic100'          // Tier 2: SNAP/Medicaid/WIC California + Florida
+  | 'ldss2921' | 'nywic'                        // Tier 2: SNAP/Medicaid/WIC Nueva York
   | 'dl14a' | 'matricula' | 'escuela'          // Tier 3: ID / Consulado / Escuela
 
 export type PdfTier = 1 | 2 | 3
@@ -292,6 +293,52 @@ export const PDF_CATALOG: PdfFormMeta[] = [
       { id: 'birth', label: 'Acta de nacimiento del niño/infante (si aplica)', required: false, category: 'identity' },
     ],
   },
+  // TIER 2 — Nueva York
+  {
+    id: 'ldss2921',
+    tier: 2,
+    slug: 'snap-nueva-york',
+    title: 'SNAP / Medicaid Nueva York',
+    subtitle: 'LDSS-2921 — New York Office of Temporary & Disability Assistance',
+    description: 'Prepara tu solicitud oficial LDSS-2921 de Nueva York para SNAP, Medicaid, Family Assistance y Safety Net. El documento se genera con tus datos y está listo para subir a mybenefits.ny.gov o llevar a tu HRA/DSS local.',
+    icon: '🗽',
+    agency: 'NY OTDA / HRA',
+    formCode: 'LDSS-2921',
+    price: 2900,
+    freeSteps: 2,
+    totalSteps: 5,
+    tags: ['SNAP', 'Medicaid', 'Nueva York', 'beneficios', 'OTDA', 'HRA', 'DSS'],
+    who: 'Familias de bajos ingresos residentes en Nueva York',
+    docs: [
+      { id: 'id', label: 'Identificación con foto (pasaporte, Green Card, IDNYC)', required: true, category: 'identity' },
+      { id: 'address', label: 'Comprobante de domicilio en Nueva York', required: true, category: 'address' },
+      { id: 'income', label: 'Comprobante de ingresos (talones de pago, carta de empleador)', required: false, category: 'income' },
+      { id: 'ssn', label: 'Social Security Number o prueba de solicitud (si aplica)', required: false, category: 'identity' },
+    ],
+  },
+  {
+    id: 'nywic',
+    tier: 2,
+    slug: 'wic-nueva-york',
+    title: 'WIC Nueva York — Solicitud de Beneficios',
+    subtitle: 'NY WIC — New York State Dept. of Health',
+    description: 'Prepara tu solicitud WIC de Nueva York con todos tus datos. El documento se genera listo para llevar a tu cita en la agencia WIC local o llamar al 1-800-522-5006.',
+    icon: '🍎',
+    agency: 'NY DOH — WIC Program',
+    formCode: 'NY WIC Application',
+    price: 2900,
+    freeSteps: 2,
+    totalSteps: 5,
+    tags: ['WIC', 'Nueva York', 'alimentos', 'embarazada', 'infante', 'DOH'],
+    who: 'Embarazadas, madres lactando, infantes y niños hasta 5 años en Nueva York',
+    docs: [
+      { id: 'id', label: 'Identificación con foto (pasaporte, Green Card, IDNYC)', required: true, category: 'identity' },
+      { id: 'address', label: 'Comprobante de domicilio en Nueva York', required: true, category: 'address' },
+      { id: 'income', label: 'Comprobante de ingresos (si tienes)', required: false, category: 'income' },
+      { id: 'pregnancy', label: 'Confirmación de embarazo del médico (si estás embarazada)', required: false, category: 'health' },
+      { id: 'birth', label: 'Acta de nacimiento del niño/infante (si aplica)', required: false, category: 'identity' },
+    ],
+  },
   // TIER 3
   {
     id: 'dl14a',
@@ -395,9 +442,13 @@ export function getRecommendedFormForFunnel(
     medicaid_default: 'h1010',
     // WIC
     wic_ca: 'cawic100',
-    wic_fl: 'cawic100', // WIC FL visual, same wizard
+    wic_fl: 'cfes2337',
     wic_tx: 'cawic100',
+    wic_ny: 'nywic',
     wic_default: 'cawic100',
+    // Nueva York SNAP/Medicaid
+    snap_ny: 'ldss2921',
+    medicaid_ny: 'ldss2921',
     // DACA / Inmigración
     daca_default: 'i821d',
     // ITIN
@@ -412,7 +463,8 @@ export function getRecommendedFormForFunnel(
     escuela_default: 'escuela',
   }
 
-  const suffix = isCA ? 'ca' : isFL ? 'fl' : 'tx'
+  const isNY = state.includes('new york') || state.includes('nueva york') || state === 'ny'
+  const suffix = isCA ? 'ca' : isFL ? 'fl' : isNY ? 'ny' : 'tx'
   const key = `${funnelId}_${suffix}` in map
     ? `${funnelId}_${suffix}`
     : `${funnelId}_default`

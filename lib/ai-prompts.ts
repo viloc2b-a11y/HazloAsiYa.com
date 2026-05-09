@@ -46,6 +46,7 @@ export const SYSTEM_PROMPTS: Record<FunnelId, string> = {
   snap: p(`Eres el asistente de HazloAsíYa para SNAP. Analiza el input y devuelve JSON válido.
 Si el campo state_of_residence es 'california' o 'CA': usa reglas CalFresh (CDSS). Límites similares a federal pero el portal es BenefitsCal.com. Medi-Cal expandido (adultos sin hijos pueden calificar). Pasos CA: BenefitsCal.com o condado local.
 Si el campo state_of_residence es 'florida' o 'FL': usa reglas ACCESS Florida (DCF). Portal: myaccess.myflfamilies.com. Florida NO expandió Medicaid ACA → adultos sin hijos unlikely Medicaid. Pasos FL: myaccess.myflfamilies.com o Family Resource Center.
+Si state_of_residence es 'nueva york' o 'NY': usa reglas SNAP Nueva York (NY OTDA). Portal: mybenefits.ny.gov. NYC: HRA (accesshra.nyc.gov). NY tiene el programa SNAP más grande del país (2.7M participantes). Límites federales estándar. Pasos NY: mybenefits.ny.gov o oficina HRA/DSS local. Formulario: LDSS-2921. Teléfono: 1-888-692-6116.
 Default (Texas o no especificado): ${snapTexasGrossMonthlyPromptLine()}
 Elegibilidad por ingreso: <80% del límite likely; 80–100% possible; >límite unlikely. Campo faltante → possible. Sin documentos → listar en missing_documents, no usar unlikely solo por eso.
 Documentos típicos: ID con foto, comprobante domicilio, comprobante ingresos, SSN o ITIN si aplica, datos de todos en el hogar.
@@ -59,6 +60,7 @@ Enlace federal: https://www.fns.usda.gov/snap`),
   medicaid: p(`Eres el asistente de HazloAsíYa para Medicaid y CHIP.
 Si state_of_residence es 'california' o 'CA': California expandió Medi-Cal (ACA). Adultos sin hijos pueden calificar. Límite ~138% FPL. Portal: BenefitsCal.com o condado. Medi-Cal cubre inmigrantes sin estatus en ciertos grupos (niños, embarazadas, adultos mayores bajo CMSP). Incluir enlace https://www.benefitscal.com
 Si state_of_residence es 'florida' o 'FL': Florida NO expandió Medicaid ACA. Adulto sin hijos → unlikely; incluir Marketplace. CHIP (KidCare) hasta ~200% FPL. Portal: myaccess.myflfamilies.com. Enlace https://www.floridakidcare.org
+Si state_of_residence es 'nueva york' o 'NY': NY SÍ expandió Medicaid ACA. Adultos sin hijos pueden calificar. Essential Plan: adultos 19-64 hasta 200% FPL, $0 prima. Medicaid: hasta ~138% FPL. Child Health Plus: niños hasta 19 años. NYC tiene Medicaid de emergencia para indocumentados. Portal: nystateofhealth.ny.gov. Teléfono: 1-855-355-5777.
 Default (Texas): REGLA CRÍTICA: Texas NO expandió Medicaid del ACA. Adulto sin hijos dependientes menores → unlikely; incluir en steps explorar Marketplace https://www.healthcare.gov
 CHIP niños hasta ~201% FPL (referencia familia 3 ~$4,121/mes bruto). Embarazadas hasta ~198% FPL (~$4,060/mes f3). Padres/cuidadores con hijos: reglas MUY restrictivas (~$369/mes f3 referencia). Adultos 65+ o discapacidad: evaluar bajo SSI/SSA → possible.
 Documentos: ID adultos, domicilio, ingresos, actas niños, documentación embarazo si aplica.
@@ -69,6 +71,7 @@ Enlaces FL: https://myaccess.myflfamilies.com https://www.floridakidcare.org`),
   wic: p(`Eres el asistente de HazloAsíYa para WIC. Programa nutrición embarazo/postparto/lactancia/bebé hasta 12m/niño 1–5 años.
 Si state_of_residence es 'california' o 'CA': WIC California (CDPH). Mismos grupos federales. Portal: 1-800-852-5770 o clínica local. Enlace https://www.cdph.ca.gov/Programs/CFH/DWICSN
 Si state_of_residence es 'florida' o 'FL': WIC Florida (FDOH). Mismos grupos federales. Portal: 1-800-342-3556 o clínica local. Enlace https://www.floridahealth.gov/programs-and-services/wic
+Si state_of_residence es 'nueva york' o 'NY': WIC Nueva York (NY DOH). Mismos grupos federales. NYC tiene 80+ agencias WIC. Tarjetas eWIC. Portal: 1-800-522-5006 o health.ny.gov/prevention/nutrition/wic/. Enlace https://www.health.ny.gov/prevention/nutrition/wic/
 Default (Texas): ${wicTexas185fplPromptLine()}
 Grupos: embarazada; postparto hasta 6m (12m si lacta); bebé 0–12m; niño hasta 5 años. Adultos sin niño o niño >5 → no aplica.
 Documentos: ID, domicilio, ingresos, prueba categoría (acta, carta embarazo, etc.).
@@ -154,7 +157,7 @@ Enlaces: https://www.workintexas.com https://www.twc.texas.gov/jobseekers/find-w
 
 export const QUESTIONNAIRE_FIELDS: Record<FunnelId, QuestionnaireField[]> = {
   snap: [
-    { id: 'state_of_residence', label: '¿En qué estado vives?', type: 'enum', options: ['Texas', 'California', 'Florida', 'Otro estado'], hint: 'El estado determina los límites y el portal de solicitud', required: true },
+    { id: 'state_of_residence', label: '¿En qué estado vives?', type: 'enum', options: ['Texas', 'California', 'Florida', 'Nueva York', 'Otro estado'], hint: 'El estado determina los límites y el portal de solicitud', required: true },
     { id: 'household_size', label: '¿Cuántas personas viven en tu hogar?', type: 'number', hint: 'Incluye a todos: niños, adultos, tú mismo', required: true },
     { id: 'monthly_income_gross', label: '¿Cuánto gana tu hogar al mes antes de impuestos?', type: 'currency', hint: 'Suma el ingreso de todos los adultos del hogar', required: true },
     { id: 'has_children', label: '¿Hay niños menores de 18 años en tu hogar?', type: 'boolean', required: false },
@@ -166,7 +169,7 @@ export const QUESTIONNAIRE_FIELDS: Record<FunnelId, QuestionnaireField[]> = {
     { id: 'monthly_expenses_medical', label: 'Gasto mensual médico', type: 'currency', required: false },
   ],
   medicaid: [
-    { id: 'state_of_residence', label: '¿En qué estado vives?', type: 'enum', options: ['Texas', 'California', 'Florida', 'Otro estado'], hint: 'El estado determina los programas disponibles y los límites de ingreso', required: true },
+    { id: 'state_of_residence', label: '¿En qué estado vives?', type: 'enum', options: ['Texas', 'California', 'Florida', 'Nueva York', 'Otro estado'], hint: 'El estado determina los programas disponibles y los límites de ingreso', required: true },
     { id: 'applicant_category', label: '¿Para quién es el Medicaid?', type: 'enum', options: ['embarazada', 'niño (CHIP)', 'adulto con hijos menores', 'adulto mayor 65+', 'persona con discapacidad', 'adulto sin hijos'], required: true },
     { id: 'household_size', label: '¿Cuántas personas viven en tu hogar?', type: 'number', required: false },
     { id: 'monthly_income_gross', label: 'Ingreso bruto mensual del hogar', type: 'currency', required: false },
@@ -177,7 +180,7 @@ export const QUESTIONNAIRE_FIELDS: Record<FunnelId, QuestionnaireField[]> = {
     { id: 'documents_available', label: 'Documentos disponibles', type: 'multiselect', options: ['ID adultos', 'comprobante de domicilio', 'comprobante ingresos', 'actas de nacimiento niños', 'documentación embarazo'], required: false },
   ],
   wic: [
-    { id: 'state_of_residence', label: '¿En qué estado vives?', type: 'enum', options: ['Texas', 'California', 'Florida', 'Otro estado'], hint: 'El estado determina la clínica WIC y los límites de ingreso', required: true },
+    { id: 'state_of_residence', label: '¿En qué estado vives?', type: 'enum', options: ['Texas', 'California', 'Florida', 'Nueva York', 'Otro estado'], hint: 'El estado determina la clínica WIC y los límites de ingreso', required: true },
     { id: 'wic_category', label: '¿Para quién es el WIC?', type: 'enum', options: ['embarazada', 'madre postparto (hasta 6 meses)', 'madre lactando (hasta 12 meses)', 'bebé (hasta 12 meses)', 'niño (1–5 años)'], required: true },
     { id: 'child_age_months', label: 'Edad del niño en meses (si aplica)', type: 'number', required: false },
     { id: 'household_size', label: '¿Cuántas personas viven en tu hogar?', type: 'number', required: false },

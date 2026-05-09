@@ -941,6 +941,163 @@ export default function PdfFormSteps({ formId, stepIndex, formData, onChange, er
     )
   }
 
+  // ── LDSS-2921 Nueva York ─────────────────────────────────────────────────
+  if (formId === 'ldss2921') {
+    if (stepIndex === 0)
+      return (
+        <div className="space-y-3">
+          <p className="text-sm font-semibold text-stone-700">¿Qué programas necesitas?</p>
+          <C id="wantSNAP" label="SNAP — Cupones de Comida (Food Stamps)" checked={!!v('wantSNAP')} onChange={onChange} />
+          <C id="wantMedicaid" label="Medicaid — Seguro de Salud" checked={!!v('wantMedicaid')} onChange={onChange} />
+          <C id="wantFA" label="Family Assistance (TANF)" checked={!!v('wantFA')} onChange={onChange} />
+          <C id="wantSNA" label="Safety Net Assistance" checked={!!v('wantSNA')} onChange={onChange} />
+          <C id="wantChildCare" label="Child Care Assistance" checked={!!v('wantChildCare')} onChange={onChange} />
+          <div className="mt-3">
+            <div className="text-xs font-bold text-stone-600 mb-2">Estado migratorio</div>
+            <R name="citizenshipStatus" value="citizen" label="Ciudadano/a estadounidense" current={v('citizenshipStatus')} onChange={onChange} />
+            <R name="citizenshipStatus" value="permanent_resident" label="Residente permanente (Green Card)" current={v('citizenshipStatus')} onChange={onChange} />
+            <R name="citizenshipStatus" value="daca" label="DACA" current={v('citizenshipStatus')} onChange={onChange} />
+            <R name="citizenshipStatus" value="tps" label="TPS" current={v('citizenshipStatus')} onChange={onChange} />
+            <R name="citizenshipStatus" value="other" label="Otro estatus" current={v('citizenshipStatus')} onChange={onChange} />
+          </div>
+        </div>
+      )
+    if (stepIndex === 1)
+      return (
+        <div className="grid sm:grid-cols-2 gap-3">
+          <T id="firstName" label="Nombre" value={v('firstName')} onChange={onChange} err={e('firstName')} />
+          <T id="lastName" label="Apellido" value={v('lastName')} onChange={onChange} err={e('lastName')} />
+          <T id="dob" label="Fecha de nacimiento" value={v('dob')} onChange={onChange} err={e('dob')} type="date" />
+          <T id="ssn" label="Social Security Number (opcional)" value={v('ssn')} onChange={onChange} ph="XXX-XX-XXXX" />
+          <div className="sm:col-span-2">
+            <div className="text-xs font-bold text-stone-600 mb-2">Género</div>
+            <R name="gender" value="male" label="Masculino" current={v('gender')} onChange={onChange} />
+            <R name="gender" value="female" label="Femenino" current={v('gender')} onChange={onChange} />
+          </div>
+          <T id="phone" label="Teléfono" value={v('phone')} onChange={onChange} err={e('phone')} type="tel" />
+          <T id="email" label="Correo electrónico" value={v('email')} onChange={onChange} type="email" />
+          <T id="householdSize" label="Personas en el hogar" value={v('householdSize')} onChange={onChange} err={e('householdSize')} type="number" />
+          <T id="monthlyIncome" label="Ingreso mensual total ($)" value={v('monthlyIncome')} onChange={onChange} type="number" />
+        </div>
+      )
+    if (stepIndex === 2)
+      return (
+        <div className="grid sm:grid-cols-2 gap-3">
+          <div className="sm:col-span-2">
+            <T id="streetAddr" label="Dirección en Nueva York" value={v('streetAddr')} onChange={onChange} err={e('streetAddr')} />
+          </div>
+          <T id="unit" label="Apt / Unidad" value={v('unit')} onChange={onChange} />
+          <T id="city" label="Ciudad / Barrio" value={v('city')} onChange={onChange} err={e('city')} ph="New York, Brooklyn, Bronx…" />
+          <T id="county" label="Condado / Borough" value={v('county')} onChange={onChange} err={e('county')} ph="Bronx, Kings, Queens…" />
+          <T id="zip" label="ZIP" value={v('zip')} onChange={onChange} err={e('zip')} />
+          <C id="isHomeless" label="No tengo domicilio fijo (sin hogar)" checked={!!v('isHomeless')} onChange={onChange} />
+          <C id="isDisabled" label="Tengo una discapacidad" checked={!!v('isDisabled')} onChange={onChange} />
+          <C id="isPregnant" label="Estoy embarazada" checked={!!v('isPregnant')} onChange={onChange} />
+          {!!v('isPregnant') && (
+            <T id="dueDate" label="Fecha probable de parto" value={v('dueDate')} onChange={onChange} type="date" />
+          )}
+          <C id="expeditedSnap" label="Solicito SNAP de emergencia (ingresos menos de $150/mes)" checked={!!v('expeditedSnap')} onChange={onChange} />
+          {!!v('expeditedSnap') && (
+            <div className="sm:col-span-2">
+              <T id="expeditedReason" label="Razón de emergencia" value={v('expeditedReason')} onChange={onChange} />
+            </div>
+          )}
+        </div>
+      )
+    if (stepIndex === 3)
+      return (
+        <div className="space-y-4">
+          <T id="incomeSource" label="Fuente principal de ingresos" value={v('incomeSource')} onChange={onChange} ph="Empleo, SSI, ninguno…" />
+          <div>
+            <div className="text-xs font-bold text-stone-600 mb-2">Método de entrega preferido</div>
+            <R name="preferredDelivery" value="online" label="En línea — mybenefits.ny.gov" current={v('preferredDelivery')} onChange={onChange} />
+            <R name="preferredDelivery" value="in_person" label="En persona — HRA / DSS local" current={v('preferredDelivery')} onChange={onChange} />
+            <R name="preferredDelivery" value="mail" label="Por correo postal" current={v('preferredDelivery')} onChange={onChange} />
+          </div>
+        </div>
+      )
+    return (
+      <div className="space-y-2 text-sm text-stone-700">
+        <p>Tu solicitud LDSS-2921 de Nueva York está lista. El PDF se descargará con todos tus datos.</p>
+        <p className="text-xs text-stone-500">Súbela en <strong>mybenefits.ny.gov</strong> o llévala a tu oficina HRA/DSS local. Llama al <strong>1-888-692-6116</strong> para ayuda en español.</p>
+      </div>
+    )
+  }
+
+  // ── NY WIC ────────────────────────────────────────────────────────────────
+  if (formId === 'nywic') {
+    if (stepIndex === 0)
+      return (
+        <div className="space-y-3">
+          <p className="text-sm font-semibold text-stone-700">¿Quién va a recibir los beneficios WIC?</p>
+          <R name="participantType" value="pregnant" label="Embarazada" current={v('participantType')} onChange={onChange} />
+          <R name="participantType" value="postpartum" label="Mamá recién dada a luz (hasta 6 meses)" current={v('participantType')} onChange={onChange} />
+          <R name="participantType" value="breastfeeding" label="Mamá lactando (hasta 1 año)" current={v('participantType')} onChange={onChange} />
+          <R name="participantType" value="infant" label="Bebé (0–12 meses)" current={v('participantType')} onChange={onChange} />
+          <R name="participantType" value="child" label="Niño/a (1–5 años)" current={v('participantType')} onChange={onChange} />
+          {(v('participantType') === 'pregnant' || v('participantType') === 'postpartum' || v('participantType') === 'breastfeeding') && (
+            <T id="dueDate" label="Fecha probable de parto (o fecha de nacimiento del bebé)" value={v('dueDate')} onChange={onChange} type="date" />
+          )}
+          {(v('participantType') === 'infant' || v('participantType') === 'child') && (
+            <div className="grid sm:grid-cols-2 gap-3 mt-2">
+              <T id="childName" label="Nombre del niño/bebé" value={v('childName')} onChange={onChange} />
+              <T id="childDob" label="Fecha de nacimiento" value={v('childDob')} onChange={onChange} type="date" />
+              <T id="guardianName" label="Nombre del padre/tutor" value={v('guardianName')} onChange={onChange} />
+              <T id="guardianRelationship" label="Relación" value={v('guardianRelationship')} onChange={onChange} ph="Madre, Padre, Tutor…" />
+            </div>
+          )}
+        </div>
+      )
+    if (stepIndex === 1)
+      return (
+        <div className="grid sm:grid-cols-2 gap-3">
+          <T id="firstName" label="Nombre" value={v('firstName')} onChange={onChange} err={e('firstName')} />
+          <T id="lastName" label="Apellido" value={v('lastName')} onChange={onChange} err={e('lastName')} />
+          <T id="dob" label="Fecha de nacimiento" value={v('dob')} onChange={onChange} err={e('dob')} type="date" />
+          <T id="phone" label="Teléfono" value={v('phone')} onChange={onChange} err={e('phone')} type="tel" />
+          <div className="sm:col-span-2">
+            <T id="email" label="Correo electrónico" value={v('email')} onChange={onChange} type="email" />
+          </div>
+          <T id="householdSize" label="Personas en el hogar" value={v('householdSize')} onChange={onChange} err={e('householdSize')} type="number" />
+          <T id="monthlyIncome" label="Ingreso mensual total ($)" value={v('monthlyIncome')} onChange={onChange} type="number" />
+        </div>
+      )
+    if (stepIndex === 2)
+      return (
+        <div className="grid sm:grid-cols-2 gap-3">
+          <div className="sm:col-span-2">
+            <T id="streetAddr" label="Dirección en Nueva York" value={v('streetAddr')} onChange={onChange} err={e('streetAddr')} />
+          </div>
+          <T id="unit" label="Apt / Unidad" value={v('unit')} onChange={onChange} />
+          <T id="city" label="Ciudad / Barrio" value={v('city')} onChange={onChange} err={e('city')} ph="New York, Bronx, Brooklyn…" />
+          <T id="county" label="Condado / Borough" value={v('county')} onChange={onChange} err={e('county')} ph="Bronx, Kings, Queens…" />
+          <T id="zip" label="ZIP" value={v('zip')} onChange={onChange} err={e('zip')} />
+        </div>
+      )
+    if (stepIndex === 3)
+      return (
+        <div className="space-y-4">
+          <T id="incomeSource" label="Fuente principal de ingresos" value={v('incomeSource')} onChange={onChange} ph="Empleo, SSI, ninguno…" />
+          <div className="space-y-2">
+            <C id="receivesMedicaid" label="Recibo Medicaid" checked={!!v('receivesMedicaid')} onChange={onChange} />
+            <C id="receivesSnap" label="Recibo SNAP / Food Stamps" checked={!!v('receivesSnap')} onChange={onChange} />
+            <C id="receivesTanf" label="Recibo TANF / Family Assistance" checked={!!v('receivesTanf')} onChange={onChange} />
+          </div>
+          <div>
+            <div className="text-xs font-bold text-stone-600 mb-2">Idioma preferido para la cita</div>
+            <R name="preferredLanguage" value="Español" label="Español" current={v('preferredLanguage')} onChange={onChange} />
+            <R name="preferredLanguage" value="English" label="English" current={v('preferredLanguage')} onChange={onChange} />
+          </div>
+        </div>
+      )
+    return (
+      <div className="space-y-2 text-sm text-stone-700">
+        <p>Tu solicitud WIC de Nueva York está lista. El documento se descargará con todos tus datos.</p>
+        <p className="text-xs text-stone-500">Llama al <strong>1-800-522-5006</strong> para encontrar tu agencia WIC más cercana en Nueva York. Hablan español.</p>
+      </div>
+    )
+  }
+
   return <p className="text-sm text-stone-500">Formulario no disponible.</p>
 }
 

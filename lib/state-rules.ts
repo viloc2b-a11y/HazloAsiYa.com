@@ -291,12 +291,91 @@ const FLORIDA: StateRules = {
   },
 }
 
-// ─── ÍNDICE GLOBAL ────────────────────────────────────────────────────────────
+// ─── NUEVA YORK ──────────────────────────────────────────────────────────────
+
+const NEW_YORK: StateRules = {
+  stateCode: 'NY',
+  stateName: 'Nueva York',
+  benefitsPortal: 'mybenefits.ny.gov',
+  programs: {
+    snap: {
+      programName: 'SNAP',
+      localName: 'SNAP Nueva York',
+      agency: 'NY OTDA / HRA (NYC) / DSS (condados)',
+      applicationPortal: 'https://mybenefits.ny.gov',
+      spanishHelpline: '1-888-692-6116',
+      incomeLimits: [
+        { householdSize: 1, grossMonthlyUsd: 1580, netMonthlyUsd: 1215 },
+        { householdSize: 2, grossMonthlyUsd: 2137, netMonthlyUsd: 1644 },
+        { householdSize: 3, grossMonthlyUsd: 2694, netMonthlyUsd: 2072 },
+        { householdSize: 4, grossMonthlyUsd: 3250, netMonthlyUsd: 2500 },
+        { householdSize: 5, grossMonthlyUsd: 3807, netMonthlyUsd: 2929 },
+        { householdSize: 6, grossMonthlyUsd: 4364, netMonthlyUsd: 3357 },
+      ],
+      officialFormId: 'ldss2921',
+      deliveryInstructions:
+        'Sube tu solicitud LDSS-2921 en mybenefits.ny.gov, llévala a tu oficina HRA (NYC) o DSS (condados) más cercana, o envíala por correo. Llama al 1-888-692-6116 para ayuda en español.',
+      stateNotes: [
+        'En NYC, la solicitud se presenta ante HRA (Human Resources Administration). En otros condados, ante el DSS local.',
+        'Nueva York tiene el programa SNAP más grande del país: más de 2.7 millones de participantes.',
+        'Los residentes de NYC pueden usar ACCESS HRA (accesshra.nyc.gov) como portal alternativo.',
+        'SNAP en NY no requiere SSN para todos los miembros del hogar.',
+      ],
+    },
+    medicaid: {
+      programName: 'Medicaid',
+      localName: 'Medicaid NY / Essential Plan',
+      agency: 'NY DOH / NY State of Health',
+      applicationPortal: 'https://nystateofhealth.ny.gov',
+      spanishHelpline: '1-855-355-5777',
+      incomeLimits: [
+        { householdSize: 1, grossMonthlyUsd: 1732 },
+        { householdSize: 2, grossMonthlyUsd: 2343 },
+        { householdSize: 3, grossMonthlyUsd: 2953 },
+        { householdSize: 4, grossMonthlyUsd: 3564 },
+      ],
+      officialFormId: 'ldss2921',
+      deliveryInstructions:
+        'Solicita Medicaid en nystateofhealth.ny.gov o llama al 1-855-355-5777. También puedes aplicar en persona en tu oficina HRA/DSS local con el formulario LDSS-2921.',
+      stateNotes: [
+        'Nueva York ofrece el Essential Plan para adultos de 19-64 años con ingresos hasta 200% FPL: $0 de prima mensual.',
+        'Medicaid en NY cubre inmigrantes con 5+ años de residencia legal y en algunos casos sin requisito de tiempo.',
+        'Niños hasta 19 años pueden calificar para Child Health Plus independientemente del estatus migratorio.',
+        'NYC tiene Medicaid de emergencia para inmigrantes indocumentados.',
+      ],
+    },
+    wic: {
+      programName: 'WIC',
+      localName: 'WIC Nueva York',
+      agency: 'NY DOH — WIC Program',
+      applicationPortal: 'https://www.health.ny.gov/prevention/nutrition/wic/',
+      spanishHelpline: '1-800-522-5006',
+      incomeLimits: [
+        { householdSize: 1, grossMonthlyUsd: 2248 },
+        { householdSize: 2, grossMonthlyUsd: 3041 },
+        { householdSize: 3, grossMonthlyUsd: 3834 },
+        { householdSize: 4, grossMonthlyUsd: 4626 },
+        { householdSize: 5, grossMonthlyUsd: 5419 },
+      ],
+      officialFormId: 'nywic',
+      deliveryInstructions:
+        'Llama al 1-800-522-5006 para encontrar tu agencia WIC más cercana en Nueva York y agendar una cita. La cita es en persona. Hablan español.',
+      stateNotes: [
+        'WIC en Nueva York no requiere estatus migratorio. Todos los grupos elegibles pueden aplicar.',
+        'NYC tiene más de 80 agencias WIC locales distribuidas en los 5 boroughs.',
+        'Nueva York WIC usa tarjetas eWIC para compras en supermercados y tiendas participantes.',
+      ],
+    },
+  },
+}
+
+// ─── ÍNDICE GLOBAL ────────────────────────────────────────────
 
 export const STATE_RULES: Record<string, StateRules> = {
   TX: TEXAS,
   CA: CALIFORNIA,
   FL: FLORIDA,
+  NY: NEW_YORK,
 }
 
 /**
@@ -351,6 +430,7 @@ export const SUPPORTED_STATES: Array<{ code: string; name: string; portal: strin
   { code: 'TX', name: 'Texas', portal: 'YourTexasBenefits.com' },
   { code: 'CA', name: 'California', portal: 'BenefitsCal.com' },
   { code: 'FL', name: 'Florida', portal: 'myACCESS.myflfamilies.com' },
+  { code: 'NY', name: 'Nueva York', portal: 'mybenefits.ny.gov' },
 ]
 
 /**

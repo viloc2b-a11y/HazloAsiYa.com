@@ -101,6 +101,20 @@ export function validatePdfStep(formId: PdfFormId, stepIndex: number, data: Reco
       // Paso 3: ingresos (tamaño del hogar requerido)
       if (stepIndex === 3) req(['householdSize'])
       return miss
+    case 'ldss2921':
+      // Paso 1: datos personales requeridos
+      if (stepIndex === 1) req(['firstName', 'lastName', 'dob', 'phone', 'householdSize'])
+      // Paso 2: dirección en Nueva York
+      if (stepIndex === 2) req(['streetAddr', 'city', 'county', 'zip'])
+      return miss
+    case 'nywic':
+      // Paso 0: tipo de participante requerido
+      if (stepIndex === 0) req(['participantType'])
+      // Paso 1: datos personales requeridos
+      if (stepIndex === 1) req(['firstName', 'lastName', 'dob', 'phone', 'householdSize'])
+      // Paso 2: dirección en Nueva York
+      if (stepIndex === 2) req(['streetAddr', 'city', 'county', 'zip'])
+      return miss
     default:
       return miss
   }

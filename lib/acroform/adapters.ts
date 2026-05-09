@@ -370,3 +370,74 @@ export function toH1010FormData(data: Record<string, unknown>): H1010FormData {
     childcare: raw(data, 'childcare'),
   }
 }
+
+/** LDSS-2921 — New York SNAP + Medicaid application */
+export function toLdss2921FormData(data: Record<string, unknown>): import('./ldss2921-mapper').Ldss2921FormData {
+  return {
+    programs: {
+      snap: raw(data, 'wantSNAP') === 'yes' || !!data.wantSNAP,
+      medicaid: raw(data, 'wantMedicaid') === 'yes' || !!data.wantMedicaid,
+      familyAssistance: raw(data, 'wantFA') === 'yes' || !!data.wantFA,
+      safetyNet: raw(data, 'wantSNA') === 'yes' || !!data.wantSNA,
+      childCare: raw(data, 'wantChildCare') === 'yes' || !!data.wantChildCare,
+    },
+    firstName: raw(data, 'firstName'),
+    lastName: raw(data, 'lastName'),
+    dateOfBirth: raw(data, 'dob'),
+    ssn: raw(data, 'ssn') || undefined,
+    gender: (raw(data, 'gender') as 'male' | 'female' | 'other') || undefined,
+    phone: raw(data, 'phone'),
+    email: raw(data, 'email') || undefined,
+    streetAddress: raw(data, 'streetAddr'),
+    apt: raw(data, 'unit') || undefined,
+    city: raw(data, 'city'),
+    state: 'NY',
+    zip: raw(data, 'zip'),
+    county: raw(data, 'county'),
+    householdSize: parseInt(raw(data, 'householdSize') || '1', 10),
+    monthlyIncome: parseFloat(raw(data, 'monthlyIncome') || '0'),
+    incomeSource: raw(data, 'incomeSource') || undefined,
+    citizenshipStatus: (raw(data, 'citizenshipStatus') as 'citizen' | 'permanent_resident' | 'daca' | 'tps' | 'other') || 'citizen',
+    isPregnant: raw(data, 'isPregnant') === 'yes' || undefined,
+    dueDateOrRecentBirth: raw(data, 'dueDate') || raw(data, 'recentBirthDate') || undefined,
+    isHomeless: raw(data, 'isHomeless') === 'yes' || undefined,
+    isDisabled: raw(data, 'isDisabled') === 'yes' || undefined,
+    expeditedSnap: raw(data, 'expeditedSnap') === 'yes' || undefined,
+    expeditedReason: raw(data, 'expeditedReason') || undefined,
+    signatureDate: raw(data, 'signatureDate') || new Date().toLocaleDateString('en-US'),
+    preferredDelivery: (raw(data, 'preferredDelivery') as 'in_person' | 'mail' | 'online') || 'online',
+  }
+}
+
+/** NY WIC — New York WIC program application reference */
+export function toNyWicFormData(data: Record<string, unknown>): import('./nywic-mapper').NyWicFormData {
+  return {
+    participantType: (raw(data, 'participantType') as 'pregnant' | 'postpartum' | 'breastfeeding' | 'infant' | 'child') || 'pregnant',
+    firstName: raw(data, 'firstName'),
+    lastName: raw(data, 'lastName'),
+    dateOfBirth: raw(data, 'dob'),
+    phone: raw(data, 'phone'),
+    email: raw(data, 'email') || undefined,
+    guardianName: raw(data, 'guardianName') || undefined,
+    guardianRelationship: raw(data, 'guardianRelationship') || undefined,
+    streetAddress: raw(data, 'streetAddr'),
+    apt: raw(data, 'unit') || undefined,
+    city: raw(data, 'city'),
+    state: 'NY',
+    zip: raw(data, 'zip'),
+    county: raw(data, 'county'),
+    householdSize: parseInt(raw(data, 'householdSize') || '1', 10),
+    monthlyIncome: parseFloat(raw(data, 'monthlyIncome') || '0'),
+    incomeSource: raw(data, 'incomeSource') || undefined,
+    isPregnant: raw(data, 'isPregnant') === 'yes' || undefined,
+    dueDate: raw(data, 'dueDate') || undefined,
+    recentBirthDate: raw(data, 'recentBirthDate') || undefined,
+    childName: raw(data, 'childName') || undefined,
+    childDob: raw(data, 'childDob') || undefined,
+    receivesMedicaid: raw(data, 'receivesMedicaid') === 'yes' || undefined,
+    receivesSnap: raw(data, 'receivesSnap') === 'yes' || undefined,
+    receivesTanf: raw(data, 'receivesTanf') === 'yes' || undefined,
+    preferredLanguage: raw(data, 'preferredLanguage') || 'Español',
+    signatureDate: raw(data, 'signatureDate') || new Date().toLocaleDateString('en-US'),
+  }
+}

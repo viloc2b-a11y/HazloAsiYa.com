@@ -19,6 +19,10 @@ const GEO_PATHS = [
   '/snap/florida/',
   '/medicaid/florida/',
   '/wic/florida/',
+  // Nueva York
+  '/snap/new-york/',
+  '/medicaid/new-york/',
+  '/wic/new-york/',
 ] as const
 
 /** Fecha de última modificación al construir el sitio (export estático). */
