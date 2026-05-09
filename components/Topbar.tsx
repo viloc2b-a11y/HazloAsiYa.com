@@ -120,6 +120,13 @@ export default function Topbar({ user }: { user?: { email: string; name?: string
             )}
           </div>
 
+          <Link
+            href="/para-organizaciones/"
+            className="px-3 py-1.5 text-[13px] font-semibold text-green/80 hover:text-green hover:bg-white/8 rounded-lg transition-colors whitespace-nowrap"
+          >
+            🤝 Organizaciones
+          </Link>
+
           {NAV_FUNNELS.map((navId) => (
             <Link
               key={navId}
@@ -213,6 +220,27 @@ export default function Topbar({ user }: { user?: { email: string; name?: string
                 </div>
               </div>
             ))}
+          </div>
+
+          {/* Cities + B2B */}
+          <div className="mb-3 border border-white/10 rounded-xl overflow-hidden">
+            <div className="px-3 py-2 bg-white/5 text-[10px] font-bold tracking-widest uppercase text-green">
+              🏙️ Por ciudad
+            </div>
+            <div className="grid grid-cols-3 gap-1 p-2">
+              {[['houston','Houston'],['dallas','Dallas'],['san-antonio','S. Antonio'],['los-angeles','L.A.'],['miami','Miami'],['nueva-york','Nueva York']].map(([slug, label]) => (
+                <Link key={slug} href={`/ciudades/${slug}/`} onClick={() => setMenuOpen(false)}
+                      className="text-center text-[11px] font-semibold text-white/70 hover:text-white bg-white/6 hover:bg-white/12 rounded-md py-1.5 transition-colors">
+                  {label}
+                </Link>
+              ))}
+            </div>
+            <div className="px-2 pb-2">
+              <Link href="/para-organizaciones/" onClick={() => setMenuOpen(false)}
+                    className="flex items-center justify-center gap-1.5 text-[11px] font-bold text-green bg-green/10 hover:bg-green/20 rounded-md py-1.5 transition-colors">
+                🤝 Para organizaciones y nonprofits
+              </Link>
+            </div>
           </div>
 
           {/* All funnels */}

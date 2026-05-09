@@ -25,6 +25,15 @@ const GEO_PATHS = [
   '/wic/new-york/',
 ] as const
 
+const CITY_PATHS = [
+  '/ciudades/houston/',
+  '/ciudades/dallas/',
+  '/ciudades/san-antonio/',
+  '/ciudades/los-angeles/',
+  '/ciudades/miami/',
+  '/ciudades/nueva-york/',
+] as const
+
 /** Fecha de última modificación al construir el sitio (export estático). */
 const LASTMOD = new Date()
 
@@ -39,6 +48,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     lastModified: LASTMOD,
     changeFrequency: 'weekly' as const,
     priority: 0.9,
+  }))
+
+  const cityPages = CITY_PATHS.map(path => ({
+    url: absoluteUrl(path),
+    lastModified: LASTMOD,
+    changeFrequency: 'monthly' as const,
+    priority: 0.85,
   }))
 
   const geoPages = GEO_PATHS.map(path => ({
@@ -68,6 +84,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: absoluteUrl('/no-vender-mis-datos/'), lastModified: LASTMOD, changeFrequency: 'yearly' as const, priority: 0.25 },
   ]
 
+  const b2bPage = {
+    url: absoluteUrl('/para-organizaciones/'),
+    lastModified: LASTMOD,
+    changeFrequency: 'monthly' as const,
+    priority: 0.8,
+  }
+
   return [
     { url: `${SITE_ORIGIN}/`, lastModified: LASTMOD, changeFrequency: 'daily' as const, priority: 1 },
     { url: absoluteUrl('/terms/'), lastModified: LASTMOD, changeFrequency: 'yearly' as const, priority: 0.3 },
@@ -83,5 +106,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...guiaPages,
     ...funnelPages,
     ...geoPages,
+    ...cityPages,
+    b2bPage,
   ]
 }
