@@ -1,27 +1,27 @@
 {
   "products": {
     "main": {
-      "priceCents": 1900,
-      "label": "Guía Completa por Trámite"
+      "priceCents": 2900,
+      "label": "Formulario Oficial Pre-llenado"
     },
     "annual": {
-      "priceCents": 4900,
-      "label": "Acceso Anual — 16 Trámites"
+      "priceCents": 7900,
+      "label": "Acceso Anual Familiar — Todos los Trámites"
     },
     "assisted": {
-      "priceCents": 8900,
+      "priceCents": 14900,
       "label": "Revisión Asistida por Especialista"
     },
     "revisionExpress": {
-      "priceCents": 1200,
+      "priceCents": 1900,
       "label": "Revisión Express — completitud documental"
     },
     "kitSnap": {
-      "priceCents": 900,
+      "priceCents": 1200,
       "label": "Kit SNAP — checklist y pasos (PDF)"
     },
     "kitItin": {
-      "priceCents": 1400,
+      "priceCents": 1900,
       "label": "Kit ITIN — guía W-7 educativa (PDF)"
     }
   }

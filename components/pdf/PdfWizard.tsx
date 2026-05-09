@@ -9,6 +9,7 @@ import { validatePdfStep } from '@/lib/pdf-step-validate'
 import { checkoutStatic, getStoredUser } from '@/lib/static-backend'
 import { checkPdfPurchase, isPdfPaywallDisabled, isUuid, pdfUnlockStorageKey } from '@/lib/pdf-access'
 import PdfFormSteps from '@/components/pdf/pdf-form-steps'
+import Disclosure from '@/components/legal/Disclosure'
 
 interface PdfWizardProps {
   form: PdfFormMeta
@@ -275,7 +276,7 @@ export default function PdfWizard({
                 disabled={checkoutBusy}
                 className="w-full bg-teal-600 hover:bg-teal-700 text-white font-bold py-3 rounded-xl disabled:opacity-50"
               >
-                Pagar guía / trámite — desbloquear PDF
+                Obtener formulario oficial pre-llenado — $29
               </button>
               <button
                 type="button"
@@ -283,7 +284,7 @@ export default function PdfWizard({
                 disabled={checkoutBusy}
                 className="w-full bg-stone-800 hover:bg-stone-900 text-white font-bold py-3 rounded-xl disabled:opacity-50"
               >
-                Plan anual (si aplica)
+                Plan anual familiar — $79 / todos los trámites
               </button>
             </div>
             <button type="button" onClick={() => setStatus('idle')} className="text-sm text-stone-500 underline w-full">
@@ -300,7 +301,7 @@ export default function PdfWizard({
         <div className="bg-white border border-stone-200 rounded-2xl overflow-hidden mb-5">
           <div className="bg-stone-900 px-6 py-5 text-center">
             <div className="text-5xl mb-2">{status === 'done' ? '✅' : '⚙️'}</div>
-            <h2 className="text-white text-xl font-bold">{status === 'done' ? '¡PDF generado!' : 'Generando PDF…'}</h2>
+            <h2 className="text-white text-xl font-bold">{status === 'done' ? '¡Tu formulario oficial está listo!' : 'Preparando tu formulario…'}</h2>
           </div>
           <div className="p-6">
             <div className="bg-stone-900 rounded-xl p-4 max-h-40 overflow-y-auto mb-4" ref={logRef}>
@@ -336,12 +337,13 @@ export default function PdfWizard({
                     {getDeliveryInstructions(form.id)}
                   </p>
                 </div>
+                <Disclosure variant="form-official" className="mb-2" />
                 <button
                   type="button"
                   onClick={handleGenerate}
                   className="w-full bg-teal-600 hover:bg-teal-700 text-white font-bold py-3 rounded-xl"
                 >
-                  ⬇️ Descargar PDF de nuevo
+                  ⬇️ Descargar formulario oficial
                 </button>
                 <button
                   type="button"
@@ -408,13 +410,7 @@ export default function PdfWizard({
           )}
 
           <div className="px-6 pt-5">
-            <div className="bg-amber-50 border border-amber-300 rounded-xl p-3 flex gap-2 items-start mb-5">
-              <span className="text-base shrink-0">⚠️</span>
-              <p className="text-xs text-amber-800 leading-relaxed">
-                Borrador orientativo preparado por HazloAsíYa. No es asesoría legal ni garantía ante la agencia. Revisa el
-                formulario oficial antes de firmar o enviar.
-              </p>
-            </div>
+            <Disclosure variant="form-official" className="mb-5" />
           </div>
 
           <div className="px-6 pb-6">

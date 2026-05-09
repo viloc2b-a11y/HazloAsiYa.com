@@ -1,10 +1,11 @@
 import {
   DISCLAIMER_AFILIADO,
+  DISCLAIMER_FORMULARIO_OFICIAL,
   DISCLAIMER_GENERAL,
   DISCLAIMER_MONETIZACION_CURSO,
 } from '@/lib/legal-texts'
 
-export type DisclosureVariant = 'affiliate' | 'sponsored' | 'paid-service' | 'educational'
+export type DisclosureVariant = 'affiliate' | 'sponsored' | 'paid-service' | 'educational' | 'form-official'
 
 type Props = {
   variant: DisclosureVariant
@@ -14,6 +15,7 @@ type Props = {
 
 /**
  * Divulgación visible (FTC § 5) — antes del contenido comercial o patrocinado.
+ * Usar 'form-official' en todas las pantallas de descarga de formularios pre-llenados.
  */
 export default function Disclosure({ variant, sponsorName, className = '' }: Props) {
   let body: string
@@ -26,6 +28,9 @@ export default function Disclosure({ variant, sponsorName, className = '' }: Pro
       break
     case 'paid-service':
       body = DISCLAIMER_MONETIZACION_CURSO
+      break
+    case 'form-official':
+      body = DISCLAIMER_FORMULARIO_OFICIAL
       break
     default:
       body = DISCLAIMER_GENERAL

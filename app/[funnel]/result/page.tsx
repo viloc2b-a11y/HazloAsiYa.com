@@ -377,11 +377,11 @@ export default function ResultPage() {
               <p className="text-xs text-gray-400 mb-3">La guía completa incluye los pasos restantes + formulario de ejemplo + instrucciones de entrega</p>
               <div className="flex flex-wrap gap-2">
                 <button onClick={() => startCheckout('main')} className="btn-primary py-2 px-5 text-sm">
-                  Guía completa — $19
+                  Formulario oficial pre-llenado — $29
                 </button>
                 <button onClick={() => startCheckout('annual')}
                         className="py-2 px-5 text-sm font-bold rounded-xl border-2 border-gold text-gold hover:bg-gold hover:text-white transition-colors">
-                  Acceso anual — $49
+                  Acceso anual familiar — $79
                 </button>
               </div>
             </div>
@@ -435,7 +435,7 @@ export default function ResultPage() {
               <p className="text-xs text-gray-500 mt-1 leading-relaxed">
                 {canDownloadFullPdf
                   ? 'Todos los pasos y listas en un solo archivo.'
-                  : 'Incluye todos los pasos del resultado — desbloquea con la guía por trámite ($19).'}
+                  : 'Incluye tu formulario oficial pre-llenado + instrucciones de entrega — desbloquea por $29.'}
               </p>
             </div>
             <div className="flex flex-wrap gap-2 shrink-0">
@@ -460,7 +460,7 @@ export default function ResultPage() {
                   disabled={pdfing}
                   className="btn-primary py-2.5 px-5 text-sm disabled:opacity-60"
                 >
-                  Desbloquear PDF completo — $19
+                  Desbloquear formulario oficial — $29
                 </button>
               )}
             </div>
@@ -470,18 +470,18 @@ export default function ResultPage() {
         {/* Upgrade box (registered, not paid) */}
         {isLoggedIn && !hasPaidAccess && (
           <div className="card p-6 border-2 border-gold">
-            <div className="text-xs font-bold tracking-widest uppercase text-gold mb-2">Guía completa — $19</div>
-            <h3 className="font-serif text-xl text-navy mb-2">Desbloquea los {hiddenSteps} pasos restantes + ejemplos</h3>
+            <div className="text-xs font-bold tracking-widest uppercase text-gold mb-2">Formulario oficial pre-llenado — $29</div>
+            <h3 className="font-serif text-xl text-navy mb-2">Tu solicitud oficial lista para entregar</h3>
             <p className="text-gray-500 text-sm mb-4">
-              Formulario de ejemplo ya llenado · Errores comunes a evitar · Instrucciones exactas de entrega · PDF profesional
+              Formulario oficial de tu estado completado con tus datos · Instrucciones exactas de entrega · Checklist de documentos · Sin errores
             </p>
             <div className="flex flex-wrap gap-3">
               <button onClick={() => startCheckout('main')} className="btn-gold py-3 px-6">
-                Obtener guía completa — $19 →
+                Obtener formulario oficial — $29 →
               </button>
               <button onClick={() => startCheckout('annual')}
                       className="text-sm font-semibold border-2 border-gray-200 rounded-xl px-5 py-3 text-gray-500 hover:border-gray-300">
-                O anual: $49 / 16 trámites
+                O anual familiar: $79 / todos los trámites
               </button>
             </div>
             <p className="text-xs text-gray-400 mt-3">Pago único · Sin suscripción · Garantía 30 días</p>
@@ -493,10 +493,10 @@ export default function ResultPage() {
           <div>
             <div className="text-xs font-bold tracking-widest uppercase text-teal-xl mb-1">Servicio asistido</div>
             <div className="font-serif text-lg text-white mb-1">Un especialista revisa tu paquete</div>
-            <div className="text-white/45 text-sm">Documentos verificados + orientación por WhatsApp</div>
+            <div className="text-white/45 text-sm">Especialista revisa tu paquete + orientación por WhatsApp en español</div>
           </div>
           <button onClick={() => startCheckout('assisted')} className="btn-primary whitespace-nowrap">
-            $89 →
+            $149 →
           </button>
         </div>
 

@@ -107,12 +107,12 @@ export default function HomePageClient() {
           <div className="w-px h-4 bg-gray-300 hidden sm:block"/>
           <div className="flex items-center gap-2 text-gray-700">
             <span className="text-gold font-bold text-base">$</span>
-            <span><strong>$19 por trámite:</strong> plan completo + ejemplos</span>
+            <span><strong>$29 por trámite:</strong> formulario oficial pre-llenado + instrucciones</span>
           </div>
           <div className="w-px h-4 bg-gray-300 hidden sm:block"/>
           <div className="flex items-center gap-2 text-gray-700">
             <span className="text-gold font-bold text-base">★</span>
-            <span><strong>$49/año:</strong> 16 trámites ilimitados</span>
+            <span><strong>$79/año:</strong> todos los trámites ilimitados</span>
           </div>
         </div>
       </div>
@@ -249,8 +249,8 @@ export default function HomePageClient() {
               ['1','Elige el trámite — gratis','El cuestionario siempre es gratuito. Sin registro.'],
               ['2','Responde preguntas simples — gratis','Sin tecnicismos. En español. 5 minutos.'],
               ['3','Ve tu resultado — gratis','Qué tienes, qué te falta, los primeros pasos.'],
-              ['4','Desbloquea el plan completo — $19','Todos los pasos + ejemplos + errores a evitar.'],
-              ['5','O acceso anual — $49','Los 16 trámites ilimitados durante un año.'],
+              ['4','Recibe tu formulario oficial pre-llenado — $29','El formulario oficial de tu estado ya completado con tus datos. Listo para imprimir o subir al portal de la agencia.'],
+              ['5','O acceso anual familiar — $79','Todos los trámites ilimitados durante un año. Para toda la familia.'],
               ['6','Conectamos con ayuda local — gratis','Especialistas en tu área que hablan español.'],
             ].map(([n, t, d]) => (
               <div key={n} className="bg-white/5 border border-white/10 rounded-2xl p-6">

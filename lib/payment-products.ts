@@ -29,30 +29,30 @@ export const PHASE1_PRODUCTS: Record<Phase1ProductKey, PaymentProductDef> = {
     name: 'Revisión Express',
     priceCents: phase1Prices.revisionExpress.priceCents,
     shortDescription:
-      'Revisamos que tu documentación esté completa según los requisitos publicados por la agencia. Respuesta orientativa en 24–48 horas hábiles.',
+      'Revisamos que tu paquete de documentos esté completo según los requisitos publicados por la agencia. Respuesta orientativa en 24–48 horas hábiles.',
     disclaimer:
-      'Este servicio es revisión de completitud documental según fuentes oficiales; no es asesoría legal ni fiscal ni garantía de aprobación por parte de la agencia.',
-    ctaLabel: 'Obtener revisión express — $12',
+      'Revisión de completitud documental con base en fuentes oficiales. No es asesoría legal ni garantía de aprobación por la agencia. HazloAsíYa no es agencia gubernamental ni bufete de abogados.',
+    ctaLabel: 'Revisar mi paquete antes de enviar — $19',
   },
   kitSnap: {
     key: 'kitSnap',
-    name: 'Kit SNAP — Lista de documentos y pasos',
+    name: 'Kit SNAP — Checklist y pasos oficiales',
     priceCents: phase1Prices.kitSnap.priceCents,
     shortDescription:
-      'PDF descargable con checklist de documentos, pasos en orden y ejemplos orientativos para preparar tu solicitud en Texas (contenido educativo).',
+      'Checklist de documentos, pasos en orden e instrucciones de entrega para tu solicitud SNAP según el estado donde vives.',
     disclaimer:
-      'Recurso educativo empaquetado. No sustituye la lectura de los formularios oficiales ni la orientación de un profesional si tu caso es complejo.',
-    ctaLabel: 'Descargar Kit SNAP — $9',
+      'Recurso educativo. No sustituye los formularios oficiales de la agencia ni la orientación de un profesional si tu caso es complejo.',
+    ctaLabel: 'Obtener Kit SNAP — $12',
   },
   kitItin: {
     key: 'kitItin',
     name: 'Kit ITIN — Guía W-7 paso a paso',
     priceCents: phase1Prices.kitItin.priceCents,
     shortDescription:
-      'PDF con orientación sobre el formulario W-7, lista de documentos que el IRS suele aceptar y errores frecuentes a evitar (contenido educativo).',
+      'Orientación sobre el formulario W-7, lista de documentos que el IRS suele aceptar y errores frecuentes a evitar.',
     disclaimer:
       'Recurso educativo. HazloAsíYa no es Acceptance Agent del IRS ni preparador de impuestos certificado. Para preparación gratuita, considera VITA (irs.gov/vita).',
-    ctaLabel: 'Descargar Kit ITIN — $14',
+    ctaLabel: 'Obtener Kit ITIN — $19',
   },
 }
 

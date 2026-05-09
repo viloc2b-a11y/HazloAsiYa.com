@@ -22,7 +22,26 @@ export const DISCLAIMER_COPPA =
   'Este formulario es para padres o tutores adultos. Si eres menor de 18 años, pide a un adulto de tu familia que te ayude a completarlo.'
 
 export const DISCLAIMER_MONETIZACION_CURSO =
-  '📚 Contenido de pago: Este curso / recurso requiere un plan activo de HazloAsíYa. El cuestionario de evaluación es siempre gratuito.'
+  '📚 Contenido de pago: Este recurso requiere un plan activo de HazloAsíYa. El cuestionario de elegibilidad es siempre gratuito.'
+
+/**
+ * Disclaimer específico para formularios oficiales pre-llenados (UPL + FTC).
+ * Mostrar SIEMPRE en la pantalla de descarga del formulario.
+ */
+export const DISCLAIMER_FORMULARIO_OFICIAL =
+  'HazloAsíYa NO es una agencia gubernamental ni bufete de abogados. Este formulario es un borrador orientativo preparado con la información que proporcionaste. No garantizamos su aceptación por la agencia. Revisa todos los campos antes de firmar y enviar. Si tu caso es complejo (estatus migratorio, ingresos variables, discapacidad), consulta a un profesional calificado.'
+
+/** Versión corta para la pantalla de descarga del formulario pre-llenado. */
+export const DISCLAIMER_DESCARGA_FORMULARIO =
+  '⚠️ Borrador orientativo: Revisa cada campo antes de firmar. HazloAsíYa no es agencia gubernamental ni asesor legal. No garantiza aprobación por la agencia.'
+
+/** Disclaimer para la página de precios — posicionamiento correcto del producto. */
+export const DISCLAIMER_PRICING =
+  'HazloAsíYa prepara borradores de formularios con base en la información que el usuario proporciona. No somos agencia gubernamental, bufete de abogados ni representante autorizado ante ninguna agencia. El cuestionario de elegibilidad es siempre gratuito. Los precios aplican a la preparación del borrador del formulario y los materiales de orientación.'
+
+/** Aviso de no-representación para usar en el footer y páginas de formularios. */
+export const AVISO_NO_REPRESENTACION =
+  'HazloAsíYa no te representa ante ninguna agencia. Completa y envía tu solicitud directamente a la agencia correspondiente. Siempre guarda una copia firmada para tus registros.'
 
 export const AVISO_GDPR =
   'Si accedes desde la Unión Europea, tus datos se procesan según el Reglamento General de Protección de Datos (GDPR). Tienes derecho de acceso, rectificación, supresión, portabilidad, limitación y objeción. Contáctanos en privacidad@hazloasiya.com'
