@@ -1,5 +1,5 @@
 type Env = {
-  SUPABASE_URL: string
+  SUPABASE_URL?: string
   NEXT_PUBLIC_SUPABASE_URL?: string
   SUPABASE_SERVICE_ROLE_KEY?: string  // legacy JWT: eyJ...
   SUPABASE_SECRET_KEY?: string        // new format: sb_secret_...
