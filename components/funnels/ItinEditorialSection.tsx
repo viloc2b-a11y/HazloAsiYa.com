@@ -1,6 +1,10 @@
 import Link from 'next/link'
 import { absoluteUrl } from '@/lib/site'
 import PrivacyBadge from '@/components/PrivacyBadge'
+
+const faqItems = [
+  {
+    q: '¿Qué es el ITIN y quién lo emite?',
     a: 'El ITIN (Individual Taxpayer Identification Number) es un número de identificación fiscal de 9 dígitos que emite el IRS para personas que deben declarar impuestos en EE.UU. pero no califican para un Social Security Number (SSN). El formato suele mostrarse como 9XX-XX-XXXX (el primer dígito es 9). Más información: irs.gov/itin.',
   },
   {
