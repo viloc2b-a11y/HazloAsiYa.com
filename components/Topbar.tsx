@@ -20,10 +20,10 @@ const LogoMark = ({ size = 36 }: { size?: number }) => (
 const NAV_FUNNELS = ['snap','medicaid','id','wic','taxes','escuela','daca','itin','iep'] as const
 
 const STATES_NAV = [
-  { flag: '🤠', label: 'Texas',      snap: '/snap/texas/',      medicaid: '/medicaid/texas/',      wic: '/wic/texas/' },
-  { flag: '🌴', label: 'California', snap: '/snap/california/', medicaid: '/medicaid/california/', wic: '/wic/california/' },
-  { flag: '☀️', label: 'Florida',    snap: '/snap/florida/',    medicaid: '/medicaid/florida/',    wic: '/wic/florida/' },
-  { flag: '🗽', label: 'Nueva York', snap: '/snap/new-york/',   medicaid: '/medicaid/new-york/',   wic: '/wic/new-york/' },
+  { flag: '🤠', label: 'Texas',      snap: '/snap/texas/',      medicaid: '/medicaid/texas/',      wic: '/wic/texas/',      more: '/snap/form?state=texas' },
+  { flag: '🌴', label: 'California', snap: '/snap/california/', medicaid: '/medicaid/california/', wic: '/wic/california/',  more: '/snap/form?state=california' },
+  { flag: '☀️', label: 'Florida',    snap: '/snap/florida/',    medicaid: '/medicaid/florida/',    wic: '/wic/florida/',    more: '/snap/form?state=florida' },
+  { flag: '🗽', label: 'Nueva York', snap: '/snap/new-york/',   medicaid: '/medicaid/new-york/',   wic: '/wic/new-york/',   more: '/snap/form?state=nueva-york' },
 ]
 
 export default function Topbar({ user }: { user?: { email: string; name?: string; plan?: string } | null }) {
@@ -91,12 +91,12 @@ export default function Topbar({ user }: { user?: { email: string; name?: string
             {statesOpen && (
               <div className="absolute top-full left-0 mt-1 w-72 bg-navy border border-white/15 rounded-xl shadow-2xl overflow-hidden">
                 <div className="px-3 pt-3 pb-1 text-[10px] font-bold tracking-widest uppercase text-white/30">
-                  Disponible en 4 estados
+                  9 trámites disponibles en 4 estados
                 </div>
                 {STATES_NAV.map(st => (
                   <div key={st.label} className="px-3 py-2 border-b border-white/8 last:border-0">
                     <div className="text-[11px] font-bold text-white/50 mb-1.5">{st.flag} {st.label}</div>
-                    <div className="flex gap-2">
+                    <div className="flex gap-1.5">
                       <Link href={st.snap} onClick={() => setStatesOpen(false)}
                             className="flex-1 text-center text-[11px] font-semibold text-white/70 hover:text-white bg-white/6 hover:bg-white/12 rounded-md py-1 transition-colors">
                         🛒 SNAP
@@ -108,6 +108,10 @@ export default function Topbar({ user }: { user?: { email: string; name?: string
                       <Link href={st.wic} onClick={() => setStatesOpen(false)}
                             className="flex-1 text-center text-[11px] font-semibold text-white/70 hover:text-white bg-white/6 hover:bg-white/12 rounded-md py-1 transition-colors">
                         🤱 WIC
+                      </Link>
+                      <Link href={st.more} onClick={() => setStatesOpen(false)}
+                            className="text-center text-[11px] font-semibold text-green hover:text-white bg-green/10 hover:bg-green/20 rounded-md py-1 px-2 transition-colors whitespace-nowrap">
+                        + más →
                       </Link>
                     </div>
                   </div>
@@ -122,7 +126,7 @@ export default function Topbar({ user }: { user?: { email: string; name?: string
               href={funnelLandingPath(navId)}
               className="px-3 py-1.5 text-[13px] font-semibold text-white/75 hover:text-white hover:bg-white/8 rounded-lg transition-colors whitespace-nowrap"
             >
-              {navId === 'id' ? 'Texas ID' : FUNNELS[navId].name.split(' ')[0]}
+              {navId === 'id' ? 'Texas ID' : navId === 'escuela' ? 'Escuela' : FUNNELS[navId].name.split(' ')[0]}
             </Link>
           ))}
         </nav>
@@ -184,12 +188,12 @@ export default function Topbar({ user }: { user?: { email: string; name?: string
           {/* States section */}
           <div className="mb-3 border border-white/10 rounded-xl overflow-hidden">
             <div className="px-3 py-2 bg-white/5 text-[10px] font-bold tracking-widest uppercase text-green">
-              📍 Por estado — TX · CA · FL · NY
+              📍 9 trámites en 4 estados: TX · CA · FL · NY
             </div>
             {STATES_NAV.map(st => (
               <div key={st.label} className="px-3 py-2 border-t border-white/8">
                 <div className="text-[11px] font-bold text-white/50 mb-1.5">{st.flag} {st.label}</div>
-                <div className="grid grid-cols-3 gap-1.5">
+                <div className="grid grid-cols-4 gap-1.5">
                   <Link href={st.snap} onClick={() => setMenuOpen(false)}
                         className="text-center text-[11px] font-semibold text-white/70 hover:text-white bg-white/6 hover:bg-white/12 rounded-md py-1.5 transition-colors">
                     🛒 SNAP
@@ -201,6 +205,10 @@ export default function Topbar({ user }: { user?: { email: string; name?: string
                   <Link href={st.wic} onClick={() => setMenuOpen(false)}
                         className="text-center text-[11px] font-semibold text-white/70 hover:text-white bg-white/6 hover:bg-white/12 rounded-md py-1.5 transition-colors">
                     🤱 WIC
+                  </Link>
+                  <Link href={st.more} onClick={() => setMenuOpen(false)}
+                        className="text-center text-[11px] font-semibold text-green hover:text-white bg-green/10 hover:bg-green/20 rounded-md py-1.5 transition-colors">
+                    + más
                   </Link>
                 </div>
               </div>
