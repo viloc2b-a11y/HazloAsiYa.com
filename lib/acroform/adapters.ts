@@ -9,6 +9,7 @@ import type { I821dFormData } from './i821d-mapper'
 import type { H1010FormData } from './h1010-mapper'
 import type { Saws1FormData } from './saws1-mapper'
 import type { CfEs2337FormData } from './cfes2337-mapper'
+import type { CaWic100Data } from './cawic100-mapper'
 
 function raw(data: Record<string, unknown>, key: string): string {
   const v = data[key]
@@ -295,6 +296,48 @@ export function toCfEs2337FormData(data: Record<string, unknown>): CfEs2337FormD
     vehicleValue: raw(data, 'vehicleValue') || undefined,
     rentAmount: raw(data, 'rent') || undefined,
     mortgageAmount: raw(data, 'mortgage') || undefined,
+  }
+}
+
+/** CA-WIC 100 — California WIC Application. */
+export function toCaWic100FormData(data: Record<string, unknown>): CaWic100Data {
+  const appType = raw(data, 'applicantType') as CaWic100Data['applicantType']
+  const incomeSource = raw(data, 'incomeSource') || 'none'
+  return {
+    applicantType: appType || '',
+    dueDate: raw(data, 'dueDate') || undefined,
+    childDob: raw(data, 'childDob') || undefined,
+    participantLastName: raw(data, 'lastName'),
+    participantFirstName: raw(data, 'firstName'),
+    participantMiddleName: raw(data, 'middleName') || undefined,
+    participantDob: raw(data, 'dob'),
+    participantGender: (raw(data, 'gender') as CaWic100Data['participantGender']) || '',
+    guardianLastName: raw(data, 'guardianLastName') || undefined,
+    guardianFirstName: raw(data, 'guardianFirstName') || undefined,
+    guardianRelationship: raw(data, 'guardianRelationship') || undefined,
+    streetAddr: raw(data, 'streetAddr'),
+    unit: raw(data, 'unit') || undefined,
+    city: raw(data, 'city'),
+    county: raw(data, 'county'),
+    state: 'CA',
+    zip: raw(data, 'zip'),
+    phone: raw(data, 'phone'),
+    altPhone: raw(data, 'altPhone') || undefined,
+    email: raw(data, 'email') || undefined,
+    householdSize: raw(data, 'householdSize') || '1',
+    monthlyIncome: raw(data, 'monthlyIncome') || '0',
+    incomeSource,
+    isUSCitizen: (raw(data, 'isUSCitizen') as CaWic100Data['isUSCitizen']) || '',
+    immigrationStatus: raw(data, 'immigrationStatus') || undefined,
+    onMediCal: !!data.onMediCal || raw(data, 'onMediCal') === 'yes',
+    onCalFresh: !!data.onCalFresh || raw(data, 'onCalFresh') === 'yes',
+    onCalWORKs: !!data.onCalWORKs || raw(data, 'onCalWORKs') === 'yes',
+    isBreastfeeding: raw(data, 'isBreastfeeding') === 'yes' ? true : undefined,
+    infantAge: raw(data, 'infantAge') || undefined,
+    hasSpecialNeeds: raw(data, 'hasSpecialNeeds') === 'yes' ? true : undefined,
+    specialNeedsDesc: raw(data, 'specialNeedsDesc') || undefined,
+    preferredLanguage: raw(data, 'preferredLanguage') || 'Español',
+    signatureDate: raw(data, 'signatureDate') || new Date().toLocaleDateString('en-US'),
   }
 }
 

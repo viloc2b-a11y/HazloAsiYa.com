@@ -635,6 +635,115 @@ export default function PdfFormSteps({ formId, stepIndex, formData, onChange, er
     return <p className="text-sm text-stone-600">Plyler v. Doe: derecho a educación pública en Texas.</p>
   }
 
+  // ── CA-WIC 100 California (WIC) ─────────────────────────────────────────────────────────
+  if (formId === 'cawic100') {
+    if (stepIndex === 0)
+      return (
+        <div className="space-y-4">
+          <div className="rounded-xl border border-green-100 bg-green-50/60 p-3 text-xs text-green-800">
+            <strong>California WIC</strong> · Alimentos nutritivos, educación nutricional y apoyo para lactancia
+          </div>
+          <div>
+            <div className="text-xs font-bold text-stone-600 mb-2">¿Quién solicita los beneficios?</div>
+            <R name="applicantType" value="pregnant" label="Embarazada / Pregnant" current={v('applicantType')} onChange={onChange} />
+            <R name="applicantType" value="postpartum" label="Postparto (hasta 6 meses) / Postpartum" current={v('applicantType')} onChange={onChange} />
+            <R name="applicantType" value="breastfeeding" label="Lactando (hasta 1 año) / Breastfeeding" current={v('applicantType')} onChange={onChange} />
+            <R name="applicantType" value="infant" label="Infante (0–12 meses) / Infant" current={v('applicantType')} onChange={onChange} />
+            <R name="applicantType" value="child" label="Niño/a (1–5 años) / Child" current={v('applicantType')} onChange={onChange} />
+            {e('applicantType') && <p className="text-xs text-red-600">Selecciona el tipo de participante.</p>}
+          </div>
+          {String(v('applicantType')) === 'pregnant' && (
+            <T id="dueDate" label="Fecha probable de parto / Due Date" value={v('dueDate')} onChange={onChange} ph="MM/DD/YYYY" />
+          )}
+          {(String(v('applicantType')) === 'infant' || String(v('applicantType')) === 'child') && (
+            <T id="childDob" label="Fecha de nacimiento del niño/a" value={v('childDob')} onChange={onChange} ph="MM/DD/YYYY" />
+          )}
+        </div>
+      )
+    if (stepIndex === 1)
+      return (
+        <div className="grid sm:grid-cols-2 gap-3">
+          <T id="lastName" label="Apellido / Last Name" value={v('lastName')} onChange={onChange} err={e('lastName')} />
+          <T id="firstName" label="Nombre / First Name" value={v('firstName')} onChange={onChange} err={e('firstName')} />
+          <T id="middleName" label="Segundo nombre / Middle Name" value={v('middleName')} onChange={onChange} />
+          <T id="dob" label="Fecha de nacimiento / Date of Birth" value={v('dob')} onChange={onChange} err={e('dob')} ph="MM/DD/YYYY" />
+          <div>
+            <div className="text-xs font-bold text-stone-600 mb-2">Género / Gender</div>
+            <R name="gender" value="F" label="Femenino / Female" current={v('gender')} onChange={onChange} />
+            <R name="gender" value="M" label="Masculino / Male" current={v('gender')} onChange={onChange} />
+            <R name="gender" value="X" label="No binario / Non-binary" current={v('gender')} onChange={onChange} />
+          </div>
+          <T id="ssn" label="Social Security Number (opcional)" value={v('ssn')} onChange={onChange} />
+          {(String(v('applicantType')) === 'infant' || String(v('applicantType')) === 'child') && (
+            <>
+              <T id="guardianFirstName" label="Nombre del padre/tutor" value={v('guardianFirstName')} onChange={onChange} />
+              <T id="guardianLastName" label="Apellido del padre/tutor" value={v('guardianLastName')} onChange={onChange} />
+              <T id="guardianRelationship" label="Relación / Relationship" value={v('guardianRelationship')} onChange={onChange} ph="Madre, Padre, Abuelo/a…" />
+            </>
+          )}
+        </div>
+      )
+    if (stepIndex === 2)
+      return (
+        <div className="grid sm:grid-cols-2 gap-3">
+          <div className="sm:col-span-2">
+            <T id="streetAddr" label="Dirección en California / Address" value={v('streetAddr')} onChange={onChange} err={e('streetAddr')} />
+          </div>
+          <T id="unit" label="Apt / Unidad" value={v('unit')} onChange={onChange} />
+          <T id="city" label="Ciudad / City" value={v('city')} onChange={onChange} err={e('city')} />
+          <T id="county" label="Condado / County" value={v('county')} onChange={onChange} err={e('county')} ph="Los Angeles, San Diego…" />
+          <T id="zip" label="ZIP" value={v('zip')} onChange={onChange} err={e('zip')} />
+          <T id="phone" label="Teléfono / Phone" value={v('phone')} onChange={onChange} err={e('phone')} type="tel" />
+          <T id="altPhone" label="Teléfono alternativo" value={v('altPhone')} onChange={onChange} type="tel" />
+          <div className="sm:col-span-2">
+            <T id="email" label="Correo / Email" value={v('email')} onChange={onChange} type="email" />
+          </div>
+        </div>
+      )
+    if (stepIndex === 3)
+      return (
+        <div className="space-y-4">
+          <div>
+            <div className="text-xs font-bold text-stone-600 mb-2">Ingresos del hogar / Household Income</div>
+            <T id="householdSize" label="Personas en el hogar" value={v('householdSize')} onChange={onChange} err={e('householdSize')} type="number" />
+            <div className="mt-3">
+              <T id="monthlyIncome" label="Ingreso mensual total ($)" value={v('monthlyIncome')} onChange={onChange} type="number" />
+            </div>
+            <div className="mt-3">
+              <div className="text-xs font-bold text-stone-600 mb-2">Fuente principal de ingresos</div>
+              <R name="incomeSource" value="employment" label="Empleo / Employment" current={v('incomeSource')} onChange={onChange} />
+              <R name="incomeSource" value="selfEmployment" label="Trabajo independiente / Self-Employment" current={v('incomeSource')} onChange={onChange} />
+              <R name="incomeSource" value="ssi" label="SSI / Beneficios federales" current={v('incomeSource')} onChange={onChange} />
+              <R name="incomeSource" value="calworks" label="CalWORKs" current={v('incomeSource')} onChange={onChange} />
+              <R name="incomeSource" value="none" label="Sin ingresos / No income" current={v('incomeSource')} onChange={onChange} />
+              <R name="incomeSource" value="other" label="Otro / Other" current={v('incomeSource')} onChange={onChange} />
+            </div>
+          </div>
+          <div>
+            <div className="text-xs font-bold text-stone-600 mb-2">¿Participas en otros programas?</div>
+            <C id="onMediCal" label="Medi-Cal" checked={!!v('onMediCal')} onChange={onChange} />
+            <C id="onCalFresh" label="CalFresh (SNAP)" checked={!!v('onCalFresh')} onChange={onChange} />
+            <C id="onCalWORKs" label="CalWORKs" checked={!!v('onCalWORKs')} onChange={onChange} />
+          </div>
+          <div>
+            <div className="text-xs font-bold text-stone-600 mb-2">Idioma preferido / Preferred Language</div>
+            <R name="preferredLanguage" value="Español" label="Español" current={v('preferredLanguage')} onChange={onChange} />
+            <R name="preferredLanguage" value="English" label="English" current={v('preferredLanguage')} onChange={onChange} />
+            <R name="preferredLanguage" value="Vietnamese" label="Vietnamese" current={v('preferredLanguage')} onChange={onChange} />
+            <R name="preferredLanguage" value="Chinese" label="Chinese" current={v('preferredLanguage')} onChange={onChange} />
+            <R name="preferredLanguage" value="Otro/Other" label="Otro / Other" current={v('preferredLanguage')} onChange={onChange} />
+          </div>
+        </div>
+      )
+    return (
+      <div className="space-y-2 text-sm text-stone-700">
+        <p>Tu solicitud WIC de California está lista. El documento se descargará con todos tus datos.</p>
+        <p className="text-xs text-stone-500">Llévalo a tu cita en la agencia WIC local o aplica en <strong>BenefitsCal.com</strong></p>
+        <p className="text-xs text-stone-500">Para encontrar tu agencia: <strong>1-800-852-5770</strong></p>
+      </div>
+    )
+  }
+
   // ── SAWS-1 California (CalFresh / Medi-Cal / CalWORKs) ──────────────────
   if (formId === 'saws1') {
     if (stepIndex === 0)

@@ -6,7 +6,7 @@
 export type PdfFormId =
   | 'i821d' | 'i765' | 'w7'                    // Tier 1: DACA / ITIN
   | 'h1010' | 'w4'  | 'i9'                    // Tier 2: SNAP Texas / W-4 / Empleo
-  | 'saws1' | 'cfes2337'                       // Tier 2: SNAP/Medicaid California + Florida
+  | 'saws1' | 'cfes2337' | 'cawic100'          // Tier 2: SNAP/Medicaid/WIC California + Florida
   | 'dl14a' | 'matricula' | 'escuela'          // Tier 3: ID / Consulado / Escuela
 
 export type PdfTier = 1 | 2 | 3
@@ -267,6 +267,29 @@ export const PDF_CATALOG: PdfFormMeta[] = [
       { id: 'id', label: 'Identificación con foto', required: true, category: 'identity' },
       { id: 'address', label: 'Comprobante de domicilio en Florida', required: true, category: 'address' },
       { id: 'income', label: 'Comprobante de ingresos (si tienes)', required: false, category: 'income' },
+    ],
+  },
+  {
+    id: 'cawic100',
+    tier: 2,
+    slug: 'wic-california',
+    title: 'WIC California — Solicitud de Beneficios',
+    subtitle: 'CA-WIC 100 — California Dept. of Public Health (CDPH)',
+    description: 'Prepara tu solicitud WIC de California con todos tus datos. El documento se genera listo para llevar a tu cita en la agencia WIC local. Incluye CalFresh, Medi-Cal y CalWORKs si aplica.',
+    icon: '🥑',
+    agency: 'CDPH — California WIC',
+    formCode: 'CA-WIC 100',
+    price: 1900,
+    freeSteps: 2,
+    totalSteps: 5,
+    tags: ['WIC', 'California', 'alimentos', 'embarazada', 'infante', 'CDPH', 'CalFresh'],
+    who: 'Embarazadas, madres lactando, infantes y niños hasta 5 años en California',
+    docs: [
+      { id: 'id', label: 'Identificación con foto (pasaporte, Green Card, Matrícula Consular)', required: true, category: 'identity' },
+      { id: 'address', label: 'Comprobante de domicilio en California', required: true, category: 'address' },
+      { id: 'income', label: 'Comprobante de ingresos (talones de pago, carta de empleador)', required: false, category: 'income' },
+      { id: 'pregnancy', label: 'Confirmación de embarazo del médico (si estás embarazada)', required: false, category: 'health' },
+      { id: 'birth', label: 'Acta de nacimiento del niño/infante (si aplica)', required: false, category: 'identity' },
     ],
   },
   // TIER 3

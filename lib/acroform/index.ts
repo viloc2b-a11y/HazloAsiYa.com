@@ -30,6 +30,7 @@ import { fillW7AcroForm } from './w7-mapper'
 import { fillI9AcroForm } from './i9-mapper'
 import { fillSaws1AcroForm } from './saws1-mapper'
 import { fillCfEs2337Form } from './cfes2337-mapper'
+import { generateCaWic100 } from './cawic100-mapper'
 
 import {
   toH1010FormData,
@@ -40,6 +41,7 @@ import {
   toW7FormData,
   toSaws1FormData,
   toCfEs2337FormData,
+  toCaWic100FormData,
 } from './adapters'
 
 // Formularios que tienen PDF oficial con campos AcroForm rellenables
@@ -56,6 +58,7 @@ const ACROFORM_READY: ReadonlySet<PdfFormId> = new Set([
 // Formularios que se generan visualmente (no tienen AcroForm en el PDF oficial)
 const VISUAL_ONLY: ReadonlySet<PdfFormId> = new Set([
   'cfes2337',
+  'cawic100',
 ])
 
 export type PdfSource = 'acroform' | 'visual'
@@ -146,6 +149,8 @@ async function fillVisualDirect(
   switch (formId) {
     case 'cfes2337':
       return fillCfEs2337Form(toCfEs2337FormData(data))
+    case 'cawic100':
+      return generateCaWic100(toCaWic100FormData(data))
     default:
       throw new Error(`No visual generator for: ${formId}`)
   }
@@ -175,6 +180,7 @@ function officialFilename(formId: PdfFormId): string {
     i9:       'I-9 Employment Eligibility',
     saws1:    'SAWS-1 California CalFresh Medi-Cal Application',
     cfes2337: 'CF-ES-2337 Florida ACCESS Application',
+  cawic100: 'CA-WIC-100 California WIC Application',
   }
   return names[formId] ?? formId
 }

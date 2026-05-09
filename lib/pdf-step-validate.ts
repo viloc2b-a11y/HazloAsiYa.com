@@ -91,6 +91,16 @@ export function validatePdfStep(formId: PdfFormId, stepIndex: number, data: Reco
       // Paso 2: dirección en Florida
       if (stepIndex === 2) req(['streetAddr', 'city', 'county', 'zip', 'phone'])
       return miss
+    case 'cawic100':
+      // Paso 0: tipo de participante requerido
+      if (stepIndex === 0) req(['applicantType'])
+      // Paso 1: datos del participante
+      if (stepIndex === 1) req(['lastName', 'firstName', 'dob'])
+      // Paso 2: dirección en California
+      if (stepIndex === 2) req(['streetAddr', 'city', 'county', 'zip', 'phone'])
+      // Paso 3: ingresos (tamaño del hogar requerido)
+      if (stepIndex === 3) req(['householdSize'])
+      return miss
     default:
       return miss
   }
