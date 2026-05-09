@@ -19,8 +19,16 @@ const LogoMark = ({ size = 36 }: { size?: number }) => (
 
 const NAV_FUNNELS = ['snap','medicaid','id','wic','taxes','escuela','daca','itin','iep'] as const
 
+const STATES_NAV = [
+  { flag: '🤠', label: 'Texas',      snap: '/snap/texas/',      medicaid: '/medicaid/texas/',      wic: '/wic/texas/' },
+  { flag: '🌴', label: 'California', snap: '/snap/california/', medicaid: '/medicaid/california/', wic: '/wic/california/' },
+  { flag: '☀️', label: 'Florida',    snap: '/snap/florida/',    medicaid: '/medicaid/florida/',    wic: '/wic/florida/' },
+  { flag: '🗽', label: 'Nueva York', snap: '/snap/new-york/',   medicaid: '/medicaid/new-york/',   wic: '/wic/new-york/' },
+]
+
 export default function Topbar({ user }: { user?: { email: string; name?: string; plan?: string } | null }) {
-  const [menuOpen, setMenuOpen] = useState(false)
+  const [menuOpen, setMenuOpen]   = useState(false)
+  const [statesOpen, setStatesOpen] = useState(false)
   const [localUser, setLocalUser] = useState<{ email: string; name?: string; plan?: string } | null>(user ?? null)
 
   useEffect(() => {
@@ -33,6 +41,14 @@ export default function Topbar({ user }: { user?: { email: string; name?: string
       setLocalUser(null)
     }
   }, [user])
+
+  // Close states dropdown when clicking outside
+  useEffect(() => {
+    if (!statesOpen) return
+    const handler = () => setStatesOpen(false)
+    document.addEventListener('click', handler)
+    return () => document.removeEventListener('click', handler)
+  }, [statesOpen])
 
   return (
     <header className="sticky top-0 z-50 bg-navy/95 backdrop-blur border-b border-white/10">
@@ -60,6 +76,46 @@ export default function Topbar({ user }: { user?: { email: string; name?: string
           >
             Formularios PDF
           </Link>
+
+          {/* States dropdown */}
+          <div className="relative" onClick={e => e.stopPropagation()}>
+            <button
+              onClick={() => setStatesOpen(!statesOpen)}
+              className="flex items-center gap-1 px-3 py-1.5 text-[13px] font-semibold text-green hover:text-white hover:bg-white/8 rounded-lg transition-colors"
+            >
+              📍 Por estado
+              <svg className={`w-3 h-3 transition-transform ${statesOpen ? 'rotate-180' : ''}`} fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/>
+              </svg>
+            </button>
+            {statesOpen && (
+              <div className="absolute top-full left-0 mt-1 w-72 bg-navy border border-white/15 rounded-xl shadow-2xl overflow-hidden">
+                <div className="px-3 pt-3 pb-1 text-[10px] font-bold tracking-widest uppercase text-white/30">
+                  Disponible en 4 estados
+                </div>
+                {STATES_NAV.map(st => (
+                  <div key={st.label} className="px-3 py-2 border-b border-white/8 last:border-0">
+                    <div className="text-[11px] font-bold text-white/50 mb-1.5">{st.flag} {st.label}</div>
+                    <div className="flex gap-2">
+                      <Link href={st.snap} onClick={() => setStatesOpen(false)}
+                            className="flex-1 text-center text-[11px] font-semibold text-white/70 hover:text-white bg-white/6 hover:bg-white/12 rounded-md py-1 transition-colors">
+                        🛒 SNAP
+                      </Link>
+                      <Link href={st.medicaid} onClick={() => setStatesOpen(false)}
+                            className="flex-1 text-center text-[11px] font-semibold text-white/70 hover:text-white bg-white/6 hover:bg-white/12 rounded-md py-1 transition-colors">
+                        🏥 Medicaid
+                      </Link>
+                      <Link href={st.wic} onClick={() => setStatesOpen(false)}
+                            className="flex-1 text-center text-[11px] font-semibold text-white/70 hover:text-white bg-white/6 hover:bg-white/12 rounded-md py-1 transition-colors">
+                        🤱 WIC
+                      </Link>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
           {NAV_FUNNELS.map((navId) => (
             <Link
               key={navId}
@@ -106,32 +162,65 @@ export default function Topbar({ user }: { user?: { email: string; name?: string
 
       {/* Mobile menu */}
       {menuOpen && (
-        <div className="lg:hidden border-t border-white/10 bg-navy px-4 py-3 grid grid-cols-2 gap-1">
-          <Link
-            href="/buscar/"
-            onClick={() => setMenuOpen(false)}
-            className="flex items-center gap-2 px-3 py-2 text-sm text-green font-semibold hover:bg-white/8 rounded-lg transition-colors col-span-2"
-          >
-            🔍 Buscar en el sitio
-          </Link>
-          <Link
-            href="/pdf/"
-            onClick={() => setMenuOpen(false)}
-            className="flex items-center gap-2 px-3 py-2 text-sm text-green font-semibold hover:bg-white/8 rounded-lg transition-colors col-span-2"
-          >
-            📄 Formularios PDF (borradores)
-          </Link>
-          {FUNNEL_ORDER.map((fid) => (
+        <div className="lg:hidden border-t border-white/10 bg-navy px-4 py-3">
+          {/* Search + PDF */}
+          <div className="grid grid-cols-2 gap-1 mb-3">
             <Link
-              key={fid}
-              href={funnelLandingPath(fid)}
+              href="/buscar/"
               onClick={() => setMenuOpen(false)}
-              className="flex items-center gap-2 px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/8 rounded-lg transition-colors"
+              className="flex items-center gap-2 px-3 py-2 text-sm text-green font-semibold hover:bg-white/8 rounded-lg transition-colors col-span-2"
             >
-              <span>{FUNNELS[fid].icon}</span>
-              <span>{fid === 'id' ? 'Texas ID' : FUNNELS[fid].name.split(' ')[0]}</span>
+              🔍 Buscar en el sitio
             </Link>
-          ))}
+            <Link
+              href="/pdf/"
+              onClick={() => setMenuOpen(false)}
+              className="flex items-center gap-2 px-3 py-2 text-sm text-green font-semibold hover:bg-white/8 rounded-lg transition-colors col-span-2"
+            >
+              📄 Formularios PDF (borradores)
+            </Link>
+          </div>
+
+          {/* States section */}
+          <div className="mb-3 border border-white/10 rounded-xl overflow-hidden">
+            <div className="px-3 py-2 bg-white/5 text-[10px] font-bold tracking-widest uppercase text-green">
+              📍 Por estado — TX · CA · FL · NY
+            </div>
+            {STATES_NAV.map(st => (
+              <div key={st.label} className="px-3 py-2 border-t border-white/8">
+                <div className="text-[11px] font-bold text-white/50 mb-1.5">{st.flag} {st.label}</div>
+                <div className="grid grid-cols-3 gap-1.5">
+                  <Link href={st.snap} onClick={() => setMenuOpen(false)}
+                        className="text-center text-[11px] font-semibold text-white/70 hover:text-white bg-white/6 hover:bg-white/12 rounded-md py-1.5 transition-colors">
+                    🛒 SNAP
+                  </Link>
+                  <Link href={st.medicaid} onClick={() => setMenuOpen(false)}
+                        className="text-center text-[11px] font-semibold text-white/70 hover:text-white bg-white/6 hover:bg-white/12 rounded-md py-1.5 transition-colors">
+                    🏥 Medicaid
+                  </Link>
+                  <Link href={st.wic} onClick={() => setMenuOpen(false)}
+                        className="text-center text-[11px] font-semibold text-white/70 hover:text-white bg-white/6 hover:bg-white/12 rounded-md py-1.5 transition-colors">
+                    🤱 WIC
+                  </Link>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* All funnels */}
+          <div className="grid grid-cols-2 gap-1">
+            {FUNNEL_ORDER.map((fid) => (
+              <Link
+                key={fid}
+                href={funnelLandingPath(fid)}
+                onClick={() => setMenuOpen(false)}
+                className="flex items-center gap-2 px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/8 rounded-lg transition-colors"
+              >
+                <span>{FUNNELS[fid].icon}</span>
+                <span>{fid === 'id' ? 'Texas ID' : FUNNELS[fid].name.split(' ')[0]}</span>
+              </Link>
+            ))}
+          </div>
         </div>
       )}
     </header>

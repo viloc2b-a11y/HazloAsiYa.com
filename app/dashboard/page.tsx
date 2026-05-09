@@ -9,6 +9,13 @@ interface Document {
   id: string; funnel: string; created_at: string; result: { eligible: boolean; headline: string }
 }
 
+const STATES_AVAILABLE = [
+  { id: 'texas',      label: 'Texas',        flag: '🤠', funnels: ['snap','medicaid','wic'] as const, paths: { snap: '/snap/texas/', medicaid: '/medicaid/texas/', wic: '/wic/texas/' } },
+  { id: 'california', label: 'California',   flag: '🌴', funnels: ['snap','medicaid','wic'] as const, paths: { snap: '/snap/california/', medicaid: '/medicaid/california/', wic: '/wic/california/' } },
+  { id: 'florida',    label: 'Florida',      flag: '☀️', funnels: ['snap','medicaid','wic'] as const, paths: { snap: '/snap/florida/', medicaid: '/medicaid/florida/', wic: '/wic/florida/' } },
+  { id: 'new-york',   label: 'Nueva York',   flag: '🗽', funnels: ['snap','medicaid','wic'] as const, paths: { snap: '/snap/new-york/', medicaid: '/medicaid/new-york/', wic: '/wic/new-york/' } },
+]
+
 export default function DashboardPage() {
   const router = useRouter()
   const [user,  setUser]  = useState<{ email: string; name?: string; plan?: string } | null>(null)
@@ -95,15 +102,47 @@ export default function DashboardPage() {
                 <div className="font-serif text-xl text-white mb-2">
                   Formulario oficial por $29 · O acceso anual por $79
                 </div>
-                <p className="text-white/50 text-sm mb-4">PDF completo con checklist, formulario de ejemplo y pasos exactos.</p>
-                <Link href="/snap" className="btn-primary inline-block">Ver opciones →</Link>
+                <p className="text-white/50 text-sm mb-4">Disponible en Texas, California, Florida y Nueva York.</p>
+                <Link href="/precios" className="btn-primary inline-block">Ver opciones →</Link>
               </div>
             )}
 
+            {/* Trámites por estado */}
             <div className="card p-5">
-              <div className="text-xs font-bold tracking-widest uppercase text-gray-400 mb-4">Accesos rápidos</div>
+              <div className="text-xs font-bold tracking-widest uppercase text-gray-400 mb-4">
+                Trámites disponibles por estado
+              </div>
+              <div className="space-y-4">
+                {STATES_AVAILABLE.map(st => (
+                  <div key={st.id}>
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="text-base">{st.flag}</span>
+                      <span className="font-semibold text-sm text-navy">{st.label}</span>
+                    </div>
+                    <div className="grid grid-cols-3 gap-2">
+                      <Link href={st.paths.snap}
+                            className="flex items-center gap-1.5 px-3 py-2 rounded-lg border border-gray-100 hover:bg-cream hover:border-green/30 transition-colors text-xs font-medium text-navy">
+                        🛒 SNAP
+                      </Link>
+                      <Link href={st.paths.medicaid}
+                            className="flex items-center gap-1.5 px-3 py-2 rounded-lg border border-gray-100 hover:bg-cream hover:border-green/30 transition-colors text-xs font-medium text-navy">
+                        🏥 Medicaid
+                      </Link>
+                      <Link href={st.paths.wic}
+                            className="flex items-center gap-1.5 px-3 py-2 rounded-lg border border-gray-100 hover:bg-cream hover:border-green/30 transition-colors text-xs font-medium text-navy">
+                        🤱 WIC
+                      </Link>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Accesos rápidos — otros trámites */}
+            <div className="card p-5">
+              <div className="text-xs font-bold tracking-widest uppercase text-gray-400 mb-4">Otros trámites</div>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                {FUNNEL_ORDER.slice(0, 8).map(id => (
+                {FUNNEL_ORDER.filter(id => !['snap','medicaid','wic'].includes(id)).slice(0, 8).map(id => (
                   <Link key={id} href={`/${id}`}
                         className="flex items-center gap-2 p-3 rounded-xl hover:bg-cream border border-gray-100 transition-colors text-sm">
                     <span>{FUNNELS[id].icon}</span>
@@ -178,12 +217,12 @@ export default function DashboardPage() {
                 <div className="card p-5 border-2 border-gold">
                   <div className="font-serif text-2xl text-navy mb-1">$29</div>
                   <div className="font-bold text-sm mb-3">Guía por Trámite</div>
-                  <Link href="/snap" className="btn-gold block text-center py-2.5 text-sm">Comprar →</Link>
+                  <Link href="/precios" className="btn-gold block text-center py-2.5 text-sm">Comprar →</Link>
                 </div>
                 <div className="card p-5 border-2 border-navy">
                   <div className="font-serif text-2xl text-navy mb-1">$79<span className="text-sm text-gray-400">/año</span></div>
                   <div className="font-bold text-sm mb-3">Acceso Anual — 16 Trámites</div>
-                  <Link href="/snap" className="btn-navy block text-center py-2.5 text-sm">Comprar →</Link>
+                  <Link href="/precios" className="btn-navy block text-center py-2.5 text-sm">Comprar →</Link>
                 </div>
               </div>
             )}
