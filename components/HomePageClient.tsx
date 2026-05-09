@@ -97,6 +97,35 @@ export default function HomePageClient() {
             ))}
           </div>
 
+        <section
+          className="mt-14 rounded-2xl border border-green/25 bg-emerald-50/80 px-6 py-8 max-w-4xl mx-auto"
+          aria-labelledby="home-estados"
+        >
+          <h2 id="home-estados" className="font-serif text-xl text-navy mb-1">
+            Disponible en 4 estados
+          </h2>
+          <p className="text-gray-600 text-sm mb-5">
+            Formularios oficiales pre-llenados para SNAP, Medicaid y WIC — en tu estado.
+          </p>
+          <div className="grid sm:grid-cols-2 gap-4">
+            {[
+              { flag: '🤠', label: 'Texas',      snap: '/snap/texas/',      medicaid: '/medicaid/texas/',      wic: '/wic/texas/',      extra: '/itin/houston/', extraLabel: 'ITIN Houston' },
+              { flag: '🌴', label: 'California', snap: '/snap/california/', medicaid: '/medicaid/california/', wic: '/wic/california/',  extra: null, extraLabel: null },
+              { flag: '☀️', label: 'Florida',    snap: '/snap/florida/',    medicaid: '/medicaid/florida/',    wic: '/wic/florida/',    extra: null, extraLabel: null },
+              { flag: '🗽', label: 'Nueva York', snap: '/snap/new-york/',   medicaid: '/medicaid/new-york/',   wic: '/wic/new-york/',   extra: null, extraLabel: null },
+            ].map(st => (
+              <div key={st.label} className="bg-white rounded-xl p-4 border border-green/15">
+                <div className="font-semibold text-navy text-sm mb-2.5">{st.flag} {st.label}</div>
+                <div className="flex flex-wrap gap-3">
+                  <Link href={st.snap} className="text-xs font-semibold text-green hover:underline">🛒 SNAP</Link>
+                  <Link href={st.medicaid} className="text-xs font-semibold text-green hover:underline">🏥 Medicaid</Link>
+                  <Link href={st.wic} className="text-xs font-semibold text-green hover:underline">🤱 WIC</Link>
+                  {st.extra && <Link href={st.extra} className="text-xs font-semibold text-green hover:underline">{st.extraLabel}</Link>}
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
           {/* Trust band */}
           <div className="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-3 text-sm">
             {[
@@ -214,35 +243,6 @@ export default function HomePageClient() {
           </p>
         </section>
 
-        <section
-          className="mt-14 rounded-2xl border border-green/25 bg-emerald-50/80 px-6 py-8 max-w-4xl mx-auto"
-          aria-labelledby="home-estados"
-        >
-          <h2 id="home-estados" className="font-serif text-xl text-navy mb-1">
-            Disponible en 4 estados
-          </h2>
-          <p className="text-gray-600 text-sm mb-5">
-            Formularios oficiales pre-llenados para SNAP, Medicaid y WIC — en tu estado.
-          </p>
-          <div className="grid sm:grid-cols-2 gap-4">
-            {[
-              { flag: '🤠', label: 'Texas',      snap: '/snap/texas/',      medicaid: '/medicaid/texas/',      wic: '/wic/texas/',      extra: '/itin/houston/', extraLabel: 'ITIN Houston' },
-              { flag: '🌴', label: 'California', snap: '/snap/california/', medicaid: '/medicaid/california/', wic: '/wic/california/',  extra: null, extraLabel: null },
-              { flag: '☀️', label: 'Florida',    snap: '/snap/florida/',    medicaid: '/medicaid/florida/',    wic: '/wic/florida/',    extra: null, extraLabel: null },
-              { flag: '🗽', label: 'Nueva York', snap: '/snap/new-york/',   medicaid: '/medicaid/new-york/',   wic: '/wic/new-york/',   extra: null, extraLabel: null },
-            ].map(st => (
-              <div key={st.label} className="bg-white rounded-xl p-4 border border-green/15">
-                <div className="font-semibold text-navy text-sm mb-2.5">{st.flag} {st.label}</div>
-                <div className="flex flex-wrap gap-3">
-                  <Link href={st.snap} className="text-xs font-semibold text-green hover:underline">🛒 SNAP</Link>
-                  <Link href={st.medicaid} className="text-xs font-semibold text-green hover:underline">🏥 Medicaid</Link>
-                  <Link href={st.wic} className="text-xs font-semibold text-green hover:underline">🤱 WIC</Link>
-                  {st.extra && <Link href={st.extra} className="text-xs font-semibold text-green hover:underline">{st.extraLabel}</Link>}
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
       </section>
 
       {/* HOW IT WORKS */}
