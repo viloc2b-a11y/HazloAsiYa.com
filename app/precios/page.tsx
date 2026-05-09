@@ -23,7 +23,7 @@ const PRICE_KIT_ITIN = usdFromCents(products.kitItin.priceCents)
 
 export const metadata: Metadata = {
   title: 'Planes y precios | HazloAsíYa — Desde $0',
-  description: 'Elige tu plan: cuestionario gratis, guía por trámite desde $19, o acceso anual completo. Garantía de reembolso 30 días. Sin sorpresas.',
+  description: 'Elige tu plan: cuestionario gratis, guía por trámite desde $29, o acceso anual completo. Garantía de reembolso 30 días. Sin sorpresas.',
   alternates: alternatesForPath('/precios/'),
   openGraph: {
     url: absoluteUrl('/precios/'),

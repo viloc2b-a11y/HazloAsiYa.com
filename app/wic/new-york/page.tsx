@@ -225,7 +225,7 @@ export default function WicNewYorkPage() {
               <div className="bg-white rounded-xl p-4 border border-rose-100">
                 <div className="text-xl mb-2">🏙️</div>
                 <div className="font-bold text-stone-900 mb-1">En NYC</div>
-                <p className="text-stone-600 text-xs">Llama al 311 y di "WIC"</p>
+                <p className="text-stone-600 text-xs">Llama al 311 y di &quot;WIC&quot;</p>
                 <p className="text-stone-500 text-xs mt-1">Más de 100 clínicas en los 5 boroughs</p>
               </div>
             </div>

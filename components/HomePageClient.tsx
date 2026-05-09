@@ -404,7 +404,7 @@ export default function HomePageClient() {
                   </div>
                   <span className="ml-auto text-xl">{emoji}</span>
                 </div>
-                <p className="text-sm text-gray-600 leading-relaxed flex-1">"{texto}"</p>
+                <p className="text-sm text-gray-600 leading-relaxed flex-1">&quot;{texto}&quot;</p>
                 <div className="text-xs font-semibold text-green border-t border-cream pt-3">
                   Trámite: {tramite}
                 </div>
