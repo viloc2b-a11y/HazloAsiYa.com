@@ -1,7 +1,6 @@
-'use client'
-
-import { useRef, useState } from 'react'
 import Link from 'next/link'
+
+const YOUTUBE_ID = 'f6shoxF_334'
 
 interface VideoExplicativoProps {
   /** Override the CTA button href. Defaults to "/" */
@@ -20,9 +19,6 @@ export default function VideoExplicativo({
   showSteps = true,
   variant = 'cream',
 }: VideoExplicativoProps) {
-  const videoRef = useRef<HTMLVideoElement>(null)
-  const [playing, setPlaying] = useState(false)
-
   const bgClass =
     variant === 'navy'
       ? 'bg-[#08213A]'
@@ -39,17 +35,6 @@ export default function VideoExplicativo({
   const stepBg =
     variant === 'navy' ? 'bg-white/10 text-white' : 'bg-white text-[#0A2540]'
 
-  function handlePlay() {
-    if (!videoRef.current) return
-    if (playing) {
-      videoRef.current.pause()
-      setPlaying(false)
-    } else {
-      videoRef.current.play()
-      setPlaying(true)
-    }
-  }
-
   return (
     <section className={`${bgClass} py-16 px-4`}>
       <div className="max-w-4xl mx-auto text-center">
@@ -62,49 +47,16 @@ export default function VideoExplicativo({
           En solo 3 pasos fáciles puedes completar tus trámites sin complicaciones y en español.
         </p>
 
-        {/* Video container */}
-        <div className="relative aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl mx-auto max-w-3xl group">
-          <video
-            ref={videoRef}
-            className="w-full h-full object-cover"
-            src="/videos/como-funciona.mp4"
-            poster="/videos/como-funciona-poster.jpg"
-            preload="metadata"
-            playsInline
-            onEnded={() => setPlaying(false)}
+        {/* YouTube embed */}
+        <div className="relative aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl mx-auto max-w-3xl">
+          <iframe
+            className="w-full h-full"
+            src={`https://www.youtube.com/embed/${YOUTUBE_ID}?rel=0&modestbranding=1&color=white`}
+            title="¿Cómo funciona HazloAsíYa? Trámites en español paso a paso"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen
           />
-
-          {/* Play overlay — shown when paused */}
-          {!playing && (
-            <button
-              onClick={handlePlay}
-              aria-label="Reproducir video"
-              className="absolute inset-0 flex flex-col items-center justify-center bg-black/40 hover:bg-black/30 transition-colors"
-            >
-              {/* Play circle */}
-              <div className="w-20 h-20 rounded-full bg-[#0EC96A] flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform">
-                <svg className="w-8 h-8 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M8 5v14l11-7z" />
-                </svg>
-              </div>
-              <span className="mt-3 text-white text-sm font-medium tracking-wide">
-                Ver cómo funciona (1:30 min)
-              </span>
-            </button>
-          )}
-
-          {/* Pause button — shown when playing */}
-          {playing && (
-            <button
-              onClick={handlePlay}
-              aria-label="Pausar video"
-              className="absolute bottom-4 right-4 w-10 h-10 rounded-full bg-black/50 hover:bg-black/70 flex items-center justify-center transition-colors"
-            >
-              <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
-              </svg>
-            </button>
-          )}
         </div>
 
         {/* CTA button */}
