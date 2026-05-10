@@ -6,6 +6,7 @@ import { SITE_ORIGIN, absoluteUrl } from '@/lib/site'
 import { alternatesForPath } from '@/lib/alternates'
 import CookieBanner from '@/components/legal/CookieBanner'
 import GoogleAnalyticsClient from '@/components/analytics/GoogleAnalyticsClient'
+import PartnerTracker from '@/components/analytics/PartnerTracker'
 
 const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID
 
@@ -81,6 +82,7 @@ gtag('config', ${JSON.stringify(GA_MEASUREMENT_ID)}, { send_page_view: false });
         />
         {children}
         <GoogleAnalyticsClient />
+        <PartnerTracker />
         <CookieBanner />
       </body>
     </html>

@@ -90,8 +90,9 @@ async function supabaseInsertPurchase(args: {
   amountCents?: number
   squarePaymentId?: string
   buyerEmail?: string
+  partnerSlug?: string
 }) {
-  const { supabaseUrl, serviceKey, userId, productId, funnelId, amountCents, squarePaymentId, buyerEmail } = args
+  const { supabaseUrl, serviceKey, userId, productId, funnelId, amountCents, squarePaymentId, buyerEmail, partnerSlug } = args
   const row: Record<string, unknown> = {
     user_id: userId,
     product_id: productId,
@@ -101,6 +102,7 @@ async function supabaseInsertPurchase(args: {
     square_payment_id: squarePaymentId || null,
   }
   if (buyerEmail) row.email = buyerEmail
+  if (partnerSlug) row.partner_slug = partnerSlug
   const r = await fetch(`${supabaseUrl}/rest/v1/purchases`, {
     method: 'POST',
     headers: {
@@ -163,6 +165,11 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
         buyerEmail = meta.email
       }
     }
+    // Partner attribution — stamped in payment_note as ;ref=<slug>
+    let partnerSlug: string | undefined
+    if (meta.ref) {
+      try { partnerSlug = decodeURIComponent(meta.ref) } catch { partnerSlug = meta.ref }
+    }
     if (!userId) return json({ error: 'Missing userId in payment_note' }, 400)
 
     if (!isUuid(userId)) {
@@ -198,6 +205,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       amountCents,
       squarePaymentId,
       buyerEmail,
+      partnerSlug,
     })
 
     return json({ ok: true })

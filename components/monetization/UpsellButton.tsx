@@ -5,6 +5,7 @@ import Disclosure from '@/components/legal/Disclosure'
 import { PHASE1_PRODUCTS, type Phase1ProductKey } from '@/lib/payment-products'
 import { checkoutStatic, getStoredUser } from '@/lib/static-backend'
 import { FUNNEL_EVENTS, trackFunnelEvent } from '@/lib/analytics-events'
+import { getStoredAttribution } from '@/lib/partner-tracking'
 import { UPSELL_COPY_EXPERIMENT_ID } from '@/hooks/useAbVariant'
 
 const REVISION_EXPRESS_CTA = {
@@ -63,6 +64,7 @@ export default function UpsellButton({
       productId: productKey,
       funnelId,
       userEmail: user?.email ?? email.trim(),
+      partnerSlug: getStoredAttribution()?.partner_slug ?? null,
     })
     setBusy(false)
     if (!res.ok) alert(res.error)

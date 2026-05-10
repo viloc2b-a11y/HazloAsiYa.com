@@ -112,6 +112,8 @@ export async function checkoutStatic(args: {
   userEmail?: string
   /** Ruta de retorno tras pago (debe empezar por `/`). */
   returnPath?: string
+  /** Partner slug from ?ref= attribution — stamped on the purchase record. */
+  partnerSlug?: string | null
 }) {
   let user = getStoredUser()
 
@@ -144,6 +146,7 @@ export async function checkoutStatic(args: {
       email,
       funnelId: args.funnelId,
       returnPath: args.returnPath,
+      partnerSlug: args.partnerSlug || null,
     }),
   })
 

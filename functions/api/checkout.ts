@@ -48,9 +48,12 @@ function buildPaymentNote(args: {
   productId: string
   funnelId: string
   email: string
+  partnerSlug?: string | null
 }) {
   const emailSafe = encodeURIComponent(args.email)
-  return `userId=${args.userId};productId=${args.productId};funnelId=${args.funnelId};email=${emailSafe}`
+  let note = `userId=${args.userId};productId=${args.productId};funnelId=${args.funnelId};email=${emailSafe}`
+  if (args.partnerSlug) note += `;ref=${encodeURIComponent(args.partnerSlug)}`
+  return note
 }
 
 export const onRequestPost: PagesFunction<Env> = async (context) => {
@@ -66,6 +69,8 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       funnelId?: string
       /** Ruta absoluta en el sitio (p. ej. `/pdf/itin/?paid=1`) para volver tras Square. */
       returnPath?: string
+      /** Partner slug from ?ref= attribution */
+      partnerSlug?: string | null
     }
 
     const productId = body.productId?.trim() || ''
@@ -109,9 +114,10 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
           email,
           product_id: productId,
           funnel: funnelId,
+          partner_slug: body.partnerSlug || '',
         },
       },
-      payment_note: buildPaymentNote({ userId, productId, funnelId, email }),
+      payment_note: buildPaymentNote({ userId, productId, funnelId, email, partnerSlug: body.partnerSlug }),
       checkout_options: {
         redirect_url: redirectUrl,
         ask_for_shipping_address: false,

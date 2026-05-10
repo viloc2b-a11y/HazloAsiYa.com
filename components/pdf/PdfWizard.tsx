@@ -7,6 +7,7 @@ import { downloadPdfBytes } from '@/lib/pdf-generator'
 import { generateFormPdf } from '@/lib/acroform'
 import { validatePdfStep } from '@/lib/pdf-step-validate'
 import { checkoutStatic, getStoredUser } from '@/lib/static-backend'
+import { getStoredAttribution } from '@/lib/partner-tracking'
 import { checkPdfPurchase, isPdfPaywallDisabled, isUuid, pdfUnlockStorageKey } from '@/lib/pdf-access'
 import PdfFormSteps from '@/components/pdf/pdf-form-steps'
 import Disclosure from '@/components/legal/Disclosure'
@@ -161,6 +162,7 @@ export default function PdfWizard({
         funnelId: `pdf-${form.slug}`,
         userEmail: email,
         returnPath,
+        partnerSlug: getStoredAttribution()?.partner_slug ?? null,
       })
       if (!res.ok) setStatus('error')
     } catch {
