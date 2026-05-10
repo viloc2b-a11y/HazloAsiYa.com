@@ -66,6 +66,11 @@ CREATE INDEX IF NOT EXISTS idx_partner_events_created
 ALTER TABLE public.partners ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.partner_events ENABLE ROW LEVEL SECURITY;
 
+-- Drop first to allow safe re-runs
+DROP POLICY IF EXISTS "service_role_all_partners" ON public.partners;
+DROP POLICY IF EXISTS "service_role_all_partner_events" ON public.partner_events;
+DROP POLICY IF EXISTS "public_read_active_partners" ON public.partners;
+
 -- Service role has full access (used by backend functions)
 CREATE POLICY "service_role_all_partners"
   ON public.partners FOR ALL

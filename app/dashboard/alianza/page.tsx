@@ -360,6 +360,12 @@ export default function AlianzaDashboard() {
                 <option key={k} value={k}>{v}</option>
               ))}
             </select>
+            <Link
+              href="/dashboard/alianza/links/"
+              className="text-sm bg-[#0EC96A] text-[#0A2540] px-4 py-2 rounded-xl font-bold hover:bg-[#0EC96A]/90 transition-colors"
+            >
+              🔗 Generar links
+            </Link>
             <button
               onClick={loadData}
               className="text-sm bg-[#0A2540] text-white px-4 py-2 rounded-xl font-bold hover:bg-[#0D2A42] transition-colors"
