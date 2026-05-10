@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import Topbar from '@/components/Topbar'
 import { SITE_ORIGIN, withTrailingSlash } from '@/lib/site'
+import VideoExplicativo from '@/components/VideoExplicativo'
 
 export const metadata: Metadata = {
   title: 'Alianza HazloAsíYa — Partners por la Comunidad | HazloAsíYa',
@@ -391,6 +392,14 @@ export default function ParaOrganizacionesPage() {
           </a>
         </p>
       </div>
+
+      {/* ── Video Explicativo ── */}
+      <VideoExplicativo
+        ctaHref="mailto:alianza@hazloasiya.com"
+        ctaLabel="Solicitar enlace comunitario →"
+        showSteps={false}
+        variant="white"
+      />
 
       {/* ── FAQ ── */}
       <div className="bg-[#EDE7DA] border-t border-[#E8E2D8]">

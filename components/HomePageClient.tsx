@@ -5,6 +5,7 @@ import FunnelCard from '@/components/FunnelCard'
 import { FUNNELS, FUNNEL_ORDER } from '@/data/funnels'
 import Link from 'next/link'
 import { getStoredUser } from '@/lib/static-backend'
+import VideoExplicativo from '@/components/VideoExplicativo'
 
 const LogoMark = ({ size = 48 }: { size?: number }) => (
   <svg width={size} height={size} viewBox="0 0 48 48" fill="none">
@@ -162,6 +163,14 @@ export default function HomePageClient() {
           </div>
         </div>
       </div>
+
+      {/* VIDEO EXPLICATIVO */}
+      <VideoExplicativo
+        ctaHref="#tramites"
+        ctaLabel="Ver todos los trámites"
+        showSteps={true}
+        variant="cream"
+      />
 
       {/* FUNNELS GRID */}
       <section id="tramites" className="max-w-7xl mx-auto px-4 py-16">
