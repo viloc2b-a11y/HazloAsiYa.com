@@ -71,7 +71,26 @@ const MOCK_PARTNERS: Partner[] = [
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
+/**
+ * Primary link format: /ref/[slug]/?funnel=snap&state=texas&utm_source=whatsapp
+ * This lands the family on the personalized partner page first.
+ * Deep-links directly to the funnel if funnel+state are provided.
+ */
 function buildLink(slug: string, orgType: string | null, funnelId: string, stateSlug: string | null, channel: string): string {
+  const params = new URLSearchParams({
+    funnel: funnelId,
+    ...(stateSlug ? { state: stateSlug } : {}),
+    utm_source: channel,
+    utm_medium: 'alianza',
+    utm_campaign: slug,
+  })
+  return `${BASE_URL}/ref/${slug}/?${params.toString()}`
+}
+
+/**
+ * Direct funnel link (bypasses partner page) — used in the quick-reference table.
+ */
+function buildDirectLink(slug: string, orgType: string | null, funnelId: string, stateSlug: string | null, channel: string): string {
   const path = stateSlug ? `/${funnelId}/${stateSlug}/` : `/${funnelId}/`
   const params = new URLSearchParams({
     ref: slug,
@@ -591,13 +610,13 @@ export default function PartnerLinksPage() {
               <div className="bg-white border border-[#E8E2D8] rounded-2xl overflow-hidden">
                 <div className="px-5 py-4 border-b border-[#E8E2D8] bg-[#F5F0E8]">
                   <div className="font-bold text-[#0A2540] text-sm">Todos los trámites — WhatsApp</div>
-                  <div className="text-xs text-[#0A2540]/40 mt-0.5">{selectedPartner.name}</div>
+                  <div className="text-xs text-[#0A2540]/40 mt-0.5">{selectedPartner.name} · Links directos al trámite</div>
                 </div>
                 <div className="divide-y divide-[#E8E2D8]">
                   {FUNNELS.flatMap(f => {
                     const states = f.states.length > 0 ? f.states : [null]
                     return states.map(s => {
-                      const link = buildLink(selectedPartner.slug, selectedPartner.organization_type, f.id, s, 'whatsapp')
+                      const link = buildDirectLink(selectedPartner.slug, selectedPartner.organization_type, f.id, s, 'whatsapp')
                       const id = `quick-${f.id}-${s}`
                       return (
                         <div key={id} className="px-5 py-3 flex items-center gap-3">
