@@ -58,6 +58,16 @@ async function getPartner(slug: string): Promise<PartnerPublic | null> {
   }
 }
 
+// ── generateStaticParams (required for output: export) ──────────────────────
+export function generateStaticParams() {
+  return [
+    { slug: 'iglesia-bethel-houston' },
+    { slug: 'clinica-salud-san-antonio' },
+    { slug: 'centro-esperanza-dallas' },
+  ]
+}
+export const dynamicParams = true
+
 // ── generateMetadata ──────────────────────────────────────────────────────────
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {

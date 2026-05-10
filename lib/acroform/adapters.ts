@@ -441,3 +441,109 @@ export function toNyWicFormData(data: Record<string, unknown>): import('./nywic-
     signatureDate: raw(data, 'signatureDate') || new Date().toLocaleDateString('en-US'),
   }
 }
+
+
+// ── DL-14A adapter ────────────────────────────────────────────────────────────
+import type { Dl14aFormData } from './dl14a-mapper'
+export function toDl14aFormData(data: Record<string, unknown>): Dl14aFormData {
+  const s = (k: string) => String(data[k] ?? '')
+  return {
+    documentType:    (s('dt') === 'id' ? 'id' : 'dl') as 'dl' | 'id',
+    applicationType: (['orig','ren','rep','chg'].includes(s('at')) ? s('at') : 'orig') as 'orig'|'ren'|'rep'|'chg',
+    lastName:        s('ln'),
+    firstName:       s('fn'),
+    middleName:      s('mn') || undefined,
+    suffix:          s('sfx') || undefined,
+    maidenName:      s('maiden') || undefined,
+    ssn:             s('ssn') || undefined,
+    dob:             s('dob'),
+    sex:             (s('sex') === 'M' || s('sex') === 'F') ? s('sex') as 'M'|'F' : undefined,
+    heightFt:        s('hft') || undefined,
+    heightIn:        s('hin') || undefined,
+    weight:          s('wt') || undefined,
+    street:          s('str'),
+    city:            s('cty'),
+    county:          s('cnty') || undefined,
+    zip:             s('zip'),
+    usCitizen:       data.cit === 'y' ? true : data.cit === 'n' ? false : undefined,
+    medicalCondition:data.med === 'y' ? true : data.med === 'n' ? false : undefined,
+    docPassport:     Boolean(data.dp),
+    docBirthCert:    Boolean(data['db_']),
+    docGreenCard:    Boolean(data.dgc),
+    docEad:          Boolean(data.dead),
+    docI94:          Boolean(data.di94),
+    docSsn:          Boolean(data.dss),
+    docW2:           Boolean(data.dw2),
+    docUtility:      Boolean(data.dut),
+    docLease:        Boolean(data.dls),
+    docBank:         Boolean(data.dbk),
+  }
+}
+
+// ── Matrícula Consular adapter ────────────────────────────────────────────────
+import type { MatriculaFormData } from './matricula-mapper'
+export function toMatriculaFormData(data: Record<string, unknown>): MatriculaFormData {
+  const s = (k: string) => String(data[k] ?? '')
+  return {
+    consulado:        s('cons') || 'hou',
+    tipoTramite:      (['nueva','ren','rep'].includes(s('mt')) ? s('mt') : 'nueva') as 'nueva'|'ren'|'rep',
+    firstName:        s('fn'),
+    middleName:       s('mn') || undefined,
+    lastName:         s('ln'),
+    lastName2:        s('ln2') || undefined,
+    dob:              s('dob'),
+    birthPlace:       s('bp') || undefined,
+    curp:             s('curp') || undefined,
+    phone:            s('phone') || undefined,
+    email:            s('email') || undefined,
+    street:           s('str'),
+    city:             s('cty'),
+    state:            s('st') || undefined,
+    zip:              s('zip'),
+    docActa:          Boolean(data.m_acta),
+    docPasaporte:     Boolean(data.m_pas),
+    docNaturalizacion:Boolean(data.m_nat),
+    docIne:           Boolean(data.m_ine),
+    docLicencia:      Boolean(data.m_lic),
+    docUtility:       Boolean(data.m_uti),
+    docRenta:         Boolean(data.m_rent),
+    docBank:          Boolean(data.m_bank),
+  }
+}
+
+// ── Escuela adapter ───────────────────────────────────────────────────────────
+import type { EscuelaFormData } from './escuela-mapper'
+export function toEscuelaFormData(data: Record<string, unknown>): EscuelaFormData {
+  const s = (k: string) => String(data[k] ?? '')
+  return {
+    studentLastName:   s('sln'),
+    studentFirstName:  s('sfn'),
+    studentMiddleName: s('smn') || undefined,
+    studentDob:        s('sdob'),
+    studentGender:     (['F','M','X'].includes(s('sg')) ? s('sg') : undefined) as 'F'|'M'|'X'|undefined,
+    grade:             s('grd') || undefined,
+    district:          s('dist') || undefined,
+    countryOfBirth:    s('scob') || undefined,
+    language:          (['es','en','both'].includes(s('slng')) ? s('slng') : undefined) as 'es'|'en'|'both'|undefined,
+    guardianFirstName: s('fn'),
+    guardianLastName:  s('ln'),
+    relationship:      s('rel') || undefined,
+    phone:             s('phone') || undefined,
+    email:             s('email') || undefined,
+    street:            s('str'),
+    city:              s('cty'),
+    zip:               s('zip'),
+    emergencyName:     s('en') || undefined,
+    emergencyRelationship: s('er') || undefined,
+    emergencyPhone:    s('ep') || undefined,
+    allergies:         s('allergy') || undefined,
+    medications:       s('meds') || undefined,
+    doctor:            s('doctor') || undefined,
+    insurance:         (['none','medicaid','private'].includes(s('ins')) ? s('ins') : undefined) as 'none'|'medicaid'|'private'|undefined,
+    docBirthCert:      Boolean(data.sch_bc),
+    docVaccines:       Boolean(data.sch_vx),
+    docAddress:        Boolean(data.sch_addr),
+    docGuardianId:     Boolean(data.sch_id),
+    docSchoolRecords:  Boolean(data.sch_rec),
+  }
+}

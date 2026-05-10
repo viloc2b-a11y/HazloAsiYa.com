@@ -6,6 +6,8 @@ import { alternatesForPath } from '@/lib/alternates'
 import VerifiedInfoBanner from '@/components/VerifiedInfoBanner'
 import { regulatoryMetadataOther } from '@/lib/regulatory-meta'
 
+export const dynamic = 'force-static'
+
 export const metadata: Metadata = {
   title: 'Inscripción escolar Houston: distritos | HazloAsíYa',
   description:

@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import CityLandingPage from '@/components/CityLandingPage'
 import { SITE_ORIGIN, withTrailingSlash } from '@/lib/site'
 
+export const dynamic = 'force-static'
+
 export const metadata: Metadata = {
   title: 'CalFresh, Medi-Cal y WIC en Los Ángeles en español | HazloAsíYa',
   description:

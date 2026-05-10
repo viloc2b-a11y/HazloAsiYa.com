@@ -12,8 +12,11 @@
  *   saws1   → saws1.pdf (California CDSS) — CalFresh / Medi-Cal / CalWORKs
  *
  * Formularios con generación visual (PDF oficial sin AcroForm):
- *   h1010   → Texas H1010 (HHSC) — visual fallback siempre activo
+ *   h1010    → Texas H1010 (HHSC) — visual fallback siempre activo
  *   cfes2337 → Florida CF-ES 2337 (DCF) — generación visual fiel al original
+ *   dl14a    → Texas DL-14A (DPS) — generación visual
+ *   matricula → Matrícula Consular Mexicana (SRE) — generación visual
+ *   escuela  → Inscripción Escolar Texas TEA — generación visual
  *
  * NOTA: h1010.pdf de Texas no está disponible para descarga automática desde HHSC.
  * Si tienes el archivo, colócalo en public/forms/h1010.pdf y el sistema lo usará.
@@ -33,6 +36,9 @@ import { fillCfEs2337Form } from './cfes2337-mapper'
 import { generateCaWic100 } from './cawic100-mapper'
 import { generateLdss2921Pdf } from './ldss2921-mapper'
 import { generateNyWicPdf } from './nywic-mapper'
+import { generateDl14aPdf } from './dl14a-mapper'
+import { generateMatriculaPdf } from './matricula-mapper'
+import { generateEscuelaPdf } from './escuela-mapper'
 
 import {
   toH1010FormData,
@@ -46,6 +52,9 @@ import {
   toCaWic100FormData,
   toLdss2921FormData,
   toNyWicFormData,
+  toDl14aFormData,
+  toMatriculaFormData,
+  toEscuelaFormData,
 } from './adapters'
 
 // Formularios que tienen PDF oficial con campos AcroForm rellenables
@@ -65,6 +74,9 @@ const VISUAL_ONLY: ReadonlySet<PdfFormId> = new Set([
   'cawic100',
   'ldss2921',
   'nywic',
+  'dl14a',
+  'matricula',
+  'escuela',
 ])
 
 export type PdfSource = 'acroform' | 'visual'
@@ -146,7 +158,7 @@ async function fillOfficial(
 
 /**
  * Genera el PDF visualmente (sin depender de un PDF oficial con AcroForm).
- * Usado para formularios como CF-ES 2337 de Florida que no tienen campos digitales.
+ * Usado para formularios que no tienen campos AcroForm digitales.
  */
 async function fillVisualDirect(
   formId: PdfFormId,
@@ -161,6 +173,12 @@ async function fillVisualDirect(
       return generateLdss2921Pdf(toLdss2921FormData(data))
     case 'nywic':
       return generateNyWicPdf(toNyWicFormData(data))
+    case 'dl14a':
+      return generateDl14aPdf(toDl14aFormData(data))
+    case 'matricula':
+      return generateMatriculaPdf(toMatriculaFormData(data))
+    case 'escuela':
+      return generateEscuelaPdf(toEscuelaFormData(data))
     default:
       throw new Error(`No visual generator for: ${formId}`)
   }
@@ -193,6 +211,9 @@ function officialFilename(formId: PdfFormId): string {
     cawic100: 'CA-WIC-100 California WIC Application',
     ldss2921: 'LDSS-2921 New York SNAP Medicaid Application',
     nywic:    'NY WIC New York WIC Application',
+    dl14a:    'DL-14A Texas Driver License / ID Application',
+    matricula:'Matrícula Consular Mexicana (MCAS)',
+    escuela:  'Paquete Inscripción Escolar Texas 2026-2027',
   }
   return names[formId] ?? formId
 }

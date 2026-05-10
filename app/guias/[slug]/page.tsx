@@ -10,6 +10,8 @@ import { alternatesForPath } from '@/lib/alternates'
 import { DISCLAIMER_ITIN } from '@/lib/legal-texts'
 import { guideNeedsItinDisclaimer } from '@/lib/guide-needs-itin-disclaimer'
 
+export const dynamic = 'force-static'
+
 export const dynamicParams = false
 
 export async function generateStaticParams() {

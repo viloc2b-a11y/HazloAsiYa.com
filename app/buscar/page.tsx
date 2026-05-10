@@ -5,6 +5,8 @@ import PagefindSearch from '@/components/PagefindSearch'
 import { absoluteUrl } from '@/lib/site'
 import { alternatesForPath } from '@/lib/alternates'
 
+export const dynamic = 'force-static'
+
 const PATH = '/buscar/'
 
 export const metadata: Metadata = {

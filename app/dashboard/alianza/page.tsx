@@ -1,4 +1,5 @@
 'use client'
+export const dynamic = 'force-static'
 /**
  * /dashboard/alianza/ — Partner Impact Dashboard
  * ─────────────────────────────────────────────────────────────────────────────
