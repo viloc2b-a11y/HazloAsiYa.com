@@ -7,9 +7,9 @@ import VerifiedInfoBanner from '@/components/VerifiedInfoBanner'
 import { regulatoryMetadataOther } from '@/lib/regulatory-meta'
 
 export const metadata: Metadata = {
-  title: 'SNAP Florida 2026: ACCESS Florida, ingresos y cómo aplicar | HazloAsíYa',
+  title: 'SNAP Florida 2026: ACCESS Florida, ingresos y cómo aplicar',
   description:
-    'SNAP en Florida: límites de ingresos 2026, cómo aplicar en ACCESS Florida, documentos requeridos y errores frecuentes. Guía en español.',
+    'SNAP Florida 2026: ingresos, ACCESS Florida y documentos requeridos. Guía en español.',
   alternates: alternatesForPath('/snap/florida/'),
   other: regulatoryMetadataOther('USDA FNS / Florida DCF'),
   openGraph: {

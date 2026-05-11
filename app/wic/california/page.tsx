@@ -7,9 +7,9 @@ import VerifiedInfoBanner from '@/components/VerifiedInfoBanner'
 import { regulatoryMetadataOther } from '@/lib/regulatory-meta'
 
 export const metadata: Metadata = {
-  title: 'WIC California 2026: clínicas, ingresos y cómo pedir cita | HazloAsíYa',
+  title: 'WIC California 2026: clínicas, ingresos y cómo pedir cita',
   description:
-    'WIC en California: límites de ingresos 2026, cómo pedir cita en cdph.ca.gov/WIC, qué alimentos cubre y documentos requeridos. Guía en español.',
+    'WIC California 2026: ingresos, cita en cdph.ca.gov/WIC y documentos requeridos. Guía en español.',
   alternates: alternatesForPath('/wic/california/'),
   other: regulatoryMetadataOther('USDA FNS / CDPH California'),
   openGraph: {

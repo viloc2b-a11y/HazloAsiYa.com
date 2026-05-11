@@ -7,9 +7,9 @@ import VerifiedInfoBanner from '@/components/VerifiedInfoBanner'
 import { regulatoryMetadataOther } from '@/lib/regulatory-meta'
 
 export const metadata: Metadata = {
-  title: 'WIC Florida 2026: clínicas, ingresos y cómo pedir cita | HazloAsíYa',
+  title: 'WIC Florida 2026: clínicas, ingresos y cómo pedir cita',
   description:
-    'WIC en Florida: límites de ingresos 2026, cómo pedir cita en myflorida.com/WIC, documentos requeridos y qué alimentos cubre. Guía en español.',
+    'WIC Florida 2026: ingresos, cita en myflorida.com/WIC y documentos requeridos. Guía en español.',
   alternates: alternatesForPath('/wic/florida/'),
   other: regulatoryMetadataOther('USDA FNS / Florida DOH'),
   openGraph: {

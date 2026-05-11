@@ -7,9 +7,9 @@ import VerifiedInfoBanner from '@/components/VerifiedInfoBanner'
 import { regulatoryMetadataOther } from '@/lib/regulatory-meta'
 
 export const metadata: Metadata = {
-  title: 'SNAP California 2026: CalFresh, ingresos y cómo aplicar | HazloAsíYa',
+  title: 'SNAP California 2026: CalFresh, ingresos y cómo aplicar',
   description:
-    'CalFresh (SNAP) en California: límites de ingresos 2026, documentos requeridos, cómo aplicar en línea y qué errores evitar. Guía en español.',
+    'CalFresh California 2026: ingresos, documentos y cómo aplicar sin errores. Guía en español.',
   alternates: alternatesForPath('/snap/california/'),
   other: regulatoryMetadataOther('USDA FNS / CDSS California'),
   openGraph: {

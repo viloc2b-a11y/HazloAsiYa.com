@@ -4,9 +4,9 @@ import { withTrailingSlash } from '@/lib/site'
 import VerifiedInfoBanner from '@/components/VerifiedInfoBanner'
 
 export const metadata: Metadata = {
-  title: 'SNAP Nueva York en español — Cómo aplicar a los cupones de comida NY',
+  title: 'SNAP Nueva York: cómo aplicar a los cupones de comida NY',
   description:
-    'Aplica a los cupones de comida SNAP en Nueva York (NY). Límites de ingreso 2025, portal myBenefits.ny.gov, formulario LDSS-2921 pre-llenado en español. Resultados en 30 días.',
+    'SNAP Nueva York: límites de ingreso, myBenefits.ny.gov y formulario LDSS-2921 en español.',
   alternates: { canonical: 'https://www.hazloasiya.com/snap/new-york/' },
   openGraph: {
     title: 'SNAP Nueva York en español | HazloAsíYa',

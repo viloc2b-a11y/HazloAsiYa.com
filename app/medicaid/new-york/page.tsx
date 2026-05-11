@@ -4,9 +4,9 @@ import { withTrailingSlash } from '@/lib/site'
 import VerifiedInfoBanner from '@/components/VerifiedInfoBanner'
 
 export const metadata: Metadata = {
-  title: 'Medicaid Nueva York en español — Cómo aplicar al seguro médico gratuito NY',
+  title: 'Medicaid Nueva York: cómo aplicar al seguro médico gratuito',
   description:
-    'Aplica a Medicaid en Nueva York (NY Medicaid / Essential Plan). Límites de ingreso 2025, formulario DOH-4220 pre-llenado en español, portal NY State of Health. Cobertura desde el día 1.',
+    'Medicaid Nueva York: límites de ingreso, formulario DOH-4220 y portal NY State of Health. En español.',
   alternates: { canonical: 'https://www.hazloasiya.com/medicaid/new-york/' },
   openGraph: {
     title: 'Medicaid Nueva York en español | HazloAsíYa',

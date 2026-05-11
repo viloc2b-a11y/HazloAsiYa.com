@@ -7,9 +7,9 @@ import VerifiedInfoBanner from '@/components/VerifiedInfoBanner'
 import { regulatoryMetadataOther } from '@/lib/regulatory-meta'
 
 export const metadata: Metadata = {
-  title: 'Medi-Cal California 2026: quién califica y cómo aplicar | HazloAsíYa',
+  title: 'Medi-Cal California 2026: quién califica y cómo aplicar',
   description:
-    'Medi-Cal (Medicaid) en California: quién califica en 2026, documentos requeridos, cómo aplicar en BenefitsCal y cobertura para inmigrantes. Guía en español.',
+    'Medi-Cal California 2026: quién califica, documentos y cómo aplicar en BenefitsCal. Guía en español.',
   alternates: alternatesForPath('/medicaid/california/'),
   other: regulatoryMetadataOther('DHCS California / CMS'),
   openGraph: {

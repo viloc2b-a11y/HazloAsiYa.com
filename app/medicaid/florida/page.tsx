@@ -7,9 +7,9 @@ import VerifiedInfoBanner from '@/components/VerifiedInfoBanner'
 import { regulatoryMetadataOther } from '@/lib/regulatory-meta'
 
 export const metadata: Metadata = {
-  title: 'Medicaid Florida 2026: quién califica, CHIP y cómo aplicar | HazloAsíYa',
+  title: 'Medicaid Florida 2026: quién califica, CHIP y cómo aplicar',
   description:
-    'Medicaid en Florida: quién califica en 2026, CHIP para niños, cómo aplicar en ACCESS Florida y documentos requeridos. Guía en español.',
+    'Medicaid Florida 2026: elegibilidad, CHIP, ACCESS Florida y documentos. Guía en español.',
   alternates: alternatesForPath('/medicaid/florida/'),
   other: regulatoryMetadataOther('Florida AHCA / CMS'),
   openGraph: {

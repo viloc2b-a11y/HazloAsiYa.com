@@ -5,9 +5,9 @@ import { SITE_ORIGIN, withTrailingSlash } from '@/lib/site'
 export const dynamic = 'force-static'
 
 export const metadata: Metadata = {
-  title: 'CalFresh, Medi-Cal y WIC en Los Ángeles en español | HazloAsíYa',
+  title: 'CalFresh, Medi-Cal y WIC en Los Ángeles | HazloAsíYa',
   description:
-    'Prepara tu solicitud de CalFresh (SNAP), Medi-Cal (Medicaid) o WIC en Los Ángeles, California completamente en español. Cuestionario gratuito, PDF oficial listo para presentar.',
+    'CalFresh, Medi-Cal y WIC en Los Ángeles: documentos, pasos y recursos locales en español.',
   alternates: { canonical: `${SITE_ORIGIN}${withTrailingSlash('/ciudades/los-angeles')}` },
   keywords: ['CalFresh Los Ángeles en español', 'Medi-Cal Los Ángeles hispanos', 'WIC Los Ángeles California', 'beneficios gobierno Los Ángeles'],
   openGraph: {

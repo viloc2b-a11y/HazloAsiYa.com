@@ -7,7 +7,7 @@ import VideoExplicativo from '@/components/VideoExplicativo'
 export const metadata: Metadata = {
   title: 'Alianza HazloAsíYa — Partners por la Comunidad | HazloAsíYa',
   description:
-    'Únete gratis a la Alianza HazloAsíYa. Iglesias, consulados, clínicas y nonprofits reciben enlace personalizado, flyers, reportes de impacto e ingreso adicional opcional. Ayudamos a tu comunidad sin costo para ti.',
+    'Únete gratis a la Alianza HazloAsíYa. Enlace personalizado, flyers y reportes de impacto para tu comunidad.',
   alternates: { canonical: `${SITE_ORIGIN}${withTrailingSlash('/para-organizaciones')}` },
   openGraph: {
     title: 'Alianza HazloAsíYa — Partners por la Comunidad',
