@@ -159,7 +159,7 @@ export default function HomePageClient() {
           <div className="w-px h-4 bg-gray-300 hidden sm:block"/>
           <div className="flex items-center gap-2 text-gray-700">
             <span className="text-gold font-bold text-base">★</span>
-            <span><strong>$79/año:</strong> todos los trámites ilimitados</span>
+            <span><strong>$79 SUSCRIPCIÓN ANUAL:</strong> todos los trámites ilimitados</span>
           </div>
         </div>
       </div>
@@ -168,7 +168,7 @@ export default function HomePageClient() {
       <VideoExplicativo
         ctaHref="#tramites"
         ctaLabel="Ver todos los trámites"
-        showSteps={true}
+        showSteps={false}
         variant="cream"
       />
 
@@ -189,7 +189,7 @@ export default function HomePageClient() {
 
         <section className="mt-16 max-w-4xl mx-auto text-left" aria-labelledby="home-preguntas-buscan">
           <h2 id="home-preguntas-buscan" className="font-serif text-2xl text-navy mb-4">
-            Preguntas que la gente busca
+            Respuestas que la gente busca
           </h2>
           <ul className="space-y-3 text-gray-700">
             <li>
@@ -308,7 +308,7 @@ export default function HomePageClient() {
             </div>
             <div className="bg-gradient-to-r from-green-dark to-green px-6 py-4 flex items-center justify-between gap-4 flex-wrap">
               <div className="text-white font-semibold">Te decimos exactamente qué hacer y cómo hacerlo — sin errores</div>
-              <Link href="/snap" className="bg-navy text-white font-bold px-5 py-2 rounded-xl text-sm hover:bg-navy-2 transition-colors">
+              <Link href="#tramites" className="bg-navy text-white font-bold px-5 py-2 rounded-xl text-sm hover:bg-navy-2 transition-colors">
                 Resolver mi trámite →
               </Link>
             </div>
@@ -462,7 +462,6 @@ export default function HomePageClient() {
               ['Términos de Uso','/terms/'],
               ['Privacidad','/privacy/'],
               ['Mis datos','/mis-datos/'],
-              ['No vender mis datos','/no-vender-mis-datos/'],
             ].map(([l,h]) => (
               <Link key={l} href={h} className="block text-white/40 hover:text-white text-sm transition-colors mb-1">{l}</Link>
             ))}

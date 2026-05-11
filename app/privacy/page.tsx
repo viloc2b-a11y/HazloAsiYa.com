@@ -257,6 +257,28 @@ export default function PrivacyPage() {
               . Este contenido es informativo y no sustituye asesoría legal.
             </p>
           </section>
+
+          <section id="no-vender">
+            <h2 className="font-serif text-2xl text-navy mb-3">12. No vender ni compartir mis datos personales</h2>
+            <p>
+              HazloAsíYa <strong>no vende</strong> datos personales. Esta sección documenta tu preferencia de
+              no compartición futura con terceros (transparencia hacia residentes de California bajo{' '}
+              <strong>CCPA/CPRA</strong> y buenas prácticas generales).
+            </p>
+            <p className="mt-2">
+              Para registrar formalmente tu preferencia de opt-out, envía un correo a{' '}
+              <a href="mailto:privacidad@hazloasiya.com?subject=%5BHazloAs%C3%ADYa%5D%20Opt-out%20compartici%C3%B3n%20de%20datos%20(CCPA%2FCPRA)" className="text-green font-semibold underline">
+                privacidad@hazloasiya.com
+              </a>{' '}
+              indicando tu correo electrónico y la solicitud de no compartir tus datos. Responderemos en un plazo
+              de <strong>15 días hábiles</strong>.
+            </p>
+            <p className="mt-2 text-xs text-gray-500">
+              También puedes usar el formulario en{' '}
+              <Link href="/mis-datos/" className="text-green underline">/mis-datos/</Link>{' '}
+              para ejercer cualquier otro derecho sobre tus datos.
+            </p>
+          </section>
         </div>
       </div>
     </div>
