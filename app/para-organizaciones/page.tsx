@@ -421,7 +421,7 @@ export default function ParaOrganizacionesPage() {
               },
               {
                 q: '¿HazloAsíYa es una firma de abogados?',
-                a: 'No. Somos un servicio de preparación de documentos. Ayudamos a llenar formularios oficiales, pero no damos asesoría legal. Para casos complejos, recomendamos consultar con un abogado certificado.',
+                a: 'No. Somos un servicio de preparación de documentos. Ayudamos a llenar formularios oficiales, pero no ofrecemos asesoría legal ni sustituye a un abogado. Para casos complejos, recomendamos consultar con un abogado certificado.',
               },
               {
                 q: '¿Puedo usar HazloAsíYa en eventos comunitarios?',
