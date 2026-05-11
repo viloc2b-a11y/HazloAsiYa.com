@@ -3,8 +3,13 @@
     "collect": {
       "numberOfRuns": 1,
       "settings": {
-        "preset": "mobile",
-        "formFactor": "mobile"
+        "formFactor": "mobile",
+        "screenEmulation": {
+          "mobile": true,
+          "width": 390,
+          "height": 844,
+          "deviceScaleFactor": 3
+        }
       }
     },
     "assert": {
