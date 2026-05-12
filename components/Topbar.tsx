@@ -152,7 +152,7 @@ export default function Topbar({ user }: { user?: { email: string; name?: string
               Entrar
             </Link>
           )}
-          <Link href="/snap" className="btn-primary py-1.5 px-4 text-[13px] hidden sm:block">
+          <Link href="/#tramites" className="btn-primary py-1.5 px-4 text-[13px] hidden sm:block">
             Empezar →
           </Link>
 
