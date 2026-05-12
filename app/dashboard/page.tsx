@@ -27,7 +27,10 @@ export default function DashboardPage() {
 
   useEffect(() => {
     const stored = localStorage.getItem('haya_user')
-    if (!stored) { router.push('/'); return }
+    if (!stored) {
+      setLoading(false)
+      return
+    }
     setUser(JSON.parse(stored))
     setLoading(false)
     // In production: fetch from Supabase
@@ -39,7 +42,39 @@ export default function DashboardPage() {
   }
 
   if (loading) return <div className="min-h-screen flex items-center justify-center bg-cream"><div className="text-gray-400">Cargando…</div></div>
-  if (!user)   return null
+  if (!user) {
+    return (
+      <div className="min-h-screen bg-cream flex flex-col">
+        <header className="bg-navy px-4 h-14 flex items-center justify-between">
+          <Link href="/" className="font-serif text-white">HazloAsí<span className="text-green">Ya</span></Link>
+        </header>
+        <main className="flex-1 flex items-center justify-center px-4">
+          <div className="max-w-md w-full bg-white border border-cream-2 rounded-2xl p-8 text-center shadow-sm">
+            <div className="text-4xl mb-3">🔒</div>
+            <h1 className="font-serif text-2xl text-navy mb-2">Tu cuenta te espera</h1>
+            <p className="text-gray-500 text-sm mb-6">
+              Inicia sesión con tu correo para ver tus trámites, descargar tus formularios y acceder a tu plan.
+            </p>
+            <Link
+              href="/login"
+              className="btn-primary inline-flex items-center justify-center w-full py-3 mb-3"
+            >
+              Iniciar sesión →
+            </Link>
+            <Link
+              href="/login?mode=register"
+              className="block text-sm text-green font-semibold hover:underline"
+            >
+              ¿No tienes cuenta? Crea una gratis
+            </Link>
+            <p className="text-xs text-gray-400 mt-6">
+              <Link href="/" className="hover:text-gray-600">← Volver al inicio</Link>
+            </p>
+          </div>
+        </main>
+      </div>
+    )
+  }
 
   const planLabel: Record<string, string> = { free: 'Gratis', paid_guide: 'Básico', annual: 'Anual', assisted: 'Asistido' }
   const plan = user.plan || 'free'

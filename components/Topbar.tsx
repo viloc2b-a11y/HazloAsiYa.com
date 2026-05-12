@@ -148,7 +148,7 @@ export default function Topbar({ user }: { user?: { email: string; name?: string
               <span className="text-white/80 text-[13px] font-medium hidden sm:block">Mi cuenta</span>
             </Link>
           ) : (
-            <Link href="/?auth=login" className="text-[13px] font-semibold text-white/55 hover:text-white px-3 py-1.5 transition-colors">
+            <Link href="/login" className="text-[13px] font-semibold text-white/55 hover:text-white px-3 py-1.5 transition-colors">
               Entrar
             </Link>
           )}

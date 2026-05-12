@@ -1,10 +1,16 @@
 'use client'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import Topbar from '@/components/Topbar'
 
 export default function LoginPage() {
   const [mode, setMode] = useState<'login' | 'register'>('login')
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    const params = new URLSearchParams(window.location.search)
+    if (params.get('mode') === 'register') setMode('register')
+  }, [])
   const [email, setEmail] = useState('')
   const [name, setName] = useState('')
   const [loading, setLoading] = useState(false)

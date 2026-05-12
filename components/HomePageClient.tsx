@@ -449,7 +449,7 @@ export default function HomePageClient() {
           </div>
           <div>
             <div className="text-white/50 text-xs font-bold tracking-widest uppercase mb-3">Cuenta</div>
-            {[['Crear cuenta','/?auth=register'],['Iniciar sesión','/?auth=login'],['Dashboard','/dashboard']].map(([l,h]) => (
+            {[['Crear cuenta','/login?mode=register'],['Iniciar sesión','/login'],['Dashboard','/dashboard']].map(([l,h]) => (
               <Link key={l} href={h} className="block text-white/40 hover:text-white text-sm transition-colors mb-1">{l}</Link>
             ))}
           </div>
