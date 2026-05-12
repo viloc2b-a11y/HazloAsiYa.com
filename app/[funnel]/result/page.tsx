@@ -17,6 +17,7 @@ import { gtagEvent, getAnalyticsDevice } from '@/lib/gtag'
 import { getResultViewSource } from '@/lib/result-view-source'
 import { getRecommendedFormForFunnel } from '@/types/pdf'
 import EmailGate, { getEmailGateData } from '@/components/EmailGate'
+import { PRICE_MAIN, PRICE_ANNUAL, PRICE_ASSISTED } from '@/lib/pricing'
 
 interface Result {
   eligible: boolean
@@ -392,11 +393,11 @@ export default function ResultPage() {
               <p className="text-xs text-gray-400 mb-3">La guía completa incluye los pasos restantes + formulario de ejemplo + instrucciones de entrega</p>
               <div className="flex flex-wrap gap-2">
                 <button onClick={() => startCheckout('main')} className="btn-primary py-2 px-5 text-sm">
-                  Formulario oficial pre-llenado — $29
+                  Formulario oficial pre-llenado — {PRICE_MAIN}
                 </button>
                 <button onClick={() => startCheckout('annual')}
                         className="py-2 px-5 text-sm font-bold rounded-xl border-2 border-gold text-gold hover:bg-gold hover:text-white transition-colors">
-                  Acceso anual familiar — $79
+                  Acceso anual familiar — {PRICE_ANNUAL}
                 </button>
               </div>
             </div>
@@ -450,7 +451,7 @@ export default function ResultPage() {
               <p className="text-xs text-gray-500 mt-1 leading-relaxed">
                 {canDownloadFullPdf
                   ? 'Todos los pasos y listas en un solo archivo.'
-                  : 'Incluye tu formulario oficial pre-llenado + instrucciones de entrega — desbloquea por $29.'}
+                  : `Incluye tu formulario oficial pre-llenado + instrucciones de entrega — desbloquea por ${PRICE_MAIN}.`}
               </p>
             </div>
             <div className="flex flex-wrap gap-2 shrink-0">
@@ -475,7 +476,7 @@ export default function ResultPage() {
                   disabled={pdfing}
                   className="btn-primary py-2.5 px-5 text-sm disabled:opacity-60"
                 >
-                  Desbloquear formulario oficial — $29
+                  Desbloquear formulario oficial — {PRICE_MAIN}
                 </button>
               )}
             </div>
@@ -485,18 +486,18 @@ export default function ResultPage() {
         {/* Upgrade box (registered, not paid) */}
         {isLoggedIn && !hasPaidAccess && (
           <div className="card p-6 border-2 border-gold">
-            <div className="text-xs font-bold tracking-widest uppercase text-gold mb-2">Formulario oficial pre-llenado — $29</div>
+            <div className="text-xs font-bold tracking-widest uppercase text-gold mb-2">Formulario oficial pre-llenado — {PRICE_MAIN}</div>
             <h3 className="font-serif text-xl text-navy mb-2">Tu solicitud oficial lista para entregar</h3>
             <p className="text-gray-500 text-sm mb-4">
               Formulario oficial de tu estado completado con tus datos · Instrucciones exactas de entrega · Checklist de documentos · Sin errores
             </p>
             <div className="flex flex-wrap gap-3">
               <button onClick={() => startCheckout('main')} className="btn-gold py-3 px-6">
-                Obtener formulario oficial — $29 →
+                Obtener formulario oficial — {PRICE_MAIN} →
               </button>
               <button onClick={() => startCheckout('annual')}
                       className="text-sm font-semibold border-2 border-gray-200 rounded-xl px-5 py-3 text-gray-500 hover:border-gray-300">
-                O anual familiar: $79 / todos los trámites
+                O anual familiar: {PRICE_ANNUAL} / todos los trámites
               </button>
             </div>
             <p className="text-xs text-gray-400 mt-3">Pago único · Sin suscripción · Garantía 30 días</p>
@@ -511,7 +512,7 @@ export default function ResultPage() {
             <div className="text-white/45 text-sm">Especialista revisa tu paquete + orientación por WhatsApp en español</div>
           </div>
           <button onClick={() => startCheckout('assisted')} className="btn-primary whitespace-nowrap">
-            $149 →
+            {PRICE_ASSISTED} →
           </button>
         </div>
 

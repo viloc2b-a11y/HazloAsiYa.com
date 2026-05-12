@@ -5,25 +5,22 @@ import PricingCard from '@/components/monetization/PricingCard'
 import { absoluteUrl } from '@/lib/site'
 import { alternatesForPath } from '@/lib/alternates'
 import checkoutPricesData from '@/data/checkout-prices.json'
+import {
+  PRICE_MAIN,
+  PRICE_ANNUAL_YEAR,
+  PRICE_ASSISTED,
+  PRICE_REVISION_EXPRESS,
+  PRICE_KIT_SNAP,
+  PRICE_KIT_ITIN,
+} from '@/lib/pricing'
 
 const products = checkoutPricesData.products
-
-function usdFromCents(cents: number, suffix = '') {
-  const n = cents / 100
-  const whole = Number.isInteger(n) ? String(n) : n.toFixed(2)
-  return `$${whole}${suffix}`
-}
-
-const PRICE_MAIN = usdFromCents(products.main.priceCents)
-const PRICE_ANNUAL = usdFromCents(products.annual.priceCents, '/año')
-const PRICE_ASSISTED = usdFromCents(products.assisted.priceCents)
-const PRICE_REVISION = usdFromCents(products.revisionExpress.priceCents)
-const PRICE_KIT_SNAP = usdFromCents(products.kitSnap.priceCents)
-const PRICE_KIT_ITIN = usdFromCents(products.kitItin.priceCents)
+const PRICE_ANNUAL = PRICE_ANNUAL_YEAR
+const PRICE_REVISION = PRICE_REVISION_EXPRESS
 
 export const metadata: Metadata = {
   title: 'Planes y precios | HazloAsíYa — Desde $0',
-  description: 'Elige tu plan: cuestionario gratis, guía por trámite desde $49, o acceso anual completo. Garantía de reembolso 30 días. Sin sorpresas.',
+  description: `Elige tu plan: cuestionario gratis, guía por trámite desde ${PRICE_MAIN}, o acceso anual completo. Garantía de reembolso 30 días. Sin sorpresas.`,
   alternates: alternatesForPath('/precios/'),
   openGraph: {
     url: absoluteUrl('/precios/'),

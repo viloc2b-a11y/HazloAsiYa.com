@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { FUNNELS, FUNNEL_ORDER } from '@/data/funnels'
 import { authStatic } from '@/lib/static-backend'
+import { PRICE_MAIN, PRICE_ANNUAL, PRICE_ANNUAL_YEAR } from '@/lib/pricing'
 
 interface Document {
   id: string; funnel: string; created_at: string; result: { eligible: boolean; headline: string }
@@ -101,7 +102,7 @@ export default function DashboardPage() {
             {plan === 'free' && (
               <div className="bg-navy rounded-2xl p-6 text-center">
                 <div className="font-serif text-xl text-white mb-2">
-                  Formulario oficial por $29 · O acceso anual por $79
+                  Formulario oficial por {PRICE_MAIN} · O acceso anual por {PRICE_ANNUAL}
                 </div>
                 <p className="text-white/50 text-sm mb-4">Disponible en Texas, California, Florida y Nueva York.</p>
                 <Link href="/precios" className="btn-primary inline-block">Ver opciones →</Link>
@@ -193,8 +194,8 @@ export default function DashboardPage() {
                   ['✅','Cuestionario completo'],
                   ['✅','Elegibilidad evaluada'],
                   ['✅','Primeros 3 pasos'],
-                  ['🔒','Formulario oficial pre-llenado ($29)'],
-                  ['🔒','Instrucciones exactas de entrega ($29)'],
+                  ['🔒',`Formulario oficial pre-llenado (${PRICE_MAIN})`],
+                  ['🔒',`Instrucciones exactas de entrega (${PRICE_MAIN})`],
                 ] : plan === 'annual' || plan === 'assisted' ? [
                   ['✅','16 trámites ilimitados'],
                   ['✅','Planes completos con ejemplos'],
@@ -204,7 +205,7 @@ export default function DashboardPage() {
                 ] : [
                   ['✅','Plan completo desbloqueado'],
                   ['✅','PDF profesional'],
-                  ['🔒','Acceso anual ($79/año)'],
+                  ['🔒',`Acceso anual (${PRICE_ANNUAL_YEAR})`],
                 ]).map(([ico, label]) => (
                   <div key={label} className="flex items-center gap-3 text-sm">
                     <span>{ico}</span>
@@ -216,12 +217,12 @@ export default function DashboardPage() {
             {plan === 'free' && (
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="card p-5 border-2 border-gold">
-                  <div className="font-serif text-2xl text-navy mb-1">$29</div>
+                  <div className="font-serif text-2xl text-navy mb-1">{PRICE_MAIN}</div>
                   <div className="font-bold text-sm mb-3">Guía por Trámite</div>
                   <Link href="/precios" className="btn-gold block text-center py-2.5 text-sm">Comprar →</Link>
                 </div>
                 <div className="card p-5 border-2 border-navy">
-                  <div className="font-serif text-2xl text-navy mb-1">$79<span className="text-sm text-gray-400">/año</span></div>
+                  <div className="font-serif text-2xl text-navy mb-1">{PRICE_ANNUAL}<span className="text-sm text-gray-400">/año</span></div>
                   <div className="font-bold text-sm mb-3">Acceso Anual — 16 Trámites</div>
                   <Link href="/precios" className="btn-navy block text-center py-2.5 text-sm">Comprar →</Link>
                 </div>

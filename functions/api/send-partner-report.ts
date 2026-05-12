@@ -19,6 +19,10 @@
  *   REPORT_FROM_NAME      — defaults to "Alianza HazloAsíYa"
  */
 
+import checkoutPricesData from '../../data/checkout-prices.json'
+
+const MAIN_PRICE_DOLLARS = checkoutPricesData.products.main.priceCents / 100
+
 type Env = {
   RESEND_API_KEY?: string
   SUPABASE_URL?: string
@@ -98,7 +102,7 @@ async function getPartnerStats(
     visits,
     funnelStarts,
     purchases: purchases.length,
-    revenue: purchases.length * 29, // $29 per purchase
+    revenue: purchases.length * MAIN_PRICE_DOLLARS,
     topFunnels,
   }
 }

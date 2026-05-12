@@ -5,6 +5,7 @@ import FunnelCard from '@/components/FunnelCard'
 import { FUNNELS, FUNNEL_ORDER } from '@/data/funnels'
 import Link from 'next/link'
 import { getStoredUser } from '@/lib/static-backend'
+import { PRICE_MAIN, PRICE_ANNUAL, PRICE_ANNUAL_YEAR } from '@/lib/pricing'
 import VideoExplicativo from '@/components/VideoExplicativo'
 
 const LogoMark = ({ size = 48 }: { size?: number }) => (
@@ -154,12 +155,12 @@ export default function HomePageClient() {
           <div className="w-px h-4 bg-gray-300 hidden sm:block"/>
           <div className="flex items-center gap-2 text-gray-700">
             <span className="text-gold font-bold text-base">$</span>
-            <span><strong>$29 por trámite:</strong> formulario oficial pre-llenado + instrucciones</span>
+            <span><strong>{PRICE_MAIN} por trámite:</strong> formulario oficial pre-llenado + instrucciones</span>
           </div>
           <div className="w-px h-4 bg-gray-300 hidden sm:block"/>
           <div className="flex items-center gap-2 text-gray-700">
             <span className="text-gold font-bold text-base">★</span>
-            <span><strong>$79 SUSCRIPCIÓN ANUAL:</strong> todos los trámites ilimitados</span>
+            <span><strong>{PRICE_ANNUAL} SUSCRIPCIÓN ANUAL:</strong> todos los trámites ilimitados</span>
           </div>
         </div>
       </div>
@@ -266,8 +267,8 @@ export default function HomePageClient() {
               ['1','Elige el trámite — gratis','El cuestionario siempre es gratuito. Sin registro.'],
               ['2','Responde preguntas simples — gratis','Sin tecnicismos. En español. 5 minutos.'],
               ['3','Ve tu resultado — gratis','Qué tienes, qué te falta, los primeros pasos.'],
-              ['4','Recibe tu formulario oficial pre-llenado — $29','El formulario oficial de tu estado ya completado con tus datos. Listo para imprimir o subir al portal de la agencia.'],
-              ['5','O acceso anual familiar — $79','Todos los trámites ilimitados durante un año. Para toda la familia.'],
+              ['4',`Recibe tu formulario oficial pre-llenado — ${PRICE_MAIN}`,'El formulario oficial de tu estado ya completado con tus datos. Listo para imprimir o subir al portal de la agencia.'],
+              ['5',`O acceso anual familiar — ${PRICE_ANNUAL}`,'Todos los trámites ilimitados durante un año. Para toda la familia.'],
               ['6','Conectamos con ayuda local — gratis','Especialistas en tu área que hablan español.'],
             ].map(([n, t, d]) => (
               <div key={n} className="bg-white/5 border border-white/10 rounded-2xl p-6">

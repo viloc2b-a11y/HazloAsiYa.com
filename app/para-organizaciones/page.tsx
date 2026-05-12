@@ -3,6 +3,7 @@ import Link from 'next/link'
 import Topbar from '@/components/Topbar'
 import { SITE_ORIGIN, withTrailingSlash } from '@/lib/site'
 import VideoExplicativo from '@/components/VideoExplicativo'
+import { PRICE_MAIN, PRICE_ANNUAL_YEAR } from '@/lib/pricing'
 
 export const metadata: Metadata = {
   title: 'Alianza HazloAsíYa — Partners por la Comunidad | HazloAsíYa',
@@ -413,7 +414,7 @@ export default function ParaOrganizacionesPage() {
               },
               {
                 q: '¿Cómo funciona el revenue share?',
-                a: 'Cuando una familia entra a HazloAsíYa a través de tu enlace personalizado y paga por un trámite ($29 o $79/año), tu organización recibe entre el 10% y el 20% del pago. Es ingreso adicional sin ningún esfuerzo extra de tu parte.',
+                a: `Cuando una familia entra a HazloAsíYa a través de tu enlace personalizado y paga por un trámite (${PRICE_MAIN} o ${PRICE_ANNUAL_YEAR}), tu organización recibe entre el 10% y el 20% del pago. Es ingreso adicional sin ningún esfuerzo extra de tu parte.`,
               },
               {
                 q: '¿Las familias necesitan crear una cuenta?',

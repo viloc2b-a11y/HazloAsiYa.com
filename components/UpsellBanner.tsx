@@ -1,5 +1,6 @@
 'use client'
 import { useState, useEffect } from 'react'
+import { PRICE_MAIN, PRICE_ANNUAL, PRICE_ANNUAL_YEAR, PRICE_ANNUAL_DELTA } from '@/lib/pricing'
 
 interface UpsellBannerProps {
   onUpgrade: () => void
@@ -59,7 +60,7 @@ export default function UpsellBanner({ onUpgrade, onDismiss }: UpsellBannerProps
                 <h3 className="font-serif text-2xl mb-2" style={{ color: 'var(--navy)' }}>
                   La oferta ha expirado
                 </h3>
-                <p className="text-gray-400 text-sm">El precio regular del acceso anual es $79/año.</p>
+                <p className="text-gray-400 text-sm">El precio regular del acceso anual es {PRICE_ANNUAL_YEAR}.</p>
               </>
             ) : (
               <>
@@ -67,10 +68,10 @@ export default function UpsellBanner({ onUpgrade, onDismiss }: UpsellBannerProps
                   ⏰ Oferta especial — Solo hoy
                 </div>
                 <h3 className="font-serif text-3xl mb-2" style={{ color: 'var(--navy)' }}>
-                  Por solo $30 más, accede a<br/>los 16 trámites durante un año
+                  Por solo {PRICE_ANNUAL_DELTA} más, accede a<br/>los 16 trámites durante un año
                 </h3>
                 <p className="text-gray-500 text-sm">
-                  Acabas de comprar 1 formulario por $29. Por $50 más tienes los 16 trámites ilimitados por 12 meses.
+                  Acabas de comprar 1 formulario por {PRICE_MAIN}. Por {PRICE_ANNUAL_DELTA} más tienes los 16 trámites ilimitados por 12 meses.
                 </p>
               </>
             )}
@@ -89,7 +90,7 @@ export default function UpsellBanner({ onUpgrade, onDismiss }: UpsellBannerProps
               {/* Price */}
               <div className="text-center mb-6">
                 <div className="flex items-baseline justify-center gap-3">
-                  <span className="font-serif text-5xl" style={{ color: 'var(--navy)' }}>$79</span>
+                  <span className="font-serif text-5xl" style={{ color: 'var(--navy)' }}>{PRICE_ANNUAL}</span>
                   <span className="text-gray-400 text-sm line-through">$266 si compras por separado</span>
                 </div>
                 <div className="text-sm text-gray-400 mt-1">16 trámites × 12 meses · Menos de $3.07/mes</div>
@@ -119,7 +120,7 @@ export default function UpsellBanner({ onUpgrade, onDismiss }: UpsellBannerProps
             </button>
             {!expired && (
               <button onClick={onUpgrade} className="flex-[2] btn-gold py-3 text-base">
-                Sí, quiero el acceso anual por $79 →
+                Sí, quiero el acceso anual por {PRICE_ANNUAL} →
               </button>
             )}
           </div>

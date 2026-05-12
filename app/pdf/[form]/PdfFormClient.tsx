@@ -8,6 +8,7 @@ import PdfWizard from '@/components/pdf/PdfWizard'
 import DocChecklist from '@/components/pdf/DocChecklist'
 import { pdfUnlockStorageKey } from '@/lib/pdf-access'
 import { withTrailingSlash } from '@/lib/site'
+import { PRICE_MAIN } from '@/lib/pricing'
 
 const tierLabels: Record<number, string> = {
   1: 'Inmigración federal',
@@ -122,7 +123,7 @@ function PdfFormInner({ formMeta }: { formMeta: PdfFormMeta }) {
 
             <div className="bg-teal-600 text-white rounded-2xl p-5">
               <div className="text-xs font-mono font-bold text-teal-200 mb-1">PRECIO</div>
-              <div className="text-3xl font-black mb-1">$29</div>
+              <div className="text-3xl font-black mb-1">{PRICE_MAIN}</div>
               <div className="text-teal-200 text-sm mb-4">
                 Llena gratis — paga solo al descargar tu formulario oficial pre-llenado.
               </div>

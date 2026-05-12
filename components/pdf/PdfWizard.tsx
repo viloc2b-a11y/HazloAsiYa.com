@@ -11,6 +11,7 @@ import { getStoredAttribution } from '@/lib/partner-tracking'
 import { checkPdfPurchase, isPdfPaywallDisabled, isUuid, pdfUnlockStorageKey } from '@/lib/pdf-access'
 import PdfFormSteps from '@/components/pdf/pdf-form-steps'
 import Disclosure from '@/components/legal/Disclosure'
+import { PRICE_MAIN, PRICE_ANNUAL } from '@/lib/pricing'
 
 interface PdfWizardProps {
   form: PdfFormMeta
@@ -278,7 +279,7 @@ export default function PdfWizard({
                 disabled={checkoutBusy}
                 className="w-full bg-teal-600 hover:bg-teal-700 text-white font-bold py-3 rounded-xl disabled:opacity-50"
               >
-                Obtener formulario oficial pre-llenado — $29
+                Obtener formulario oficial pre-llenado — {PRICE_MAIN}
               </button>
               <button
                 type="button"
@@ -286,7 +287,7 @@ export default function PdfWizard({
                 disabled={checkoutBusy}
                 className="w-full bg-stone-800 hover:bg-stone-900 text-white font-bold py-3 rounded-xl disabled:opacity-50"
               >
-                Plan anual familiar — $79 / todos los trámites
+                Plan anual familiar — {PRICE_ANNUAL} / todos los trámites
               </button>
             </div>
             <button type="button" onClick={() => setStatus('idle')} className="text-sm text-stone-500 underline w-full">
