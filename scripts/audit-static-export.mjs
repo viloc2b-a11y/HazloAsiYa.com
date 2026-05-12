@@ -183,19 +183,17 @@ function main() {
   }
 
   const redir = fs.readFileSync(redirectsPath, 'utf8')
-  const need = [
-    'https://hazloasiya.pages.dev/*  https://www.hazloasiya.com/:splat  301!',
-    'http://hazloasiya.com/*  https://www.hazloasiya.com/:splat  301!',
-    'http://www.hazloasiya.com/*  https://www.hazloasiya.com/:splat  301!',
-    'https://hazloasiya.com/*  https://www.hazloasiya.com/:splat  301!',
-  ]
-  for (const line of need) {
-    if (!redir.includes(line)) {
-      issues.push({
-        file: rel(redirectsPath),
-        msg: `falta regla 301 exacta: ${line}`,
-      })
-    }
+  if (!redir.includes('hazloasiya: Cloudflare Pages _redirects')) {
+    issues.push({
+      file: rel(redirectsPath),
+      msg: 'public/_redirects: falta cabecera esperada (Cloudflare Pages = solo rutas; apex/www en dashboard)',
+    })
+  }
+  if (redir.includes(' 301!')) {
+    issues.push({
+      file: rel(redirectsPath),
+      msg: 'public/_redirects: sintaxis 301! (Netlify) no es válida en Cloudflare Pages — usar 301 o reglas en zona',
+    })
   }
 
   const xml = fs.readFileSync(sitemapPath, 'utf8')

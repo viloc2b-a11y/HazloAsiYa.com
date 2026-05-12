@@ -1,4 +1,7 @@
-https://hazloasiya.pages.dev/*  https://www.hazloasiya.com/:splat  301!
-http://hazloasiya.com/*  https://www.hazloasiya.com/:splat  301!
-http://www.hazloasiya.com/*  https://www.hazloasiya.com/:splat  301!
-https://hazloasiya.com/*  https://www.hazloasiya.com/:splat  301!
+# hazloasiya: Cloudflare Pages _redirects (path-only sources; no domain-level rules here).
+# Apex → www, HTTP → HTTPS, and optional Pages preview hostname → www belong in the
+# Cloudflare zone: Rules → Redirect Rules or URL Forwarding → Bulk Redirects.
+# Reference: https://developers.cloudflare.com/pages/configuration/redirects/
+#
+# Add path-only redirects below when needed, for example:
+# /old-path /new-path 301
