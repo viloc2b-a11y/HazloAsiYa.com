@@ -1,16 +1,16 @@
 {
   "products": {
     "main": {
-      "priceCents": 2900,
-      "label": "Formulario Oficial Pre-llenado"
+      "priceCents": 4900,
+      "label": "Formulario Oficial Listo"
     },
     "annual": {
-      "priceCents": 7900,
-      "label": "Acceso Anual Familiar — Todos los Trámites"
+      "priceCents": 17900,
+      "label": "Plan Familiar Anual"
     },
     "assisted": {
-      "priceCents": 14900,
-      "label": "Revisión Asistida por Especialista"
+      "priceCents": 9900,
+      "label": "Revisión Asistida"
     },
     "revisionExpress": {
       "priceCents": 1900,
