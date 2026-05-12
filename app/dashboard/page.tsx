@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { FUNNELS, FUNNEL_ORDER } from '@/data/funnels'
-import { authStatic } from '@/lib/static-backend'
+import { logoutClient } from '@/lib/auth-session'
 import { PRICE_MAIN, PRICE_ANNUAL, PRICE_ANNUAL_YEAR } from '@/lib/pricing'
 
 interface Document {
@@ -20,24 +20,37 @@ const STATES_AVAILABLE = [
 
 export default function DashboardPage() {
   const router = useRouter()
-  const [user,  setUser]  = useState<{ email: string; name?: string; plan?: string } | null>(null)
+  const [user,  setUser]  = useState<{ email: string; name?: string; plan?: string; id?: string } | null>(null)
   const [docs,  setDocs]  = useState<Document[]>([])
   const [tab,   setTab]   = useState<'overview'|'history'|'plan'|'profile'>('overview')
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    const stored = localStorage.getItem('haya_user')
-    if (!stored) {
+    let cancelled = false
+    ;(async () => {
+      const { hydrateLocalUserFromSupabase } = await import('@/lib/auth-session')
+      await hydrateLocalUserFromSupabase()
+      if (cancelled) return
+      const stored = localStorage.getItem('haya_user')
+      if (!stored) {
+        setUser(null)
+        setLoading(false)
+        return
+      }
+      try {
+        setUser(JSON.parse(stored))
+      } catch {
+        setUser(null)
+      }
       setLoading(false)
-      return
+    })()
+    return () => {
+      cancelled = true
     }
-    setUser(JSON.parse(stored))
-    setLoading(false)
-    // In production: fetch from Supabase
-  }, [router])
+  }, [])
 
   const handleLogout = async () => {
-    await authStatic({ action: 'logout' })
+    await logoutClient()
     router.push('/')
   }
 

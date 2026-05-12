@@ -25,6 +25,9 @@
  * ═══════════════════════════════════════════════════════════════════════════
  */
 
+import { setStoredUser } from '@/lib/static-backend'
+import { HAYA_AUTH_CHANGED } from '@/lib/auth-session'
+
 // ── Tipos ──────────────────────────────────────────────────────────────────
 
 export type SupabaseUser = {
@@ -109,6 +112,10 @@ export async function authSupabase(args: {
 
   if (args.action === 'logout') {
     await supabase.auth.signOut()
+    setStoredUser(null)
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent(HAYA_AUTH_CHANGED))
+    }
     return { ok: true }
   }
 

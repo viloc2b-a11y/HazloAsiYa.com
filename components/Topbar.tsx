@@ -2,6 +2,7 @@
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { FUNNEL_ORDER, FUNNELS, funnelLandingPath } from '@/data/funnels'
+import { HAYA_AUTH_CHANGED } from '@/lib/auth-session'
 
 const LogoMark = ({ size = 36 }: { size?: number }) => (
   <svg width={size} height={size} viewBox="0 0 36 36" fill="none">
@@ -32,14 +33,24 @@ export default function Topbar({ user }: { user?: { email: string; name?: string
   const [localUser, setLocalUser] = useState<{ email: string; name?: string; plan?: string } | null>(user ?? null)
 
   useEffect(() => {
-    // If a parent didn't pass a user (static export pages), use localStorage.
-    if (user !== undefined) { setLocalUser(user); return }
-    try {
-      const raw = localStorage.getItem('haya_user')
-      setLocalUser(raw ? JSON.parse(raw) : null)
-    } catch {
-      setLocalUser(null)
+    const readStorage = () => {
+      if (user !== undefined) {
+        setLocalUser(user)
+        return
+      }
+      try {
+        const raw = localStorage.getItem('haya_user')
+        setLocalUser(raw ? JSON.parse(raw) : null)
+      } catch {
+        setLocalUser(null)
+      }
     }
+    readStorage()
+    if (user === undefined && typeof window !== 'undefined') {
+      window.addEventListener(HAYA_AUTH_CHANGED, readStorage)
+      return () => window.removeEventListener(HAYA_AUTH_CHANGED, readStorage)
+    }
+    return undefined
   }, [user])
 
   // Close states dropdown when clicking outside

@@ -1,5 +1,6 @@
 'use client'
 import { useEffect, useState } from 'react'
+import ContactHelpSection from '@/components/contact/ContactHelpSection'
 import Topbar from '@/components/Topbar'
 import FunnelCard from '@/components/FunnelCard'
 import { FUNNELS, FUNNEL_ORDER } from '@/data/funnels'
@@ -428,6 +429,8 @@ export default function HomePageClient() {
         </div>
       </section>
 
+      <ContactHelpSection />
+
       {/* FOOTER */}
       <footer className="bg-navy border-t border-white/10 py-12 px-4">
         <div className="max-w-6xl mx-auto grid sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-10">
@@ -455,6 +458,9 @@ export default function HomePageClient() {
           </div>
           <div>
             <div className="text-white/50 text-xs font-bold tracking-widest uppercase mb-3">Legal</div>
+            <Link href="/#contacto" className="block text-white/40 hover:text-white text-sm transition-colors mb-1">
+              Contacto
+            </Link>
             {[
               ['Guías','/guias/'],
               ['Formularios PDF','/pdf/'],

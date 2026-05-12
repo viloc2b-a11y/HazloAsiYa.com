@@ -4,8 +4,10 @@ import './globals.css'
 import { fontSans, fontSerif } from '@/app/fonts'
 import { SITE_ORIGIN, absoluteUrl } from '@/lib/site'
 import { alternatesForPath } from '@/lib/alternates'
+import FloatingWhatsApp from '@/components/FloatingWhatsApp'
 import CookieBanner from '@/components/legal/CookieBanner'
 import GoogleAnalyticsClient from '@/components/analytics/GoogleAnalyticsClient'
+import AuthHydrator from '@/components/AuthHydrator'
 import PartnerTracker from '@/components/analytics/PartnerTracker'
 
 const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID
@@ -81,6 +83,8 @@ gtag('config', ${JSON.stringify(GA_MEASUREMENT_ID)}, { send_page_view: false });
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
         />
         {children}
+        <AuthHydrator />
+        <FloatingWhatsApp />
         <GoogleAnalyticsClient />
         <PartnerTracker />
         <CookieBanner />
