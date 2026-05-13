@@ -48,8 +48,8 @@ export default function HomePageClient() {
             <LogoMark size={64}/>
           </div>
 
-          <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl text-white leading-tight mb-6">
-            Haz tu trámite bien desde la primera vez — sin miedo, sin errores, sin depender de nadie.
+          <h1 className="font-serif text-3xl sm:text-5xl lg:text-6xl text-white leading-tight mb-6 max-w-4xl mx-auto">
+            Trámites en EE.UU. en español, sin errores desde la primera vez.
           </h1>
 
           <p className="text-white/60 text-lg max-w-2xl mx-auto mb-3 leading-relaxed">

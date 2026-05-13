@@ -61,6 +61,16 @@ export default function Topbar({ user }: { user?: { email: string; name?: string
     return () => document.removeEventListener('click', handler)
   }, [statesOpen])
 
+  useEffect(() => {
+    if (typeof document === 'undefined') return
+    if (!menuOpen) return
+    const prev = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.body.style.overflow = prev
+    }
+  }, [menuOpen])
+
   return (
     <header className="sticky top-0 z-50 bg-navy/95 backdrop-blur border-b border-white/10">
       <div className="max-w-7xl mx-auto px-4 h-14 flex items-center justify-between gap-4">
@@ -172,8 +182,11 @@ export default function Topbar({ user }: { user?: { email: string; name?: string
 
           {/* Mobile menu btn */}
           <button
+            type="button"
             onClick={() => setMenuOpen(!menuOpen)}
-            className="lg:hidden p-2 text-white/70 hover:text-white"
+            aria-expanded={menuOpen}
+            aria-label={menuOpen ? 'Cerrar menú' : 'Abrir menú'}
+            className="lg:hidden flex items-center justify-center min-h-[44px] min-w-[44px] p-2 text-white/70 hover:text-white"
           >
             <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
               {menuOpen
@@ -187,7 +200,7 @@ export default function Topbar({ user }: { user?: { email: string; name?: string
 
       {/* Mobile menu */}
       {menuOpen && (
-        <div className="lg:hidden border-t border-white/10 bg-navy px-4 py-3">
+        <div className="lg:hidden border-t border-white/10 bg-navy px-4 py-3 max-h-[calc(100dvh-3.5rem)] overflow-y-auto overscroll-contain">
           {/* Search + PDF */}
           <div className="grid grid-cols-2 gap-1 mb-3">
             <Link
@@ -208,27 +221,39 @@ export default function Topbar({ user }: { user?: { email: string; name?: string
 
           {/* States section */}
           <div className="mb-3 border border-white/10 rounded-xl overflow-hidden">
-            <div className="px-3 py-2 bg-white/5 text-[10px] font-bold tracking-widest uppercase text-green">
+            <div className="px-3 py-2 bg-white/5 text-xs font-bold tracking-widest uppercase text-green">
               📍 9 trámites en 4 estados: TX · CA · FL · NY
             </div>
             {STATES_NAV.map(st => (
               <div key={st.label} className="px-3 py-2 border-t border-white/8">
-                <div className="text-[11px] font-bold text-white/50 mb-1.5">{st.flag} {st.label}</div>
-                <div className="grid grid-cols-4 gap-1.5">
-                  <Link href={st.snap} onClick={() => setMenuOpen(false)}
-                        className="text-center text-[11px] font-semibold text-white/70 hover:text-white bg-white/6 hover:bg-white/12 rounded-md py-1.5 transition-colors">
+                <div className="text-sm font-bold text-white/50 mb-2">{st.flag} {st.label}</div>
+                <div className="grid grid-cols-2 gap-2">
+                  <Link
+                    href={st.snap}
+                    onClick={() => setMenuOpen(false)}
+                    className="flex items-center justify-center min-h-[44px] text-center text-sm font-semibold text-white/70 hover:text-white bg-white/6 hover:bg-white/12 rounded-lg transition-colors"
+                  >
                     🛒 SNAP
                   </Link>
-                  <Link href={st.medicaid} onClick={() => setMenuOpen(false)}
-                        className="text-center text-[11px] font-semibold text-white/70 hover:text-white bg-white/6 hover:bg-white/12 rounded-md py-1.5 transition-colors">
+                  <Link
+                    href={st.medicaid}
+                    onClick={() => setMenuOpen(false)}
+                    className="flex items-center justify-center min-h-[44px] text-center text-sm font-semibold text-white/70 hover:text-white bg-white/6 hover:bg-white/12 rounded-lg transition-colors"
+                  >
                     🏥 Medicaid
                   </Link>
-                  <Link href={st.wic} onClick={() => setMenuOpen(false)}
-                        className="text-center text-[11px] font-semibold text-white/70 hover:text-white bg-white/6 hover:bg-white/12 rounded-md py-1.5 transition-colors">
+                  <Link
+                    href={st.wic}
+                    onClick={() => setMenuOpen(false)}
+                    className="flex items-center justify-center min-h-[44px] text-center text-sm font-semibold text-white/70 hover:text-white bg-white/6 hover:bg-white/12 rounded-lg transition-colors"
+                  >
                     🤱 WIC
                   </Link>
-                  <Link href={st.more} onClick={() => setMenuOpen(false)}
-                        className="text-center text-[11px] font-semibold text-green hover:text-white bg-green/10 hover:bg-green/20 rounded-md py-1.5 transition-colors">
+                  <Link
+                    href={st.more}
+                    onClick={() => setMenuOpen(false)}
+                    className="flex items-center justify-center min-h-[44px] text-center text-sm font-semibold text-green hover:text-white bg-green/10 hover:bg-green/20 rounded-lg transition-colors"
+                  >
                     + más
                   </Link>
                 </div>
@@ -238,33 +263,40 @@ export default function Topbar({ user }: { user?: { email: string; name?: string
 
           {/* Cities + B2B */}
           <div className="mb-3 border border-white/10 rounded-xl overflow-hidden">
-            <div className="px-3 py-2 bg-white/5 text-[10px] font-bold tracking-widest uppercase text-green">
+            <div className="px-3 py-2 bg-white/5 text-xs font-bold tracking-widest uppercase text-green">
               🏙️ Por ciudad
             </div>
-            <div className="grid grid-cols-3 gap-1 p-2">
+            <div className="grid grid-cols-2 gap-2 p-2">
               {[['houston','Houston'],['dallas','Dallas'],['san-antonio','S. Antonio'],['los-angeles','L.A.'],['miami','Miami'],['nueva-york','Nueva York']].map(([slug, label]) => (
-                <Link key={slug} href={`/ciudades/${slug}/`} onClick={() => setMenuOpen(false)}
-                      className="text-center text-[11px] font-semibold text-white/70 hover:text-white bg-white/6 hover:bg-white/12 rounded-md py-1.5 transition-colors">
+                <Link
+                  key={slug}
+                  href={`/ciudades/${slug}/`}
+                  onClick={() => setMenuOpen(false)}
+                  className="flex items-center justify-center min-h-[44px] text-center text-sm font-semibold text-white/70 hover:text-white bg-white/6 hover:bg-white/12 rounded-lg transition-colors"
+                >
                   {label}
                 </Link>
               ))}
             </div>
             <div className="px-2 pb-2">
-              <Link href="/para-organizaciones/" onClick={() => setMenuOpen(false)}
-                    className="flex items-center justify-center gap-1.5 text-[11px] font-bold text-green bg-green/10 hover:bg-green/20 rounded-md py-1.5 transition-colors">
+              <Link
+                href="/para-organizaciones/"
+                onClick={() => setMenuOpen(false)}
+                className="flex min-h-[44px] items-center justify-center gap-1.5 text-sm font-bold text-green bg-green/10 hover:bg-green/20 rounded-lg px-2 transition-colors text-center"
+              >
                 🤝 Para organizaciones y nonprofits
               </Link>
             </div>
           </div>
 
           {/* All funnels */}
-          <div className="grid grid-cols-2 gap-1">
+          <div className="grid grid-cols-2 gap-2">
             {FUNNEL_ORDER.map((fid) => (
               <Link
                 key={fid}
                 href={funnelLandingPath(fid)}
                 onClick={() => setMenuOpen(false)}
-                className="flex items-center gap-2 px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/8 rounded-lg transition-colors"
+                className="flex min-h-[44px] items-center gap-2 px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/8 rounded-lg transition-colors"
               >
                 <span>{FUNNELS[fid].icon}</span>
                 <span>{fid === 'id' ? 'Texas ID' : FUNNELS[fid].name.split(' ')[0]}</span>

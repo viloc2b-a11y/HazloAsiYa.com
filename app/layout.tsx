@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import Script from 'next/script'
 import './globals.css'
 import { fontSans, fontSerif } from '@/app/fonts'
@@ -11,6 +11,13 @@ import AuthHydrator from '@/components/AuthHydrator'
 import PartnerTracker from '@/components/analytics/PartnerTracker'
 
 const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+  themeColor: '#08213A',
+}
 
 const searchUrlTemplate = `${absoluteUrl('/buscar')}?q={search_term_string}`
 
@@ -30,10 +37,13 @@ const websiteJsonLd = {
 }
 
 export const metadata: Metadata = {
-  title: 'HazloAsíYa — Haz tus trámites en Estados Unidos sin errores',
+  title: 'HazloAsíYa — Trámites en EE.UU. en español',
   description: 'Te decimos exactamente qué hacer, qué documentos necesitas y cómo completar tus trámites en EE.UU. desde la primera vez. En español.',
   metadataBase: new URL(SITE_ORIGIN),
   alternates: alternatesForPath('/'),
+  icons: {
+    icon: [{ url: '/favicon.svg', type: 'image/svg+xml' }],
+  },
   openGraph: {
     title: 'HazloAsíYa — Haz tus trámites en EE.UU. sin errores',
     description: 'Guías paso a paso en español para SNAP, Medicaid, DACA, taxes, escuela y más.',
