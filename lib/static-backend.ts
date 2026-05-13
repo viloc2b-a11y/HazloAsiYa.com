@@ -150,8 +150,29 @@ export async function checkoutStatic(args: {
     }),
   })
 
-  const data = await res.json().catch(() => ({}))
-  if (!res.ok) return { ok: false as const, error: data?.error || 'No se pudo iniciar el pago' }
+  const raw = await res.text()
+  let data: { error?: string; checkoutUrl?: string } = {}
+  try {
+    if (raw) data = JSON.parse(raw) as typeof data
+  } catch {
+    /* ignore */
+  }
+
+  if (!res.ok) {
+    const fromApi = typeof data.error === 'string' && data.error.trim()
+    if (fromApi) return { ok: false as const, error: fromApi }
+    if (res.status === 404) {
+      return {
+        ok: false as const,
+        error:
+          'No se encontró /api/checkout. Comprueba que Cloudflare Pages haya desplegado las Functions y que NEXT_PUBLIC_API_BASE_URL no apunte a otro sitio.',
+      }
+    }
+    return {
+      ok: false as const,
+      error: `No se pudo iniciar el pago (HTTP ${res.status}).${raw && raw.length < 400 ? ` ${raw}` : ''}`,
+    }
+  }
 
   if (data?.checkoutUrl) {
     // FIX #3: Guardar el plan pendiente en AMBOS storages antes de redirigir.
