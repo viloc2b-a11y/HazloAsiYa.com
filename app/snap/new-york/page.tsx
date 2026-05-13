@@ -1,18 +1,19 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { withTrailingSlash } from '@/lib/site'
+import { withTrailingSlash, absoluteUrl } from '@/lib/site'
+import { alternatesForPath } from '@/lib/alternates'
 import VerifiedInfoBanner from '@/components/VerifiedInfoBanner'
 
 export const metadata: Metadata = {
   title: 'SNAP Nueva York: cómo aplicar a los cupones de comida NY',
   description:
     'SNAP Nueva York: límites de ingreso, myBenefits.ny.gov y formulario LDSS-2921 en español.',
-  alternates: { canonical: 'https://www.hazloasiya.com/snap/new-york/' },
+  alternates: alternatesForPath('/snap/new-york/'),
   openGraph: {
     title: 'SNAP Nueva York en español | HazloAsíYa',
     description:
       'Guía completa para aplicar a los cupones de comida SNAP en Nueva York. Formulario LDSS-2921 oficial pre-llenado en español.',
-    url: 'https://www.hazloasiya.com/snap/new-york/',
+    url: absoluteUrl('/snap/new-york/'),
     siteName: 'HazloAsíYa',
     locale: 'es_US',
     type: 'article',
@@ -25,16 +26,16 @@ const jsonLd = {
   headline: 'Cómo aplicar a SNAP en Nueva York en español',
   description:
     'Guía paso a paso para aplicar a los cupones de comida SNAP en Nueva York. Límites de ingreso 2025, formulario LDSS-2921 y portal myBenefits.',
-  url: 'https://www.hazloasiya.com/snap/new-york/',
+  url: absoluteUrl('/snap/new-york/'),
   author: { '@type': 'Organization', name: 'HazloAsíYa' },
-  publisher: { '@type': 'Organization', name: 'HazloAsíYa', url: 'https://www.hazloasiya.com' },
+  publisher: { '@type': 'Organization', name: 'HazloAsíYa', url: absoluteUrl('/') },
   inLanguage: 'es',
   breadcrumb: {
     '@type': 'BreadcrumbList',
     itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Inicio', item: 'https://www.hazloasiya.com/' },
-      { '@type': 'ListItem', position: 2, name: 'SNAP', item: 'https://www.hazloasiya.com/snap/' },
-      { '@type': 'ListItem', position: 3, name: 'Nueva York', item: 'https://www.hazloasiya.com/snap/new-york/' },
+      { '@type': 'ListItem', position: 1, name: 'Inicio', item: absoluteUrl('/') },
+      { '@type': 'ListItem', position: 2, name: 'SNAP', item: absoluteUrl('/snap/') },
+      { '@type': 'ListItem', position: 3, name: 'Nueva York', item: absoluteUrl('/snap/new-york/') },
     ],
   },
 }
@@ -93,12 +94,26 @@ const faqs = [
   },
 ]
 
+const faqJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+}
+
 export default function SnapNewYorkPage() {
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
 
       <main className="min-h-screen bg-stone-50">
