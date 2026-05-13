@@ -3,14 +3,15 @@
 import { useState } from 'react'
 import Disclosure from '@/components/legal/Disclosure'
 import { PHASE1_PRODUCTS, type Phase1ProductKey } from '@/lib/payment-products'
+import { PRICE_REVISION_EXPRESS } from '@/lib/pricing'
 import { checkoutStatic, getStoredUser } from '@/lib/static-backend'
 import { FUNNEL_EVENTS, trackFunnelEvent } from '@/lib/analytics-events'
 import { getStoredAttribution } from '@/lib/partner-tracking'
 import { UPSELL_COPY_EXPERIMENT_ID } from '@/hooks/useAbVariant'
 
 const REVISION_EXPRESS_CTA = {
-  A: 'Obtener revisión express — $12',
-  B: 'Revisar mis documentos antes de enviar — $12',
+  A: `Obtener revisión express — ${PRICE_REVISION_EXPRESS}`,
+  B: `Revisar mis documentos antes de enviar — ${PRICE_REVISION_EXPRESS}`,
 } as const
 
 type Props = {

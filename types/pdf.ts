@@ -22,7 +22,7 @@ export interface PdfFormMeta {
   icon: string
   agency: string
   formCode: string
-  price: number      // en centavos — 1900 = $19
+  price: number // USD cents for PDF paywall tier (catálogo PDF; no es el addon Square `revisionExpress`)
   freeSteps: number  // cuántos pasos puede ver sin pagar
   totalSteps: number
   tags: string[]

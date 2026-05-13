@@ -18,8 +18,8 @@ Activar solo con tráfico real (orientativo: **200–300+** usuarios completando
 
 |        | Copy del botón |
 |--------|----------------|
-| **A** (control) | Obtener revisión express — $12 |
-| **B** (test)    | Revisar mis documentos antes de enviar — $12 |
+| **A** (control) | Prefijo «Obtener revisión express —» + precio desde `PRICE_REVISION_EXPRESS` (`data/checkout-prices.json` vía `lib/pricing.ts`). Ver `UpsellButton.tsx`. |
+| **B** (test)    | Prefijo «Revisar mis documentos antes de enviar —» + mismo precio dinámico. |
 
 Los kits SNAP / ITIN **no** entran en el test.
 

@@ -6,7 +6,7 @@
 
 | Elemento | Implementación |
 |----------|----------------|
-| Revisión express ($12) | `revisionExpress` en `lib/payment-products.ts` + `UpsellButton` en resultado del cuestionario |
+| Revisión express (precio en `data/checkout-prices.json`) | `revisionExpress` en `lib/payment-products.ts` + `UpsellButton` en resultado del cuestionario |
 | Kit SNAP ($9) | `kitSnap` |
 | Kit ITIN ($14) | `kitItin` |
 | Afiliados contextuales (3) | `lib/affiliates.ts` + `AffiliateCard` + `AffiliateRecommendations` |
@@ -29,12 +29,12 @@
 
 ## Textos para publicar (revisar con abogado)
 
-### Revisión Express — $12
+### Revisión Express — precio único (`data/checkout-prices.json` → Square)
 
 - **Nombre comercial:** Revisión Express  
 - **Descripción:** Revisamos que tu documentación esté completa según los requisitos publicados por la agencia. Respuesta orientativa en 24–48 horas hábiles.  
 - **Disclaimer:** Este servicio es revisión de completitud documental según fuentes oficiales; no es asesoría legal ni fiscal ni garantía de aprobación por parte de la agencia.  
-- **CTA:** Obtener revisión express — $12  
+- **CTA:** Texto A/B en `UpsellButton`; el monto sale de `lib/pricing` (`PRICE_REVISION_EXPRESS`).  
 
 ### Kit SNAP — $9
 

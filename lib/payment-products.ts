@@ -5,6 +5,7 @@
  */
 
 import checkoutPricesData from '@/data/checkout-prices.json'
+import { usdFromCents } from '@/lib/pricing'
 
 const phase1Prices = checkoutPricesData.products
 
@@ -32,7 +33,7 @@ export const PHASE1_PRODUCTS: Record<Phase1ProductKey, PaymentProductDef> = {
       'Revisamos que tu paquete de documentos esté completo según los requisitos publicados por la agencia. Respuesta orientativa en 24–48 horas hábiles.',
     disclaimer:
       'Revisión de completitud documental con base en fuentes oficiales. No es asesoría legal ni garantía de aprobación por la agencia. HazloAsíYa no es agencia gubernamental ni bufete de abogados.',
-    ctaLabel: 'Revisar mi paquete antes de enviar — $19',
+    ctaLabel: `Revisar mi paquete antes de enviar — ${usdFromCents(phase1Prices.revisionExpress.priceCents)}`,
   },
   kitSnap: {
     key: 'kitSnap',
@@ -42,7 +43,7 @@ export const PHASE1_PRODUCTS: Record<Phase1ProductKey, PaymentProductDef> = {
       'Checklist de documentos, pasos en orden e instrucciones de entrega para tu solicitud SNAP según el estado donde vives.',
     disclaimer:
       'Recurso educativo. No sustituye los formularios oficiales de la agencia ni la orientación de un profesional si tu caso es complejo.',
-    ctaLabel: 'Obtener Kit SNAP — $12',
+    ctaLabel: `Obtener Kit SNAP — ${usdFromCents(phase1Prices.kitSnap.priceCents)}`,
   },
   kitItin: {
     key: 'kitItin',
@@ -52,7 +53,7 @@ export const PHASE1_PRODUCTS: Record<Phase1ProductKey, PaymentProductDef> = {
       'Orientación sobre el formulario W-7, lista de documentos que el IRS suele aceptar y errores frecuentes a evitar.',
     disclaimer:
       'Recurso educativo. HazloAsíYa no es Acceptance Agent del IRS ni preparador de impuestos certificado. Para preparación gratuita, considera VITA (irs.gov/vita).',
-    ctaLabel: 'Obtener Kit ITIN — $19',
+    ctaLabel: `Obtener Kit ITIN — ${usdFromCents(phase1Prices.kitItin.priceCents)}`,
   },
 }
 
