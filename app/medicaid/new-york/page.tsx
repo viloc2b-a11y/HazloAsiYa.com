@@ -1,18 +1,19 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { withTrailingSlash } from '@/lib/site'
+import { withTrailingSlash, absoluteUrl } from '@/lib/site'
+import { alternatesForPath } from '@/lib/alternates'
 import VerifiedInfoBanner from '@/components/VerifiedInfoBanner'
 
 export const metadata: Metadata = {
   title: 'Medicaid Nueva York: cómo aplicar al seguro médico gratuito',
   description:
     'Medicaid Nueva York: límites de ingreso, formulario DOH-4220 y portal NY State of Health. En español.',
-  alternates: { canonical: 'https://www.hazloasiya.com/medicaid/new-york/' },
+  alternates: alternatesForPath('/medicaid/new-york/'),
   openGraph: {
     title: 'Medicaid Nueva York en español | HazloAsíYa',
     description:
       'Guía completa para aplicar a Medicaid en Nueva York. Formulario DOH-4220 oficial pre-llenado en español.',
-    url: 'https://www.hazloasiya.com/medicaid/new-york/',
+    url: absoluteUrl('/medicaid/new-york/'),
     siteName: 'HazloAsíYa',
     locale: 'es_US',
     type: 'article',
@@ -25,9 +26,9 @@ const jsonLd = {
   headline: 'Cómo aplicar a Medicaid en Nueva York en español',
   description:
     'Guía paso a paso para aplicar a Medicaid en Nueva York. Límites de ingreso 2025, formulario DOH-4220 y portal NY State of Health.',
-  url: 'https://www.hazloasiya.com/medicaid/new-york/',
+  url: absoluteUrl('/medicaid/new-york/'),
   author: { '@type': 'Organization', name: 'HazloAsíYa' },
-  publisher: { '@type': 'Organization', name: 'HazloAsíYa', url: 'https://www.hazloasiya.com' },
+  publisher: { '@type': 'Organization', name: 'HazloAsíYa', url: absoluteUrl('/') },
   inLanguage: 'es',
 }
 
@@ -89,12 +90,26 @@ const faqs = [
   },
 ]
 
+const faqJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+}
+
 export default function MedicaidNewYorkPage() {
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
 
       <main className="min-h-screen bg-stone-50">
