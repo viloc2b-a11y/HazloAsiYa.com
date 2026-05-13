@@ -76,7 +76,10 @@ export default function Topbar({ user }: { user?: { email: string; name?: string
       <div className="max-w-7xl mx-auto px-4 h-14 flex items-center justify-between gap-4">
 
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2.5 shrink-0">
+        <Link
+          href="/"
+          className="flex items-center gap-2.5 shrink-0 min-h-[44px] lg:min-h-0"
+        >
           <LogoMark size={32}/>
           <span className="font-serif text-[18px] text-white leading-none">
             HazloAsí<span className="text-green">Ya</span>
@@ -87,13 +90,13 @@ export default function Topbar({ user }: { user?: { email: string; name?: string
         <nav className="hidden lg:flex items-center gap-0.5">
           <Link
             href="/buscar/"
-            className="px-3 py-1.5 text-[13px] font-semibold text-white/55 hover:text-white hover:bg-white/8 rounded-lg transition-colors"
+            className="px-3 py-2 text-sm font-semibold text-white/55 hover:text-white hover:bg-white/8 rounded-lg transition-colors"
           >
             Buscar
           </Link>
           <Link
             href="/pdf/"
-            className="px-3 py-1.5 text-[13px] font-bold text-white/90 hover:text-white hover:bg-white/8 rounded-lg transition-colors whitespace-nowrap"
+            className="px-3 py-2 text-sm font-bold text-white/90 hover:text-white hover:bg-white/8 rounded-lg transition-colors whitespace-nowrap"
           >
             Formularios PDF
           </Link>
@@ -102,7 +105,7 @@ export default function Topbar({ user }: { user?: { email: string; name?: string
           <div className="relative" onClick={e => e.stopPropagation()}>
             <button
               onClick={() => setStatesOpen(!statesOpen)}
-              className="flex items-center gap-1 px-3 py-1.5 text-[13px] font-bold text-white/90 hover:text-white hover:bg-white/8 rounded-lg transition-colors whitespace-nowrap"
+              className="flex items-center gap-1 px-3 py-2 text-sm font-bold text-white/90 hover:text-white hover:bg-white/8 rounded-lg transition-colors whitespace-nowrap"
             >
               📍 Por estado
               <svg className={`w-3 h-3 transition-transform ${statesOpen ? 'rotate-180' : ''}`} fill="currentColor" viewBox="0 0 20 20">
@@ -110,28 +113,40 @@ export default function Topbar({ user }: { user?: { email: string; name?: string
               </svg>
             </button>
             {statesOpen && (
-              <div className="absolute top-full left-0 mt-1 w-72 bg-navy border border-white/15 rounded-xl shadow-2xl overflow-hidden">
-                <div className="px-3 pt-3 pb-1 text-[10px] font-bold tracking-widest uppercase text-white/30">
+              <div className="absolute top-full left-0 mt-1 w-[22rem] max-w-[min(22rem,calc(100vw-2rem))] bg-navy border border-white/15 rounded-xl shadow-2xl overflow-hidden">
+                <div className="px-3 pt-3 pb-1 text-xs font-bold tracking-widest uppercase text-white/30">
                   9 trámites disponibles en 4 estados
                 </div>
                 {STATES_NAV.map(st => (
                   <div key={st.label} className="px-3 py-2 border-b border-white/8 last:border-0">
-                    <div className="text-[11px] font-bold text-white/50 mb-1.5">{st.flag} {st.label}</div>
-                    <div className="flex gap-1.5">
-                      <Link href={st.snap} onClick={() => setStatesOpen(false)}
-                            className="flex-1 text-center text-[11px] font-semibold text-white/70 hover:text-white bg-white/6 hover:bg-white/12 rounded-md py-1 transition-colors">
+                    <div className="text-xs font-bold text-white/50 mb-2">{st.flag} {st.label}</div>
+                    <div className="grid grid-cols-2 gap-2">
+                      <Link
+                        href={st.snap}
+                        onClick={() => setStatesOpen(false)}
+                        className="flex min-h-9 items-center justify-center text-center text-xs font-semibold text-white/70 hover:text-white bg-white/6 hover:bg-white/12 rounded-lg px-1 py-2 transition-colors"
+                      >
                         🛒 SNAP
                       </Link>
-                      <Link href={st.medicaid} onClick={() => setStatesOpen(false)}
-                            className="flex-1 text-center text-[11px] font-semibold text-white/70 hover:text-white bg-white/6 hover:bg-white/12 rounded-md py-1 transition-colors">
+                      <Link
+                        href={st.medicaid}
+                        onClick={() => setStatesOpen(false)}
+                        className="flex min-h-9 items-center justify-center text-center text-xs font-semibold text-white/70 hover:text-white bg-white/6 hover:bg-white/12 rounded-lg px-1 py-2 transition-colors"
+                      >
                         🏥 Medicaid
                       </Link>
-                      <Link href={st.wic} onClick={() => setStatesOpen(false)}
-                            className="flex-1 text-center text-[11px] font-semibold text-white/70 hover:text-white bg-white/6 hover:bg-white/12 rounded-md py-1 transition-colors">
+                      <Link
+                        href={st.wic}
+                        onClick={() => setStatesOpen(false)}
+                        className="flex min-h-9 items-center justify-center text-center text-xs font-semibold text-white/70 hover:text-white bg-white/6 hover:bg-white/12 rounded-lg px-1 py-2 transition-colors"
+                      >
                         🤱 WIC
                       </Link>
-                      <Link href={st.more} onClick={() => setStatesOpen(false)}
-                            className="text-center text-[11px] font-semibold text-green hover:text-white bg-green/10 hover:bg-green/20 rounded-md py-1 px-2 transition-colors whitespace-nowrap">
+                      <Link
+                        href={st.more}
+                        onClick={() => setStatesOpen(false)}
+                        className="flex min-h-9 items-center justify-center text-center text-xs font-semibold text-green hover:text-white bg-green/10 hover:bg-green/20 rounded-lg px-2 py-2 transition-colors whitespace-nowrap"
+                      >
                         + más →
                       </Link>
                     </div>
@@ -143,7 +158,7 @@ export default function Topbar({ user }: { user?: { email: string; name?: string
 
           <Link
             href="/para-organizaciones/"
-            className="px-3 py-1.5 text-[13px] font-semibold text-green/80 hover:text-green hover:bg-white/8 rounded-lg transition-colors whitespace-nowrap"
+            className="px-3 py-2 text-sm font-semibold text-green/80 hover:text-green hover:bg-white/8 rounded-lg transition-colors whitespace-nowrap"
           >
             🤝 Organizaciones
           </Link>
@@ -152,7 +167,7 @@ export default function Topbar({ user }: { user?: { email: string; name?: string
             <Link
               key={navId}
               href={funnelLandingPath(navId)}
-              className="px-3 py-1.5 text-[13px] font-semibold text-white/75 hover:text-white hover:bg-white/8 rounded-lg transition-colors whitespace-nowrap"
+              className="px-3 py-2 text-sm font-semibold text-white/75 hover:text-white hover:bg-white/8 rounded-lg transition-colors whitespace-nowrap"
             >
               {navId === 'id' ? 'Texas ID' : navId === 'escuela' ? 'Escuela' : FUNNELS[navId].name.split(' ')[0]}
             </Link>
@@ -162,21 +177,24 @@ export default function Topbar({ user }: { user?: { email: string; name?: string
         {/* Right side */}
         <div className="flex items-center gap-2">
           {localUser ? (
-            <Link href="/dashboard" className="flex items-center gap-2 bg-white/10 hover:bg-white/15 px-3 py-1.5 rounded-lg transition-colors">
+            <Link
+              href="/dashboard"
+              className="flex min-h-[44px] items-center gap-2 bg-white/10 hover:bg-white/15 px-3 py-1.5 rounded-lg transition-colors lg:min-h-0"
+            >
               <div className="w-6 h-6 rounded-full bg-green flex items-center justify-center text-white text-xs font-bold">
                 {(localUser.name || localUser.email)[0].toUpperCase()}
               </div>
-              <span className="text-white/80 text-[13px] font-medium hidden sm:block">Mi cuenta</span>
+              <span className="text-white/80 text-sm font-medium hidden sm:block">Mi cuenta</span>
             </Link>
           ) : (
             <Link
               href="/login"
-              className="text-[11px] sm:text-[12px] font-semibold text-white/55 hover:text-white px-3 py-1.5 transition-colors"
+              className="flex min-h-[44px] items-center text-sm font-semibold text-white/55 hover:text-white px-3 transition-colors lg:min-h-0 lg:text-sm"
             >
               Accede a tu cuenta
             </Link>
           )}
-          <Link href="/#tramites" className="btn-primary py-1.5 px-4 text-[13px] hidden sm:block">
+          <Link href="/#tramites" className="btn-primary py-2 px-4 text-sm hidden sm:inline-flex">
             Empezar →
           </Link>
 
