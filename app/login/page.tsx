@@ -48,22 +48,25 @@ export default function LoginPage() {
         return
       }
 
-      const res = await fetch(`${supabaseUrl}/auth/v1/otp`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          apikey: supabaseKey,
+      const { createClient } = await import('@/lib/supabase/client')
+      const supabase = createClient()
+      const origin = typeof window !== 'undefined' ? window.location.origin : ''
+      const { error: otpError } = await supabase.auth.signInWithOtp({
+        email: email.trim(),
+        options: {
+          shouldCreateUser: mode === 'register',
+          emailRedirectTo: origin ? `${origin}/` : undefined,
+          ...(mode === 'register' && name.trim() ? { data: { name: name.trim() } } : {}),
         },
-        body: JSON.stringify({
-          email,
-          create_user: mode === 'register',
-          data: mode === 'register' ? { name } : undefined,
-        }),
       })
 
-      if (!res.ok) {
-        const data = (await res.json().catch(() => ({}))) as { msg?: string; error_description?: string }
-        throw new Error(data.msg || data.error_description || 'Error al enviar el enlace')
+      if (otpError) {
+        const msg = otpError.message || 'Error al enviar el enlace'
+        const hint =
+          /redirect|url|not\s*allowed/i.test(msg) || /invalid/i.test(msg)
+            ? ' Revisa en Supabase → Authentication → URL Configuration que tu dominio (incl. *.pages.dev de preview) esté en Redirect URLs.'
+            : ''
+        throw new Error(`${msg}${hint}`)
       }
 
       setSent(true)
