@@ -374,12 +374,9 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   }), { status: 200, headers: jsonHeaders })
 }
 
-// ── Cron handler (Cloudflare Cron Trigger) ────────────────────────────────────
-// Add to wrangler.toml:
-//   [triggers]
-//   crons = ["0 10 1 * *"]   ← 10:00 UTC on the 1st of every month
-//
-// The cron trigger calls the same logic as the POST handler.
+// ── Cron handler (Cloudflare Cron) ───────────────────────────────────────────
+// No añadas cron en wrangler.toml de Pages: configúralo en el dashboard del proyecto.
+// El disparador programado reutiliza la misma lógica que el POST.
 export const onScheduled = async (env: Env) => {
   const fakeRequest = new Request('https://hazloasiya.com/api/send-partner-report', {
     method: 'POST',

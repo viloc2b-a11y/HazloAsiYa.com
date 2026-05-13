@@ -1,5 +1,5 @@
 /**
- * Cron mensual (wrangler.toml → [triggers] crons): día 1, 10:00 UTC.
+ * Cron mensual (configurar en el dashboard de Cloudflare Pages → Functions): día 1, 10:00 UTC.
  * Envío del informe vía Resend cuando RESEND_API_KEY y RESEND_REPORT_TO están definidos en Cloudflare.
  *
  * Logs: Workers & Pages → proyecto → Logs.

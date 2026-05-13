@@ -4,6 +4,6 @@ compatibility_date = "2024-11-01"
 compatibility_flags = ["nodejs_compat"]
 pages_build_output_dir = "out"
 
-# Cloudflare Pages no admite [triggers] en wrangler.toml (solo Workers).
-# Cron para `functions/_scheduled.ts`: Dashboard → Workers & Pages → tu proyecto Pages
-# → Settings → Functions → Cron Triggers, o un Worker aparte con su propio wrangler.
+# Cloudflare Pages: no uses bloques de cron en este archivo (solo Workers independientes).
+# Cron para `functions/_scheduled.ts`: dashboard del proyecto Pages → Functions → crons,
+# o un Worker aparte con su propio wrangler.
