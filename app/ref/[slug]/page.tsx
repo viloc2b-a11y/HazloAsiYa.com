@@ -66,7 +66,7 @@ export function generateStaticParams() {
     { slug: 'centro-esperanza-dallas' },
   ]
 }
-export const dynamicParams = true
+export const dynamicParams = false
 
 // ── generateMetadata ──────────────────────────────────────────────────────────
 

@@ -3,6 +3,9 @@ import { FUNNEL_ORDER } from '@/data/funnels'
 import { getPublishedGuideSlugs } from '@/lib/guides-fs'
 import { SITE_ORIGIN, absoluteUrl } from '@/lib/site'
 
+/** Requerido con `output: 'export'` en Next 15+ */
+export const dynamic = 'force-static'
+
 const GEO_PATHS = [
   // Texas
   '/snap/texas/',

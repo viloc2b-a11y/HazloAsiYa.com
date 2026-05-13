@@ -1,5 +1,6 @@
 'use client'
 import { useState } from 'react'
+import Link from 'next/link'
 
 interface Props {
   funnelName: string
@@ -119,9 +120,9 @@ export default function EmailGate({ funnelName, onContinue }: Props) {
         {/* Already have account */}
         <p className="text-center text-xs text-gray-400 mt-4">
           ¿Ya tienes cuenta?{' '}
-          <a href="/login" className="text-green underline hover:text-navy transition-colors">
+          <Link href="/login/" className="text-green underline hover:text-navy transition-colors">
             Inicia sesión aquí
-          </a>
+          </Link>
         </p>
       </div>
     </div>

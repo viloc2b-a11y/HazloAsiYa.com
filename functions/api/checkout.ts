@@ -59,9 +59,6 @@ function buildPaymentNote(args: {
 export const onRequestPost: PagesFunction<Env> = async (context) => {
   try {
     const env = context.env
-    const accessToken = requireEnv(env, 'SQUARE_ACCESS_TOKEN')
-    const locationId = requireEnv(env, 'SQUARE_LOCATION_ID')
-
     const body = (await context.request.json()) as {
       productId?: string
       userId?: string
@@ -83,7 +80,10 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     if (!emailRaw.trim()) return json({ error: 'Falta email' }, 400)
     if (!isValidEmail(emailRaw)) return json({ error: 'Email inválido' }, 400)
 
-    const email = emailRaw.trim()
+    const accessToken = requireEnv(env, 'SQUARE_ACCESS_TOKEN')
+    const locationId = requireEnv(env, 'SQUARE_LOCATION_ID')
+
+    const email = emailRaw.trim().toLowerCase()
     const lineItemPrice = PRODUCT_PRICE_CENTS[productId]
     const label = PRODUCT_LABEL[productId] || productId
 

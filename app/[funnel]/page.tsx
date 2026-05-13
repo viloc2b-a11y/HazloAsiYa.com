@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { FUNNELS, NEXT_STEP_MAP, funnelLandingPath, isValidFunnelId } from '@/data/funnels'
+import { FUNNELS, FUNNEL_ORDER, NEXT_STEP_MAP, funnelLandingPath, isValidFunnelId } from '@/data/funnels'
 import { getFunnelContextLinks } from '@/data/funnel-internal-links'
 import { getFunnelHeroCopy, getFunnelSeoMeta } from '@/data/funnel-landing'
 import Topbar from '@/components/Topbar'
@@ -29,6 +29,12 @@ import { FunnelFinalCtaLink, FunnelScrollDepth } from '@/components/analytics/Fu
 import PrivacyBadge from '@/components/PrivacyBadge'
 
 interface Props { params: Promise<{ funnel: string }> }
+
+export const dynamicParams = false
+
+export function generateStaticParams() {
+  return FUNNEL_ORDER.map((funnel) => ({ funnel }))
+}
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { funnel: id } = await params

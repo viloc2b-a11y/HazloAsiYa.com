@@ -84,7 +84,7 @@ async function supabaseUpdatePlan(args: { supabaseUrl: string; serviceKey: strin
 async function supabaseInsertPurchase(args: {
   supabaseUrl: string
   serviceKey: string
-  userId: string
+  userId?: string | null
   productId: string
   funnelId?: string
   amountCents?: number
@@ -94,7 +94,7 @@ async function supabaseInsertPurchase(args: {
 }) {
   const { supabaseUrl, serviceKey, userId, productId, funnelId, amountCents, squarePaymentId, buyerEmail, partnerSlug } = args
   const row: Record<string, unknown> = {
-    user_id: userId,
+    user_id: userId || null,
     product_id: productId,
     funnel: funnelId || null,
     amount: Math.round((amountCents || 0) / 100),
@@ -103,13 +103,16 @@ async function supabaseInsertPurchase(args: {
   }
   if (buyerEmail) row.email = buyerEmail
   if (partnerSlug) row.partner_slug = partnerSlug
-  const r = await fetch(`${supabaseUrl}/rest/v1/purchases`, {
+  const endpoint = squarePaymentId
+    ? `${supabaseUrl}/rest/v1/purchases?on_conflict=square_payment_id`
+    : `${supabaseUrl}/rest/v1/purchases`
+  const r = await fetch(endpoint, {
     method: 'POST',
     headers: {
       apikey: serviceKey,
       authorization: `Bearer ${serviceKey}`,
       'content-type': 'application/json',
-      prefer: 'return=minimal',
+      prefer: squarePaymentId ? 'resolution=ignore-duplicates,return=minimal' : 'return=minimal',
     },
     body: JSON.stringify(row),
   })
@@ -160,9 +163,9 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     let buyerEmail: string | undefined
     if (meta.email) {
       try {
-        buyerEmail = decodeURIComponent(meta.email)
+        buyerEmail = decodeURIComponent(meta.email).trim().toLowerCase()
       } catch {
-        buyerEmail = meta.email
+        buyerEmail = meta.email.trim().toLowerCase()
       }
     }
     // Partner attribution — stamped in payment_note as ;ref=<slug>
@@ -172,13 +175,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     }
     if (!userId) return json({ error: 'Missing userId in payment_note' }, 400)
 
-    if (!isUuid(userId)) {
-      return json({
-        ok: true,
-        skipped: true,
-        reason: 'user_id_not_uuid',
-      })
-    }
+    const supabaseUserId = isUuid(userId) ? userId : null
 
     // Mapa completo de productId → plan (sincronizado con static-backend.ts)
     const PRODUCT_TO_PLAN: Record<string, string> = {
@@ -195,11 +192,13 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     const amountCents = typeof amountMoney?.amount === 'number' ? amountMoney.amount : undefined
     const squarePaymentId = payment?.id
 
-    await supabaseUpdatePlan({ supabaseUrl, serviceKey, userId, plan })
+    if (supabaseUserId) {
+      await supabaseUpdatePlan({ supabaseUrl, serviceKey, userId: supabaseUserId, plan })
+    }
     await supabaseInsertPurchase({
       supabaseUrl,
       serviceKey,
-      userId,
+      userId: supabaseUserId,
       productId,
       funnelId: funnelId || undefined,
       amountCents,

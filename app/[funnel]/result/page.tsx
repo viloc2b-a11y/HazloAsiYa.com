@@ -56,7 +56,6 @@ export default function ResultPage() {
   const [lead,     setLead]     = useState({ name: '', phone: '', zip: '' })
   const [pdfing,   setPdfing]   = useState(false)
   const [authForm, setAuthForm] = useState({ email: '', password: '', name: '', mode: 'login' as 'login'|'register' })
-  const [paidInUrl, setPaidInUrl] = useState(false)
   const [purchaseVerified, setPurchaseVerified] = useState(false)
   const [emailGatePassed, setEmailGatePassed] = useState(false)
   const resultViewSent = useRef(false)
@@ -106,10 +105,6 @@ export default function ResultPage() {
   }, [id])
 
   useEffect(() => {
-    setPaidInUrl(new URLSearchParams(window.location.search).get('paid') === '1')
-  }, [id])
-
-  useEffect(() => {
     if (!id || typeof id !== 'string' || !user?.email) return
     let cancelled = false
     fetch(
@@ -136,7 +131,7 @@ export default function ResultPage() {
     })
   }, [loading, result, id])
 
-  const canDownloadFullPdf = hasPaidAccess || paidInUrl
+  const canDownloadFullPdf = hasPaidAccess
 
   const handleAuth = async () => {
     const { mode, email, password, name } = authForm

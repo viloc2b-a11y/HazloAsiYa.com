@@ -267,7 +267,7 @@ export default function PartnerReportPage() {
       <div className="min-h-screen bg-cream flex flex-col items-center justify-center gap-4">
         <div className="text-4xl">🤔</div>
         <div className="font-bold text-[#0A2540]">Partner no encontrado</div>
-        <p className="text-[#0A2540]/50 text-sm">El slug "{slug}" no existe en la Alianza.</p>
+        <p className="text-[#0A2540]/50 text-sm">El slug &quot;{slug}&quot; no existe en la Alianza.</p>
         <Link href="/dashboard/alianza/" className="text-[#0EC96A] font-bold text-sm">← Volver al dashboard</Link>
       </div>
     )
@@ -383,7 +383,7 @@ export default function PartnerReportPage() {
                     <div className="w-full bg-[#E8E2D8] rounded-full h-2">
                       <div
                         className="bg-[#0EC96A] h-2 rounded-full"
-                        style={{ width: `${Math.max(10, (f.count / report.purchases) * 100)}%` }}
+                        style={{ width: `${Math.max(10, report.purchases > 0 ? (f.count / report.purchases) * 100 : 0)}%` }}
                       />
                     </div>
                   </div>

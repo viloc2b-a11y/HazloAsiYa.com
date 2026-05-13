@@ -16,8 +16,7 @@ export function generateStaticParams() {
   return PARTNER_SLUGS.map((slug) => ({ slug }))
 }
 
-// Allow unknown slugs to render (they'll load dynamically on the client)
-export const dynamicParams = true
+export const dynamicParams = false
 
 export default function ReportePage() {
   return <ReporteClient />
