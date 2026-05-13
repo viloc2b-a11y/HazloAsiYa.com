@@ -1,18 +1,19 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { withTrailingSlash } from '@/lib/site'
+import { withTrailingSlash, absoluteUrl } from '@/lib/site'
+import { alternatesForPath } from '@/lib/alternates'
 import VerifiedInfoBanner from '@/components/VerifiedInfoBanner'
 
 export const metadata: Metadata = {
   title: 'WIC Nueva York en español — Cómo aplicar al programa WIC NY',
   description:
     'Aplica al programa WIC en Nueva York. Límites de ingreso 2025, alimentos WIC, tarjeta eWIC, formulario pre-llenado en español. Llama al 1-800-522-5006.',
-  alternates: { canonical: 'https://www.hazloasiya.com/wic/new-york/' },
+  alternates: alternatesForPath('/wic/new-york/'),
   openGraph: {
     title: 'WIC Nueva York en español | HazloAsíYa',
     description:
       'Guía completa para aplicar al programa WIC en Nueva York. Formulario pre-llenado en español, límites de ingreso 2025.',
-    url: 'https://www.hazloasiya.com/wic/new-york/',
+    url: absoluteUrl('/wic/new-york/'),
     siteName: 'HazloAsíYa',
     locale: 'es_US',
     type: 'article',
@@ -25,9 +26,9 @@ const jsonLd = {
   headline: 'Cómo aplicar al programa WIC en Nueva York en español',
   description:
     'Guía paso a paso para aplicar al WIC en Nueva York. Límites de ingreso 2025, tarjeta eWIC y agencias locales.',
-  url: 'https://www.hazloasiya.com/wic/new-york/',
+  url: absoluteUrl('/wic/new-york/'),
   author: { '@type': 'Organization', name: 'HazloAsíYa' },
-  publisher: { '@type': 'Organization', name: 'HazloAsíYa', url: 'https://www.hazloasiya.com' },
+  publisher: { '@type': 'Organization', name: 'HazloAsíYa', url: absoluteUrl('/') },
   inLanguage: 'es',
 }
 
@@ -78,12 +79,26 @@ const faqs = [
   },
 ]
 
+const faqJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+}
+
 export default function WicNewYorkPage() {
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
 
       <main className="min-h-screen bg-stone-50">
