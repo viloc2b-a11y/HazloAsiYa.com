@@ -3,3 +3,8 @@ name = "hazloasiya"
 compatibility_date = "2024-11-01"
 compatibility_flags = ["nodejs_compat"]
 pages_build_output_dir = "out"
+
+# Cron mensual: día 1 a las 10:00 UTC → handler en `functions/_scheduled.ts`.
+# Sin cron: dispara manualmente desde el dashboard de Workers o curl al endpoint de prueba de scheduled (Wrangler).
+[triggers]
+crons = ["0 10 1 * *"]

@@ -2,6 +2,44 @@
 
 Sitio en **español** para orientar a familias hispanas en EE. UU. en trámites (SNAP, Medicaid, ITIN, escuela, etc.) con cuestionario, plan paso a paso y contenido educativo (no asesoría legal ni gubernamental).
 
+## Repositorio (GitHub y local)
+
+| | |
+|---|---|
+| **GitHub** | [github.com/viloc2b-a11y/HazloAsiYa.com](https://github.com/viloc2b-a11y/HazloAsiYa.com) |
+| **Rama principal** | `main` |
+| **Remoto por defecto** | `origin` → mismo URL HTTPS de arriba |
+
+### Clonar en tu máquina
+
+```bash
+git clone https://github.com/viloc2b-a11y/HazloAsiYa.com.git
+cd HazloAsiYa.com
+```
+
+La carpeta del proyecto tras clonar es **`HazloAsiYa.com`** (raíz del repo). Si guardas el proyecto dentro de otro directorio (por ejemplo OneDrive), abre siempre esa carpeta antes de `npm install` o los comandos de Git.
+
+### Sincronizar con GitHub
+
+```bash
+git pull origin main          # bajar cambios antes de trabajar
+git status                    # ver archivos modificados
+git add -A && git commit -m "descripción del cambio"
+git push origin main          # subir a GitHub
+```
+
+- No incluyas `.env.local` en commits (secretos; ya está en `.gitignore`).
+- Si es tu primer uso de Git en ese PC, configura `git config --global user.name "..."` y `user.email`.
+
+### Deploy tras push (Cloudflare)
+
+Si el proyecto está **conectado a Cloudflare Pages** con build desde Git, un `push` a `main` suele disparar el build. Para **deploy manual** desde tu repo local (autenticado con Wrangler):
+
+```bash
+npm run build
+npx wrangler pages deploy out --project-name=hazloasiya
+```
+
 ## Stack
 
 | Pieza | Detalle |
@@ -17,7 +55,7 @@ Sitio en **español** para orientar a familias hispanas en EE. UU. en trámites 
 ## Inicio rápido
 
 ```bash
-cd HazloAsiYa.com   # si clonas el monorepo, entra a esta carpeta
+cd HazloAsiYa.com   # raíz del repo clonado (ajusta la ruta si tu carpeta está dentro de otro directorio)
 npm install
 cp .env.local.example .env.local
 npm run dev
@@ -33,7 +71,7 @@ Deploy manual a Pages (requiere [Wrangler](https://developers.cloudflare.com/wor
 
 ```bash
 npm run build
-npx wrangler pages deploy out
+npx wrangler pages deploy out --project-name=hazloasiya
 ```
 
 En CI o Git integrado con Cloudflare, el build suele ser el mismo comando; la salida debe ser **`out/`** (incluye Pagefind en `out/pagefind/`).

@@ -4,12 +4,17 @@ import { getFormBySlug, PDF_CATALOG } from '@/types/pdf'
 import PdfFormClient from './PdfFormClient'
 import { SITE_ORIGIN, withTrailingSlash } from '@/lib/site'
 
+export const dynamicParams = false
+
 export function generateStaticParams() {
   return PDF_CATALOG.map(form => ({ form: form.slug }))
 }
 
-export async function generateMetadata({ params }: { params: { form: string } }): Promise<Metadata> {
-  const formMeta = getFormBySlug(params.form)
+type PdfFormParams = Promise<{ form: string }>
+
+export async function generateMetadata({ params }: { params: PdfFormParams }): Promise<Metadata> {
+  const { form } = await params
+  const formMeta = getFormBySlug(form)
   if (!formMeta) return { title: 'Formulario no encontrado | HazloAsíYa' }
 
   const path = withTrailingSlash(`/pdf/${formMeta.slug}`)
@@ -27,8 +32,9 @@ export async function generateMetadata({ params }: { params: { form: string } })
   }
 }
 
-export default function PdfFormPage({ params }: { params: { form: string } }) {
-  const formMeta = getFormBySlug(params.form)
+export default async function PdfFormPage({ params }: { params: PdfFormParams }) {
+  const { form } = await params
+  const formMeta = getFormBySlug(form)
   if (!formMeta) notFound()
   return <PdfFormClient formMeta={formMeta} />
 }

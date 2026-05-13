@@ -1,5 +1,8 @@
 node_modules
 
+# Artefactos locales (p. ej. runs de verify-production)
+.tmp/
+
 # Secretos y entorno local
 .env.local
 .env*.local

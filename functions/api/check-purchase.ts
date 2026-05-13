@@ -26,7 +26,7 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
     }
 
     const { searchParams } = new URL(context.request.url)
-    const email = searchParams.get('email')?.trim() || ''
+    const email = searchParams.get('email')?.trim().toLowerCase() || ''
     const funnel = searchParams.get('funnel')?.trim() || ''
     if (!email || !funnel) {
       return json({ error: 'Faltan email o funnel' }, 400)

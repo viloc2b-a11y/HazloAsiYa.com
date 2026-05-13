@@ -1,6 +1,12 @@
 import type { Metadata } from 'next'
 import { alternatesForPath } from '@/lib/alternates'
-import { FUNNELS, isValidFunnelId } from '@/data/funnels'
+import { FUNNELS, FUNNEL_ORDER, isValidFunnelId } from '@/data/funnels'
+
+export const dynamicParams = false
+
+export function generateStaticParams() {
+  return FUNNEL_ORDER.map((funnel) => ({ funnel }))
+}
 
 type Props = { children: React.ReactNode; params: Promise<{ funnel: string }> }
 

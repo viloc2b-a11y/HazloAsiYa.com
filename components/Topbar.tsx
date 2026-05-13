@@ -159,8 +159,11 @@ export default function Topbar({ user }: { user?: { email: string; name?: string
               <span className="text-white/80 text-[13px] font-medium hidden sm:block">Mi cuenta</span>
             </Link>
           ) : (
-            <Link href="/login" className="text-[13px] font-semibold text-white/55 hover:text-white px-3 py-1.5 transition-colors">
-              Entrar
+            <Link
+              href="/login"
+              className="text-[11px] sm:text-[12px] font-semibold text-white/55 hover:text-white px-3 py-1.5 transition-colors"
+            >
+              Accede a tu cuenta
             </Link>
           )}
           <Link href="/#tramites" className="btn-primary py-1.5 px-4 text-[13px] hidden sm:block">

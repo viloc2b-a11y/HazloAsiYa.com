@@ -4,7 +4,7 @@ Configurar en **Cloudflare Pages → Settings → Environment variables → Prod
 
 > Importante:
 > - Las variables `NEXT_PUBLIC_*` son **públicas** (quedan embebidas en el HTML/JS del cliente).
-> - `MAILCHIMP_API_KEY` y `SQUARE_ACCESS_TOKEN` son **solo servidor** (Cloudflare Pages Functions). No deben usarse en componentes del cliente.
+> - `MAILCHIMP_API_KEY`, `SQUARE_ACCESS_TOKEN` y `RESEND_API_KEY` son **solo servidor** (Pages Functions / cron). No las uses en el cliente.
 
 ## Lista exacta
 
@@ -15,6 +15,9 @@ Configurar en **Cloudflare Pages → Settings → Environment variables → Prod
 | `MAILCHIMP_API_KEY` | `[nueva key rotada]` |
 | `MAILCHIMP_AUDIENCE_ID` | `0331f44a68` |
 | `MAILCHIMP_SERVER` | `us2` |
+| `RESEND_API_KEY` | `[API key re_… — marcar como *Secret* en Cloudflare]` |
+| `RESEND_FROM` | `[remitente verificado en Resend, ej. notificaciones@tudominio.com]` |
+| `RESEND_REPORT_TO` | `[correo(s) que reciben el informe mensual del cron — coma si hay varios]` |
 | `SQUARE_ACCESS_TOKEN` | `[desde Square Dashboard]` |
 | `SQUARE_LOCATION_ID` | `[desde Square Dashboard]` |
 | `NEXT_PUBLIC_SQUARE_APP_ID` | `[desde Square Dashboard]` |
