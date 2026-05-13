@@ -1,0 +1,10 @@
+packages:
+  - "."
+
+strictDepBuilds: true
+
+onlyBuiltDependencies:
+  - core-js
+  - esbuild
+  - sharp
+  - unrs-resolver
