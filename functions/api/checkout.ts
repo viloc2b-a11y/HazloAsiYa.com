@@ -115,7 +115,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
                                     email,
                                     product_id: productId,
                                     funnel: funnelId,
-                                    partner_slug: body.partnerSlug || '',
+                                    ...(body.partnerSlug ? { partner_slug: body.partnerSlug } : {}),
                         },
               },
               payment_note: buildPaymentNote({ userId, productId, funnelId, email, partnerSlug: body.partnerSlug }),
