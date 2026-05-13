@@ -48,7 +48,7 @@ export default function HomePageClient() {
             <LogoMark size={64}/>
           </div>
 
-          <h1 className="font-serif text-3xl sm:text-5xl lg:text-6xl text-white leading-tight mb-6 max-w-4xl mx-auto">
+          <h1 className="font-serif text-2xl min-[400px]:text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-white leading-tight mb-6 max-w-4xl mx-auto">
             Trámites en EE.UU. en español, sin errores desde la primera vez.
           </h1>
 
@@ -73,7 +73,7 @@ export default function HomePageClient() {
             ))}
           </div>
 
-          <div className="flex flex-wrap justify-center gap-3">
+          <div className="flex flex-wrap justify-center gap-3 gap-y-4">
             <Link href="/snap" className="btn-primary text-base px-8 py-3.5">
               Empieza ahora →
             </Link>
