@@ -109,7 +109,7 @@ export default function EmailGate({ funnelName, onContinue }: Props) {
           </form>
 
           {/* Trust signals */}
-          <div className="mt-5 flex flex-wrap justify-center gap-x-4 gap-y-1.5 text-[11px] text-gray-400">
+          <div className="mt-5 flex flex-wrap justify-center gap-x-4 gap-y-2 text-xs text-gray-400">
             <span>🔒 Sin tarjeta</span>
             <span>📵 Sin spam</span>
             <span>🗑️ Cancela cuando quieras</span>
