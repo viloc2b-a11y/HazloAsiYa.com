@@ -218,7 +218,7 @@ export default function ParaOrganizacionesPage() {
                   {/* Channel tags */}
                   <div className="flex flex-wrap gap-1.5">
                     {s.channels.map(c => (
-                      <span key={c} className="text-[10px] font-bold text-green bg-green/10 border border-green/20 rounded-md px-2 py-0.5">
+                      <span key={c} className="text-xs font-bold text-green bg-green/10 border border-green/20 rounded-md px-2 py-0.5">
                         {c}
                       </span>
                     ))}
@@ -257,9 +257,9 @@ export default function ParaOrganizacionesPage() {
           <div className="bg-white border border-[#E8E2D8] rounded-2xl p-6 shadow-sm">
             <div className="flex items-center justify-between mb-5">
               <div>
-                <div className="text-[10px] font-bold text-[#0A2540]/35 uppercase tracking-widest">Reporte de impacto</div>
+                <div className="text-xs font-bold text-[#0A2540]/35 uppercase tracking-widest">Reporte de impacto</div>
                 <div className="font-black text-[#0A2540] text-sm mt-0.5">Centro Comunitario Esperanza · Abril 2026</div>
-                <div className="text-[10px] text-[#0A2540]/40 mt-0.5">Houston, TX</div>
+                <div className="text-xs text-[#0A2540]/40 mt-0.5">Houston, TX</div>
               </div>
               <div className="text-2xl">📊</div>
             </div>
@@ -278,7 +278,7 @@ export default function ParaOrganizacionesPage() {
               ].map(s => (
                 <div key={s.label} className="bg-cream rounded-xl p-3 text-center">
                   <div className="text-base font-black text-[#0A2540]">{s.num}</div>
-                  <div className="text-[9px] text-[#0A2540]/45 mt-0.5 leading-tight">{s.label}</div>
+                  <div className="text-[11px] text-[#0A2540]/45 mt-0.5 leading-tight">{s.label}</div>
                 </div>
               ))}
             </div>
@@ -292,11 +292,11 @@ export default function ParaOrganizacionesPage() {
                 { label: 'ITIN / Taxes', pct: 13, color: 'bg-purple-400' },
               ].map(t => (
                 <div key={t.label} className="flex items-center gap-2">
-                  <div className="text-[10px] text-[#0A2540]/55 w-28 shrink-0">{t.label}</div>
+                  <div className="text-xs text-[#0A2540]/55 w-28 shrink-0">{t.label}</div>
                   <div className="flex-1 bg-[#E8E2D8] rounded-full h-1.5">
                     <div className={`${t.color} h-1.5 rounded-full`} style={{ width: `${t.pct}%` }} />
                   </div>
-                  <div className="text-[10px] font-bold text-[#0A2540]/55 w-7 text-right">{t.pct}%</div>
+                  <div className="text-xs font-bold text-[#0A2540]/55 w-7 text-right">{t.pct}%</div>
                 </div>
               ))}
             </div>
