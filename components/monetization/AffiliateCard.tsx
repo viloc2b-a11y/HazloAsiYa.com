@@ -36,7 +36,7 @@ export default function AffiliateCard({ affiliate }: Props) {
         /* Solo visible en desarrollo */
         <p className="text-xs text-amber-800 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2">
           ⚙️ <strong>Dev only:</strong> Enlace pendiente. Configura{' '}
-          <code className="text-[10px]">NEXT_PUBLIC_AFFILIATE_{affiliate.slug.toUpperCase().replace('-', '_')}</code>{' '}
+          <code className="text-xs">NEXT_PUBLIC_AFFILIATE_{affiliate.slug.toUpperCase().replace('-', '_')}</code>{' '}
           en Cloudflare Pages para activar este afiliado en producción.
         </p>
       ) : (
