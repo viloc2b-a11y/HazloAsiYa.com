@@ -292,7 +292,7 @@ export default function HomePageClient() {
             </div>
             <div className="grid sm:grid-cols-2">
               <div className="p-6 border-r border-white/10">
-                <div className="text-[11px] font-bold tracking-widest uppercase text-white/25 mb-4">FindHelp · USAHello · BenefitsCheckUp</div>
+                <div className="text-xs font-bold tracking-widest uppercase text-white/25 mb-4">FindHelp · USAHello · BenefitsCheckUp</div>
                 {['"Encuentra ayuda"','Lee más información','Te llevan a otra web','Sin instrucciones concretas'].map(t => (
                   <div key={t} className="flex items-center gap-3 text-sm text-white/35 mb-3">
                     <span className="text-red-400 font-bold shrink-0">✗</span>{t}
@@ -300,7 +300,7 @@ export default function HomePageClient() {
                 ))}
               </div>
               <div className="p-6">
-                <div className="text-[11px] font-bold tracking-widest uppercase text-green/70 mb-4">HazloAsíYa</div>
+                <div className="text-xs font-bold tracking-widest uppercase text-green/70 mb-4">HazloAsíYa</div>
                 {['"Hazlo así: haz esto ahora"','Instrucciones exactas paso a paso','Todo en un solo lugar','Pasos concretos + ejemplos llenados'].map(t => (
                   <div key={t} className="flex items-center gap-3 text-sm text-white/80 mb-3">
                     <span className="text-green font-bold shrink-0">✓</span>{t}
@@ -310,7 +310,10 @@ export default function HomePageClient() {
             </div>
             <div className="bg-gradient-to-r from-green-dark to-green px-6 py-4 flex items-center justify-between gap-4 flex-wrap">
               <div className="text-white font-semibold">Te decimos exactamente qué hacer y cómo hacerlo — sin errores</div>
-              <Link href="#tramites" className="bg-navy text-white font-bold px-5 py-2 rounded-xl text-sm hover:bg-navy-2 transition-colors">
+              <Link
+                href="#tramites"
+                className="inline-flex min-h-[44px] items-center justify-center bg-navy px-5 py-2 text-sm font-bold text-white rounded-xl transition-colors hover:bg-navy-2 sm:min-h-0"
+              >
                 Resolver mi trámite →
               </Link>
             </div>
