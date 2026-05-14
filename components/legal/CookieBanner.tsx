@@ -151,14 +151,14 @@ export default function CookieBanner() {
               <button
                 type="button"
                 onClick={rejectAll}
-                className="order-1 sm:order-none px-4 py-2.5 rounded-xl border-2 border-navy/30 font-semibold text-navy hover:bg-cream"
+                className="order-1 sm:order-none inline-flex min-h-[44px] items-center justify-center px-4 py-2.5 rounded-xl border-2 border-navy/30 font-semibold text-navy hover:bg-cream"
               >
                 Rechazar todo
               </button>
               <button
                 type="button"
                 onClick={saveCustom}
-                className="px-4 py-2.5 rounded-xl border-2 border-green text-green font-semibold hover:bg-green/5"
+                className="inline-flex min-h-[44px] items-center justify-center px-4 py-2.5 rounded-xl border-2 border-green text-green font-semibold hover:bg-green/5"
               >
                 Guardar selección
               </button>
@@ -167,7 +167,7 @@ export default function CookieBanner() {
           <button
             type="button"
             onClick={saveEssentialsOnly}
-            className="px-4 py-2.5 rounded-xl border-2 border-gray-200 font-semibold text-gray-700 hover:border-gray-300"
+            className="inline-flex min-h-[44px] items-center justify-center px-4 py-2.5 rounded-xl border-2 border-gray-200 font-semibold text-gray-700 hover:border-gray-300"
           >
             {isEU ? 'Solo necesarias' : 'Solo esenciales'}
           </button>
@@ -176,14 +176,18 @@ export default function CookieBanner() {
               <button
                 type="button"
                 onClick={() => saveUS(true, true)}
-                className="px-4 py-2.5 rounded-xl btn-primary font-semibold"
+                className="inline-flex min-h-[44px] items-center justify-center px-4 py-2.5 rounded-xl btn-primary font-semibold"
               >
                 Aceptar todo
               </button>
             </>
           )}
           {isEU && (
-            <button type="button" onClick={acceptAll} className="px-4 py-2.5 rounded-xl btn-primary font-semibold">
+            <button
+              type="button"
+              onClick={acceptAll}
+              className="inline-flex min-h-[44px] items-center justify-center px-4 py-2.5 rounded-xl btn-primary font-semibold"
+            >
               Aceptar todo
             </button>
           )}
