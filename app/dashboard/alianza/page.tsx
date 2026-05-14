@@ -452,18 +452,18 @@ export default function AlianzaDashboard() {
                             <div className="font-bold text-[#0A2540] text-sm">{p.name}</div>
                             <div className="flex items-center gap-1.5 mt-0.5">
                               {p.organization_type && (
-                                <span className="text-[10px] text-[#0A2540]/40">
+                                <span className="text-xs text-[#0A2540]/40">
                                   {ORG_TYPE_LABELS[p.organization_type] || p.organization_type}
                                 </span>
                               )}
                               {p.city && (
-                                <span className="text-[10px] text-[#0A2540]/30">
+                                <span className="text-xs text-[#0A2540]/30">
                                   · {p.city}, {p.state}
                                 </span>
                               )}
                             </div>
                           </div>
-                          <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${TIER_COLORS[p.tier] || 'bg-gray-100 text-gray-500'}`}>
+                          <span className={`text-xs font-bold px-2 py-0.5 rounded-full ${TIER_COLORS[p.tier] || 'bg-gray-100 text-gray-500'}`}>
                             {p.tier}
                           </span>
                         </div>
