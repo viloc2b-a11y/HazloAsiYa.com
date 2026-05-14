@@ -81,9 +81,9 @@ gtag('consent', 'default', {
           <>
             <Script
               src={`https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(GA_MEASUREMENT_ID)}`}
-              strategy="afterInteractive"
+              strategy="lazyOnload"
             />
-            <Script id="ga-config" strategy="afterInteractive">
+            <Script id="ga-config" strategy="lazyOnload">
               {`
 gtag('js', new Date());
 gtag('config', ${JSON.stringify(GA_MEASUREMENT_ID)}, { send_page_view: false });
