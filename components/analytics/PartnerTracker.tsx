@@ -12,7 +12,7 @@
  */
 
 import { useEffect } from 'react'
-import { capturePartnerAttribution, getStoredAttribution } from '@/lib/partner-tracking'
+import { capturePartnerAttribution } from '@/lib/partner-tracking'
 
 async function fireVisitEvent(slug: string, meta: Record<string, string | null>) {
   try {
@@ -40,17 +40,35 @@ export default function PartnerTracker() {
     const params = new URLSearchParams(window.location.search)
     const hasNewRef = Boolean(params.get('ref') || params.get('partner'))
 
-    // Always call capturePartnerAttribution — it handles both new and stored attribution
     const attr = capturePartnerAttribution()
+    const slug = attr?.partner_slug
+    if (!hasNewRef || !slug) return
 
-    if (hasNewRef && attr?.partner_slug) {
-      // New referral visit — fire event
-      fireVisitEvent(attr.partner_slug, {
-        organization_type: attr.organization_type,
-        referral_source: attr.referral_source,
-        referral_city: attr.referral_city,
-        referral_state: attr.referral_state,
-      })
+    const payload = {
+      organization_type: attr.organization_type,
+      referral_source: attr.referral_source,
+      referral_city: attr.referral_city,
+      referral_state: attr.referral_state,
+    }
+
+    const run = () => {
+      fireVisitEvent(slug, payload)
+    }
+
+    let idleId: number | undefined
+    let timeoutId: ReturnType<typeof setTimeout> | undefined
+
+    if (typeof requestIdleCallback !== 'undefined') {
+      idleId = requestIdleCallback(() => run(), { timeout: 4000 })
+    } else {
+      timeoutId = setTimeout(run, 0)
+    }
+
+    return () => {
+      if (idleId !== undefined && typeof cancelIdleCallback !== 'undefined') {
+        cancelIdleCallback(idleId)
+      }
+      if (timeoutId !== undefined) clearTimeout(timeoutId)
     }
   }, [])
 
