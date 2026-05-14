@@ -278,7 +278,7 @@ export default function ParaOrganizacionesPage() {
               ].map(s => (
                 <div key={s.label} className="bg-cream rounded-xl p-3 text-center">
                   <div className="text-base font-black text-[#0A2540]">{s.num}</div>
-                  <div className="text-[11px] text-[#0A2540]/45 mt-0.5 leading-tight">{s.label}</div>
+                  <div className="text-xs text-[#0A2540]/45 mt-0.5 leading-tight">{s.label}</div>
                 </div>
               ))}
             </div>
