@@ -30,7 +30,7 @@ export default function FunnelCard({ id, name, icon, action, color, bg }: Funnel
         </div>
       </div>
       <div
-        className="text-[13px] font-bold flex items-center gap-1 mt-auto transition-all group-hover:gap-2"
+        className="text-sm font-bold flex items-center gap-1 mt-auto transition-all group-hover:gap-2"
         style={{ color }}
       >
         Hazlo así <span>→</span>
