@@ -297,7 +297,7 @@ export default function PartnerLinksPage() {
                       <div className="font-bold">{p.name}</div>
                       <div className={`text-xs mt-0.5 flex items-center gap-2 ${selectedPartner?.slug === p.slug ? 'text-white/50' : 'text-[#0A2540]/40'}`}>
                         <span>{p.city}, {p.state}</span>
-                        <span className={`px-1.5 py-0.5 rounded text-[10px] font-bold ${selectedPartner?.slug === p.slug ? 'bg-white/20 text-white' : tierColor(p.tier)}`}>
+                        <span className={`px-1.5 py-0.5 rounded text-xs font-bold ${selectedPartner?.slug === p.slug ? 'bg-white/20 text-white' : tierColor(p.tier)}`}>
                           {p.tier}
                         </span>
                       </div>
@@ -443,7 +443,7 @@ export default function PartnerLinksPage() {
                               <span className="text-lg shrink-0">{ch.icon}</span>
                               <div className="flex-1 min-w-0">
                                 <div className="text-xs font-bold text-[#0A2540]">{ch.label}</div>
-                                <div className="text-[10px] text-[#0A2540]/40 font-mono truncate mt-0.5">
+                                <div className="text-xs text-[#0A2540]/40 font-mono truncate mt-0.5">
                                   {link.replace('https://hazloasiya.com', '')}
                                 </div>
                               </div>
@@ -536,10 +536,10 @@ export default function PartnerLinksPage() {
                         <div className="bg-white border border-[#E8E2D8] rounded-xl p-4 inline-block mb-3">
                           <QRCodeSVG value={currentLink} size={120} bgColor="#ffffff" fgColor="#0A2540" level="H" />
                         </div>
-                        <div className="text-[#0A2540]/40 text-[10px] font-mono break-all max-w-xs mx-auto mb-3">
+                        <div className="text-[#0A2540]/40 text-xs font-mono break-all max-w-xs mx-auto mb-3">
                           {currentLink}
                         </div>
-                        <div className="text-[#0A2540]/30 text-[10px]">
+                        <div className="text-[#0A2540]/30 text-xs">
                           Presentado por {selectedPartner.name}
                         </div>
                       </div>
@@ -585,7 +585,7 @@ export default function PartnerLinksPage() {
 
                     {/* Code block */}
                     <div className="bg-[#0A2540] rounded-xl p-4 mb-4 relative">
-                      <pre className="text-[#0EC96A] text-[10px] font-mono whitespace-pre-wrap break-all leading-relaxed overflow-x-auto">
+                      <pre className="text-[#0EC96A] text-xs font-mono whitespace-pre-wrap break-all leading-relaxed overflow-x-auto">
                         {widgetSnippet}
                       </pre>
                     </div>
@@ -626,7 +626,7 @@ export default function PartnerLinksPage() {
                             <div className="text-xs font-bold text-[#0A2540]">
                               {f.label}{s ? ` · ${STATE_LABELS[s]}` : ''}
                             </div>
-                            <div className="text-[10px] text-[#0A2540]/40 font-mono truncate mt-0.5">
+                            <div className="text-xs text-[#0A2540]/40 font-mono truncate mt-0.5">
                               {link.replace('https://hazloasiya.com', '')}
                             </div>
                           </div>
