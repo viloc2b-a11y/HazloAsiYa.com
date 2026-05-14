@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import CityLandingPage from '@/components/CityLandingPage'
-import { SITE_ORIGIN, withTrailingSlash } from '@/lib/site'
+import { absoluteUrl } from '@/lib/site'
+import { alternatesForPath } from '@/lib/alternates'
 
 export const dynamic = 'force-static'
 
@@ -8,12 +9,12 @@ export const metadata: Metadata = {
   title: 'SNAP, Medicaid y WIC en Houston en español | HazloAsíYa',
   description:
     'Prepara tu solicitud de SNAP, Medicaid o WIC en Houston, Texas completamente en español. Cuestionario gratuito, PDF oficial listo para presentar.',
-  alternates: { canonical: `${SITE_ORIGIN}${withTrailingSlash('/ciudades/houston')}` },
+  alternates: alternatesForPath('/ciudades/houston/'),
   keywords: ['SNAP Houston en español', 'Medicaid Houston hispanos', 'WIC Houston Texas', 'beneficios gobierno Houston'],
   openGraph: {
     title: 'SNAP, Medicaid y WIC en Houston | HazloAsíYa',
     description: 'Trámites de gobierno en español para familias hispanas en Houston, TX.',
-    url: `${SITE_ORIGIN}${withTrailingSlash('/ciudades/houston')}`,
+    url: absoluteUrl('/ciudades/houston/'),
   },
 }
 

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import CityLandingPage from '@/components/CityLandingPage'
-import { SITE_ORIGIN, withTrailingSlash } from '@/lib/site'
+import { absoluteUrl } from '@/lib/site'
+import { alternatesForPath } from '@/lib/alternates'
 
 export const dynamic = 'force-static'
 
@@ -8,12 +9,12 @@ export const metadata: Metadata = {
   title: 'CalFresh, Medi-Cal y WIC en Los Ángeles | HazloAsíYa',
   description:
     'CalFresh, Medi-Cal y WIC en Los Ángeles: documentos, pasos y recursos locales en español.',
-  alternates: { canonical: `${SITE_ORIGIN}${withTrailingSlash('/ciudades/los-angeles')}` },
+  alternates: alternatesForPath('/ciudades/los-angeles/'),
   keywords: ['CalFresh Los Ángeles en español', 'Medi-Cal Los Ángeles hispanos', 'WIC Los Ángeles California', 'beneficios gobierno Los Ángeles'],
   openGraph: {
     title: 'CalFresh, Medi-Cal y WIC en Los Ángeles | HazloAsíYa',
     description: 'Trámites de gobierno en español para familias hispanas en Los Ángeles, CA.',
-    url: `${SITE_ORIGIN}${withTrailingSlash('/ciudades/los-angeles')}`,
+    url: absoluteUrl('/ciudades/los-angeles/'),
   },
 }
 

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import CityLandingPage from '@/components/CityLandingPage'
-import { SITE_ORIGIN, withTrailingSlash } from '@/lib/site'
+import { absoluteUrl } from '@/lib/site'
+import { alternatesForPath } from '@/lib/alternates'
 
 export const dynamic = 'force-static'
 
@@ -8,12 +9,12 @@ export const metadata: Metadata = {
   title: 'SNAP, Medicaid y WIC en Nueva York en español | HazloAsíYa',
   description:
     'Prepara tu solicitud de SNAP, Medicaid o WIC en Nueva York completamente en español. Cuestionario gratuito, PDF oficial listo para presentar.',
-  alternates: { canonical: `${SITE_ORIGIN}${withTrailingSlash('/ciudades/nueva-york')}` },
+  alternates: alternatesForPath('/ciudades/nueva-york/'),
   keywords: ['SNAP Nueva York en español', 'Medicaid Nueva York hispanos', 'WIC Nueva York', 'MyBenefits NY hispanos', 'beneficios gobierno Nueva York'],
   openGraph: {
     title: 'SNAP, Medicaid y WIC en Nueva York | HazloAsíYa',
     description: 'Trámites de gobierno en español para familias hispanas en Nueva York.',
-    url: `${SITE_ORIGIN}${withTrailingSlash('/ciudades/nueva-york')}`,
+    url: absoluteUrl('/ciudades/nueva-york/'),
   },
 }
 

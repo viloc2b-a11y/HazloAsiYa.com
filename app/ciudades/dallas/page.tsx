@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import CityLandingPage from '@/components/CityLandingPage'
-import { SITE_ORIGIN, withTrailingSlash } from '@/lib/site'
+import { absoluteUrl } from '@/lib/site'
+import { alternatesForPath } from '@/lib/alternates'
 
 export const dynamic = 'force-static'
 
@@ -8,12 +9,12 @@ export const metadata: Metadata = {
   title: 'SNAP, Medicaid y WIC en Dallas en español | HazloAsíYa',
   description:
     'Prepara tu solicitud de SNAP, Medicaid o WIC en Dallas, Texas completamente en español. Cuestionario gratuito, PDF oficial listo para presentar.',
-  alternates: { canonical: `${SITE_ORIGIN}${withTrailingSlash('/ciudades/dallas')}` },
+  alternates: alternatesForPath('/ciudades/dallas/'),
   keywords: ['SNAP Dallas en español', 'Medicaid Dallas hispanos', 'WIC Dallas Texas', 'beneficios gobierno Dallas'],
   openGraph: {
     title: 'SNAP, Medicaid y WIC en Dallas | HazloAsíYa',
     description: 'Trámites de gobierno en español para familias hispanas en Dallas, TX.',
-    url: `${SITE_ORIGIN}${withTrailingSlash('/ciudades/dallas')}`,
+    url: absoluteUrl('/ciudades/dallas/'),
   },
 }
 

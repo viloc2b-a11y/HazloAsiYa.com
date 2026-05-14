@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import CityLandingPage from '@/components/CityLandingPage'
-import { SITE_ORIGIN, withTrailingSlash } from '@/lib/site'
+import { absoluteUrl } from '@/lib/site'
+import { alternatesForPath } from '@/lib/alternates'
 
 export const dynamic = 'force-static'
 
@@ -8,12 +9,12 @@ export const metadata: Metadata = {
   title: 'SNAP, Medicaid y WIC en Miami en español | HazloAsíYa',
   description:
     'Prepara tu solicitud de SNAP, Medicaid o WIC en Miami, Florida completamente en español. Cuestionario gratuito, PDF oficial listo para presentar.',
-  alternates: { canonical: `${SITE_ORIGIN}${withTrailingSlash('/ciudades/miami')}` },
+  alternates: alternatesForPath('/ciudades/miami/'),
   keywords: ['SNAP Miami en español', 'Medicaid Miami hispanos', 'WIC Miami Florida', 'ACCESS Florida Miami', 'beneficios gobierno Miami'],
   openGraph: {
     title: 'SNAP, Medicaid y WIC en Miami | HazloAsíYa',
     description: 'Trámites de gobierno en español para familias hispanas en Miami, FL.',
-    url: `${SITE_ORIGIN}${withTrailingSlash('/ciudades/miami')}`,
+    url: absoluteUrl('/ciudades/miami/'),
   },
 }
 

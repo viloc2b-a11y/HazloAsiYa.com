@@ -2,7 +2,8 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { getFormBySlug, PDF_CATALOG } from '@/types/pdf'
 import PdfFormClient from './PdfFormClient'
-import { SITE_ORIGIN, withTrailingSlash } from '@/lib/site'
+import { absoluteUrl, withTrailingSlash } from '@/lib/site'
+import { alternatesForPath } from '@/lib/alternates'
 
 export const dynamicParams = false
 
@@ -18,7 +19,6 @@ export async function generateMetadata({ params }: { params: PdfFormParams }): P
   if (!formMeta) return { title: 'Formulario no encontrado | HazloAsíYa' }
 
   const path = withTrailingSlash(`/pdf/${formMeta.slug}`)
-  const canonical = `${SITE_ORIGIN}${path}`
 
   return {
     title: `${formMeta.title} en español | HazloAsíYa`,
@@ -26,9 +26,9 @@ export async function generateMetadata({ params }: { params: PdfFormParams }): P
     openGraph: {
       title: `${formMeta.title} | HazloAsíYa`,
       description: formMeta.description,
-      url: canonical,
+      url: absoluteUrl(path),
     },
-    alternates: { canonical },
+    alternates: alternatesForPath(path),
   }
 }
 

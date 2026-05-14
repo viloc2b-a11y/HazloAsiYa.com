@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import CityLandingPage from '@/components/CityLandingPage'
-import { SITE_ORIGIN, withTrailingSlash } from '@/lib/site'
+import { absoluteUrl } from '@/lib/site'
+import { alternatesForPath } from '@/lib/alternates'
 
 export const dynamic = 'force-static'
 
@@ -8,12 +9,12 @@ export const metadata: Metadata = {
   title: 'SNAP, Medicaid y WIC en San Antonio en español | HazloAsíYa',
   description:
     'Prepara tu solicitud de SNAP, Medicaid o WIC en San Antonio, Texas completamente en español. Cuestionario gratuito, PDF oficial listo para presentar.',
-  alternates: { canonical: `${SITE_ORIGIN}${withTrailingSlash('/ciudades/san-antonio')}` },
+  alternates: alternatesForPath('/ciudades/san-antonio/'),
   keywords: ['SNAP San Antonio en español', 'Medicaid San Antonio hispanos', 'WIC San Antonio Texas', 'beneficios gobierno San Antonio'],
   openGraph: {
     title: 'SNAP, Medicaid y WIC en San Antonio | HazloAsíYa',
     description: 'Trámites de gobierno en español para familias hispanas en San Antonio, TX.',
-    url: `${SITE_ORIGIN}${withTrailingSlash('/ciudades/san-antonio')}`,
+    url: absoluteUrl('/ciudades/san-antonio/'),
   },
 }
 

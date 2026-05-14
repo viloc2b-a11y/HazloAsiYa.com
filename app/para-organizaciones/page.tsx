@@ -1,7 +1,8 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import Topbar from '@/components/Topbar'
-import { SITE_ORIGIN, withTrailingSlash } from '@/lib/site'
+import { absoluteUrl, withTrailingSlash } from '@/lib/site'
+import { alternatesForPath } from '@/lib/alternates'
 import VideoExplicativo from '@/components/VideoExplicativo'
 import { PRICE_MAIN, PRICE_ANNUAL_YEAR } from '@/lib/pricing'
 
@@ -9,11 +10,11 @@ export const metadata: Metadata = {
   title: 'Alianza HazloAsíYa — Partners por la Comunidad | HazloAsíYa',
   description:
     'Únete gratis a la Alianza HazloAsíYa. Enlace personalizado, flyers y reportes de impacto para tu comunidad.',
-  alternates: { canonical: `${SITE_ORIGIN}${withTrailingSlash('/para-organizaciones')}` },
+  alternates: alternatesForPath('/para-organizaciones/'),
   openGraph: {
     title: 'Alianza HazloAsíYa — Partners por la Comunidad',
     description: 'Únete gratis. Tú demuestras impacto real. Nosotros hacemos el trabajo.',
-    url: `${SITE_ORIGIN}${withTrailingSlash('/para-organizaciones')}`,
+    url: absoluteUrl('/para-organizaciones/'),
   },
 }
 

@@ -2,18 +2,19 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { PDF_CATALOG, getFormsByTier } from '@/types/pdf'
 import type { PdfTier } from '@/types/pdf'
-import { SITE_ORIGIN, withTrailingSlash } from '@/lib/site'
+import { absoluteUrl, withTrailingSlash } from '@/lib/site'
+import { alternatesForPath } from '@/lib/alternates'
 import Topbar from '@/components/Topbar'
 
 export const metadata: Metadata = {
   title: 'Formularios y borradores en español | HazloAsíYa',
   description:
     'Asistente en español para preparar borradores (DACA, permiso de trabajo, ITIN, SNAP Texas, W-4, I-9, Texas ID, escuela y más) con PDF descargable.',
-  alternates: { canonical: `${SITE_ORIGIN}${withTrailingSlash('/pdf')}` },
+  alternates: alternatesForPath('/pdf/'),
   openGraph: {
     title: 'Formularios en español | HazloAsíYa',
     description: 'Borradores orientativos con PDF listo para imprimir.',
-    url: `${SITE_ORIGIN}${withTrailingSlash('/pdf')}`,
+    url: absoluteUrl('/pdf/'),
   },
 }
 
