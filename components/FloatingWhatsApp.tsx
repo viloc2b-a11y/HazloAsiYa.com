@@ -32,7 +32,7 @@ export default function FloatingWhatsApp() {
 
   return (
     <div className="fixed bottom-5 right-5 z-[100] flex flex-col items-end gap-2 sm:bottom-6 sm:right-6">
-      <span className="rounded-lg bg-navy/90 px-2.5 py-1.5 text-[11px] sm:text-xs font-medium text-white shadow-lg pointer-events-none max-w-[min(200px,calc(100vw-5rem))] text-center leading-snug">
+      <span className="rounded-lg bg-navy/90 px-2.5 py-1.5 text-xs font-medium text-white shadow-lg pointer-events-none max-w-[min(200px,calc(100vw-5rem))] text-center leading-snug">
         ¿Necesitas ayuda?
       </span>
       <Link
