@@ -362,7 +362,7 @@ export default function PartnerReportPage() {
               <div className="text-2xl mb-2">{k.icon}</div>
               <div className="text-2xl font-black text-[#0A2540]">{k.value}</div>
               <div className="text-xs font-bold text-[#0A2540] mt-0.5">{k.label}</div>
-              <div className="text-[10px] text-[#0A2540]/40 mt-0.5">{k.sub}</div>
+              <div className="text-xs text-[#0A2540]/40 mt-0.5">{k.sub}</div>
             </div>
           ))}
         </div>
