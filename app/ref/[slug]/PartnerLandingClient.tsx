@@ -180,12 +180,12 @@ export default function PartnerLandingClient({ partner }: { partner: PartnerPubl
             </div>
             <div>
               <div className="text-white font-bold text-sm leading-tight">{partner.name}</div>
-              <div className="text-white/40 text-[11px]">{orgLabel} · {partner.city}, {partner.state}</div>
+              <div className="text-white/40 text-xs">{orgLabel} · {partner.city}, {partner.state}</div>
             </div>
           </div>
           <div className="text-right">
             <div className="text-[#0EC96A] font-black text-sm">HazloAsí<span className="text-white">Ya</span></div>
-            <div className="text-white/30 text-[10px]">hazloasiya.com</div>
+            <div className="text-white/30 text-xs">hazloasiya.com</div>
           </div>
         </div>
       </div>
@@ -244,7 +244,7 @@ export default function PartnerLandingClient({ partner }: { partner: PartnerPubl
               ].map(item => (
                 <div key={item.text} className="bg-white border border-[#E8E2D8] rounded-xl p-3 text-center">
                   <div className="text-xl mb-1">{item.icon}</div>
-                  <div className="text-[10px] font-bold text-[#0A2540]/60">{item.text}</div>
+                  <div className="text-xs font-bold text-[#0A2540]/60">{item.text}</div>
                 </div>
               ))}
             </div>
@@ -333,7 +333,7 @@ export default function PartnerLandingClient({ partner }: { partner: PartnerPubl
                   { n: '3', text: 'Recibir una guía paso a paso para completar tu solicitud' },
                 ].map(item => (
                   <div key={item.n} className="flex items-start gap-3">
-                    <div className="w-5 h-5 rounded-full bg-[#0A2540] text-white text-[10px] font-black flex items-center justify-center shrink-0 mt-0.5">
+                    <div className="w-6 h-6 rounded-full bg-[#0A2540] text-xs font-black text-white flex items-center justify-center shrink-0 mt-0.5">
                       {item.n}
                     </div>
                     <div className="text-[#0A2540]/70 text-sm leading-relaxed">{item.text}</div>
