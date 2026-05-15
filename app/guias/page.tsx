@@ -10,16 +10,30 @@ const CATEGORY_LABELS: Record<string, string> = {
   vivienda: 'Vivienda',
 }
 
+/** Guías de listas de documentos e identificación fiscal (orden estable, sin duplicar en “Beneficios”). */
+const DOCUMENT_IDENTITY_SLUGS = [
+  'documentos-para-snap',
+  'documentos-para-medicaid',
+  'documentos-para-inscribir-a-tu-hijo-en-la-escuela',
+  'como-llenar-la-w7',
+  'que-es-el-itin-y-para-que-sirve',
+] as const
+
 export default function GuiasIndexPage() {
   const guides = getAllGuidesForIndex()
   const byCat = (cat: string) => guides.filter((g) => g.category === cat)
+  const bySlug = (slug: string) => guides.find((g) => g.slug === slug)
+  const beneficiosProgramGuides = byCat('beneficios').filter((g) => g.slug === 'como-solicitar-medicaid-en-espanol')
+  const documentIdentityGuides = [...DOCUMENT_IDENTITY_SLUGS]
+    .map((slug) => bySlug(slug))
+    .filter((g): g is NonNullable<typeof g> => Boolean(g))
 
   const collectionJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
-    name: 'Guías de trámites en EE.UU. en español',
+    name: 'Guías para trámites en EE.UU. en español',
     description:
-      'Explora guías paso a paso en español para trámites en EE.UU.: SNAP, Medicaid, escuela, impuestos, ITIN, renta y más, con fuentes oficiales.',
+      'Listas de documentos, pasos, errores comunes y enlaces a fuentes oficiales para trámites en EE.UU. — en español.',
     url: absoluteUrl('/guias/'),
     inLanguage: 'es-US',
     isPartOf: { '@type': 'WebSite', name: 'HazloAsíYa', url: absoluteUrl('/') },
@@ -47,49 +61,52 @@ export default function GuiasIndexPage() {
       <Topbar />
       <section className="bg-navy text-white px-4 py-16 text-center">
         <p className="text-xs font-bold tracking-widest uppercase text-green mb-3">GUÍAS</p>
-        <h1 className="font-serif text-3xl sm:text-4xl text-white max-w-2xl mx-auto mb-4">Guías de trámites en EE.UU. en español</h1>
-        <p className="text-white/65 text-base max-w-lg mx-auto">
-          Artículos con pasos concretos, listas de documentos y requisitos — en español, con fuentes oficiales.
+        <h1 className="font-serif text-3xl sm:text-4xl text-white max-w-2xl mx-auto mb-4">
+          Guías para trámites en EE.UU. en español
+        </h1>
+        <p className="text-white/65 text-base max-w-xl mx-auto leading-relaxed">
+          Listas de documentos, pasos concretos, errores que suelen devolver un caso y enlaces a portales oficiales —
+          para aplicar con menos vueltas.
         </p>
       </section>
       <div className="max-w-3xl mx-auto px-4 py-12">
 
         <div className="space-y-4 text-gray-700 text-sm leading-relaxed mb-10">
           <p>
-            Aquí reunimos artículos con <strong>pasos concretos</strong>, listas de <strong>documentos</strong> y{' '}
-            <strong>requisitos</strong> que suelen pedir las agencias en EE.UU. Todo está en <strong>español</strong> y
-            enlaza a fuentes oficiales (HHSC, USDA FNS, IRS, etc.).
+            Aquí agrupamos artículos por tema: <strong>beneficios públicos</strong>,{' '}
+            <strong>documentos e identidad</strong>, <strong>escuela y familia</strong>, <strong>impuestos y empleo</strong>{' '}
+            y <strong>vivienda y servicios</strong>. Cada pieza enlaza a fuentes oficiales (HHSC, USDA FNS, IRS, HUD,
+            etc.) y lleva fecha de verificación — confirma siempre en el portal el día que envíes tu solicitud.
           </p>
           <p>
-            Sirven para familias que preparan un <strong>trámite</strong> real: SNAP, Medicaid, escuela pública, ITIN,
-            ayuda con renta o servicios. Cada guía indica fecha de verificación; confirma siempre en el portal oficial el
-            día que envíes tu solicitud.
-          </p>
-          <p>
-            Si ya sabes qué necesitas, entra a tu categoría. Si no, usa el{' '}
+            Si ya sabes qué trámite necesitas, abre la guía o la landing del trámite. Si no, puedes empezar por el{' '}
             <Link href="/snap/" className="text-green font-semibold hover:underline">
               cuestionario orientativo de SNAP
             </Link>{' '}
-            como primer paso gratuito (muchas familias empiezan por ahí).
+            (gratis) o por{' '}
+            <Link href="/medicaid/" className="text-green font-semibold hover:underline">
+              Medicaid y CHIP
+            </Link>
+            .
           </p>
         </div>
 
-        <section className="mb-12" aria-labelledby="guias-por-categoria">
-          <h2 id="guias-por-categoria" className="font-serif text-2xl text-navy mb-4">
-            Por categoría
+        <section className="mb-12" aria-labelledby="guias-por-tema">
+          <h2 id="guias-por-tema" className="font-serif text-2xl text-navy mb-6">
+            Explora por tema
           </h2>
 
-          <div className="space-y-8">
+          <div className="space-y-10">
             <div>
-              <h3 className="font-semibold text-navy mb-2">Beneficios sociales</h3>
+              <h3 className="font-serif text-lg text-navy mb-2">Beneficios públicos</h3>
               <p className="text-sm text-gray-600 mb-2">
-                Páginas de trámite:{' '}
+                Landings:{' '}
                 <Link href="/snap/" className="text-green font-medium hover:underline">
                   SNAP
                 </Link>
                 {' · '}
                 <Link href="/medicaid/" className="text-green font-medium hover:underline">
-                  Medicaid
+                  Medicaid y CHIP
                 </Link>
                 {' · '}
                 <Link href="/wic/" className="text-green font-medium hover:underline">
@@ -97,7 +114,7 @@ export default function GuiasIndexPage() {
                 </Link>
               </p>
               <ul className="list-disc list-inside space-y-1 text-sm">
-                {byCat('beneficios').map((g) => (
+                {beneficiosProgramGuides.map((g) => (
                   <li key={g.slug}>
                     <Link href={`/guias/${g.slug}/`} className="text-green font-medium hover:underline">
                       {g.title}
@@ -108,18 +125,24 @@ export default function GuiasIndexPage() {
             </div>
 
             <div>
-              <h3 className="font-semibold text-navy mb-2">Impuestos e ITIN</h3>
+              <h3 className="font-serif text-lg text-navy mb-2">Documentos e identidad</h3>
               <p className="text-sm text-gray-600 mb-2">
-                <Link href="/itin/" className="text-green font-medium hover:underline">
-                  ITIN
+                Listas para carpeta y fiscalidad: SNAP, Medicaid, escuela, W-7 e ITIN. Identificación:{' '}
+                <Link href="/id/texas/" className="text-green font-medium hover:underline">
+                  Texas ID o licencia
                 </Link>
                 {' · '}
-                <Link href="/taxes/" className="text-green font-medium hover:underline">
-                  Impuestos
+                <Link href="/matricula/" className="text-green font-medium hover:underline">
+                  Matrícula consular
                 </Link>
+                {' · '}
+                <Link href="/bank/" className="text-green font-medium hover:underline">
+                  Cuenta bancaria
+                </Link>
+                .
               </p>
               <ul className="list-disc list-inside space-y-1 text-sm">
-                {byCat('impuestos').map((g) => (
+                {documentIdentityGuides.map((g) => (
                   <li key={g.slug}>
                     <Link href={`/guias/${g.slug}/`} className="text-green font-medium hover:underline">
                       {g.title}
@@ -130,40 +153,57 @@ export default function GuiasIndexPage() {
             </div>
 
             <div>
-              <h3 className="font-semibold text-navy mb-2">Educación</h3>
+              <h3 className="font-serif text-lg text-navy mb-2">Escuela y familia</h3>
               <p className="text-sm text-gray-600 mb-2">
-                <Link href="/escuela/" className="text-green font-medium hover:underline">
-                  Inscripción escolar
+                Inscripción y apoyos; la guía de documentos del colegio está arriba en “Documentos e identidad”.
+              </p>
+              <p className="text-sm text-gray-700">
+                <Link href="/escuela/" className="text-green font-semibold hover:underline">
+                  Inscripción escolar pública
                 </Link>
                 {' · '}
-                <Link href="/iep/" className="text-green font-medium hover:underline">
-                  IEP
+                <Link href="/iep/" className="text-green font-semibold hover:underline">
+                  IEP y educación especial
                 </Link>
                 {' · '}
-                <Link href="/prek/" className="text-green font-medium hover:underline">
+                <Link href="/prek/" className="text-green font-semibold hover:underline">
                   Pre-K
                 </Link>
               </p>
-              <ul className="list-disc list-inside space-y-1 text-sm">
-                {byCat('escuela').map((g) => (
-                  <li key={g.slug}>
-                    <Link href={`/guias/${g.slug}/`} className="text-green font-medium hover:underline">
-                      {g.title}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
             </div>
 
             <div>
-              <h3 className="font-semibold text-navy mb-2">Vivienda</h3>
+              <h3 className="font-serif text-lg text-navy mb-2">Impuestos y empleo</h3>
+              <p className="text-sm text-gray-600 mb-2">
+                Guías del W-7 y del ITIN arriba; aquí los trámites tipo declaración y nómina.
+              </p>
+              <p className="text-sm text-gray-700">
+                <Link href="/taxes/" className="text-green font-semibold hover:underline">
+                  Declaración de impuestos (IRS)
+                </Link>
+                {' · '}
+                <Link href="/jobs/" className="text-green font-semibold hover:underline">
+                  Empleo (I-9, W-4)
+                </Link>
+                {' · '}
+                <Link href="/itin/" className="text-green font-semibold hover:underline">
+                  Solicitud de ITIN
+                </Link>
+              </p>
+            </div>
+
+            <div>
+              <h3 className="font-serif text-lg text-navy mb-2">Vivienda y servicios</h3>
+              <p className="text-sm text-gray-600 mb-2">
+                Renta, luz y gas; enlaces a trámites de hogar en HazloAsíYa.
+              </p>
               <p className="text-sm text-gray-600 mb-2">
                 <Link href="/rent/" className="text-green font-medium hover:underline">
-                  Renta
+                  Ayuda para renta
                 </Link>
                 {' · '}
                 <Link href="/utilities/" className="text-green font-medium hover:underline">
-                  Servicios públicos
+                  Servicios públicos (luz, gas)
                 </Link>
               </p>
               <ul className="list-disc list-inside space-y-1 text-sm">
@@ -175,23 +215,6 @@ export default function GuiasIndexPage() {
                   </li>
                 ))}
               </ul>
-            </div>
-
-            <div>
-              <h3 className="font-semibold text-navy mb-2">Trabajo y documentos</h3>
-              <p className="text-sm text-gray-600 mb-2">
-                <Link href="/id/texas/" className="text-green font-medium hover:underline">
-                  Texas ID / licencia
-                </Link>
-                {' · '}
-                <Link href="/jobs/" className="text-green font-medium hover:underline">
-                  Empleo
-                </Link>
-                {' · '}
-                <Link href="/bank/" className="text-green font-medium hover:underline">
-                  Cuenta bancaria
-                </Link>
-              </p>
             </div>
           </div>
         </section>
@@ -256,7 +279,7 @@ export default function GuiasIndexPage() {
                   <span className="text-xs font-semibold uppercase tracking-wide text-green">
                     {CATEGORY_LABELS[g.category] ?? g.category}
                   </span>
-                  <h2 className="font-serif text-xl text-navy mt-1">{g.title}</h2>
+                  <h3 className="font-serif text-xl text-navy mt-1">{g.title}</h3>
                   <p className="text-gray-600 text-sm mt-2 leading-relaxed">{g.description}</p>
                 </Link>
               </li>

@@ -29,6 +29,7 @@ import { FunnelFinalCtaLink, FunnelScrollDepth } from '@/components/analytics/Fu
 import PrivacyBadge from '@/components/PrivacyBadge'
 import RelatedLinks from '@/components/seo/RelatedLinks'
 import { getRelatedClusterForFunnel } from '@/data/related-link-clusters'
+import FunnelTopicalHub from '@/components/funnels/FunnelTopicalHub'
 
 interface Props { params: Promise<{ funnel: string }> }
 
@@ -205,6 +206,8 @@ export default async function FunnelPage({ params }: Props) {
             </ul>
           </nav>
         )}
+
+        {(id === 'snap' || id === 'medicaid' || id === 'itin') && <FunnelTopicalHub id={id} />}
 
         {/* What you get */}
         <div className="bg-navy rounded-2xl p-6 text-white">
