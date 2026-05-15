@@ -68,7 +68,7 @@ export default function VideoExplicativo({
               {/* eslint-disable-next-line @next/next/no-img-element -- static thumb from YouTube CDN; avoids image optimizer config */}
               <img
                 src={THUMB_SRC}
-                alt=""
+                alt="Cómo funciona HazloAsíYa paso a paso"
                 className="absolute inset-0 h-full w-full object-cover opacity-90 transition-opacity group-hover:opacity-100"
                 loading="lazy"
                 decoding="async"

@@ -50,20 +50,25 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const seo = getFunnelSeoMeta(id, f.name, f.desc)
 
+  const ogTitleResolved = seo.ogTitle ?? seo.title
+
   const base: Metadata = {
     title: seo.title,
     description: seo.description,
     alternates: alternatesForPath(path),
     openGraph: {
+      title: ogTitleResolved,
+      description: seo.description,
       url: absoluteUrl(path),
       locale: 'es_US',
+      siteName: 'HazloAsíYa',
       images: [ogImage],
-      ...(seo.ogTitle
-        ? {
-            title: seo.ogTitle,
-            description: seo.description,
-          }
-        : {}),
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: ogTitleResolved,
+      description: seo.description,
+      images: [ogImage.url],
     },
   }
   if (isMoneyPageOgSlug(id)) {

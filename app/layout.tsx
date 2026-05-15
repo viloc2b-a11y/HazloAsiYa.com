@@ -55,9 +55,22 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'es_US',
     url: `${SITE_ORIGIN}/`,
-    images: [{ url: '/images/og/default-og.jpg', width: 1200, height: 630, alt: 'HazloAsíYa' }],
+    siteName: 'HazloAsíYa',
+    images: [
+      {
+        url: '/images/og/default-og.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'HazloAsíYa — trámites en español',
+      },
+    ],
   },
-  twitter: { card: 'summary_large_image' },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'HazloAsíYa — Haz tus trámites en EE.UU. sin errores',
+    description: 'Guías paso a paso en español para SNAP, Medicaid, DACA, taxes, escuela y más.',
+    images: ['/images/og/default-og.jpg'],
+  },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

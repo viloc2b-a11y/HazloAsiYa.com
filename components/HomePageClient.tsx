@@ -31,7 +31,7 @@ const HOME_FUNNEL_CARD_HEADINGS: Record<FunnelId, string> = {
 }
 
 const LogoMark = ({ size = 48 }: { size?: number }) => (
-  <svg width={size} height={size} viewBox="0 0 48 48" fill="none">
+  <svg width={size} height={size} viewBox="0 0 48 48" fill="none" aria-hidden>
     <rect width="48" height="48" rx="12" fill="url(#hm)"/>
     <path d="M13 34 L24 14 L35 34" stroke="white" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
     <path d="M24 14 L24 36" stroke="white" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round" fill="none"/>

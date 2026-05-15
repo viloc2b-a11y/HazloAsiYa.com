@@ -10,50 +10,68 @@ export const FUNNEL_SEO: Partial<
   snap: {
     title: 'Cómo solicitar SNAP en español — TX, CA, FL, NY | HazloAsíYa',
     description:
-      '¿Calificas para SNAP? Guía completa: documentos, límites de ingresos 2026 y cómo aplicar sin errores en Texas, California, Florida o Nueva York. Evaluación gratis.',
+      'SNAP (cupones de comida) en español: comprobantes frecuentes, portal de tu estado y errores que devuelven el caso. Pasos claros antes de enviar.',
     ogTitle: 'Cómo solicitar SNAP en español — 4 estados',
   },
   medicaid: {
     title: 'Medicaid en español — TX, CA, FL, NY | HazloAsíYa',
     description:
-      'Descubre si calificas para Medicaid o CHIP: requisitos, grupos elegibles y cómo completar la solicitud en español. Disponible en Texas, California, Florida y Nueva York.',
+      'Medicaid o CHIP en español: qué subir primero al portal, comprobantes por tipo de hogar y cómo ordenar la carpeta en Texas, California, Florida o Nueva York.',
     ogTitle: 'Medicaid y CHIP en español — 4 estados',
   },
   itin: {
     title: 'ITIN en español: qué es y formulario W-7 | HazloAsíYa',
     description:
-      'Aprende qué es el ITIN, para qué sirve y cómo solicitarlo con el formulario W-7. Guía paso a paso en español. Evaluación gratuita.',
+      'Solicitar el ITIN en español: W-7, ID válida y correo o Acceptance Agent. Orientación paso a paso; tú envías el paquete al IRS.',
     ogTitle: 'ITIN en español: guía y formulario W-7',
   },
   wic: {
     title: 'WIC en Texas en español: requisitos y cita | HazloAsíYa',
     description:
-      'WIC en Texas: quién califica, documentos para la cita y cómo usar texaswic.org. Orientación en español. Evaluación gratis.',
+      'WIC en Texas en español: quién califica, qué llevar a la cita clínica y cómo usar texaswic.org. Lista de documentos práctica antes de salir de casa.',
     ogTitle: 'WIC en Texas en español',
   },
   escuela: {
     title: 'Inscripción escolar Texas en español | HazloAsíYa',
     description:
-      'Documentos y pasos para inscribir a tu hijo en escuela pública en Texas: ISD, vacunas y Home Language Survey. Gratis.',
+      'Inscripción K–12 en español: vacunas, domicilio en el distrito, HLS y anexos típicos de tu ISD. Lista para el portal o la ventanilla del colegio.',
     ogTitle: 'Inscripción escolar en Texas',
   },
   daca: {
     title: 'Renovar DACA: formularios USCIS en español | HazloAsíYa',
     description:
-      'Renueva DACA con orientación sobre I-821D e I-765, plazos y USCIS. Contenido educativo en español. No es asesoría legal.',
+      'Renovar DACA en español: I-821D, I-765, pruebas habituales y plazos a verificar en USCIS. Contenido educativo; no es asesoría legal ni envío por nosotros.',
     ogTitle: 'Renovar DACA — orientación USCIS',
   },
   taxes: {
     title: 'Impuestos IRS en español: ITIN y VITA | HazloAsíYa',
     description:
-      'Declara impuestos en español: documentos, ITIN, créditos y VITA gratis. Orientación educativa, no preparación oficial.',
+      'Declaración IRS en español: W-2 y 1099, ITIN o SSN, créditos a revisar y qué llevar a VITA. Orientación educativa; no es preparación oficial ni firma por nosotros.',
     ogTitle: 'Impuestos en español — IRS y VITA',
   },
   rent: {
     title: 'Ayuda para renta en Texas en español | HazloAsíYa',
     description:
-      'Orientación sobre alquiler, HUD y ayuda para pagar renta en Texas. Listas de espera y enlaces oficiales.',
+      'Renta y vivienda en español: PHA de tu zona, HUD y rutas de emergencia; qué datos tener listos al llamar y cómo detectar ofertas falsas de “cupo inmediato”.',
     ogTitle: 'Ayuda para renta en Texas',
+  },
+  id: {
+    title: 'Texas ID y licencia en español — documentos DPS | HazloAsíYa',
+    description:
+      'Texas ID o licencia en español: papeles del DPS, orden del expediente y fallos habituales que obligan a otra cita. Revisa la lista antes de ir al centro.',
+    ogTitle: 'Texas ID y licencia — checklist DPS',
+  },
+  jobs: {
+    title: 'Empleo en EE.UU.: I-9 y W-4 en español | HazloAsíYa',
+    description:
+      'Empleo en español: I-9, W-4 y pruebas de autorización para trabajar que piden RR.HH. Lista concreta al firmar contrato o renovar papeles.',
+    ogTitle: 'I-9 y W-4 en español',
+  },
+  bank: {
+    title: 'Abrir cuenta bancaria en EE.UU. en español | HazloAsíYa',
+    description:
+      'Abrir cuenta en EE.UU. en español: identificaciones aceptadas, ITIN o SSN y qué llevar a la sucursal para no salir con la solicitud incompleta o rechazada.',
+    ogTitle: 'Cuenta bancaria en EE.UU.',
   },
 }
 
