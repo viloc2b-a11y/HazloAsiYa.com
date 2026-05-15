@@ -3,12 +3,32 @@ import { useEffect, useState } from 'react'
 import ContactHelpSection from '@/components/contact/ContactHelpSection'
 import Topbar from '@/components/Topbar'
 import FunnelCard from '@/components/FunnelCard'
-import { FUNNELS, FUNNEL_ORDER } from '@/data/funnels'
+import { FUNNELS, FUNNEL_ORDER, type FunnelId } from '@/data/funnels'
 import Link from 'next/link'
 import { getStoredUser } from '@/lib/static-backend'
 import { PRICE_MAIN, PRICE_ANNUAL, PRICE_ANNUAL_YEAR } from '@/lib/pricing'
 import VideoExplicativo from '@/components/VideoExplicativo'
 import { HOME_FAQ_ITEMS, HOME_TESTIMONIALS } from '@/data/home-structured-content'
+
+/** Títulos long-tail en la rejilla de trámites (home); deben coincidir con el orden de las tarjetas. */
+const HOME_FUNNEL_CARD_HEADINGS: Record<FunnelId, string> = {
+  snap: 'Cómo solicitar SNAP — cupones de comida',
+  medicaid: 'Cómo aplicar a Medicaid o CHIP',
+  id: 'Cómo obtener Texas ID o licencia',
+  wic: 'Cómo solicitar WIC — nutrición para mamá y niño',
+  twc: 'Cómo solicitar el desempleo (TWC)',
+  taxes: 'Cómo preparar tu declaración de impuestos',
+  escuela: 'Cómo preparar documentos para la escuela pública',
+  daca: 'Cómo renovar o revisar DACA',
+  iep: 'Cómo pedir una evaluación IEP',
+  itin: 'Cómo preparar tu solicitud de ITIN',
+  rent: 'Cómo buscar ayuda para renta o vivienda',
+  prek: 'Cómo inscribir al Pre-K gratuito',
+  utilities: 'Cómo contratar luz, gas o internet',
+  jobs: 'Cómo preparar documentos para empleo (I-9, W-4)',
+  bank: 'Cómo abrir cuenta bancaria en EE.UU.',
+  matricula: 'Cómo sacar la matrícula consular mexicana',
+}
 
 const LogoMark = ({ size = 48 }: { size?: number }) => (
   <svg width={size} height={size} viewBox="0 0 48 48" fill="none">
@@ -75,8 +95,8 @@ export default function HomePageClient() {
           </div>
 
           <div className="flex flex-wrap justify-center gap-3 gap-y-4">
-            <Link href="/snap" className="btn-primary text-base px-8 py-3.5">
-              Empieza ahora →
+            <Link href="#tramites" className="btn-primary text-base px-8 py-3.5">
+              Ver trámites disponibles
             </Link>
             <Link href="#tramites" className="bg-white/10 hover:bg-white/15 border border-white/20 text-white font-semibold rounded-xl px-8 py-3.5 transition-colors">
               Ver los 16 trámites
@@ -186,7 +206,12 @@ export default function HomePageClient() {
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {FUNNEL_ORDER.map(id => (
-            <FunnelCard key={id} id={id} {...FUNNELS[id]}/>
+            <FunnelCard
+              key={id}
+              id={id}
+              cardHeading={HOME_FUNNEL_CARD_HEADINGS[id]}
+              {...FUNNELS[id]}
+            />
           ))}
         </div>
 
@@ -397,9 +422,9 @@ export default function HomePageClient() {
           <div>
             <div className="text-white/50 text-xs font-bold tracking-widest uppercase mb-3">Trámites</div>
             <div className="grid grid-cols-2 gap-1">
-              {FUNNEL_ORDER.slice(0,8).map(id => (
-                <Link key={id} href={`/${id}`} className="text-white/40 hover:text-white text-sm transition-colors">
-                  {FUNNELS[id].name.split(' ')[0]}
+              {FUNNEL_ORDER.slice(0, 8).map(id => (
+                <Link key={id} href={`/${id}/`} className="text-white/40 hover:text-white text-sm transition-colors">
+                  {id === 'id' ? 'Texas ID / Licencia' : FUNNELS[id].name.split(' ')[0]}
                 </Link>
               ))}
             </div>

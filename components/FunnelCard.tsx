@@ -4,14 +4,17 @@ import { funnelLandingPath, isValidFunnelId, type FunnelId } from '@/data/funnel
 interface FunnelCardProps {
   id: string
   name: string
+  /** Título visible (p. ej. long-tail SEO en home). Si no se pasa, se usa `name`. */
+  cardHeading?: string
   icon: string
   action: string
   color: string
   bg: string
 }
 
-export default function FunnelCard({ id, name, icon, action, color, bg }: FunnelCardProps) {
+export default function FunnelCard({ id, name, cardHeading, icon, action, color, bg }: FunnelCardProps) {
   const href = isValidFunnelId(id) ? funnelLandingPath(id as FunnelId) : `/${id}/`
+  const title = cardHeading ?? name
   return (
     <Link
       href={href}
@@ -25,7 +28,7 @@ export default function FunnelCard({ id, name, icon, action, color, bg }: Funnel
           {icon}
         </div>
         <div>
-          <div className="font-bold text-navy text-[15px] leading-tight">{name}</div>
+          <h3 className="font-bold text-navy text-[15px] leading-tight">{title}</h3>
           <div className="text-xs text-gray-500 mt-1 line-clamp-2 leading-relaxed">{action}</div>
         </div>
       </div>
