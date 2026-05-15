@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import HomeJsonLd from '@/components/home/HomeJsonLd'
 import HomePageClient from '@/components/HomePageClient'
 import { alternatesForPath } from '@/lib/alternates'
 import { absoluteUrl } from '@/lib/site'
@@ -20,5 +21,10 @@ export const metadata: Metadata = {
 }
 
 export default function HomePage() {
-  return <HomePageClient />
+  return (
+    <>
+      <HomeJsonLd />
+      <HomePageClient />
+    </>
+  )
 }

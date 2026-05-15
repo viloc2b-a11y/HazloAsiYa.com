@@ -8,6 +8,7 @@ import Link from 'next/link'
 import { getStoredUser } from '@/lib/static-backend'
 import { PRICE_MAIN, PRICE_ANNUAL, PRICE_ANNUAL_YEAR } from '@/lib/pricing'
 import VideoExplicativo from '@/components/VideoExplicativo'
+import { HOME_FAQ_ITEMS, HOME_TESTIMONIALS } from '@/data/home-structured-content'
 
 const LogoMark = ({ size = 48 }: { size?: number }) => (
   <svg width={size} height={size} viewBox="0 0 48 48" fill="none">
@@ -333,80 +334,7 @@ export default function HomePageClient() {
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {[
-              {
-                nombre: 'Rosa M.',
-                ciudad: 'Houston, TX',
-                rol: 'Madre de familia',
-                tramite: 'SNAP',
-                emoji: '🛒',
-                texto: 'Tenía miedo de que mi estatus me impidiera aplicar. Aquí supe exactamente qué documentos llevar y cómo completar la solicitud. Me aprobaron en 10 días. Por fin puedo alimentar a mis hijos sin ese peso encima.',
-              },
-              {
-                nombre: 'Miguel Á. T.',
-                ciudad: 'San Antonio, TX',
-                rol: 'Trabajador de construcción',
-                tramite: 'Texas ID',
-                emoji: '🪪',
-                texto: 'Necesitaba mi Texas ID para trabajar y no sabía ni por dónde empezar. La guía me dijo paso a paso qué llevar al DPS. Fui, me atendieron a la primera y salí con mi licencia. Sin vueltas, sin perder el día.',
-              },
-              {
-                nombre: 'Carmen D.',
-                ciudad: 'Dallas, TX',
-                rol: 'Dueña de negocio',
-                tramite: 'Taxes',
-                emoji: '💰',
-                texto: 'Siempre pagaba preparador de taxes. Este año lo hice sola con HazloAsíYa: me explicó qué llenar, cómo y dónde enviar. Ahorré $200 y mi declaración salió sin un solo error. Se lo recomiendo a todos.',
-              },
-              {
-                nombre: 'Jesús R.',
-                ciudad: 'El Paso, TX',
-                rol: 'Padre soltero',
-                tramite: 'IEP Educación Especial',
-                emoji: '📋',
-                texto: 'Mi hijo necesita servicios especiales en la escuela y el proceso IEP me parecía imposible de entender. La guía me explicó mis derechos y me dio el formato listo. La escuela lo aceptó sin problemas. Mi hijo por fin tiene el apoyo que merece.',
-              },
-              {
-                nombre: 'Lucía H.',
-                ciudad: 'McAllen, TX',
-                rol: 'Estudiante universitaria',
-                tramite: 'DACA',
-                emoji: '📄',
-                texto: 'Renovar mi DACA me daba pánico — un error y todo se complica. HazloAsíYa me mostró los formularios I-821D e I-765 ya preparados y qué documentos adjuntar. Lo envié sin miedo y ya tengo mi aprobación.',
-              },
-              {
-                nombre: 'Roberto S.',
-                ciudad: 'Austin, TX',
-                rol: 'Recién llegado a Texas',
-                tramite: 'ITIN',
-                emoji: '🔢',
-                texto: 'No hablo bien inglés y los trámites me parecían un laberinto. Aquí todo está en español, claro y directo. Saqué mi ITIN en dos semanas y ya pude abrir mi cuenta bancaria. No sabía que fuera tan posible.',
-              },
-              {
-                nombre: 'Ana Patricia V.',
-                ciudad: 'Corpus Christi, TX',
-                rol: 'Madre trabajadora',
-                tramite: 'WIC',
-                emoji: '🤱',
-                texto: 'WIC siempre me pareció complicado — nunca sabía si calificaba ni qué llevar. Con HazloAsíYa supe todo eso en minutos. Me aprobaron y ya tengo ayuda para la leche y la comida de mi bebé.',
-              },
-              {
-                nombre: 'Carlos J.',
-                ciudad: 'Laredo, TX',
-                rol: 'Buscando empleo',
-                tramite: 'Desempleo TWC',
-                emoji: '💼',
-                texto: 'Perdí mi trabajo y no tenía idea cómo aplicar al desempleo en Texas. La guía me dijo exactamente qué responder en la solicitud del TWC. Me aprobaron en la primera semana. Sin esto hubiera esperado meses sin saber qué hacer.',
-              },
-              {
-                nombre: 'Fernando L.',
-                ciudad: 'Lubbock, TX',
-                rol: 'Trabajador independiente',
-                tramite: 'Cuenta bancaria',
-                emoji: '🏦',
-                texto: 'Me rechazaban en los bancos por no tener SSN. La guía me dijo qué bancos aceptan ITIN o matrícula consular y qué decir en la sucursal. Abrí mi cuenta en 20 minutos. Por fin tengo acceso a servicios que pensé que no eran para mí.',
-              },
-            ].map(({ nombre, ciudad, rol, tramite, emoji, texto }) => (
+            {HOME_TESTIMONIALS.map(({ nombre, ciudad, rol, tramite, emoji, texto }) => (
               <div key={nombre} className="bg-white rounded-2xl border border-cream p-5 shadow-sm flex flex-col gap-4">
                 <div className="flex items-start gap-3">
                   <div className="w-10 h-10 rounded-full bg-navy flex items-center justify-center text-white font-bold text-sm shrink-0">
@@ -429,6 +357,29 @@ export default function HomePageClient() {
           <p className="text-center text-xs text-gray-400 mt-8">
             Nombres abreviados para proteger la privacidad. Resultados individuales pueden variar según cada caso.
           </p>
+        </div>
+      </section>
+
+      <section
+        id="preguntas-frecuentes"
+        className="bg-white py-16 px-4 border-t border-cream"
+        aria-labelledby="home-faq-heading"
+      >
+        <div className="max-w-3xl mx-auto">
+          <h2 id="home-faq-heading" className="font-serif text-3xl text-navy mb-2 text-center">
+            Preguntas frecuentes
+          </h2>
+          <p className="text-center text-gray-500 text-sm mb-10 max-w-xl mx-auto">
+            Respuestas generales sobre el servicio. Para tu caso específico revisa siempre la fuente oficial del programa.
+          </p>
+          <dl className="space-y-4">
+            {HOME_FAQ_ITEMS.map(({ q, a }) => (
+              <div key={q} className="border border-navy/10 rounded-xl p-5 bg-cream/30">
+                <dt className="font-semibold text-navy">{q}</dt>
+                <dd className="mt-2 text-gray-600 text-sm leading-relaxed">{a}</dd>
+              </div>
+            ))}
+          </dl>
         </div>
       </section>
 
