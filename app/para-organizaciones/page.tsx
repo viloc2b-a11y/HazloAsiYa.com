@@ -48,8 +48,8 @@ const STEPS = [
     num: '3',
     icon: '📊',
     title: 'Recibes reportes de impacto',
-    desc: 'Cada mes te enviamos cuántas familias ayudaste, qué trámites hicieron y el ahorro estimado para tu comunidad.',
-    channels: ['Familias', 'Trámites', 'Ahorro $', 'Comunidad'],
+    desc: 'Cada mes te enviamos un resumen claro: actividad desde tu enlace, qué trámites avanzaron y el ahorro estimado para tu comunidad.',
+    channels: ['Actividad', 'Trámites', 'Ahorro $', 'Comunidad'],
   },
 ]
 
@@ -243,7 +243,7 @@ export default function ParaOrganizacionesPage() {
             </h2>
             <p className="text-[#0A2540]/60 text-sm leading-relaxed mb-6">
               Cada mes recibes un reporte con el impacto concreto de tu organización:
-              familias atendidas, trámites completados, y el ahorro estimado en honorarios
+              uso desde tu enlace, trámites completados, y el ahorro estimado en honorarios
               de abogados y gestores para tu comunidad.
             </p>
             <a
@@ -268,7 +268,7 @@ export default function ParaOrganizacionesPage() {
             {/* Big stat */}
             <div className="bg-[#0A2540] rounded-xl p-4 mb-4 text-center">
               <div className="text-4xl font-black text-white">184</div>
-              <div className="text-xs text-white/50 mt-1">familias ayudadas este mes</div>
+              <div className="text-xs text-white/50 mt-1">Personas que avanzaron con guías (ejemplo)</div>
             </div>
 
             <div className="grid grid-cols-3 gap-2 mb-4">

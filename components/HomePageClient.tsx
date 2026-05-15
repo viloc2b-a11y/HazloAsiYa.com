@@ -89,7 +89,7 @@ export default function HomePageClient() {
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-0 mt-14 bg-white/5 border border-white/10 rounded-2xl overflow-hidden">
             {[
               ['16', 'Trámites disponibles'],
-              ['441K', 'Familias atendidas'],
+              ['Guías', 'En español para completar trámites en EE.UU. con menos errores'],
               ['100%', 'En español'],
               ['$0', 'Para empezar'],
             ].map(([num, label]) => (

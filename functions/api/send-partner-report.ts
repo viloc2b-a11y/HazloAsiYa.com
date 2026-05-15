@@ -2,7 +2,7 @@
  * /api/send-partner-report — Monthly impact report email for Alianza partners
  * ─────────────────────────────────────────────────────────────────────────────
  * Sends a branded HTML email to one or all active partners with their
- * monthly impact stats (families helped, tramites, estimated savings).
+ * monthly impact stats (partner-referred activity, tramites, estimated savings).
  *
  * Called:
  *   - Manually: POST /api/send-partner-report { slug?: string, month?: "2026-05" }
@@ -140,7 +140,7 @@ function buildEmailHtml(
     ? stats.topFunnels.map(f => `
         <tr>
           <td style="padding:8px 0;color:#0A2540;font-size:14px;">${FUNNEL_LABELS[f.funnel] ?? f.funnel}</td>
-          <td style="padding:8px 0;text-align:right;font-weight:700;color:#0A2540;font-size:14px;">${f.count} familias</td>
+          <td style="padding:8px 0;text-align:right;font-weight:700;color:#0A2540;font-size:14px;">${f.count} personas</td>
         </tr>`).join('')
     : `<tr><td colspan="2" style="padding:8px 0;color:rgba(10,37,64,0.4);font-size:13px;">Sin datos de trámites este mes.</td></tr>`
 
@@ -185,7 +185,7 @@ function buildEmailHtml(
               <!-- Big number -->
               <div style="background:#F5F0E8;border-radius:16px;padding:28px;text-align:center;margin-bottom:24px;">
                 <div style="font-size:56px;font-weight:900;color:#0A2540;line-height:1;">${stats.purchases}</div>
-                <div style="color:rgba(10,37,64,0.5);font-size:14px;margin-top:6px;">familias ayudadas este mes</div>
+                <div style="color:rgba(10,37,64,0.5);font-size:14px;margin-top:6px;">Personas orientadas con tu enlace (este mes)</div>
               </div>
 
               <!-- 4 KPIs -->
@@ -329,7 +329,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
 
       // Build email
       const html = buildEmailHtml(partner, stats, monthLabel)
-      const subject = `📊 Reporte ${monthLabel} — ${partner.name} ayudó a ${stats.purchases} familias`
+      const subject = `📊 Reporte ${monthLabel} — ${partner.name}: ${stats.purchases} personas orientadas con guías`
 
       if (body.dryRun) {
         results.push({ slug: partner.slug, email: partner.contact_email, status: 'dry-run — email not sent' })

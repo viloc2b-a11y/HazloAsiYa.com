@@ -10,7 +10,7 @@ export const dynamic = 'force-static'
  *      hazloasiya.com/alianza/reporte/iglesia-bethel-houston/?month=2026-04
  *
  * The report shows:
- *   - "Tu organización ayudó a X familias este mes."
+ *   - "Tu organización conectó a X personas con guías este mes."
  *   - 4 KPIs: visitas, cuestionarios, compras, revenue
  *   - Top trámites del mes
  *   - Ahorro estimado para la comunidad
@@ -331,8 +331,8 @@ export default function PartnerReportPage() {
           </p>
           <p className="text-[#0A2540] text-sm leading-relaxed mt-3">
             Gracias por ser parte de la <strong>Alianza HazloAsíYa</strong>. Gracias a su apoyo y a los enlaces que compartieron con su comunidad, este mes{' '}
-            <strong className="text-[#0EC96A] text-base">{fmt(report.families_helped)} familias</strong>{' '}
-            pudieron completar trámites de gobierno en español — solas, sin pagar a un notario, desde su teléfono.
+            <strong className="text-[#0EC96A] text-base">{fmt(report.families_helped)} personas</strong>{' '}
+            pudieron avanzar con trámites de gobierno en español — solas, sin pagar a un notario, desde su teléfono.
           </p>
           {report.growth_pct !== null && report.growth_pct > 0 && (
             <p className="text-[#0A2540]/60 text-sm mt-3">
@@ -344,7 +344,7 @@ export default function PartnerReportPage() {
         {/* Big headline stat */}
         <div className="bg-[#0EC96A] rounded-2xl p-8 mb-6 text-center">
           <div className="text-6xl font-black text-[#0A2540]">{fmt(report.families_helped)}</div>
-          <div className="text-[#0A2540]/70 font-bold text-lg mt-1">familias ayudadas este mes</div>
+          <div className="text-[#0A2540]/70 font-bold text-lg mt-1">Personas orientadas con tu enlace (este mes)</div>
           <div className="text-[#0A2540]/50 text-sm mt-2">
             a través de los enlaces de {partner.name}
           </div>
@@ -355,7 +355,7 @@ export default function PartnerReportPage() {
           {[
             { label: 'Visitas a tu enlace', value: fmt(report.visits), icon: '👁️', sub: 'personas que hicieron clic' },
             { label: 'Cuestionarios iniciados', value: fmt(report.funnel_starts), icon: '📝', sub: `${report.completion_rate}% los completaron solos` },
-            { label: 'Trámites completados', value: fmt(report.purchases), icon: '✅', sub: 'familias con acceso a guía oficial' },
+            { label: 'Trámites completados', value: fmt(report.purchases), icon: '✅', sub: 'con acceso a guía oficial' },
             { label: 'Ahorro para la comunidad', value: fmtUSD(report.estimated_savings_usd), icon: '💰', sub: 'vs contratar un notario/gestor' },
           ].map(k => (
             <div key={k.label} className="bg-white border border-[#E8E2D8] rounded-2xl p-5">
@@ -378,7 +378,7 @@ export default function PartnerReportPage() {
                   <div className="flex-1">
                     <div className="flex items-center justify-between mb-1">
                       <span className="text-sm font-bold text-[#0A2540]">{f.name}</span>
-                      <span className="text-xs text-[#0A2540]/50">{f.count} familias</span>
+                      <span className="text-xs text-[#0A2540]/50">{f.count} personas</span>
                     </div>
                     <div className="w-full bg-[#E8E2D8] rounded-full h-2">
                       <div
@@ -421,7 +421,7 @@ export default function PartnerReportPage() {
         <div className="bg-white border border-[#E8E2D8] rounded-2xl p-6 mb-6">
           <div className="font-bold text-[#0A2540] mb-3">Gracias por su confianza 🙏</div>
           <p className="text-[#0A2540]/70 text-sm leading-relaxed">
-            Cada familia que ayudaron este mes es una familia que no tuvo que pagar $150–$300 a un notario, que no perdió una cita por no entender los formularios, y que pudo hacerlo sola — en español, desde su teléfono.
+            Cada persona a la que orientaron este mes es alguien que no tuvo que pagar $150–$300 a un notario, que no perdió una cita por no entender los formularios, y que pudo hacerlo sola — en español, desde su teléfono.
           </p>
           <p className="text-[#0A2540]/70 text-sm leading-relaxed mt-3">
             Para seguir creciendo juntos, les recomendamos compartir el enlace de {FUNNEL_META['snap']?.label} esta semana — es el trámite con mayor demanda en su área.
