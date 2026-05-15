@@ -156,7 +156,7 @@ export default function FunnelTopicalHub({ id }: { id: FunnelId }) {
         </section>
         <section aria-labelledby="hub-mc-tramites">
           <h2 id="hub-mc-tramites" className="font-serif text-xl text-navy mb-3">
-            Trámites relacionados
+            Programas que suelen ir junto con Medicaid
           </h2>
           <ul className="list-disc pl-5 space-y-1.5 marker:text-green">
             <li>
@@ -238,7 +238,7 @@ export default function FunnelTopicalHub({ id }: { id: FunnelId }) {
         </section>
         <section aria-labelledby="hub-itin-tramites">
           <h2 id="hub-itin-tramites" className="font-serif text-xl text-navy mb-3">
-            Trámites relacionados
+            Trámites útiles si necesitas ITIN
           </h2>
           <ul className="list-disc pl-5 space-y-1.5 marker:text-green">
             <li>
