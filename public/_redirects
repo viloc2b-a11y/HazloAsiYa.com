@@ -1,6 +1,6 @@
 # hazloasiya: Cloudflare Pages _redirects (path-only sources; no domain-level rules here).
-# Apex → www, HTTP → HTTPS, and optional Pages preview hostname → www belong in the
-# Cloudflare zone: Rules → Redirect Rules or URL Forwarding → Bulk Redirects.
+# Host canónico: apex `https://hazloasiya.com` (www → apex, HTTP → HTTPS) en la zona
+# Cloudflare: Rules → Redirect Rules o Bulk Redirects. `output: 'export'` no aplica redirects de next.config.
 # Reference: https://developers.cloudflare.com/pages/configuration/redirects/
 #
 # Add path-only redirects below when needed, for example:

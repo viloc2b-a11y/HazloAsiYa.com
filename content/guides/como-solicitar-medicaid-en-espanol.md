@@ -3,7 +3,7 @@ draft: false
 title: "Cómo solicitar Medicaid en Texas (guía en español)"
 description: "Pasos generales para aplicar a Medicaid/CHIP por Your Texas Benefits y qué revisar en HHSC. No somos el gobierno; confirma en el portal oficial."
 h1: "Cómo solicitar Medicaid en español en Texas"
-canonical: "https://www.hazloasiya.com/guias/como-solicitar-medicaid-en-espanol/"
+canonical: "https://hazloasiya.com/guias/como-solicitar-medicaid-en-espanol/"
 ogImage: "/images/og/medicaid-og.jpg"
 tramiteSlug: "medicaid"
 category: "beneficios"

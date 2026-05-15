@@ -14,8 +14,8 @@ function resolveRawSiteOrigin(): string {
 }
 
 /**
- * Host canónico del sitio (siempre `https://www.hazloasiya.com` para el dominio de producción,
- * aunque `NEXT_PUBLIC_APP_URL` apunte al apex o a `http`).
+ * Host canónico del sitio (`https://hazloasiya.com` en producción; `www` se normaliza al apex).
+ * Si `NEXT_PUBLIC_APP_URL` trae `www` o `http`, `normalizeHazloOrigin` unifica el origen.
  */
 export const SITE_ORIGIN = normalizeHazloOrigin(resolveRawSiteOrigin())
 

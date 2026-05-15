@@ -20,7 +20,7 @@ from datetime import datetime, timezone
 # 1. CONFIGURACIÓN GLOBAL
 # ---------------------------------------------------------------------------
 
-DOMAIN = "https://www.hazloasiya.com"
+DOMAIN = "https://hazloasiya.com"
 BRAND = "HazloAsíYa"
 
 # Páginas de negocio principales (Nivel 1)

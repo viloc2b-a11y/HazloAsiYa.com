@@ -3,7 +3,7 @@ draft: true
 title: "Título SEO ≤60 caracteres del trámite"
 description: "Meta description ≤155 caracteres con propuesta de valor y aviso de verificación oficial."
 h1: "Titular del hub de trámite"
-canonical: "https://www.hazloasiya.com/snap/"
+canonical: "https://hazloasiya.com/snap/"
 ogImage: "/images/og/snap-og.jpg"
 slug: "snap"
 category: "beneficios"

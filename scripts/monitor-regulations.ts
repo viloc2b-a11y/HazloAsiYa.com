@@ -167,7 +167,7 @@ function writeReportFiles(report: MonitorReport, jsonPath: string) {
 
 async function fetchTextExcerpt(url: string, maxChars: number): Promise<string> {
   const res = await fetch(url, {
-    headers: { 'user-agent': 'HazloAsiYa-reg-monitor/1.0 (+https://www.hazloasiya.com)' },
+    headers: { 'user-agent': 'HazloAsiYa-reg-monitor/1.0 (+https://hazloasiya.com)' },
     signal: AbortSignal.timeout(25_000),
   })
   if (!res.ok) throw new Error(`HTTP ${res.status} for ${url}`)

@@ -44,7 +44,7 @@ async function sendMonthlyReportEmail(env: ScheduledEnv, controller: ScheduledBi
   const to = rawTo.split(',').map(s => s.trim()).filter(Boolean)
   if (to.length === 0) return
 
-  const origin = (env.NEXT_PUBLIC_APP_URL || 'https://www.hazloasiya.com').replace(/\/+$/, '')
+  const origin = (env.NEXT_PUBLIC_APP_URL || 'https://hazloasiya.com').replace(/\/+$/, '')
   const whenUtc = new Date(controller.scheduledTime).toISOString()
 
   const subject = `HazloAsíYa — Informe mensual (${whenUtc.slice(0, 10)} UTC)`

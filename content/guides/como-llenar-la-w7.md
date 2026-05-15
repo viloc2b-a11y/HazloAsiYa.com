@@ -3,7 +3,7 @@ draft: false
 title: "Cómo llenar el Formulario W-7 para el ITIN (guía)"
 description: "Campos clave del W-7, anexos y envío al IRS o agente certificado. Sigue siempre las instrucciones vigentes en IRS.gov para el año fiscal."
 h1: "Cómo llenar la W-7 para solicitar o renovar el ITIN"
-canonical: "https://www.hazloasiya.com/guias/como-llenar-la-w7/"
+canonical: "https://hazloasiya.com/guias/como-llenar-la-w7/"
 ogImage: "/images/og/itin-og.jpg"
 tramiteSlug: "itin"
 category: "impuestos"

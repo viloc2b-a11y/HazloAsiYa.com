@@ -1,4 +1,6 @@
 /** @type {import('next').NextConfig} */
+// `output: 'export'`: redirects/rewrites de next.config no se emiten en el estático.
+// Redirect www → apex vive en Cloudflare (reglas de host), no aquí.
 const nextConfig = {
   output: 'export',
   trailingSlash: true,

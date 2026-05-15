@@ -3,7 +3,7 @@ draft: false
 title: "Qué es el ITIN del IRS y para qué sirve (guía clara)"
 description: "ITIN no es permiso de trabajo: sirve para declarar impuestos y cumplir obligaciones ante el IRS. Lee las reglas oficiales del Form W-7."
 h1: "Qué es el ITIN y para qué sirve"
-canonical: "https://www.hazloasiya.com/guias/que-es-el-itin-y-para-que-sirve/"
+canonical: "https://hazloasiya.com/guias/que-es-el-itin-y-para-que-sirve/"
 ogImage: "/images/og/itin-og.jpg"
 tramiteSlug: "itin"
 category: "impuestos"

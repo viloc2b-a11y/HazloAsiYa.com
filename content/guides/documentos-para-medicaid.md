@@ -3,7 +3,7 @@ draft: false
 title: "Documentos para Medicaid en Texas: qué preparar"
 description: "Pruebas de identidad, ingreso, ciudadanía o estatus y más que HHSC puede pedir para Medicaid/CHIP. Revisa siempre el aviso más reciente."
 h1: "Documentos para solicitar Medicaid o CHIP"
-canonical: "https://www.hazloasiya.com/guias/documentos-para-medicaid/"
+canonical: "https://hazloasiya.com/guias/documentos-para-medicaid/"
 ogImage: "/images/og/medicaid-og.jpg"
 tramiteSlug: "medicaid"
 category: "beneficios"

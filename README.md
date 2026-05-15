@@ -102,7 +102,7 @@ Prueba local del subscribe: `curl` contra el origen que sirva la ruta (dev: Next
 
 Plantilla: **`.env.local.example`**. Resumen:
 
-- **Públicas:** `NEXT_PUBLIC_APP_URL` (ej. `https://www.hazloasiya.com`), `NEXT_PUBLIC_API_BASE_URL` si el API no es el mismo origen, Supabase público, WhatsApp, claves `NEXT_PUBLIC_AFFILIATE_*` (Fase 1).
+- **Públicas:** `NEXT_PUBLIC_APP_URL` (ej. `https://hazloasiya.com`), `NEXT_PUBLIC_API_BASE_URL` si el API no es el mismo origen, Supabase público, WhatsApp, claves `NEXT_PUBLIC_AFFILIATE_*` (Fase 1).
 - **GA4 (consent-gate):** `NEXT_PUBLIC_GA_MEASUREMENT_ID=G-XXXXXXXXXX`. El script `gtag.js` **no** se inyecta en el HTML estático: solo tras aceptar analítica en el CookieBanner (Consent Mode v2: default `denied` en `layout`).
   - Eventos usados para embudo (vía `lib/gtag.ts`; sin `gtag` cargado no hacen nada):
     - **`cta_click`** — CTA final de `/{funnel}/` (`funnel`, `location`, `variant`, `device`).
@@ -193,7 +193,7 @@ wrangler.toml              # Proyecto Pages + `out/` + nodejs_compat
 
 ## Dominio y SEO
 
-- Canónico: **`https://www.hazloasiya.com`** (`lib/site.ts`, `metadataBase` en `app/layout.tsx`). Apex redirige a `www` vía `_redirects` / Cloudflare.
+- Canónico: **`https://hazloasiya.com`** (`lib/canonical-origin.ts`, `lib/site.ts`, `metadataBase` en `app/layout.tsx`). `www` redirige al apex vía reglas de host en Cloudflare.
 - Tras el build: comprobar que no queden `pages.dev` ni `aggregateRating` falso en `out/` (`npm run audit:legal`).
 
 ## Licencia / propiedad
