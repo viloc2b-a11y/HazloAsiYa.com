@@ -41,17 +41,18 @@ export default function RelatedLinks({
         ))}
       </ul>
       {geoLinks && geoLinks.length > 0 ? (
-        <p className="mt-5 text-xs text-gray-600 leading-relaxed">
-          <span className="font-semibold text-navy">{geoIntro}</span>{' '}
-          {geoLinks.map((g, i) => (
-            <span key={g.href}>
-              {i > 0 ? <span className="text-gray-400"> · </span> : null}
-              <Link href={g.href} className="text-green font-medium hover:underline underline-offset-2">
-                {g.label}
-              </Link>
-            </span>
-          ))}
-        </p>
+        <div className="mt-5 text-xs text-gray-600 leading-relaxed">
+          <p className="font-semibold text-navy">{geoIntro}</p>
+          <ul className="mt-2 list-disc space-y-1 pl-5 text-gray-700 marker:text-green">
+            {geoLinks.map((g) => (
+              <li key={g.href}>
+                <Link href={g.href} className="text-green font-medium hover:underline underline-offset-2">
+                  {g.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
       ) : null}
     </section>
   )

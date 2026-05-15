@@ -1,24 +1,28 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import Topbar from '@/components/Topbar'
 import RelatedLinks from '@/components/seo/RelatedLinks'
 import { RELATED_SNAP_NEW_YORK, excludeGeoByHref, SNAP_STATE_GEO } from '@/data/related-link-clusters'
 import { withTrailingSlash, absoluteUrl } from '@/lib/site'
 import { alternatesForPath } from '@/lib/alternates'
 import VerifiedInfoBanner from '@/components/VerifiedInfoBanner'
+import { regulatoryMetadataOther } from '@/lib/regulatory-meta'
 
 export const metadata: Metadata = {
-  title: 'SNAP Nueva York: cómo aplicar a los cupones de comida NY',
+  title: 'Cómo solicitar SNAP en Nueva York en español',
   description:
-    'SNAP Nueva York: límites de ingreso, myBenefits.ny.gov y formulario LDSS-2921 en español.',
+    'Nueva York: SNAP en español — ingresos orientativos, documentos frecuentes y canales oficiales (myBenefits / HRA) antes de aplicar.',
   alternates: alternatesForPath('/snap/new-york/'),
+  other: regulatoryMetadataOther('USDA FNS / NY OTDA'),
   openGraph: {
-    title: 'SNAP Nueva York en español | HazloAsíYa',
+    title: 'Cómo solicitar SNAP en Nueva York en español',
     description:
-      'Guía completa para aplicar a los cupones de comida SNAP en Nueva York. Formulario LDSS-2921 oficial pre-llenado en español.',
+      'Nueva York: SNAP en español — ingresos orientativos, documentos frecuentes y canales oficiales (myBenefits / HRA) antes de aplicar.',
     url: absoluteUrl('/snap/new-york/'),
     siteName: 'HazloAsíYa',
     locale: 'es_US',
     type: 'article',
+    images: [{ url: '/images/og/default-og.jpg', width: 1200, height: 630, alt: 'SNAP Nueva York' }],
   },
 }
 
@@ -118,6 +122,7 @@ export default function SnapNewYorkPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
 
+      <Topbar />
       <main className="min-h-screen bg-stone-50">
         {/* Hero */}
         <section className="bg-stone-900 text-white">
@@ -125,7 +130,7 @@ export default function SnapNewYorkPage() {
             <nav className="text-xs text-stone-400 mb-6 flex items-center gap-1.5">
               <Link href={withTrailingSlash('/')} className="hover:text-white transition-colors">Inicio</Link>
               <span>/</span>
-              <Link href={'/snap/form?state=nueva-york'} className="hover:text-white transition-colors">SNAP</Link>
+              <Link href={withTrailingSlash('/snap/')} className="hover:text-white transition-colors">SNAP</Link>
               <span>/</span>
               <span className="text-white">Nueva York</span>
             </nav>

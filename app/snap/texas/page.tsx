@@ -9,17 +9,17 @@ import VerifiedInfoBanner from '@/components/VerifiedInfoBanner'
 import { regulatoryMetadataOther } from '@/lib/regulatory-meta'
 
 export const metadata: Metadata = {
-  title: 'SNAP Texas 2026: requisitos, ingresos y aplicar | HazloAsíYa',
+  title: 'Cómo solicitar SNAP en Texas en español',
   description:
-    'Límites de ingresos SNAP en Texas, dónde aplicar, qué documentos suelen pedir y cómo prepararte para la solicitud en español.',
+    'Texas: SNAP en español con HHSC — ingresos orientativos, documentos frecuentes y pasos en YourTexasBenefits antes de aplicar.',
   alternates: alternatesForPath('/snap/texas/'),
   other: regulatoryMetadataOther('USDA FNS / HHSC Texas'),
   openGraph: {
     url: absoluteUrl('/snap/texas/'),
     locale: 'es_US',
-    title: 'SNAP Texas 2026: requisitos, ingresos y aplicar',
+    title: 'Cómo solicitar SNAP en Texas en español',
     description:
-      'Límites de ingresos SNAP en Texas, dónde aplicar, qué documentos suelen pedir y cómo prepararte para la solicitud en español.',
+      'Texas: SNAP en español con HHSC — ingresos orientativos, documentos frecuentes y pasos en YourTexasBenefits antes de aplicar.',
     images: [{ url: '/images/og/snap-texas-og.jpg', width: 1200, height: 630, alt: 'SNAP en Texas' }],
   },
 }
@@ -80,15 +80,15 @@ export default function SnapTexasPage() {
       <Topbar />
       <article className="max-w-3xl mx-auto px-4 py-12">
         <nav className="text-sm text-gray-500 mb-6" aria-label="Ruta de navegación">
-          <Link href="/" className="hover:text-green">
+          <Link href="/" className="hover:text-navy">
             Inicio
           </Link>
-          <span className="mx-2">/</span>
-          <Link href="/snap/" className="hover:text-green">
+          {' › '}
+          <Link href="/snap/" className="hover:text-navy">
             SNAP
           </Link>
-          <span className="mx-2">/</span>
-          <span className="text-navy">SNAP en Texas</span>
+          {' › '}
+          <span className="text-navy font-medium">Texas</span>
         </nav>
 
         <h1 className="font-serif text-3xl sm:text-4xl text-navy mb-4">
@@ -289,16 +289,30 @@ export default function SnapTexasPage() {
               ))}
             </dl>
           </section>
-
-          <RelatedLinks
-            links={RELATED_SNAP_TEXAS}
-            geoLinks={excludeGeoByHref(SNAP_STATE_GEO, '/snap/texas/')}
-          />
-
-          <p className="text-sm text-gray-500 pt-6">
-            HazloAsíYa no es HHSC ni el USDA. No garantizamos aprobación de beneficios.
-          </p>
         </div>
+
+        <div className="rounded-2xl bg-navy text-white p-6 mb-8 flex flex-col sm:flex-row items-start sm:items-center gap-4 not-prose">
+          <div className="text-4xl">🛒</div>
+          <div className="flex-1">
+            <p className="font-semibold text-lg mb-1">¿Calificas para SNAP en Texas?</p>
+            <p className="text-white/70 text-sm">Responde unas preguntas y revisa qué documentos preparar.</p>
+          </div>
+          <Link
+            href="/snap/form?state=texas"
+            className="bg-green hover:bg-green/90 text-white font-bold px-6 py-3 rounded-xl text-sm whitespace-nowrap transition-colors"
+          >
+            Evalúate gratis →
+          </Link>
+        </div>
+
+        <RelatedLinks
+          links={RELATED_SNAP_TEXAS}
+          geoLinks={excludeGeoByHref(SNAP_STATE_GEO, '/snap/texas/')}
+        />
+
+        <p className="text-sm text-gray-500 pt-6 not-prose">
+          HazloAsíYa no es HHSC ni el USDA. No garantizamos aprobación de beneficios.
+        </p>
       </article>
     </div>
   )

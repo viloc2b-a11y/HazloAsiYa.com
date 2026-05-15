@@ -1,22 +1,29 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import Topbar from '@/components/Topbar'
+import RelatedLinks from '@/components/seo/RelatedLinks'
+import {
+  RELATED_MEDICAID_CALIFORNIA,
+  excludeGeoByHref,
+  MEDICAID_STATE_GEO,
+} from '@/data/related-link-clusters'
 import { absoluteUrl } from '@/lib/site'
 import { alternatesForPath } from '@/lib/alternates'
 import VerifiedInfoBanner from '@/components/VerifiedInfoBanner'
 import { regulatoryMetadataOther } from '@/lib/regulatory-meta'
 
 export const metadata: Metadata = {
-  title: 'Medi-Cal California 2026: quién califica y cómo aplicar',
+  title: 'Cómo solicitar Medicaid en California en español',
   description:
-    'Medi-Cal California 2026: quién califica, documentos y cómo aplicar en BenefitsCal. Guía en español.',
+    'California (Medi-Cal): guía en español — ingresos orientativos, documentos frecuentes y cómo aplicar en BenefitsCal antes de enviar.',
   alternates: alternatesForPath('/medicaid/california/'),
   other: regulatoryMetadataOther('DHCS California / CMS'),
   openGraph: {
     url: absoluteUrl('/medicaid/california/'),
     locale: 'es_US',
-    title: 'Medi-Cal California — quién califica y cómo aplicar',
-    description: 'Medi-Cal en California: elegibilidad, documentos y pasos para aplicar. Contenido educativo en español.',
+    title: 'Cómo solicitar Medicaid en California en español',
+    description:
+      'California (Medi-Cal): guía en español — ingresos orientativos, documentos frecuentes y cómo aplicar en BenefitsCal antes de enviar.',
     images: [{ url: '/images/og/default-og.jpg', width: 1200, height: 630, alt: 'Medi-Cal California' }],
   },
 }
@@ -86,7 +93,7 @@ export default function MedicaidCaliforniaPage() {
         <nav className="text-sm text-gray-500 mb-6" aria-label="Ruta de navegación">
           <Link href="/" className="hover:text-navy">Inicio</Link>
           {' › '}
-          <Link href="/medicaid/form?state=california" className="hover:text-navy">Medicaid</Link>
+          <Link href="/medicaid/" className="hover:text-navy">Medicaid</Link>
           {' › '}
           <span className="text-navy font-medium">California</span>
         </nav>
@@ -99,18 +106,6 @@ export default function MedicaidCaliforniaPage() {
         <p className="text-gray-500 text-sm mb-8">
           Contenido educativo · La elegibilidad exacta la determina el DHCS o tu condado según tu situación
         </p>
-
-        {/* CTA principal */}
-        <div className="rounded-2xl bg-navy text-white p-6 mb-8 flex flex-col sm:flex-row items-start sm:items-center gap-4">
-          <div className="text-4xl">🏥</div>
-          <div className="flex-1">
-            <p className="font-semibold text-lg mb-1">¿Calificas para Medi-Cal?</p>
-            <p className="text-white/70 text-sm">Responde 5 preguntas y te decimos qué documentos necesitas.</p>
-          </div>
-          <Link href="/medicaid/form?state=california" className="bg-green hover:bg-green/90 text-white font-bold px-6 py-3 rounded-xl text-sm whitespace-nowrap transition-colors">
-            Evalúate gratis →
-          </Link>
-        </div>
 
         <div className="space-y-8 text-gray-700">
 
@@ -216,19 +211,23 @@ export default function MedicaidCaliforniaPage() {
               ))}
             </dl>
           </section>
-
-          {/* Recursos relacionados */}
-          <section className="rounded-xl border border-green/25 bg-emerald-50/60 p-5">
-            <h2 className="font-serif text-xl text-navy mb-3">Recursos relacionados</h2>
-            <ul className="space-y-2 text-sm">
-              <li><Link href="/medicaid/form?state=california" className="text-green font-semibold hover:underline">Medicaid general (cuestionario)</Link></li>
-              <li><Link href="/medicaid/florida/" className="text-green font-semibold hover:underline">Medicaid Florida</Link></li>
-              <li><Link href="/medicaid/texas/" className="text-green font-semibold hover:underline">Medicaid Texas</Link></li>
-              <li><Link href="/snap/california/" className="text-green font-semibold hover:underline">CalFresh (SNAP) California</Link></li>
-              <li><Link href="/wic/california/" className="text-green font-semibold hover:underline">WIC en California</Link></li>
-            </ul>
-          </section>
         </div>
+
+        <div className="rounded-2xl bg-navy text-white p-6 mb-8 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+          <div className="text-4xl">🏥</div>
+          <div className="flex-1">
+            <p className="font-semibold text-lg mb-1">¿Calificas para Medi-Cal?</p>
+            <p className="text-white/70 text-sm">Responde 5 preguntas y te decimos qué documentos necesitas.</p>
+          </div>
+          <Link href="/medicaid/form?state=california" className="bg-green hover:bg-green/90 text-white font-bold px-6 py-3 rounded-xl text-sm whitespace-nowrap transition-colors">
+            Evalúate gratis →
+          </Link>
+        </div>
+
+        <RelatedLinks
+          links={RELATED_MEDICAID_CALIFORNIA}
+          geoLinks={excludeGeoByHref(MEDICAID_STATE_GEO, '/medicaid/california/')}
+        />
 
         <p className="text-sm text-gray-500 border-t border-cream pt-6 mt-8">
           HazloAsíYa no es el DHCS ni el CMS. No garantizamos aprobación de beneficios. Este contenido es educativo.

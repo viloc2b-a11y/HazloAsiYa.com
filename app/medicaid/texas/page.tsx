@@ -1,21 +1,29 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import Topbar from '@/components/Topbar'
+import RelatedLinks from '@/components/seo/RelatedLinks'
+import {
+  RELATED_MEDICAID_TEXAS,
+  excludeGeoByHref,
+  MEDICAID_STATE_GEO,
+} from '@/data/related-link-clusters'
 import { absoluteUrl } from '@/lib/site'
 import { alternatesForPath } from '@/lib/alternates'
 import VerifiedInfoBanner from '@/components/VerifiedInfoBanner'
 import { regulatoryMetadataOther } from '@/lib/regulatory-meta'
 
 export const metadata: Metadata = {
-  /** Brief Semana 2 (≤60 chars para validate-content) */
-  title: 'Medicaid Texas: CHIP, embarazadas y familias | HazloAsíYa',
+  title: 'Cómo solicitar Medicaid en Texas en español',
   description:
-    '¿Calificas para Medicaid en Texas? Guía actualizada 2026: CHIP para niños, cobertura para embarazadas y familias. Evaluación gratis.',
+    'Texas: Medicaid y CHIP en español — quién suele calificar, documentos frecuentes y enlaces a HHSC / YourTexasBenefits antes de aplicar.',
   alternates: alternatesForPath('/medicaid/texas/'),
   other: regulatoryMetadataOther('HHSC Texas / CMS'),
   openGraph: {
     url: absoluteUrl('/medicaid/texas/'),
     locale: 'es_US',
+    title: 'Cómo solicitar Medicaid en Texas en español',
+    description:
+      'Texas: Medicaid y CHIP en español — quién suele calificar, documentos frecuentes y enlaces a HHSC / YourTexasBenefits antes de aplicar.',
     images: [{ url: '/images/og/medicaid-texas-og.jpg', width: 1200, height: 630, alt: 'Medicaid en Texas' }],
   },
 }
@@ -32,6 +40,16 @@ const serviceJsonLd = {
   availableLanguage: 'Spanish',
 }
 
+const breadcrumbJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Inicio', item: absoluteUrl('/') },
+    { '@type': 'ListItem', position: 2, name: 'Medicaid', item: absoluteUrl('/medicaid/') },
+    { '@type': 'ListItem', position: 3, name: 'Medicaid en Texas', item: absoluteUrl('/medicaid/texas/') },
+  ],
+}
+
 export default function MedicaidTexasPage() {
   return (
     <div className="min-h-screen bg-cream">
@@ -39,8 +57,24 @@ export default function MedicaidTexasPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       <Topbar />
       <article className="max-w-3xl mx-auto px-4 py-12">
+        <nav className="text-sm text-gray-500 mb-6" aria-label="Ruta de navegación">
+          <Link href="/" className="hover:text-navy">
+            Inicio
+          </Link>
+          {' › '}
+          <Link href="/medicaid/" className="hover:text-navy">
+            Medicaid
+          </Link>
+          {' › '}
+          <span className="text-navy font-medium">Texas</span>
+        </nav>
+
         <h1 className="font-serif text-3xl sm:text-4xl text-navy mb-4">
           Medicaid y CHIP en Texas
         </h1>
@@ -180,10 +214,30 @@ export default function MedicaidTexasPage() {
             </Link>{' '}
             para preparar documentos antes de la solicitud.
           </p>
-          <p className="text-sm text-gray-500 border-t border-cream pt-6">
-            HazloAsíYa no es HHSC ni CMS. No somos intermediarios del gobierno.
-          </p>
         </div>
+
+        <div className="rounded-2xl bg-navy text-white p-6 mb-8 flex flex-col sm:flex-row items-start sm:items-center gap-4 not-prose">
+          <div className="text-4xl">🏥</div>
+          <div className="flex-1">
+            <p className="font-semibold text-lg mb-1">¿Calificas para Medicaid o CHIP en Texas?</p>
+            <p className="text-white/70 text-sm">Responde unas preguntas y revisa qué documentos preparar.</p>
+          </div>
+          <Link
+            href="/medicaid/form?state=texas"
+            className="bg-green hover:bg-green/90 text-white font-bold px-6 py-3 rounded-xl text-sm whitespace-nowrap transition-colors"
+          >
+            Evalúate gratis →
+          </Link>
+        </div>
+
+        <RelatedLinks
+          links={RELATED_MEDICAID_TEXAS}
+          geoLinks={excludeGeoByHref(MEDICAID_STATE_GEO, '/medicaid/texas/')}
+        />
+
+        <p className="text-sm text-gray-500 border-t border-cream pt-6 mt-8 not-prose">
+          HazloAsíYa no es HHSC ni CMS. No somos intermediarios del gobierno.
+        </p>
       </article>
     </div>
   )

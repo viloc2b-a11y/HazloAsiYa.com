@@ -1,22 +1,32 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import Topbar from '@/components/Topbar'
+import RelatedLinks from '@/components/seo/RelatedLinks'
+import {
+  RELATED_MEDICAID_NEW_YORK,
+  excludeGeoByHref,
+  MEDICAID_STATE_GEO,
+} from '@/data/related-link-clusters'
 import { withTrailingSlash, absoluteUrl } from '@/lib/site'
 import { alternatesForPath } from '@/lib/alternates'
 import VerifiedInfoBanner from '@/components/VerifiedInfoBanner'
+import { regulatoryMetadataOther } from '@/lib/regulatory-meta'
 
 export const metadata: Metadata = {
-  title: 'Medicaid Nueva York: cómo aplicar al seguro médico gratuito',
+  title: 'Cómo solicitar Medicaid en Nueva York en español',
   description:
-    'Medicaid Nueva York: límites de ingreso, formulario DOH-4220 y portal NY State of Health. En español.',
+    'Nueva York: Medicaid y Essential Plan en español — ingresos orientativos, documentos y canales oficiales (NY State of Health) antes de aplicar.',
   alternates: alternatesForPath('/medicaid/new-york/'),
+  other: regulatoryMetadataOther('NY State of Health / CMS'),
   openGraph: {
-    title: 'Medicaid Nueva York en español | HazloAsíYa',
+    title: 'Cómo solicitar Medicaid en Nueva York en español',
     description:
-      'Guía completa para aplicar a Medicaid en Nueva York. Formulario DOH-4220 oficial pre-llenado en español.',
+      'Nueva York: Medicaid y Essential Plan en español — ingresos orientativos, documentos y canales oficiales (NY State of Health) antes de aplicar.',
     url: absoluteUrl('/medicaid/new-york/'),
     siteName: 'HazloAsíYa',
     locale: 'es_US',
     type: 'article',
+    images: [{ url: '/images/og/default-og.jpg', width: 1200, height: 630, alt: 'Medicaid Nueva York' }],
   },
 }
 
@@ -112,6 +122,7 @@ export default function MedicaidNewYorkPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
 
+      <Topbar />
       <main className="min-h-screen bg-stone-50">
         {/* Hero */}
         <section className="bg-stone-900 text-white">
@@ -119,7 +130,7 @@ export default function MedicaidNewYorkPage() {
             <nav className="text-xs text-stone-400 mb-6 flex items-center gap-1.5">
               <Link href={withTrailingSlash('/')} className="hover:text-white transition-colors">Inicio</Link>
               <span>/</span>
-              <Link href={'/medicaid/form?state=nueva-york'} className="hover:text-white transition-colors">Medicaid</Link>
+              <Link href={withTrailingSlash('/medicaid/')} className="hover:text-white transition-colors">Medicaid</Link>
               <span>/</span>
               <span className="text-white">Nueva York</span>
             </nav>
@@ -294,6 +305,11 @@ export default function MedicaidNewYorkPage() {
               ⚖️ HazloAsíYa NO es una agencia gubernamental. Este servicio es educativo e informativo.
             </p>
           </section>
+
+          <RelatedLinks
+            links={RELATED_MEDICAID_NEW_YORK}
+            geoLinks={excludeGeoByHref(MEDICAID_STATE_GEO, '/medicaid/new-york/')}
+          />
         </div>
       </main>
     </>

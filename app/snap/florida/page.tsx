@@ -9,17 +9,17 @@ import VerifiedInfoBanner from '@/components/VerifiedInfoBanner'
 import { regulatoryMetadataOther } from '@/lib/regulatory-meta'
 
 export const metadata: Metadata = {
-  title: 'SNAP Florida 2026: ACCESS Florida, ingresos y cómo aplicar',
+  title: 'Cómo solicitar SNAP en Florida en español',
   description:
-    'SNAP Florida 2026: ingresos, ACCESS Florida y documentos requeridos. Guía en español.',
+    'Florida: SNAP en español con DCF — ingresos orientativos, documentos frecuentes y cómo usar ACCESS Florida antes de aplicar.',
   alternates: alternatesForPath('/snap/florida/'),
   other: regulatoryMetadataOther('USDA FNS / Florida DCF'),
   openGraph: {
     url: absoluteUrl('/snap/florida/'),
     locale: 'es_US',
-    title: 'SNAP Florida — ACCESS Florida y cómo aplicar',
+    title: 'Cómo solicitar SNAP en Florida en español',
     description:
-      'SNAP en Florida: límites de ingresos, documentos y pasos para aplicar en ACCESS Florida. Contenido educativo en español.',
+      'Florida: SNAP en español con DCF — ingresos orientativos, documentos frecuentes y cómo usar ACCESS Florida antes de aplicar.',
     images: [{ url: '/images/og/default-og.jpg', width: 1200, height: 630, alt: 'SNAP Florida' }],
   },
 }
@@ -89,7 +89,7 @@ export default function SnapFloridaPage() {
         <nav className="text-sm text-gray-500 mb-6" aria-label="Ruta de navegación">
           <Link href="/" className="hover:text-navy">Inicio</Link>
           {' › '}
-          <Link href="/snap/form?state=florida" className="hover:text-navy">SNAP</Link>
+          <Link href="/snap/" className="hover:text-navy">SNAP</Link>
           {' › '}
           <span className="text-navy font-medium">Florida</span>
         </nav>
@@ -102,18 +102,6 @@ export default function SnapFloridaPage() {
         <p className="text-gray-500 text-sm mb-8">
           Contenido educativo · La elegibilidad exacta la determina el DCF según tu situación y documentación
         </p>
-
-        {/* CTA principal */}
-        <div className="rounded-2xl bg-navy text-white p-6 mb-8 flex flex-col sm:flex-row items-start sm:items-center gap-4">
-          <div className="text-4xl">🛒</div>
-          <div className="flex-1">
-            <p className="font-semibold text-lg mb-1">¿Calificas para SNAP en Florida?</p>
-            <p className="text-white/70 text-sm">Responde 5 preguntas y te decimos qué documentos necesitas.</p>
-          </div>
-          <Link href="/snap/form?state=florida" className="bg-green hover:bg-green/90 text-white font-bold px-6 py-3 rounded-xl text-sm whitespace-nowrap transition-colors">
-            Evalúate gratis →
-          </Link>
-        </div>
 
         <div className="space-y-8 text-gray-700">
 
@@ -221,12 +209,23 @@ export default function SnapFloridaPage() {
               ))}
             </dl>
           </section>
-
-          <RelatedLinks
-            links={RELATED_SNAP_FLORIDA}
-            geoLinks={excludeGeoByHref(SNAP_STATE_GEO, '/snap/florida/')}
-          />
         </div>
+
+        <div className="rounded-2xl bg-navy text-white p-6 mb-8 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+          <div className="text-4xl">🛒</div>
+          <div className="flex-1">
+            <p className="font-semibold text-lg mb-1">¿Calificas para SNAP en Florida?</p>
+            <p className="text-white/70 text-sm">Responde 5 preguntas y te decimos qué documentos necesitas.</p>
+          </div>
+          <Link href="/snap/form?state=florida" className="bg-green hover:bg-green/90 text-white font-bold px-6 py-3 rounded-xl text-sm whitespace-nowrap transition-colors">
+            Evalúate gratis →
+          </Link>
+        </div>
+
+        <RelatedLinks
+          links={RELATED_SNAP_FLORIDA}
+          geoLinks={excludeGeoByHref(SNAP_STATE_GEO, '/snap/florida/')}
+        />
 
         <p className="text-sm text-gray-500 border-t border-cream pt-6 mt-8">
           HazloAsíYa no es el DCF ni el USDA. No garantizamos aprobación de beneficios. Este contenido es educativo.

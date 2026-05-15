@@ -70,7 +70,7 @@ export const RELATED_ID_HUB: RelatedLinkItem[] = [
 
 export const SNAP_STATE_GEO: RelatedLinkItem[] = [
   { href: '/snap/texas/', label: 'SNAP en Texas' },
-  { href: '/snap/california/', label: 'SNAP en California (CalFresh)' },
+  { href: '/snap/california/', label: 'SNAP en California' },
   { href: '/snap/florida/', label: 'SNAP en Florida' },
   { href: '/snap/new-york/', label: 'SNAP en Nueva York' },
 ]
@@ -121,6 +121,38 @@ export const RELATED_SNAP_NEW_YORK: RelatedLinkItem[] = [
   { href: '/escuela/', label: 'Inscripción escolar y papeles del distrito' },
   { href: '/guias/documentos-para-snap/', label: 'Documentos para SNAP en Nueva York' },
   { href: '/snap/', label: 'SNAP — hub y otros estados' },
+]
+
+export const RELATED_MEDICAID_TEXAS: RelatedLinkItem[] = [
+  { href: '/snap/texas/', label: 'SNAP (alimentación) en Texas' },
+  { href: '/wic/texas/', label: 'WIC en Texas' },
+  { href: '/guias/documentos-para-medicaid/', label: 'Documentos para Medicaid y CHIP (guía)' },
+  { href: '/guias/como-solicitar-medicaid-en-espanol/', label: 'Cómo solicitar Medicaid paso a paso en español' },
+  { href: '/medicaid/', label: 'Medicaid — hub y otros estados' },
+]
+
+export const RELATED_MEDICAID_CALIFORNIA: RelatedLinkItem[] = [
+  { href: '/snap/california/', label: 'CalFresh (SNAP) en California' },
+  { href: '/wic/california/', label: 'WIC en California' },
+  { href: '/guias/documentos-para-medicaid/', label: 'Documentos para Medicaid y CHIP (guía)' },
+  { href: '/guias/como-solicitar-medicaid-en-espanol/', label: 'Cómo solicitar Medicaid paso a paso en español' },
+  { href: '/medicaid/', label: 'Medicaid — hub y otros estados' },
+]
+
+export const RELATED_MEDICAID_FLORIDA: RelatedLinkItem[] = [
+  { href: '/snap/florida/', label: 'SNAP en Florida' },
+  { href: '/wic/florida/', label: 'WIC en Florida' },
+  { href: '/guias/documentos-para-medicaid/', label: 'Documentos para Medicaid y CHIP (guía)' },
+  { href: '/guias/como-solicitar-medicaid-en-espanol/', label: 'Cómo solicitar Medicaid paso a paso en español' },
+  { href: '/medicaid/', label: 'Medicaid — hub y otros estados' },
+]
+
+export const RELATED_MEDICAID_NEW_YORK: RelatedLinkItem[] = [
+  { href: '/snap/new-york/', label: 'SNAP en Nueva York' },
+  { href: '/wic/new-york/', label: 'WIC en Nueva York' },
+  { href: '/guias/documentos-para-medicaid/', label: 'Documentos para Medicaid y CHIP (guía)' },
+  { href: '/guias/como-solicitar-medicaid-en-espanol/', label: 'Cómo solicitar Medicaid paso a paso en español' },
+  { href: '/medicaid/', label: 'Medicaid — hub y otros estados' },
 ]
 
 /** Landings principales con bloque "Trámites relacionados" al pie. */

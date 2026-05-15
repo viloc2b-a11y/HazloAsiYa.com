@@ -9,17 +9,17 @@ import VerifiedInfoBanner from '@/components/VerifiedInfoBanner'
 import { regulatoryMetadataOther } from '@/lib/regulatory-meta'
 
 export const metadata: Metadata = {
-  title: 'SNAP California 2026: CalFresh, ingresos y cómo aplicar',
+  title: 'Cómo solicitar SNAP en California en español',
   description:
-    'CalFresh California 2026: ingresos, documentos y cómo aplicar sin errores. Guía en español.',
+    'California (CalFresh): guía en español — ingresos orientativos, documentos frecuentes y cómo aplicar en BenefitsCal antes de enviar.',
   alternates: alternatesForPath('/snap/california/'),
   other: regulatoryMetadataOther('USDA FNS / CDSS California'),
   openGraph: {
     url: absoluteUrl('/snap/california/'),
     locale: 'es_US',
-    title: 'SNAP CalFresh California — requisitos y cómo aplicar',
+    title: 'Cómo solicitar SNAP en California en español',
     description:
-      'CalFresh en California: límites de ingresos, documentos y pasos para aplicar. Contenido educativo en español.',
+      'California (CalFresh): guía en español — ingresos orientativos, documentos frecuentes y cómo aplicar en BenefitsCal antes de enviar.',
     images: [{ url: '/images/og/default-og.jpg', width: 1200, height: 630, alt: 'SNAP CalFresh California' }],
   },
 }
@@ -89,7 +89,7 @@ export default function SnapCaliforniaPage() {
         <nav className="text-sm text-gray-500 mb-6" aria-label="Ruta de navegación">
           <Link href="/" className="hover:text-navy">Inicio</Link>
           {' › '}
-          <Link href="/snap/form?state=california" className="hover:text-navy">SNAP</Link>
+          <Link href="/snap/" className="hover:text-navy">SNAP</Link>
           {' › '}
           <span className="text-navy font-medium">California</span>
         </nav>
@@ -102,18 +102,6 @@ export default function SnapCaliforniaPage() {
         <p className="text-gray-500 text-sm mb-8">
           Contenido educativo · La elegibilidad exacta la determina el condado según tu situación y documentación
         </p>
-
-        {/* CTA principal */}
-        <div className="rounded-2xl bg-navy text-white p-6 mb-8 flex flex-col sm:flex-row items-start sm:items-center gap-4">
-          <div className="text-4xl">🛒</div>
-          <div className="flex-1">
-            <p className="font-semibold text-lg mb-1">¿Calificas para CalFresh?</p>
-            <p className="text-white/70 text-sm">Responde 5 preguntas y te decimos qué documentos necesitas.</p>
-          </div>
-          <Link href="/snap/form?state=california" className="bg-green hover:bg-green/90 text-white font-bold px-6 py-3 rounded-xl text-sm whitespace-nowrap transition-colors">
-            Evalúate gratis →
-          </Link>
-        </div>
 
         <div className="prose prose-sm max-w-none space-y-8 text-gray-700">
 
@@ -225,12 +213,23 @@ export default function SnapCaliforniaPage() {
               ))}
             </dl>
           </section>
-
-          <RelatedLinks
-            links={RELATED_SNAP_CALIFORNIA}
-            geoLinks={excludeGeoByHref(SNAP_STATE_GEO, '/snap/california/')}
-          />
         </div>
+
+        <div className="rounded-2xl bg-navy text-white p-6 mb-8 flex flex-col sm:flex-row items-start sm:items-center gap-4 not-prose">
+          <div className="text-4xl">🛒</div>
+          <div className="flex-1">
+            <p className="font-semibold text-lg mb-1">¿Calificas para CalFresh?</p>
+            <p className="text-white/70 text-sm">Responde 5 preguntas y te decimos qué documentos necesitas.</p>
+          </div>
+          <Link href="/snap/form?state=california" className="bg-green hover:bg-green/90 text-white font-bold px-6 py-3 rounded-xl text-sm whitespace-nowrap transition-colors">
+            Evalúate gratis →
+          </Link>
+        </div>
+
+        <RelatedLinks
+          links={RELATED_SNAP_CALIFORNIA}
+          geoLinks={excludeGeoByHref(SNAP_STATE_GEO, '/snap/california/')}
+        />
 
         <p className="text-sm text-gray-500 border-t border-cream pt-6 mt-8">
           HazloAsíYa no es el CDSS ni el USDA. No garantizamos aprobación de beneficios. Este contenido es educativo.
