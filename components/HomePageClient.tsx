@@ -98,8 +98,8 @@ export default function HomePageClient() {
             <Link href="#tramites" className="btn-primary text-base px-8 py-3.5">
               Ver trámites disponibles
             </Link>
-            <Link href="#tramites" className="bg-white/10 hover:bg-white/15 border border-white/20 text-white font-semibold rounded-xl px-8 py-3.5 transition-colors">
-              Ver los 16 trámites
+            <Link href="/guias/" className="bg-white/10 hover:bg-white/15 border border-white/20 text-white font-semibold rounded-xl px-8 py-3.5 transition-colors">
+              Leer guías gratis
             </Link>
             <Link href="/pdf/" className="bg-white/10 hover:bg-white/15 border border-white/20 text-white font-semibold rounded-xl px-8 py-3.5 transition-colors">
               Formularios PDF →
