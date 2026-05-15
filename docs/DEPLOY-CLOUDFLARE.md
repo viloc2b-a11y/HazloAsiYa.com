@@ -11,6 +11,8 @@
 
 `npm run build` ejecuta `next build` y luego **`pagefind --site out`**, que genera `out/pagefind/` (búsqueda). Sin ese paso, `/buscar/` no tendrá índice.
 
+**robots.txt:** lo genera solo `app/robots.ts` → `out/robots.txt`. No añadas `public/robots.txt`: en el export estático puede **sobrescribir** la salida de Next y dejar una línea `Sitemap:` con host equivocado. Si tras un deploy sigues viendo `www` en robots, purga caché en Cloudflare para la ruta `/robots.txt` o espera a que caduque el TTL del CDN.
+
 ## Variables de entorno (Production + Preview)
 
 | Nombre | Valor | Notas |

@@ -181,6 +181,19 @@ function main() {
       msg: 'robots.txt no debe contener Disallow: /*?* (rompe UTM)',
     })
   }
+  if (robots.includes('www.hazloasiya.com')) {
+    issues.push({
+      file: rel(robotsPath),
+      msg:
+        'robots.txt no debe usar www.hazloasiya.com (canónico = apex). Si existe public/robots.txt, elimínalo: tapa app/robots.ts en el export.',
+    })
+  }
+  if (!robots.includes('https://hazloasiya.com/sitemap.xml')) {
+    issues.push({
+      file: rel(robotsPath),
+      msg: 'robots.txt debe referenciar el sitemap en https://hazloasiya.com/sitemap.xml (sin www)',
+    })
+  }
 
   const redir = fs.readFileSync(redirectsPath, 'utf8')
   if (!redir.includes('hazloasiya: Cloudflare Pages _redirects')) {
