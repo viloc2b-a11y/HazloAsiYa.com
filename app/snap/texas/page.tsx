@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import Topbar from '@/components/Topbar'
+import RelatedLinks from '@/components/seo/RelatedLinks'
+import { RELATED_SNAP_TEXAS, excludeGeoByHref, SNAP_STATE_GEO } from '@/data/related-link-clusters'
 import { absoluteUrl } from '@/lib/site'
 import { alternatesForPath } from '@/lib/alternates'
 import VerifiedInfoBanner from '@/components/VerifiedInfoBanner'
@@ -288,35 +290,12 @@ export default function SnapTexasPage() {
             </dl>
           </section>
 
-          <section className="rounded-xl border border-green/25 bg-emerald-50/60 p-5 not-prose" aria-labelledby="st-recursos">
-            <h2 id="st-recursos" className="font-serif text-xl text-navy mb-3">
-              Recursos relacionados
-            </h2>
-            <ul className="space-y-2 text-sm">
-              <li>
-                <Link href="/snap/form?state=texas" className="text-green font-semibold hover:underline">
-                  SNAP (cuestionario — Texas)
-                </Link>
-              </li>
-              <li>
-                <Link href="/guias/documentos-para-snap/" className="text-green font-semibold hover:underline">
-                  Documentos para SNAP (guía)
-                </Link>
-              </li>
-              <li>
-                <Link href="/medicaid/texas/" className="text-green font-semibold hover:underline">
-                  Medicaid Texas
-                </Link>
-              </li>
-              <li>
-                <Link href="/wic/" className="text-green font-semibold hover:underline">
-                  WIC
-                </Link>
-              </li>
-            </ul>
-          </section>
+          <RelatedLinks
+            links={RELATED_SNAP_TEXAS}
+            geoLinks={excludeGeoByHref(SNAP_STATE_GEO, '/snap/texas/')}
+          />
 
-          <p className="text-sm text-gray-500 border-t border-cream pt-6">
+          <p className="text-sm text-gray-500 pt-6">
             HazloAsíYa no es HHSC ni el USDA. No garantizamos aprobación de beneficios.
           </p>
         </div>

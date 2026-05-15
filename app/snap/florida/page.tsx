@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import Topbar from '@/components/Topbar'
+import RelatedLinks from '@/components/seo/RelatedLinks'
+import { RELATED_SNAP_FLORIDA, excludeGeoByHref, SNAP_STATE_GEO } from '@/data/related-link-clusters'
 import { absoluteUrl } from '@/lib/site'
 import { alternatesForPath } from '@/lib/alternates'
 import VerifiedInfoBanner from '@/components/VerifiedInfoBanner'
@@ -220,18 +222,10 @@ export default function SnapFloridaPage() {
             </dl>
           </section>
 
-          {/* Recursos relacionados */}
-          <section className="rounded-xl border border-green/25 bg-emerald-50/60 p-5">
-            <h2 className="font-serif text-xl text-navy mb-3">Recursos relacionados</h2>
-            <ul className="space-y-2 text-sm">
-              <li><Link href="/snap/form?state=florida" className="text-green font-semibold hover:underline">SNAP general (cuestionario de elegibilidad)</Link></li>
-              <li><Link href="/snap/california/" className="text-green font-semibold hover:underline">SNAP en California (CalFresh)</Link></li>
-              <li><Link href="/snap/texas/" className="text-green font-semibold hover:underline">SNAP en Texas</Link></li>
-              <li><Link href="/medicaid/florida/" className="text-green font-semibold hover:underline">Medicaid Florida</Link></li>
-              <li><Link href="/wic/florida/" className="text-green font-semibold hover:underline">WIC en Florida</Link></li>
-              <li><Link href="/guias/documentos-para-snap/" className="text-green font-semibold hover:underline">Documentos para SNAP (guía detallada)</Link></li>
-            </ul>
-          </section>
+          <RelatedLinks
+            links={RELATED_SNAP_FLORIDA}
+            geoLinks={excludeGeoByHref(SNAP_STATE_GEO, '/snap/florida/')}
+          />
         </div>
 
         <p className="text-sm text-gray-500 border-t border-cream pt-6 mt-8">

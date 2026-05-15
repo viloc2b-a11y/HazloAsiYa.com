@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import RelatedLinks from '@/components/seo/RelatedLinks'
+import { RELATED_SNAP_NEW_YORK, excludeGeoByHref, SNAP_STATE_GEO } from '@/data/related-link-clusters'
 import { withTrailingSlash, absoluteUrl } from '@/lib/site'
 import { alternatesForPath } from '@/lib/alternates'
 import VerifiedInfoBanner from '@/components/VerifiedInfoBanner'
@@ -303,6 +305,11 @@ export default function SnapNewYorkPage() {
               ⚖️ HazloAsíYa NO es una agencia gubernamental. Este servicio es educativo e informativo.
             </p>
           </section>
+
+          <RelatedLinks
+            links={RELATED_SNAP_NEW_YORK}
+            geoLinks={excludeGeoByHref(SNAP_STATE_GEO, '/snap/new-york/')}
+          />
         </div>
       </main>
     </>

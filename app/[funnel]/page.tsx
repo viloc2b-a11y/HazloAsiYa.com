@@ -27,6 +27,8 @@ import TaxesEditorialSection from '@/components/funnels/TaxesEditorialSection'
 import RentEditorialSection from '@/components/funnels/RentEditorialSection'
 import { FunnelFinalCtaLink, FunnelScrollDepth } from '@/components/analytics/FunnelLandingMeasurement'
 import PrivacyBadge from '@/components/PrivacyBadge'
+import RelatedLinks from '@/components/seo/RelatedLinks'
+import { getRelatedClusterForFunnel } from '@/data/related-link-clusters'
 
 interface Props { params: Promise<{ funnel: string }> }
 
@@ -94,6 +96,8 @@ export default async function FunnelPage({ params }: Props) {
     pageTitle: seoForLd.title,
     pageDescription: seoForLd.description,
   })
+
+  const relatedCluster = getRelatedClusterForFunnel(id)
 
   return (
     <>
@@ -314,6 +318,10 @@ export default async function FunnelPage({ params }: Props) {
         )}
 
         <SeasonalCourseBanner funnelId={id} />
+
+        {relatedCluster ? (
+          <RelatedLinks links={relatedCluster.links} geoLinks={relatedCluster.geoLinks} />
+        ) : null}
       </div>
     </div>
     </>
